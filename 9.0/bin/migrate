@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+if PGPASSWORD=$DB_PASS psql -h db -U $DB_USER $DB_NAME -c '' >/dev/null 2>&1
+then
+  echo "$0: database $DB_NAME already exists: skipping migration."
+else
+  bin/oerpscenario --stop -t $SCENARIO_MAIN_TAG -t setup
+  bin/oerpscenario --stop -t $SCENARIO_MAIN_TAG -t demo
+fi
+

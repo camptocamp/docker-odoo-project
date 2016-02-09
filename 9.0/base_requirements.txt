@@ -1,0 +1,3 @@
+# new packages not from debian
+ERPpeek==1.6.1
+behave==1.2.4
