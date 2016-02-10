@@ -1,0 +1,15 @@
+configurable values in etc/openerp.cfg from env variables? (number of workers...)
+could just be some 'sed' commands, example:
+
+in docker-compose.yml:
+
+ODOO_CONF_WORKERS=4
+
+in etc/openerp.cfg:
+
+workers = ##ODOO_CONF_WORKERS##
+
+in entrypoint.sh:
+
+sed -i -e "s/##ODOO_CONF_WORKERS##/${ODOO_CONF_WORKERS:-4}/g" etc/openerp.cfg
+
