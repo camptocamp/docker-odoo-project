@@ -8,28 +8,31 @@ Follow the steps:
 
 1. Create directories. This is mandatory, they will be copied in the image
 
-        mkdir -p external-src local-src etc data features
+        mkdir -p odoo/external-src odoo/local-src odoo/etc odoo/data odoo/features
 
 2. Add a submodule for Odoo (official or OCA/OCB)
 
         git submodule init
-        git submodule add git@github.com:odoo/odoo.git src
+        git submodule add git@github.com:odoo/odoo.git odoo/src
 
-3. Optionally add submodules for external addons in `external-src`
+3. Optionally add submodules for external addons in `odoo/external-src`
  
-        git submodule add git@github.com:OCA/server-tools.git external-src/server-tools
+        git submodule add git@github.com:OCA/server-tools.git odoo/external-src/server-tools
 
-4. Optionally add custom addons in `local-src`
+4. Optionally add custom addons in `odoo/local-src`
 
-5. Create `openerp.cfg` in `etc`, see [the example file](etc/openerp.cfg).
+5. Create `openerp.cfg` in `etc`, see [the example file](odoo/etc/openerp.cfg).
    Adapt the `addons_path` and the other options if needed.
 
 6. Create the Dockerfile, the bare minimum being (see also [the example
-   file](etc/openerp.cfg) that installs additional dependencies):
+   file](odoo/Dockerfile) that installs additional dependencies):
 
         FROM camptocamp/odoo-project:9.0
         MAINTAINER <name>
 
 7. Build your image
 
-        docker build -t namespace/project .
+        docker build -t youruser/odoo-project-example .
+
+8. Optionally create a [docker-compose.yml](docker-compose.yml) file. This
+   example is a development composition.

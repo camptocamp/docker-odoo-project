@@ -1,0 +1,54 @@
+odoo:
+  tty: true
+  stdin_open: true
+  build: ./odoo/
+  command: ""
+  ports:
+    - 8069
+    - 8072
+  links:
+    - db:db
+  volumes:
+    # volumes should be shared for dev only
+    - "./odoo/src:/opt/odoo/src"
+    - "./odoo/local-src:/opt/odoo/local-src"
+  volumes_from:
+    - dataodoo
+  environment:
+    - SCENARIO_MAIN_TAG=example
+    - DB_USER=odoo
+    - DB_PASS=odoo
+    - DB_NAME=odoodb
+
+db:
+  # could be camptocamp/postgis:9.5 if postgis is required
+  image: postgres:9.5
+  environment:
+    - POSTGRES_USER=odoo
+    - POSTGRES_PASSWORD=odoo
+  volumes_from:
+    - datadb
+  expose:
+    - 5432
+
+# can be useful for dev when longpolling is required
+nginx:
+  image: nginx
+  ports:
+    - 80:80
+  volumes:
+    - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+  links:
+    - odoo:odoo
+
+dataodoo:
+  image: debian:jessie
+  volumes:
+    - /data/odoo
+  command: "true"
+
+datadb:
+  image: debian:jessie
+  volumes:
+    - /var/lib/postgresql
+  command: "true"
