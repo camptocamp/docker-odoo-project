@@ -41,7 +41,7 @@ you have to use logical AND:\n
 BEHAVE=behave
 BEHAVE_FLAGS="-k --no-capture"
 ROOTDIR=`dirname $0`/..
-BASIC_FEATURES=${ROOTDIR}/src/oerpscenario/features
+BASIC_FEATURES=${ROOTDIR}/oerpscenario/features
 FIND_FLAGS="-not -path ${BASIC_FEATURES}  -a -name features"
 
 if [ "$1" == "-h" ]  || [ "$1" == "--help" ] ; then
