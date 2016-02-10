@@ -80,6 +80,8 @@ RUN pip install -r base_requirements.txt
 
 COPY ./bin bin
 
+COPY oerpscenario /opt/odoo/oerpscenario
+
 VOLUME ["/data/odoo"]
 
 # Expose Odoo services
