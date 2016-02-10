@@ -4,7 +4,7 @@ set -e
 BASEDIR=$(dirname $0)
 $BASEDIR/wait_postgres.sh
 
-if [ "$1" = "./src/odoo/odoo.py" ]; then
+if [ "$1" = "./src/odoo.py" ]; then
   chown -R odoo .
   chown -R odoo /data/odoo
 

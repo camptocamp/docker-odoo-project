@@ -13,7 +13,7 @@ BASEDIR=$(dirname $0)
 $BASEDIR/wait_postgres.sh
 ROOT_DIR=$BASEDIR/..
 LOCAL_SRC_DIR=${ROOT_DIR}/local-src
-ODOO_DIR=${ROOT_DIR}/src/odoo
+ODOO_DIR=${ROOT_DIR}/src
 
 if [ -z $1 ]
 then

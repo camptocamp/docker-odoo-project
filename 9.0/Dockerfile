@@ -88,15 +88,15 @@ EXPOSE 8069 8072
 # Set the default config file
 ENV OPENERP_SERVER /opt/odoo/etc/openerp.cfg
 
-ENV PYTHONPATH /opt/odoo/src/odoo
+ENV PYTHONPATH /opt/odoo/src
 
 ENTRYPOINT ["./bin/entrypoint.sh"]
-CMD ["./src/odoo/odoo.py"]
+CMD ["./src/odoo.py"]
 
 # intermediate images should help speed up builds when only local-src, or only
-# src/addons changes
-ONBUILD COPY ./src/odoo src/odoo
-ONBUILD COPY ./src/addons src/addons
+# external-src changes
+ONBUILD COPY ./src src
+ONBUILD COPY ./external-src external-src
 ONBUILD COPY ./local-src local-src
 ONBUILD COPY ./data data
 ONBUILD COPY ./features features
