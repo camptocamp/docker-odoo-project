@@ -75,7 +75,7 @@ RUN mkdir -p /opt/odoo
 
 WORKDIR "/opt/odoo"
 
-COPY ./base_requirements.txt .
+COPY ./base_requirements.txt ./
 RUN pip install -r base_requirements.txt
 
 COPY ./bin bin
