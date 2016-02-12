@@ -5,7 +5,7 @@ A base image for our Odoo projects.
 This image alone does nothing because it doesn't contain any Odoo's code. The
 code should be added in a Docker inheriting from this image.
 
-The structure of a project has to respect a structure, look at the [example](example).
+A project has to respect a structure, look at the [example](example).
 
 ## Configuration
 
