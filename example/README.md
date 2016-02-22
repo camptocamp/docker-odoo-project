@@ -21,7 +21,7 @@ Follow the steps:
 
 4. Optionally add custom addons in `odoo/local-src`
 
-5. Create `openerp.cfg` in `etc`, see [the example file](odoo/etc/openerp.cfg).
+5. Copy the configuration template `etc/openerp.cfg.tmpl` in your project, see [the example file](odoo/etc/openerp.cfg.tmpl).
    Adapt the `addons_path` and the other options if needed.
 
 6. Create the Dockerfile, the bare minimum being (see also [the example

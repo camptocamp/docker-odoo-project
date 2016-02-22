@@ -69,6 +69,9 @@ RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/dow
         && rm /usr/local/bin/gosu.asc \
         && chmod +x /usr/local/bin/gosu
 
+# grab dockerize for generation of the configuration file and wait on postgres
+RUN curl https://github.com/jwilder/dockerize/releases/download/v0.2.0/dockerize-linux-amd64-v0.2.0.tar.gz -L | tar xz -C /usr/local/bin
+
 ENV ODOO_VERSION 9.0
 
 RUN mkdir -p /opt/odoo
@@ -104,6 +107,6 @@ ONBUILD COPY ./data data
 ONBUILD COPY ./features features
 
 # Copy entrypoint script and Odoo configuration file
-ONBUILD COPY ./etc/openerp.cfg etc/
-ONBUILD RUN chown odoo /opt/odoo/etc/openerp.cfg \
+ONBUILD COPY ./etc etc
+ONBUILD RUN chown odoo /opt/odoo/etc/* \
       && chown odoo /opt/odoo/bin/entrypoint.sh

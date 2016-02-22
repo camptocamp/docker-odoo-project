@@ -17,13 +17,11 @@ You are expected to set the  following environment variables:
 * `DB_PASS`: password for this user
 * `DB_NAME`: name of the database
 * `SCENARIO_MAIN_TAG`: tag filtering oerpscenario's features, usually the name of the project
-
-Note: those variables are not yet substituted in the project's `openerp.cfg`
-configuration file, so for now you should set them correctly in the
-configuration file.
+* Optionally every variable used in `etc/openerp.cfg.tmpl`, the syntax is:
+  https://github.com/jwilder/dockerize#using-templates
 
 A volume `/data/odoo` is shared, which is expected to contain Odoo's filestore
-(to set in `openerp.cfg`).
+(this path is set in `openerp.cfg`).
 
 Ports 8069 and 8072 are exposed by default.
 
