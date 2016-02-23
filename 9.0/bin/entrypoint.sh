@@ -3,12 +3,19 @@ set -e
 
 BASEDIR=$(dirname $0)
 
-CONFIGDIR=$BASEDIR/..
-if [ -e $CONFIGDIR/etc/openerp.cfg.tmpl ]; then
-  dockerize -template $CONFIGDIR/etc/openerp.cfg.tmpl:$CONFIGDIR/etc/openerp.cfg
+# Create configuration file from the template
+CONFIGDIR=$BASEDIR/../etc
+if [ -e $CONFIGDIR/openerp.cfg.tmpl ]; then
+  dockerize -template $CONFIGDIR/openerp.cfg.tmpl:$CONFIGDIR/openerp.cfg
 fi
 
-$(dirname $0)/wait_postgres.sh
+if [ ! -f "$CONFIGDIR/openerp.cfg" ]; then
+  echo "Error: either etc/openerp.cfg.tmpl, either etc/openerp.cfg is required"
+  exit 1
+fi
+
+# Wait until postgres is up
+$BASEDIR/wait_postgres.sh
 
 if [ "$1" = "./src/odoo.py" ] || [ "$1" = "src/odoo.py" ]; then
   chown -R odoo .

@@ -8,6 +8,7 @@ db_host = db
 db_name = {{ default .Env.DB_NAME "odoodb" }}
 db_user = {{ default .Env.DB_USER "odoo" }}
 db_password = {{ default .Env.DB_PASSWORD "odoo" }}
+db_port = {{ default .Env.DB_PORT "5432" }}
 dbfilter = ^{{ default .Env.DB_NAME "odoodb" }}$
 admin_passwd = {{ default .Env.ADMIN_PASSWD "" }}
 db_maxconn = {{ default .Env.DB_MAXCONN "64" }}

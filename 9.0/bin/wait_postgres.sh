@@ -1,8 +1,14 @@
 #!/bin/bash
+#
+# Wait until postgresql is running.
+#
 set -e
 
-while ! PGPASSWORD=$DB_PASS psql -h db -U $DB_USER </dev/null >/dev/null 2>&1
-do
-  echo "Waiting for db to come up..."
-  sleep 1
-done
+BASEDIR=$(dirname $0)
+CONFIGDIR=$BASEDIR/../etc
+
+DB_PORT=$(grep db_port $CONFIGDIR/openerp.cfg | cut -d ' ' -f 3)
+if [ -z $DB_PORT ]; then
+  DB_PORT=5432
+fi
+dockerize -wait tcp://db:${DB_PORT}
