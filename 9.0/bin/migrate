@@ -1,11 +1,13 @@
 #!/bin/bash
 set -e
 
-if PGPASSWORD=$DB_PASS psql -h db -U $DB_USER $DB_NAME -c '' >/dev/null 2>&1
+if PGPASSWORD=$DB_PASSWORD psql -h db -U $DB_USER $DB_NAME -c '' >/dev/null 2>&1
 then
   echo "$0: database $DB_NAME already exists: skipping migration."
 else
-  PGPASSWORD=$DB_PASS createdb -h db -U $DB_USER $DB_NAME
+  if ! PGPASSWORD=$DB_PASSWORD psql -lqtA -h db -U $DB_USER $DB_NAME | grep -q "^$DB_NAME|"; then
+    PGPASSWORD=$DB_PASSWORD createdb -h db -U $DB_USER $DB_NAME
+  fi
   bin/oerpscenario --stop -t $SCENARIO_MAIN_TAG -t setup
   # TODO: disable demo/story with env variable
   bin/oerpscenario --stop -t $SCENARIO_MAIN_TAG -t demo
