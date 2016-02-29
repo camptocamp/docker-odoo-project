@@ -21,6 +21,7 @@ log_handler = {{ default .Env.LOG_HANDLER "':INFO'" }}
 log_level = {{ default .Env.LOG_LEVEL "info" }}
 max_cron_threads = {{ default .Env.MAX_CRON_THREADS "2" }}
 workers = {{ default .Env.WORKERS "4" }}
+running_env = {{ default .Env.RUNNING_ENV "dev" }}
 ; csv_internal_sep = ,
 ; db_template = template1
 ; debug_mode = False
