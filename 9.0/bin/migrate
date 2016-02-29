@@ -10,6 +10,6 @@ else
   fi
   bin/oerpscenario --stop -t $SCENARIO_MAIN_TAG -t setup
   # TODO: disable demo/story with env variable
-  bin/oerpscenario --stop -t $SCENARIO_MAIN_TAG -t demo
+  bin/oerpscenario --stop -t $SCENARIO_MAIN_TAG -t story
 fi
 
