@@ -99,7 +99,7 @@ ENV PYTHONPATH /opt/odoo/src
 RUN ln -s /opt/odoo/src/odoo.py /opt/odoo/bin/odoo.py
 ENV PATH /opt/odoo/bin:$PATH
 
-ENTRYPOINT ["./bin/entrypoint.sh"]
+ENTRYPOINT ["./bin/docker-entrypoint.sh"]
 CMD ["./src/odoo.py"]
 
 # intermediate images should help speed up builds when only local-src, or only
@@ -113,4 +113,4 @@ ONBUILD COPY ./features features
 # Copy entrypoint script and Odoo configuration file
 ONBUILD COPY ./etc etc
 ONBUILD RUN chown odoo /opt/odoo/etc/* \
-      && chown odoo /opt/odoo/bin/entrypoint.sh
+      && chown odoo /opt/odoo/bin/docker-entrypoint.sh
