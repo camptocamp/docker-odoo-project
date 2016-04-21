@@ -95,6 +95,10 @@ ENV OPENERP_SERVER /opt/odoo/etc/openerp.cfg
 
 ENV PYTHONPATH /opt/odoo/src
 
+# so we can run odoo.py, oerpscenario, ... without the full path
+RUN ln -s /opt/odoo/src/odoo.py /opt/odoo/bin/odoo.py
+ENV PATH /opt/odoo/bin:$PATH
+
 ENTRYPOINT ["./bin/entrypoint.sh"]
 CMD ["./src/odoo.py"]
 

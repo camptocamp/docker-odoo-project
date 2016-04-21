@@ -17,7 +17,9 @@ fi
 # Wait until postgres is up
 $BASEDIR/wait_postgres.sh
 
-if [ "$1" = "./src/odoo.py" ] || [ "$1" = "src/odoo.py" ]; then
+BASE_CMD=$(basename $1)
+if [ "$BASE_CMD" = "odoo.py" ]; then
+
   chown -R odoo .
   chown -R odoo /data/odoo
 
@@ -26,4 +28,3 @@ if [ "$1" = "./src/odoo.py" ] || [ "$1" = "src/odoo.py" ]; then
 fi
 
 exec "$@"
-
