@@ -1,6 +1,8 @@
 FROM debian:jessie
 MAINTAINER Camptocamp
 
+ENV DB_PORT 5432
+
 # see http://stackoverflow.com/a/29799703
 RUN groupadd -r odoo && useradd -r -g odoo odoo
 
