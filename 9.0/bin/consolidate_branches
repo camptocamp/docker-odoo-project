@@ -1,0 +1,139 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# © 2016 Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
+
+"""
+
+Usage: ./consolidate_branches project.yml
+
+This script is used to (re-)generate branches from a selection of pull
+requests. Each time a pull request is modified, added or removed from the
+project, we may want to rebuild a consolidated branch, this is where this
+script enjoyable.
+
+It reads the base branch and the pull requests from a project file
+and, for each branch, does the following operations:
+
+1. Create or reset a branch in which the merges will be done.
+   git command: git checkout -B <branch-name> <base-remote>/<base>
+
+2. Merge each pull request
+   git command: git pull --no-ff --no-edit --commit \
+                  <base-remote> pull/<pull-request-id>/head
+
+3. The last operation is manual! You can push the branches and update the git
+   submodules if the result is good.
+
+Be sure to share the branches and the project.yml file with volumes.
+
+project.yml should contain a section 'consolidate-merges' with the following
+information:
+
+    consolidate-merges:
+      - path: external-src/sale-workflow
+        base-remote: origin
+        base: 9.0
+        branch-name: "9.0-consolidate-1234"
+        pull-requests:
+          - https://github.com/OCA/sale-workflow/pull/291
+          - https://github.com/OCA/sale-workflow/pull/297
+
+The path is relative to the project.yml file.
+
+"""
+
+from __future__ import print_function
+
+import os
+import subprocess
+import sys
+
+from contextlib import contextmanager
+
+import yaml
+
+
+@contextmanager
+def cd_push_pop(path):
+    base_cwd = os.getcwd()
+    os.chdir(path)
+    try:
+        yield
+    finally:
+        os.chdir(base_cwd)
+
+
+def error_with_example(msg):
+    example = ('Example:\n'
+               'consolidate-merges:\n'
+               '  - path: external-src/sale-workflow\n'
+               '    base-remote: origin\n'
+               '    base: 9.0\n'
+               '    branch-name: "9.0-consolidate-1234"\n'
+               '    pull-requests:\n'
+               '      - https://github.com/OCA/sale-workflow/pull/291\n'
+               '      - https://github.com/OCA/sale-workflow/pull/297\n')
+    raise Exception('{}\n\n{}'.format(msg, example))
+
+if len(sys.argv) == 1:
+    print('you have to provide the path of the project.yml file')
+    exit(1)
+
+project_file = sys.argv[1]
+
+if not os.path.exists(project_file):
+    print('{} does not exist'.format(project_file))
+    exit(1)
+
+new_branches = set()
+
+project_file_path = os.path.dirname(os.path.abspath(project_file))
+with open(project_file, 'rU') as fh:
+    merges = yaml.load(fh.read())
+    for info in merges.get('consolidate-merges', []):
+        relative_path = info.get('path')
+        if not relative_path:
+            error_with_example(
+                'the "path" for a branch is mandatory'
+            )
+        abs_path = os.path.join(project_file_path, relative_path)
+        base_remote = info.get('base-remote')
+        if not base_remote:
+            error_with_example(
+                'the "base-remote" for a branch is mandatory'
+            )
+        base = info.get('base')
+        if not base:
+            error_with_example(
+                'the "base" for a branch is mandatory'
+            )
+        branch_name = info.get('branch-name')
+        if not branch_name:
+            error_with_example(
+                'the "branch-name" for a branch is mandatory'
+            )
+        pulls = info.get('pull-requests', [])
+
+        with cd_push_pop(abs_path):
+            cmd = ['git', 'checkout', '-B', branch_name,
+                   '{}/{}'.format(base_remote, base)]
+            print(' '.join(cmd))
+            subprocess.check_call(cmd)
+
+            if pulls:
+                new_branches.add(relative_path)
+            for pull in pulls:
+                print('merging {}'.format(pull))
+                if '/pull/' in pull:
+                    pull = pull.split('/pull/')[1]
+                cmd = ['git', 'pull', '--no-ff', '--no-edit', '--commit',
+                       base_remote, 'pull/{}/head'.format(pull)]
+                print(' '.join(cmd))
+                subprocess.check_call(cmd)
+
+if new_branches:
+    bullet_branches = '\n'.join('- ' + b for b in new_branches)
+    print('New branches generated for:\n\n{}'.format(bullet_branches))
+else:
+    print('No branch generated')
