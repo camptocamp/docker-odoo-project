@@ -112,6 +112,7 @@ ONBUILD COPY ./external-src external-src
 ONBUILD COPY ./local-src local-src
 ONBUILD COPY ./data data
 ONBUILD COPY ./features features
+ONBUILD COPY ./project.yml
 
 # Copy entrypoint script and Odoo configuration file
 ONBUILD COPY ./etc etc
