@@ -10,8 +10,13 @@ odoo:
     - db:db
   volumes:
     # volumes should be shared for dev only
-    - "./odoo/src:/opt/odoo/src"
+    - "./odoo/data:/opt/odoo/data"
+    - "./odoo/etc/openerp.cfg.tmpl:/opt/odoo/etc/openerp.cfg.tmpl"
+    - "./odoo/external-src:/opt/odoo/external-src"
+    - "./odoo/features:/opt/odoo/features"
     - "./odoo/local-src:/opt/odoo/local-src"
+    - "./odoo/src:/opt/odoo/src"
+    - "./odoo/project.yml:/opt/odoo/local-src"
   volumes_from:
     - dataodoo
   environment:

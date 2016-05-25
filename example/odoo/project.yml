@@ -1,0 +1,14 @@
+consolidate-merges:
+  - path: external-src/sale-workflow
+    base-remote: origin
+    base: 9.0
+    branch-name: "9.0-consolidate-1234"
+    pull-requests:
+      - https://github.com/OCA/sale-workflow/pull/291
+      - https://github.com/OCA/sale-workflow/pull/297
+  - path: external-src/server-tools
+    base-remote: origin
+    base: 9.0
+    branch-name: "9.0-consolidate-1234"
+    pull-requests:
+      - https://github.com/OCA/server-tools/pull/409

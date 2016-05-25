@@ -14,7 +14,7 @@ The host for the database is `db`.
 You are expected to set the  following environment variables:
 
 * `DB_USER`: user that connects on the db
-* `DB_PASS`: password for this user
+* `DB_PASSWORD`: password for this user
 * `DB_NAME`: name of the database
 * `SCENARIO_MAIN_TAG`: tag filtering oerpscenario's features, usually the name of the project
 * Optionally every variable used in `etc/openerp.cfg.tmpl`, the syntax is:
