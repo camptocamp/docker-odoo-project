@@ -11,4 +11,4 @@ dockerize -timeout 30s -wait tcp://db:${DB_PORT}
 # port is up before postgres is totally ready:
 # 'createdb: could not connect to database template1: FATAL:  the database system is starting up'
 # wait a little bit more
-sleep 2
+sleep 1
