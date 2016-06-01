@@ -44,7 +44,6 @@ RUN set -x; \
             python-pypdf \
             python-renderpm \
             python-reportlab \
-            python-requests \
             python-simplejson \
             python-support \
             python-tz \
