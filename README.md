@@ -25,8 +25,21 @@ A volume `/data/odoo` is shared, which is expected to contain Odoo's filestore
 
 Ports 8069 and 8072 are exposed by default.
 
-## Particularities
+## Environment variables
 
+**`SCENARIO_MAIN_TAG`**
+
+Will be deprecated once the new scenario system is there.
 When a container is started, if no database exists, the entrypoint will call
-the setup script of `oerpscenario` with the tags `$SCENARIO_MAIN_TAG` and
+the setup script of `oerpscenario` with the tags `$SCENARIO_MAIN_TAG` plus
 `setup` followed by `demo`, creating and initializing the database.
+So usually, this variable is set to the name of the project.
+
+**DEMO**:
+
+Accepted values for DEMO:
+* none (default value): no demo data
+* odoo: create Odoo's database with Odoo's demo data only (only works at the creation
+  of the database!)
+* scenario: load the demo from the scenario only
+* all: lead both Odoo's demo data and the scenario demo data
