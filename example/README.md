@@ -8,7 +8,7 @@ Follow the steps:
 
 1. Create directories. This is mandatory, they will be copied in the image
 
-        mkdir -p odoo/external-src odoo/local-src odoo/etc odoo/data odoo/features
+        mkdir -p odoo/external-src odoo/local-src odoo/data odoo/features
 
 2. Add a submodule for Odoo (official or OCA/OCB)
 
@@ -29,6 +29,8 @@ Follow the steps:
 
         FROM camptocamp/odoo-project:9.0
         MAINTAINER <name>
+
+        ENV ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/external-src/server-tools,/opt/odoo/src/addons
 
 7. Build your image
 
