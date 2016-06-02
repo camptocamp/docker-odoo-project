@@ -13,6 +13,7 @@ RUN set -x; \
             curl \
             ghostscript \
             graphviz \
+            nano \
             node-clean-css \
             node-less \
             poppler-utils \
