@@ -9,7 +9,9 @@ else
     PGPASSWORD=$DB_PASSWORD createdb -h db -U $DB_USER $DB_NAME
   fi
   bin/oerpscenario --stop -t $SCENARIO_MAIN_TAG -t setup
-  # TODO: disable demo/story with env variable
-  bin/oerpscenario --stop -t $SCENARIO_MAIN_TAG -t story
+
+  if [ "${DEMO}" = "all" ] || [ "${DEMO}" = "scenario" ]; then
+    bin/oerpscenario --stop -t $SCENARIO_MAIN_TAG -t story
+  fi
 fi
 

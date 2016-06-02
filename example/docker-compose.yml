@@ -24,6 +24,7 @@ odoo:
     - DB_USER=odoo
     - DB_PASS=odoo
     - DB_NAME=odoodb
+    - DEMO=all
 
 db:
   # could be camptocamp/postgis:9.5 if postgis is required

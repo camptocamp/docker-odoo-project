@@ -11,22 +11,42 @@ A project has to respect a structure, look at the [example](example).
 
 The host for the database is `db`.
 
-You are expected to set the  following environment variables:
-
-* `DB_USER`: user that connects on the db
-* `DB_PASSWORD`: password for this user
-* `DB_NAME`: name of the database
-* `SCENARIO_MAIN_TAG`: tag filtering oerpscenario's features, usually the name of the project
-* Optionally every variable used in `etc/openerp.cfg.tmpl`, the syntax is:
-  https://github.com/jwilder/dockerize#using-templates
-
 A volume `/data/odoo` is shared, which is expected to contain Odoo's filestore
 (this path is set in `openerp.cfg`).
 
 Ports 8069 and 8072 are exposed by default.
 
-## Particularities
+## Environment variables
 
+### SCENARIO_MAIN_TAG
+
+Will be deprecated once the new scenario system is there.
 When a container is started, if no database exists, the entrypoint will call
-the setup script of `oerpscenario` with the tags `$SCENARIO_MAIN_TAG` and
+the setup script of `oerpscenario` with the tags `$SCENARIO_MAIN_TAG` plus
 `setup` followed by `demo`, creating and initializing the database.
+So usually, this variable is set to the name of the project.
+
+### DEMO
+
+Accepted values for DEMO:
+* none (default value): no demo data
+* odoo: create Odoo's database with Odoo's demo data only (only works at the creation
+  of the database!)
+* scenario: load the demo from the scenario only
+* all: lead both Odoo's demo data and the scenario demo data
+
+### Odoo Configuration Options
+
+The main configuration options of Odoo can be configured through environment variables. The name of the environment variables are the same of the options but uppercased (eg. `workers` becomes `WORKERS`).
+
+Look in [9.0/etc/openerp.cfg.tmpl](9.0/etc/openerp.cfg.tmpl) to see the full list.
+
+While most of the variables can be set in the docker-compose file so we can have different values for different environments, the `ADDONS_PATH` **must** be set in the `Dockerfile` of your project with a line such as:
+
+```
+ENV ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/external-src/server-tools,/opt/odoo/src/addons
+```
+
+By setting this value in the `Dockerfile`, it will be integrated into the build and thus will be consistent across each environment.
+
+By the way, you can add other `ENV` variables in your project's `Dockerfile` if you want to customize the default values of some variables for a project.

@@ -1,8 +1,6 @@
 FROM debian:jessie
 MAINTAINER Camptocamp
 
-ENV DB_PORT 5432
-
 # see http://stackoverflow.com/a/29799703
 RUN groupadd -r odoo && useradd -r -g odoo odoo
 
@@ -73,8 +71,6 @@ RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/dow
 # grab dockerize for generation of the configuration file and wait on postgres
 RUN curl https://github.com/jwilder/dockerize/releases/download/v0.2.0/dockerize-linux-amd64-v0.2.0.tar.gz -L | tar xz -C /usr/local/bin
 
-ENV ODOO_VERSION 9.0
-
 RUN mkdir -p /opt/odoo
 
 WORKDIR "/opt/odoo"
@@ -83,6 +79,7 @@ COPY ./base_requirements.txt ./
 RUN pip install -U pip && pip install -r base_requirements.txt
 
 COPY ./bin bin
+COPY ./etc etc
 
 COPY oerpscenario /opt/odoo/oerpscenario
 
@@ -91,15 +88,21 @@ VOLUME ["/data/odoo"]
 # Expose Odoo services
 EXPOSE 8069 8072
 
-# Set the default config file
-ENV OPENERP_SERVER /opt/odoo/etc/openerp.cfg
-
-ENV PYTHONPATH /opt/odoo/src
-
 # so we can run odoo.py, oerpscenario, ... without the full path
 RUN ln -s /opt/odoo/src/odoo.py /opt/odoo/bin/odoo.py \
     && ln -s /opt/odoo/src/openerp-gevent /opt/odoo/bin/openerp-gevent
-ENV PATH /opt/odoo/bin:$PATH
+
+ENV ODOO_VERSION=9.0 \
+    PATH=/opt/odoo/bin:$PATH \
+    PYTHONPATH=/opt/odoo/src \
+    DB_PORT=5432 \
+    DB_NAME=odoodb \
+    DB_USER=odoo \
+    DB_PASSWORD=odoo \
+    DEMO=none \
+    ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/src/addons \
+    OPENERP_SERVER=/opt/odoo/etc/openerp.cfg
+
 
 ENTRYPOINT ["./bin/docker-entrypoint.sh"]
 CMD ["./src/odoo.py"]
@@ -113,6 +116,5 @@ ONBUILD COPY ./data data
 ONBUILD COPY ./features features
 
 # Copy entrypoint script and Odoo configuration file
-ONBUILD COPY ./etc etc
 ONBUILD RUN chown odoo /opt/odoo/etc/* \
       && chown odoo /opt/odoo/bin/docker-entrypoint.sh
