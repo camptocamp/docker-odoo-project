@@ -1,9 +1,6 @@
 FROM debian:jessie
 MAINTAINER Camptocamp
 
-# see http://stackoverflow.com/a/29799703
-RUN groupadd -r odoo && useradd -r -g odoo odoo
-
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
         apt-get update \
@@ -72,7 +69,8 @@ RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/dow
 # grab dockerize for generation of the configuration file and wait on postgres
 RUN curl https://github.com/jwilder/dockerize/releases/download/v0.2.0/dockerize-linux-amd64-v0.2.0.tar.gz -L | tar xz -C /usr/local/bin
 
-RUN mkdir -p /opt/odoo
+# create the working directory and a place to set the logs (if wanted)
+RUN mkdir -p /opt/odoo /var/log/odoo
 
 WORKDIR "/opt/odoo"
 
@@ -84,7 +82,7 @@ COPY ./etc etc
 
 COPY oerpscenario /opt/odoo/oerpscenario
 
-VOLUME ["/data/odoo"]
+VOLUME ["/data/odoo", "/var/log/odoo"]
 
 # Expose Odoo services
 EXPOSE 8069 8072
@@ -115,7 +113,3 @@ ONBUILD COPY ./external-src external-src
 ONBUILD COPY ./local-src local-src
 ONBUILD COPY ./data data
 ONBUILD COPY ./features features
-
-# Copy entrypoint script and Odoo configuration file
-ONBUILD RUN chown odoo /opt/odoo/etc/* \
-      && chown odoo /opt/odoo/bin/docker-entrypoint.sh

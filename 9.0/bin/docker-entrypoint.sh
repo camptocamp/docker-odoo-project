@@ -1,6 +1,17 @@
 #!/bin/bash
 set -e
 
+# allow to customize the UID of the odoo user,
+# so we can share the same than the host's.
+# If no user id is set, we use 9001
+# so we have hardly any chance to collide
+# with an existing UID on the host
+# See https://denibertovic.com/posts/handling-permissions-with-docker-volumes/
+USER_ID=${LOCAL_USER_ID:-9001}
+
+echo "Starting with UID : $USER_ID"
+id -u odoo &> /dev/null || useradd --shell /bin/bash -u $USER_ID -o -c "" -m odoo
+
 BASEDIR=$(dirname $0)
 
 # Accepted values for DEMO:
@@ -54,8 +65,9 @@ $BASEDIR/wait_postgres.sh
 BASE_CMD=$(basename $1)
 if [ "$BASE_CMD" = "odoo.py" ]; then
 
-  chown -R odoo .
-  chown -R odoo /data/odoo
+  chown -R odoo: .
+  chown -R odoo: /data/odoo
+  chown -R odoo: /var/log/odoo
 
   gosu odoo bin/migrate
   exec gosu odoo "$@"

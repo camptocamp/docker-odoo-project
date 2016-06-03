@@ -35,6 +35,18 @@ Accepted values for DEMO:
 * scenario: load the demo from the scenario only
 * all: lead both Odoo's demo data and the scenario demo data
 
+### LOCAL_USER_ID
+
+By default, the user ID inside of the container will be 9001. There is little
+concern with this ID until we setup a host volume: the same user ID will be
+used to write the files on the host's filesystem. 9001 will probably be
+inexistent on the host system but at least it will not collide with an actual
+user.
+
+Instead, you can set the ID of the host's system in `LOCAL_USER_ID`, which will
+then be shared by the container. All the files created in host volumes will
+then share the same user.
+
 ### Odoo Configuration Options
 
 The main configuration options of Odoo can be configured through environment variables. The name of the environment variables are the same of the options but uppercased (eg. `workers` becomes `WORKERS`).
