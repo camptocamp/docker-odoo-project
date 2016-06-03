@@ -1,60 +1,56 @@
-odoo:
-  tty: true
-  stdin_open: true
-  build: ./odoo/
-  command: ""
-  ports:
-    - 8069
-    - 8072
-  links:
-    - db:db
-  volumes:
-    # volumes should be shared for dev only
-    - "./odoo/data:/opt/odoo/data"
-    - "./odoo/etc/openerp.cfg.tmpl:/opt/odoo/etc/openerp.cfg.tmpl"
-    - "./odoo/external-src:/opt/odoo/external-src"
-    - "./odoo/features:/opt/odoo/features"
-    - "./odoo/local-src:/opt/odoo/local-src"
-    - "./odoo/src:/opt/odoo/src"
-    - "./odoo/project.yml:/opt/odoo/local-src"
-  volumes_from:
-    - dataodoo
-  environment:
-    - SCENARIO_MAIN_TAG=example
-    - DB_USER=odoo
-    - DB_PASS=odoo
-    - DB_NAME=odoodb
-    - DEMO=all
+# Composition for development
 
-db:
-  # could be camptocamp/postgis:9.5 if postgis is required
-  image: postgres:9.5
-  environment:
-    - POSTGRES_USER=odoo
-    - POSTGRES_PASSWORD=odoo
-  volumes_from:
-    - datadb
-  expose:
-    - 5432
+version: '2'
 
-# can be useful for dev when longpolling is required
-nginx:
-  image: nginx
-  ports:
-    - 80:80
-  volumes:
-    - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
-  links:
-    - odoo:odoo
+services:
+  odoo:
+    tty: true
+    stdin_open: true
+    build: ./odoo/
+    command: ""
+    ports:
+      - 8069
+      - 8072
+    links:
+      - db:db
+    volumes:
+      # volumes should be shared for dev only
+      - "./odoo/src:/opt/odoo/src"
+      - "./odoo/local-src:/opt/odoo/local-src"
+      - "./odoo/external-src:/opt/odoo/external-src"
+      - "./odoo/features:/opt/odoo/features"
+      - "./odoo/data:/opt/odoo/data"
+      - "data-odoo:/data/odoo"
+    environment:
+      - SCENARIO_MAIN_TAG=example
+      - DB_USER=odoo
+      - DB_PASS=odoo
+      - DB_NAME=odoodb
+      - ADMIN_PASSWD=# set me
+      - RUNNING_ENV=dev
+      - DEMO=all
 
-dataodoo:
-  image: debian:jessie
-  volumes:
-    - /data/odoo
-  command: "true"
+  db:
+    # could be camptocamp/postgis:9.5 if postgis is required
+    image: postgres:9.5
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+    volumes:
+      - "data-db:/var/lib/postgresql/data"
+    expose:
+      - 5432
 
-datadb:
-  image: debian:jessie
-  volumes:
-    - /var/lib/postgresql
-  command: "true"
+  # can be useful for dev when longpolling is required
+  nginx:
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+    links:
+      - odoo:odoo
+
+volumes:
+  data-odoo:
+  data-db:
