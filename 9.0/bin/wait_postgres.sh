@@ -8,7 +8,13 @@ BASEDIR=$(dirname $0)
 CONFIGDIR=$BASEDIR/../etc
 
 dockerize -timeout 30s -wait tcp://db:${DB_PORT}
-# port is up before postgres is totally ready:
+
+# now the port is up but sometimes postgres is not totally ready yet:
 # 'createdb: could not connect to database template1: FATAL:  the database system is starting up'
-# wait a little bit more
-sleep 1
+# we retry if we get this error
+
+while [ "$(PGPASSWORD=$DB_PASSWORD psql -h db -U $DB_USER -c '' postgres 2>&1)" = "psql: FATAL:  the database system is starting up" ]
+do
+  echo "Waiting for the database system to start up"
+  sleep 0.1
+done
