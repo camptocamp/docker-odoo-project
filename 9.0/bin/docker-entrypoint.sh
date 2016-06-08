@@ -65,7 +65,6 @@ $BASEDIR/wait_postgres.sh
 BASE_CMD=$(basename $1)
 if [ "$BASE_CMD" = "odoo.py" ]; then
 
-  chown -R odoo: .
   chown -R odoo: /data/odoo
   chown -R odoo: /var/log/odoo
 
