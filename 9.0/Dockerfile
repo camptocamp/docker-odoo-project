@@ -94,6 +94,8 @@ RUN ln -s /opt/odoo/src/odoo.py /opt/odoo/bin/odoo.py \
 ENV ODOO_VERSION=9.0 \
     PATH=/opt/odoo/bin:$PATH \
     PYTHONPATH=/opt/odoo/src \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
     DB_PORT=5432 \
     DB_NAME=odoodb \
     DB_USER=odoo \
