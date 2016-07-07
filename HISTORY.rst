@@ -34,6 +34,11 @@ This release is not backward compatible, it drops ``oerpscenario``.
 * ``pip install -e src`` is called to install Odoo, so ``odoo.py`` and ``import
   openerp`` are widely available without having to resort on ``PATH``
   modifications.
+* The ``DEMO`` environment variable now only accepts ``True`` or ``False``,
+  loading demo data from scenario (anthem songs) should be done using
+  ``MARABUNTA_MODE=<mode>``.  It allows to have an unlimited number of
+  different scenario (demo, light, full, or whatever)
+* ``SCENARIO_MAIN_TAG`` has no effect
 
 **Instructions for migration of your project**
 
@@ -43,86 +48,98 @@ New files / directory to add in the ``odoo`` directory:
 * File ``setup.py``, used to make a Python package from the project's
   directory, allowing to find data and songs for the migrations
 
-```python
-# -*- coding: utf-8 -*-
+  ::
 
-from setuptools import setup, find_packages
+    # -*- coding: utf-8 -*-
 
-with open('VERSION') as fd:
-    version = fd.read().strip()
+    from setuptools import setup, find_packages
 
-setup(
-    name="project-name",
-    version=version,
-    description="project description",
-    license='GNU Affero General Public License v3 or later (AGPLv3+)',
-    author="Author...",
-    author_email="email...",
-    url="url...",
-    packages=['songs'] + ['songs.%s' % p for p in find_packages('./songs')],
-    include_package_data=True,
-    classifiers=[
-        'Development Status :: 4 - Beta',
-        'License :: OSI Approved',
-        'License :: OSI Approved :: '
-        'GNU Affero General Public License v3 or later (AGPLv3+)',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: Implementation :: CPython',
-    ],
-)
+    with open('VERSION') as fd:
+        version = fd.read().strip()
 
-```
+    setup(
+        name="project-name",
+        version=version,
+        description="project description",
+        license='GNU Affero General Public License v3 or later (AGPLv3+)',
+        author="Author...",
+        author_email="email...",
+        url="url...",
+        packages=['songs'] + ['songs.%s' % p for p in find_packages('./songs')],
+        include_package_data=True,
+        classifiers=[
+            'Development Status :: 4 - Beta',
+            'License :: OSI Approved',
+            'License :: OSI Approved :: '
+            'GNU Affero General Public License v3 or later (AGPLv3+)',
+            'Programming Language :: Python',
+            'Programming Language :: Python :: 2',
+            'Programming Language :: Python :: 2.7',
+            'Programming Language :: Python :: Implementation :: CPython',
+        ],
+    )
 
 * ``VERSION`` contains the current version number, such as ``9.1.0``.
 
 * ``migration.yml`` is the ``marabunta``'s manifest file, example:
 
-```yaml
-migration:
-  options:
-    install_command: odoo.py
-  versions:
-    - version: 9.0.0
-      operations:
-        pre:
-          - "sh -c 'PGPASSWORD=$DB_PASSWORD psql -h db -U $DB_USER -c \"CREATE EXTENSION pg_trgm;" $DB_NAME'"
-        post:
-          - anthem songs.install.base::main
-      addons:
-        upgrade:
-          - sale
-          - document
-    - version: 9.1.0
-      addons:
-        upgrade:
-         - stock
+  ::
 
-```
+    migration:
+      options:
+        install_command: odoo.py
+      versions:
+        - version: 9.0.0
+          operations:
+            pre:
+              - "sh -c 'PGPASSWORD=$DB_PASSWORD psql -h db -U $DB_USER -c \"CREATE EXTENSION pg_trgm;" $DB_NAME'"
+            post:
+              - anthem songs.install.base::main
+          addons:
+            upgrade:
+              - sale
+              - document
+        - version: 9.1.0
+          addons:
+            upgrade:
+             - stock
 
-If you use ``oerpscenario`` in your project, you should plan to replace it by
-``anthem``. In the meantime, you need to add it in your project:
 
-```sh
+* If you use ``DEMO=odoo``, you should replace it with ``DEMO=True``
+* If you use ``DEMO=scenario``, you should remove the variable and use
+  ``MARABUNTA_MODE=demo``
+* If you use ``DEMO=all``, you should replace it with ``DEMO=True`` and add
+  ``MARABUNTA_MODE=demo``
 
-$ git submodule add https://github.com/camptocamp/oerpscenario.git odoo/oerpscenario
-$ mkdir -p odoo/bin
-$ wget https://raw.githubusercontent.com/camptocamp/docker-odoo-project/c9a2afcf8152e5323cc49c919443602c54c839fd/9.0/bin/oerpscenario -O odoo/bin/oerpscenario
-$ chmod +x odoo/bin/oerpscenario
+* If you use ``oerpscenario`` in your project, you should plan to replace it by
+  ``anthem``. In the meantime, you need to add it in your project:
 
-```
+  ::
 
-And in your local Dockerfile, add the following lines:
+    $ git submodule add https://github.com/camptocamp/oerpscenario.git odoo/oerpscenario
+    $ mkdir -p odoo/bin
+    $ wget https://raw.githubusercontent.com/camptocamp/docker-odoo-project/c9a2afcf8152e5323cc49c919443602c54c839fd/9.0/bin/oerpscenario -O odoo/bin/oerpscenario
+    $ chmod +x odoo/bin/oerpscenario
 
-```
 
-COPY oerpscenario /opt/odoo/oerpscenario
-COPY bin/oerpscenario /opt/odoo/bin/oerpscenario
+  And in your local Dockerfile, add the following lines:
 
-```
+  ::
 
-Then, add call to ``oerpscenario`` in the ``marabunta``'s ``migration.yml`` operations.
+    COPY oerpscenario /opt/odoo/oerpscenario
+    COPY bin/oerpscenario /opt/odoo/bin/oerpscenario
+
+
+  Then, add call to ``oerpscenario`` in the ``marabunta``'s ``migration.yml`` operations.
+
+  ::
+
+    migration:
+      versions:
+        - version: 9.0.0
+          operations:
+            post:
+              - oerpscenario -t my-project-tag
 
 9.0
 +++

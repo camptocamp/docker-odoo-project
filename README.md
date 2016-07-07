@@ -18,22 +18,44 @@ Ports 8069 and 8072 are exposed by default.
 
 ## Environment variables
 
-### SCENARIO_MAIN_TAG
+### MARABUNTA_MODE
 
-Will be deprecated once the new scenario system is there.
-When a container is started, if no database exists, the entrypoint will call
-the setup script of `oerpscenario` with the tags `$SCENARIO_MAIN_TAG` plus
-`setup` followed by `demo`, creating and initializing the database.
-So usually, this variable is set to the name of the project.
+In [Marabunta](https://github.com/camptocamp/marabunta) versions, you can
+declare additional execution modes, such as `demo` or `full` in order to choose
+which operations and addons are executed for a migration.
+
+A typical use case would be:
+
+* Install the set of addons in the base mode (the base mode is always executed)
+* Load an excerpt of the data in the `demo` mode, used for test instances
+* Load the complete dataset in the `full` mode, used for the integration and
+  production servers
+
+On the test server, you would set `MARABUNTA_MODE=demo` and on the production
+one `MARABUNTA_MODE=full`.
+
+### MARABUNTA_ALLOW_SERIE
+
+By default, [Marabunta](https://github.com/camptocamp/marabunta) does not allow
+to execute more than one version upgrade at a time. This is because it is
+dangerous to execute a migration script (say 9.1.0) if the version of the code
+is not the same (say 9.2.0).
+
+For a production server, it works, because usually you only want to upgrade to
+the last version N from N-1.  But for development or a test server, you might
+want to take the risk of running all the migration scripts consecutively, this
+is what `MARABUNTA_ALLOW_SERIE=True` is for. 
+
+### MARABUNTA_FORCE_VERSION
+
+When you are developing / testing migrations with
+[Marabunta](https://github.com/camptocamp/marabunta), you can force the upgrade
+of a specific version with `MARABUNTA_FORCE_VERSION=<version>`.
 
 ### DEMO
 
-Accepted values for DEMO:
-* none (default value): no demo data
-* odoo: create Odoo's database with Odoo's demo data only (only works at the creation
-  of the database!)
-* scenario: load the demo from the scenario only
-* all: lead both Odoo's demo data and the scenario demo data
+`DEMO` can be `True` or `False` and determines whether Odoo will load its Demo
+data. It has effect only at the creation of the database.
 
 ### LOCAL_USER_ID
 
