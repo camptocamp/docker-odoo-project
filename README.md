@@ -7,11 +7,13 @@ code should be added in a Docker inheriting from this image.
 
 A project has to respect a structure, look at the [example](example).
 
+See also the [Changelog](HISTORY.rst).
+
 ## Configuration
 
 The host for the database is `db`.
 
-A volume `/data/odoo` is shared, which is expected to contain Odoo's filestore
+A volume `/data/odoo` is declared, which is expected to contain Odoo's filestore
 (this path is set in `openerp.cfg`).
 
 Ports 8069 and 8072 are exposed by default.
