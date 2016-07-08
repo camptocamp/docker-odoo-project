@@ -17,6 +17,7 @@ RUN set -x; \
             curl \
             ghostscript \
             graphviz \
+            less \
             nano \
             node-clean-css \
             node-less \
