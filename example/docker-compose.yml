@@ -22,13 +22,12 @@ services:
       - "./odoo/data:/opt/odoo/data"
       - "data-odoo:/data/odoo"
     environment:
-      - SCENARIO_MAIN_TAG=example
       - DB_USER=odoo
       - DB_PASS=odoo
       - DB_NAME=odoodb
       - ADMIN_PASSWD=# set me
       - RUNNING_ENV=dev
-      - DEMO=all
+      - MARABUNTA_MODE=demo
 
   db:
     # could be camptocamp/postgis:9.5 if postgis is required

@@ -1,17 +1,15 @@
 #!/bin/bash
 set -e
 
-if PGPASSWORD=$DB_PASSWORD psql -h db -U $DB_USER $DB_NAME -c '' >/dev/null 2>&1
-then
-  echo "$0: database $DB_NAME already exists: skipping migration."
-else
-  if ! PGPASSWORD=$DB_PASSWORD psql -lqtA -h db -U $DB_USER $DB_NAME | grep -q "^$DB_NAME|"; then
-    PGPASSWORD=$DB_PASSWORD createdb -h db -U $DB_USER $DB_NAME
-  fi
-  bin/oerpscenario --stop -t $SCENARIO_MAIN_TAG -t setup
-
-  if [ "${DEMO}" = "all" ] || [ "${DEMO}" = "scenario" ]; then
-    bin/oerpscenario --stop -t $SCENARIO_MAIN_TAG -t story
-  fi
+if ! PGPASSWORD=$DB_PASSWORD psql -lqtA -h db -U $DB_USER | grep -q "^$DB_NAME|"; then
+  PGPASSWORD=$DB_PASSWORD createdb -h db -U $DB_USER $DB_NAME
 fi
 
+BASEDIR=$(dirname $0)
+CONFIGFILE=$(dirname $0)/../migration.yml
+MARABUNTA_DB_HOST=db \
+  MARABUNTA_DATABASE=$DB_NAME \
+  MARABUNTA_DB_USER=$DB_USER \
+  MARABUNTA_DB_PASSWORD=$DB_PASSWORD \
+  MARABUNTA_DB_PORT=$DB_PORT \
+  marabunta --migration-file $CONFIGFILE
