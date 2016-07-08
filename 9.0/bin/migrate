@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-if ! PGPASSWORD=$DB_PASSWORD psql -lqtA -h db -U $DB_USER $DB_NAME | grep -q "^$DB_NAME|"; then
+if ! PGPASSWORD=$DB_PASSWORD psql -lqtA -h db -U $DB_USER | grep -q "^$DB_NAME|"; then
   PGPASSWORD=$DB_PASSWORD createdb -h db -U $DB_USER $DB_NAME
 fi
 
