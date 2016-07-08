@@ -27,7 +27,7 @@ case "$(echo "${DEMO}" | tr '[:upper:]' '[:lower:]' )" in
     export WITHOUT_DEMO=all
     ;;
   "true")
-    echo "Running without demo data"
+    echo "Running with demo data"
     export WITHOUT_DEMO=
     ;;
   # deprecated options:

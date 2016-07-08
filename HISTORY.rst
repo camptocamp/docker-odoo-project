@@ -16,6 +16,14 @@
 Release History
 ---------------
 
+Unreleased
+++++++++++
+
+**Fixes**
+
+* Fix ``DEMO=True`` wrongly displaying "Running without demo data" instead of
+  "with" (but the demo data was loaded)
+
 1.0.1 (2016-07-08)
 ++++++++++++++++++
 
