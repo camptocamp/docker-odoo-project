@@ -16,8 +16,10 @@
 Release History
 ---------------
 
-latest (unreleased)
-+++++++++++++++++++
+1.0.0 (2016-07-08)
+++++++++++++++++++
+
+The docker image for Odoo 9.0 is `camptocamp/odoo-project:9.0-1.0.0`
 
 This release is not backward compatible, it drops ``oerpscenario``.
 
