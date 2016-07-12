@@ -19,10 +19,15 @@ Release History
 Unreleased
 ++++++++++
 
+
+1.0.2 (2016-07-12)
+++++++++++++++++++
+
 **Fixes**
 
 * Fix ``DEMO=True`` wrongly displaying "Running without demo data" instead of
   "with" (but the demo data was loaded)
+* Upgrade to Marabunta 0.3.3 which resolves an unicode encode error on output
 
 1.0.1 (2016-07-08)
 ++++++++++++++++++
