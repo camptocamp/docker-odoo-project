@@ -19,6 +19,9 @@ Release History
 Unreleased
 ++++++++++
 
+1.0.3 (2016-07-13)
+++++++++++++++++++
+
 **Fixes**
 
 * Fix error ``pkg_resources.DistributionNotFound: odoo==9.0c`` happening at the
