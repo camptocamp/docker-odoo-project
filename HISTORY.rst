@@ -19,6 +19,10 @@ Release History
 Unreleased
 ++++++++++
 
+**Fixes**
+
+* Fix error ``pkg_resources.DistributionNotFound: odoo==9.0c`` happening at the
+  start of the container when we use a host volume for the odoo's src.
 
 1.0.2 (2016-07-12)
 ++++++++++++++++++
