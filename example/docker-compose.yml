@@ -42,13 +42,9 @@ services:
 
   # can be useful for dev when longpolling is required
   nginx:
-    image: nginx
-    ports:
-      - 80:80
-    volumes:
-      - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
-    links:
-      - odoo:odoo
+    image: camptocamp/odoo-nginx:9.0
+    depends_on:
+      - odoo
 
 volumes:
   data-odoo:
