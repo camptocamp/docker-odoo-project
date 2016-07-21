@@ -20,6 +20,11 @@ Ports 8069 and 8072 are exposed by default.
 
 ## Environment variables
 
+### MIGRATE
+
+`MIGRATE` can be `True` or `False` and determines whether migration tool
+marabunta will be launched. By default migration will be launched.
+
 ### MARABUNTA_MODE
 
 In [Marabunta](https://github.com/camptocamp/marabunta) versions, you can

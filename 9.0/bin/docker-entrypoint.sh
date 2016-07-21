@@ -88,7 +88,9 @@ if [ "$BASE_CMD" = "odoo.py" ]; then
   chown -R odoo: /data/odoo
   chown -R odoo: /var/log/odoo
 
-  gosu odoo bin/migrate
+  if [ -z "$MIGRATE" -o "$MIGRATE" = True ]; then
+      gosu odoo bin/migrate
+  fi
   exec gosu odoo "$@"
 fi
 
