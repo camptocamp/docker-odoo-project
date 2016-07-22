@@ -19,6 +19,11 @@ Release History
 Unreleased
 ++++++++++
 
+**Features and Improvements**
+
+* Add environment variable `MIGRATE` which allow to disable migration when
+  launching the container.
+
 1.0.3 (2016-07-13)
 ++++++++++++++++++
 
