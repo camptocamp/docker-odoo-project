@@ -24,6 +24,10 @@ Unreleased
 * Add environment variable `MIGRATE` which allow to disable migration when
   launching the container.
 
+**Libraries**
+
+* Upgrade to Anthem 0.2.0
+
 1.0.3 (2016-07-13)
 ++++++++++++++++++
 
