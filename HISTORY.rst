@@ -19,6 +19,9 @@ Release History
 Unreleased
 ++++++++++
 
+1.1.0 (2016-07-22)
+++++++++++++++++++
+
 **Features and Improvements**
 
 * Add environment variable `MIGRATE` which allow to disable migration when
