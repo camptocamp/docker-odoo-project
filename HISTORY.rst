@@ -25,6 +25,8 @@ Unreleased
 
 .. **Libraries**
 
+* Upgrade to Marabunta 0.4.1 (https://github.com/camptocamp/marabunta/releases/tag/0.4.1)
+
 .. **Bugfixes**
 
 .. **Build**
