@@ -7,6 +7,8 @@
 
 .. **Features and Improvements**
 
+.. **Libraries**
+
 .. **Bugfixes**
 
 .. **Build**
@@ -18,6 +20,19 @@ Release History
 
 Unreleased
 ++++++++++
+
+.. **Features and Improvements**
+
+.. **Libraries**
+
+.. **Bugfixes**
+
+.. **Build**
+
+.. **Documentation**
+
+1.2.0 (2016-07-26)
+++++++++++++++++++
 
 **Libraries**
 
