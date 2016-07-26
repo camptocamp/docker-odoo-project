@@ -19,6 +19,11 @@ Release History
 Unreleased
 ++++++++++
 
+**Libraries**
+
+* Upgrade to Marabunta 0.4.0 (https://github.com/camptocamp/marabunta/releases/tag/0.4.0)
+* Upgrade to Anthem 0.3.0 (https://github.com/camptocamp/anthem/releases/tag/0.3.0)
+
 1.1.0 (2016-07-22)
 ++++++++++++++++++
 
