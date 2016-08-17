@@ -47,5 +47,5 @@ pydot==1.0.2
 suds-jurko==0.6
 
 # Migration tools
-marabunta==0.4.1
+marabunta==0.4.2
 anthem==0.3.0
