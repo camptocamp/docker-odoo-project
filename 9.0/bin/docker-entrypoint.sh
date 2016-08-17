@@ -85,6 +85,7 @@ $BINDIR/wait_postgres.sh
 BASE_CMD=$(basename $1)
 if [ "$BASE_CMD" = "odoo.py" ]; then
 
+  mkdir -p /data/odoo/addons /data/odoo/filestore /data/odoo/sessions
   chown -R odoo: /data/odoo
   chown -R odoo: /var/log/odoo
 
