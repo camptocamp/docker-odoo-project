@@ -27,13 +27,22 @@ Unreleased
 
 **Libraries**
 
-* Upgrade to Marabunta 0.4.2 (https://github.com/camptocamp/marabunta/releases/tag/0.4.2)
-* Upgrade to Anthem 0.4.0 (https://github.com/camptocamp/anthem/releases/tag/0.4.0)
-
 **Build**
 
 **Documentation**
 
+1.3.0 (2016-08-19)
+++++++++++++++++++
+
+**Bugfixes**
+
+* Create /data/odoo{addons,filestore,sessions} folders at container's start,
+  which sometimes prevent Odoo to start at the first boot
+
+**Libraries**
+
+* Upgrade to Marabunta 0.4.2 (https://github.com/camptocamp/marabunta/releases/tag/0.4.2)
+* Upgrade to Anthem 0.4.0 (https://github.com/camptocamp/anthem/releases/tag/0.4.0)
 
 1.2.1 (2016-07-27)
 ++++++++++++++++++
