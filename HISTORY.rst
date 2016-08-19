@@ -7,9 +7,9 @@
 
 .. **Features and Improvements**
 
-.. **Libraries**
-
 .. **Bugfixes**
+
+.. **Libraries**
 
 .. **Build**
 
@@ -21,15 +21,18 @@ Release History
 Unreleased
 ++++++++++
 
-.. **Features and Improvements**
+**Features and Improvements**
 
-.. **Libraries**
+**Bugfixes**
 
-.. **Bugfixes**
+**Libraries**
 
-.. **Build**
+* Upgrade to Marabunta 0.4.2 (https://github.com/camptocamp/marabunta/releases/tag/0.4.2)
+* Upgrade to Anthem 0.4.0 (https://github.com/camptocamp/anthem/releases/tag/0.4.0)
 
-.. **Documentation**
+**Build**
+
+**Documentation**
 
 
 1.2.1 (2016-07-27)
