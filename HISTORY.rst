@@ -27,6 +27,8 @@ Unreleased
 
 **Libraries**
 
+* Upgrade requests to 2.6.0 (same version defined in odoo's requirements.txt)
+
 **Build**
 
 **Documentation**
