@@ -23,6 +23,19 @@ Unreleased
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+1.4.0 (2016-09-23)
+++++++++++++++++++
+
+**Features and Improvements**
+
 * Add a 'lint' command that calls flake8 on the local sources
 
 **Bugfixes**
@@ -32,10 +45,6 @@ Unreleased
 **Libraries**
 
 * Upgrade requests to 2.6.0 (same version defined in odoo's requirements.txt)
-
-**Build**
-
-**Documentation**
 
 1.3.0 (2016-08-19)
 ++++++++++++++++++
