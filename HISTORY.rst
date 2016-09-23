@@ -27,6 +27,8 @@ Unreleased
 
 **Bugfixes**
 
+* Make the database user own the created database
+
 **Libraries**
 
 * Upgrade requests to 2.6.0 (same version defined in odoo's requirements.txt)
