@@ -23,6 +23,8 @@ Unreleased
 
 **Features and Improvements**
 
+* Add a 'lint' command that calls flake8 on the local sources
+
 **Bugfixes**
 
 **Libraries**
