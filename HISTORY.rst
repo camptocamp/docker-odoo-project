@@ -31,6 +31,17 @@ Unreleased
 
 **Documentation**
 
+1.5.0 (2016-09-28)
+++++++++++++++++++
+
+**Possibly breaking change**
+
+* Now the default user id for the filestore will be 999 instead of 9001.  It
+  should not be problematic in most cases because the volumes are `chown`-ed in
+  the entrypoint. But you have to be cautious if you have interactions with
+  host volumes or other containers.
+
+
 1.4.0 (2016-09-23)
 ++++++++++++++++++
 
