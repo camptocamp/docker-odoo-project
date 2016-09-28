@@ -3,11 +3,8 @@ set -e
 
 # allow to customize the UID of the odoo user,
 # so we can share the same than the host's.
-# If no user id is set, we use 9001
-# so we have hardly any chance to collide
-# with an existing UID on the host
-# See https://denibertovic.com/posts/handling-permissions-with-docker-volumes/
-USER_ID=${LOCAL_USER_ID:-9001}
+# If no user id is set, we use 999
+USER_ID=${LOCAL_USER_ID:-999}
 
 echo "Starting with UID : $USER_ID"
 id -u odoo &> /dev/null || useradd --shell /bin/bash -u $USER_ID -o -c "" -m odoo
