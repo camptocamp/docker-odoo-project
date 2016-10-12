@@ -12,11 +12,11 @@ all: build
 
 .PHONY: build
 build:
-	cp -r bin/ $(VERSION)
-	# docker build -t $(IMAGE_LATEST) $(VERSION)
-	docker build --no-cache -t $(IMAGE_LATEST) $(VERSION)
-	rm -rf $(VERSION)/bin
-
+	$(eval TMP := $(shell mktemp -u))
+	cp -r $(VERSION) $(TMP)
+	cp -r bin/ $(TMP)
+	docker build --no-cache -t $(IMAGE_LATEST) $(TMP)
+	rm -rf $(TMP)
 
 
 .PHONY: tag
