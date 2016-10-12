@@ -1,11 +1,11 @@
 migration:
   options:
-    install_command: odoo.py
+    install_command: odoo
   versions:
     - version: 9.0.0
       operations:
         pre:
-          - "sh -c 'PGPASSWORD=$DB_PASSWORD psql -h db -U $DB_USER -c \"CREATE EXTENSION pg_trgm;" $DB_NAME'"
+          - "sh -c 'PGPASSWORD=$DB_PASSWORD psql -h db -U $DB_USER -c \"CREATE EXTENSION pg_trgm;\" $DB_NAME'"
         post:
           - anthem songs.install.base::main
       addons:
@@ -13,5 +13,6 @@ migration:
           - sale
       modes:
         demo:
-          post:
-            - anthem songs.install.demo::main
+          operations:
+            post:
+              - anthem songs.install.demo::main

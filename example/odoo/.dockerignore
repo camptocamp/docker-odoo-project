@@ -3,6 +3,5 @@
 **/.gitignore
 **/.travis.yml
 **/LICENSE
-**/VERSION
 **/*.pyc
 **/README.md

@@ -1,0 +1,31 @@
+# used for development
+# docker-compose.override.yml is automatically used by docker-compose when no
+# option -f is provided
+
+version: '2'
+
+services:
+  odoo:
+    tty: true
+    stdin_open: true
+    ports:
+      - 8069
+      - 8072
+    volumes:
+      - "./odoo/src:/opt/odoo/src"
+      - "./odoo/local-src:/opt/odoo/local-src"
+      - "./odoo/external-src:/opt/odoo/external-src"
+      - "./odoo/songs:/opt/odoo/songs"
+      - "./odoo/migration.yml:/opt/odoo/migration.yml"
+      - "./odoo/data:/opt/odoo/data"
+    environment:
+      - MARABUNTA_MODE=demo  # could be 'full' for the db with all the data
+      - MARABUNTA_ALLOW_SERIE=True  # should not be set in production
+
+  db:
+    ports:
+      - 5432
+
+  nginx:
+    ports:
+      - 80:80

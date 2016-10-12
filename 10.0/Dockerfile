@@ -72,8 +72,8 @@ VOLUME ["/data/odoo", "/var/log/odoo"]
 # Expose Odoo services
 EXPOSE 8069 8072
 
-ENV ODOO_VERSION=9.0 \
-    PATH=/opt/odoo/bin:/opt/odoo/bin_compat:$PATH \
+ENV ODOO_VERSION=10.0 \
+    PATH=/opt/odoo/bin:$PATH \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     DB_PORT=5432 \
@@ -85,7 +85,7 @@ ENV ODOO_VERSION=9.0 \
     OPENERP_SERVER=/opt/odoo/etc/odoo.cfg
 
 ENTRYPOINT ["./bin/docker-entrypoint.sh"]
-CMD ["./src/odoo.py"]
+CMD ["odoo"]
 
 # intermediate images should help speed up builds when only local-src, or only
 # external-src changes

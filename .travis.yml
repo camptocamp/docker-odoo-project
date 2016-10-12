@@ -1,0 +1,15 @@
+sudo: required
+
+services: docker
+
+env:
+  matrix:
+    - VERSION=10.0
+    - VERSION=9.0
+
+script:
+  - make VERSION=$VERSION build
+  - travis/test.sh
+
+after_success:
+  - travis/publish.sh

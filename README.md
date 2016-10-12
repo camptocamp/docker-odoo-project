@@ -9,6 +9,15 @@ A project has to respect a structure, look at the [example](example).
 
 See also the [Changelog](HISTORY.rst).
 
+## Build
+
+The images should be build with `make`:
+
+```
+$ make VERSION=10.0  # generate image camptocamp/odoo-project:10.0-latest
+$ make VERSION=9.0  # generate image camptocamp/odoo-project:9.0-latest
+```
+
 ## Configuration
 
 The host for the database is `db`.
