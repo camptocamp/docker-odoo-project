@@ -27,6 +27,6 @@ fi
 DB_NAME_TEST=${DB_NAME}_test
 
 PGPASSWORD=$DB_PASSWORD createdb -h db -U $DB_USER -O $DB_USER ${DB_NAME_TEST}
-${ODOO_DIR}/odoo.py --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn -i ${LOCAL_ADDONS}
-${ODOO_DIR}/odoo.py --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable -u ${LOCAL_ADDONS}
+${ODOO_DIR}/odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn -i ${LOCAL_ADDONS}
+${ODOO_DIR}/odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable -u ${LOCAL_ADDONS}
 PGPASSWORD=$DB_PASSWORD dropdb -h db -U $DB_USER ${DB_NAME_TEST}

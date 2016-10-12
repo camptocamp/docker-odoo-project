@@ -1,3 +1,2 @@
 # project's packages, customize for your needs:
 unidecode==0.4.14
-shapely==1.5.13

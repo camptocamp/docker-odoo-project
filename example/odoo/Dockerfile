@@ -1,4 +1,4 @@
-FROM camptocamp/odoo-project:9.0
+FROM camptocamp/odoo-project:10.0-latest
 MAINTAINER Camptocamp
 
 # Project's specifics packages
@@ -12,4 +12,4 @@ RUN set -x; \
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-ENV ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/external-src/server-tools,/opt/odoo/src/addons
+ENV ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/src/addons

@@ -58,9 +58,12 @@ CONFIGDIR=$BASEDIR/etc
 if [ -e $CONFIGDIR/openerp.cfg.tmpl ]; then
   dockerize -template $CONFIGDIR/openerp.cfg.tmpl:$CONFIGDIR/openerp.cfg
 fi
+if [ -e $CONFIGDIR/odoo.cfg.tmpl ]; then
+  dockerize -template $CONFIGDIR/odoo.cfg.tmpl:$CONFIGDIR/odoo.cfg
+fi
 
-if [ ! -f "$CONFIGDIR/openerp.cfg" ]; then
-  echo "Error: either etc/openerp.cfg.tmpl, either etc/openerp.cfg is required"
+if [ ! -f "$CONFIGDIR/odoo.cfg" ]; then
+  echo "Error: one of etc/openerp.cfg.tmpl, etc/odoo.cfg.tmpl, etc/odoo.cfg is required"
   exit 1
 fi
 
@@ -74,13 +77,17 @@ if [ -z "$(pip list | grep "/opt/odoo/src")" ]; then
   echo '/opt/odoo/src/odoo.egg-info is missing, probably because the directory is a volume.'
   echo 'Running pip install -e /opt/odoo/src to restore odoo.egg-info'
   pip install -e $BASEDIR/src
+  # As we write in a volume, ensure it has the same user.
+  # So when the src is a host volume and we set the LOCAL_USER_ID to be the
+  # host user, the files are owned by the host user
+  chown -R odoo: /opt/odoo/src/odoo.egg-info
 fi
 
 # Wait until postgres is up
 $BINDIR/wait_postgres.sh
 
 BASE_CMD=$(basename $1)
-if [ "$BASE_CMD" = "odoo.py" ]; then
+if [ "$BASE_CMD" = "odoo" ]; then
 
   mkdir -p /data/odoo/{addons,filestore,sessions}
   chown -R odoo: /data/odoo

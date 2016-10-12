@@ -8,10 +8,10 @@ from anthem.lyrics.records import create_or_update
 def create_partners(ctx):
     names = [('Khiank Mountaingut', 'partner_1'),
              ('Kher Fernthorn', 'partner_2'),
-             ('Sheing Coaldigger' 'partner_3'),
+             ('Sheing Coaldigger', 'partner_3'),
              ]
     for name, xmlid in names:
-        create_or_update('res.partner', xmlid, {'name': name})
+        create_or_update(ctx, 'res.partner', xmlid, {'name': name})
 
 
 def main(ctx):
