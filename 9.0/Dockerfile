@@ -64,6 +64,7 @@ RUN curl https://github.com/jwilder/dockerize/releases/download/v0.2.0/dockerize
 
 COPY ./src_requirements.txt ./
 COPY ./bin bin
+COPY ./bin_compat bin_compat
 COPY ./etc etc
 COPY ./MANIFEST.in ./
 
