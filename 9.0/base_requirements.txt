@@ -41,6 +41,7 @@ urllib3==1.9.1
 vatnumber==1.2
 vobject==0.8.2
 wsgiref==0.1.2
+XlsxWriter==0.7.7
 xlwt==0.7.5
 # version in debian has problems
 pydot==1.0.2
