@@ -56,7 +56,7 @@ esac
 # Create configuration file from the template
 CONFIGDIR=$BASEDIR/etc
 if [ -e $CONFIGDIR/openerp.cfg.tmpl ]; then
-  dockerize -template $CONFIGDIR/openerp.cfg.tmpl:$CONFIGDIR/openerp.cfg
+  dockerize -template $CONFIGDIR/openerp.cfg.tmpl:$CONFIGDIR/odoo.cfg
 fi
 if [ -e $CONFIGDIR/odoo.cfg.tmpl ]; then
   dockerize -template $CONFIGDIR/odoo.cfg.tmpl:$CONFIGDIR/odoo.cfg
