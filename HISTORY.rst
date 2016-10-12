@@ -31,6 +31,43 @@ Unreleased
 
 **Documentation**
 
+
+1.6.0 (2016-10-12)
+++++++++++++++++++
+
+**New Odoo 10.0 image**
+
+Now, images for Odoo 10.0 and 9.0 are generated.
+The versioning is still the same, note that 9.0 and 10.0 share the final
+part of their version:
+
+- ``camptocamp/odoo-project:9.0-latest``
+- ``camptocamp/odoo-project:9.0-1.6.0``
+- ``camptocamp/odoo-project:10.0-latest``
+- ``camptocamp/odoo-project:10.0-1.6.0``
+
+Images are no longer built on hub.docker.com but tested on Travis and pushed
+when the test is green.
+The test consists of the example project being built and Odoo started.
+
+Images should be built using ``make`` now. The ``bin`` folder at the root of the
+repository is copied into the folders before the builds, so it is common to
+both versions.
+
+**Changes in the Odoo 9.0 image**
+
+A new command ``odoo`` has been added in the path and ``exec``-utes ``odoo.py``.
+This is to ensure the compatibility of the various scripts as ``odoo.py`` has
+been renamed to ``odoo`` in Odoo 10.0.
+
+**Libraries**
+
+* Anthem upgraded to 0.5.0 (Odoo 10.0 support)
+* Marabunta upgraded to 0.5.0 (Odoo 10.0 support)
+* XlsxWriter added in 9.0 as it becomes required in Odoo 10.0 and required for
+  the OCA QWeb accounting reports
+
+
 1.5.0 (2016-09-28)
 ++++++++++++++++++
 

@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/camptocamp/docker-odoo-project.svg?branch=master)](https://travis-ci.org/camptocamp/docker-odoo-project)
+
 # docker-odoo-project
 
 A base image for our Odoo projects.
