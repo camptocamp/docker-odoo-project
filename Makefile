@@ -44,11 +44,12 @@ test:
 	$(eval TMP := $(shell mktemp -u))
 	cp -r example $(TMP)
 	rm -rf $(TMP)/odoo/src
-	wget -nv -c -O /tmp/odoo.tar.gz $(ODOO_URL)
+	wget -nv -O /tmp/odoo.tar.gz $(ODOO_URL)
 	tar xfz /tmp/odoo.tar.gz -C $(TMP)/odoo/
 	mv $(TMP)/odoo/odoo-$(VERSION) $(TMP)/odoo/src
 	sed 's|FROM .*|FROM $(IMAGE_LATEST)|' -i $(TMP)/odoo/Dockerfile
 	cat $(TMP)/odoo/Dockerfile
 	cd $(TMP) && docker-compose run --rm -e LOCAL_USER_ID=$(shell id -u) odoo odoo --stop-after-init
+	cd $(TMP) && docker-compose down
 	rm -f /tmp/odoo.tar.gz
 	rm -rf $(TMP)

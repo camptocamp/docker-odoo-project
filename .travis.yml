@@ -9,7 +9,7 @@ env:
 
 script:
   - make VERSION=$VERSION build
-  - travis/test.sh
+  - make VERSION=$VERSION test
 
 after_success:
   - travis/publish.sh

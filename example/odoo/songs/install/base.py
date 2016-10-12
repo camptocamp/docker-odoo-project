@@ -24,6 +24,7 @@ def setup_company(ctx, req):
         'city': "There",
         'parent_id': company.id,
         'logo': logo,
+        'currency_id': ctx.env.ref('base.CHF').id
     }
     create_or_update(ctx, 'res.company', '__setup__.company_rainbow', values)
 
