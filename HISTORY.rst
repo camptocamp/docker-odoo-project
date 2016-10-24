@@ -32,6 +32,19 @@ Unreleased
 **Documentation**
 
 
+1.6.1 (2016-10-24)
+++++++++++++++++++
+
+**Bugfixes**
+
+* ``runtests`` was calling the wrong path for ``odoo`` in 9.0 version
+
+**Build**
+
+* Tests on Travis call ``runtests`` during the build to ensure the script works
+  as expected
+
+
 1.6.0 (2016-10-12)
 ++++++++++++++++++
 
