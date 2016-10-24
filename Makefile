@@ -50,6 +50,7 @@ test:
 	sed 's|FROM .*|FROM $(IMAGE_LATEST)|' -i $(TMP)/odoo/Dockerfile
 	cat $(TMP)/odoo/Dockerfile
 	cd $(TMP) && docker-compose run --rm -e LOCAL_USER_ID=$(shell id -u) odoo odoo --stop-after-init
+	cd $(TMP) && docker-compose run --rm -e LOCAL_USER_ID=$(shell id -u) odoo runtests
 	cd $(TMP) && docker-compose down
 	rm -f /tmp/odoo.tar.gz
 	rm -rf $(TMP)
