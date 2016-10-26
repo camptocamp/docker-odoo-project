@@ -86,7 +86,7 @@ ENV ODOO_VERSION=9.0 \
     OPENERP_SERVER=/opt/odoo/etc/odoo.cfg
 
 ENTRYPOINT ["./bin/docker-entrypoint.sh"]
-CMD ["./src/odoo.py"]
+CMD ["odoo"]
 
 # intermediate images should help speed up builds when only local-src, or only
 # external-src changes
