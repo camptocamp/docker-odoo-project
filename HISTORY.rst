@@ -31,6 +31,17 @@ Unreleased
 
 **Documentation**
 
+1.6.2 (2016-10-26)
+++++++++++++++++++
+
+**Bugfixes**
+
+* Set default command to 'odoo' for 9.0 as well
+* Run migration if the command is odoo.py too
+
+**Libraries**
+
+* Upgrade marabunta to 0.5.1
 
 1.6.1 (2016-10-24)
 ++++++++++++++++++
