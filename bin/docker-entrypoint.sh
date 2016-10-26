@@ -87,7 +87,7 @@ fi
 $BINDIR/wait_postgres.sh
 
 BASE_CMD=$(basename $1)
-if [ "$BASE_CMD" = "odoo" ]; then
+if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] ; then
 
   mkdir -p /data/odoo/{addons,filestore,sessions}
   chown -R odoo: /data/odoo
