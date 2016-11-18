@@ -12,4 +12,4 @@ MARABUNTA_DB_HOST=db \
   MARABUNTA_DB_USER=$DB_USER \
   MARABUNTA_DB_PASSWORD=$DB_PASSWORD \
   MARABUNTA_DB_PORT=$DB_PORT \
-  marabunta --migration-file $CONFIGFILE
+unbuffer marabunta --migration-file $CONFIGFILE
