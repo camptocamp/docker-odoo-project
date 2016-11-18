@@ -67,7 +67,7 @@ if [ ! -f "$CONFIGDIR/odoo.cfg" ]; then
   exit 1
 fi
 
-if [ -z "$(pip list | grep "/opt/odoo/src")" ]; then
+if [ -z "$(pip list --format=columns | grep "/opt/odoo/src")" ]; then
   # The build runs 'pip install -e' on the odoo src, which creates an
   # odoo.egg-info directory *inside /opt/odoo/src*. So when we run a container
   # with a volume shared with the host, we don't have this .egg-info (at least
