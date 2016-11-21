@@ -21,9 +21,23 @@ Release History
 Unreleased
 ++++++++++
 
+.. **Features and Improvements**
+
+.. **Bugfixes**
+
+.. **Libraries**
+
+.. **Build**
+
+.. **Documentation**
+
+
+1.7.0 (2016-11-21)
+++++++++++++++++++
+
 **Features and Improvements**
 
-* Export PG* environment variables for convenience, so in shell we can connect
+* Export PG* environment variables for convenience, so in a shell we can connect
   on the current database with:
 
   ``docker-compose run --rm odoo psql -l``
@@ -36,15 +50,16 @@ Unreleased
 
   ``sh -c 'PGPASSWORD=$DB_PASSWORD psql -h db -U $DB_USER -f path/to/file.sql $DB_NAME'``
 
+* Use unbuffer when calling marabunta, to have the output line by line
+
 **Bugfixes**
+
+* Change 'pip list' invocation to remove a deprecation warning
 
 **Libraries**
 
-* Upgrade marabunta to 0.6.0
+* Upgrade marabunta to 0.6.0 (https://github.com/camptocamp/marabunta/releases/tag/0.6.0)
 
-**Build**
-
-**Documentation**
 
 1.6.2 (2016-10-26)
 ++++++++++++++++++
