@@ -23,6 +23,19 @@ Unreleased
 
 **Features and Improvements**
 
+* Export PG* environment variables for convenience, so in shell we can connect
+  on the current database with:
+
+  ``docker-compose run --rm odoo psql -l``
+
+  And in Marabunta steps we can execute SQL files with:
+
+  ``psql -f path/to/file.sql``
+
+  Instead of:
+
+  ``sh -c 'PGPASSWORD=$DB_PASSWORD psql -h db -U $DB_USER -f path/to/file.sql $DB_NAME'``
+
 **Bugfixes**
 
 **Libraries**

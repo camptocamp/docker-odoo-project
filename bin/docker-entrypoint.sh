@@ -12,6 +12,12 @@ id -u odoo &> /dev/null || useradd --shell /bin/bash -u $USER_ID -o -c "" -m odo
 BINDIR=$(dirname $0)
 BASEDIR=$(readlink -f $BINDIR/..)
 
+export PGHOST=db
+export PGPORT=${DB_PORT}
+export PGUSER=${DB_USER}
+export PGPASSWORD=${DB_PASSWORD}
+export PGDATABASE=${DB_NAME}
+
 # Accepted values for DEMO: True / False
 # Odoo use a reverse boolean for the demo, which is not handy,
 # that's why we propose DEMO which exports WITHOUT_DEMO used in
