@@ -40,6 +40,8 @@ Unreleased
 
 **Libraries**
 
+* Upgrade marabunta to 0.6.0
+
 **Build**
 
 **Documentation**
