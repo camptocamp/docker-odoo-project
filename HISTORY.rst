@@ -21,11 +21,16 @@ Release History
 Unreleased
 ++++++++++
 
+Important bugfix in marabunta! The changes in the ``marabunta_version`` were
+never committed, so migration would run again.
+
 .. **Features and Improvements**
 
 .. **Bugfixes**
 
 .. **Libraries**
+
+* Upgrade Marabunta to 0.6.1
 
 .. **Build**
 
