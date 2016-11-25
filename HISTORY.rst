@@ -21,20 +21,26 @@ Release History
 Unreleased
 ++++++++++
 
+**Features and Improvements**
+
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+
+1.7.1 (2016-11-25)
+++++++++++++++++++
+
 Important bugfix in marabunta! The changes in the ``marabunta_version`` were
 never committed, so migration would run again.
 
-.. **Features and Improvements**
-
-.. **Bugfixes**
-
-.. **Libraries**
+**Libraries**
 
 * Upgrade Marabunta to 0.6.1
-
-.. **Build**
-
-.. **Documentation**
 
 
 1.7.0 (2016-11-21)
