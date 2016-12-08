@@ -100,7 +100,7 @@ if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] ; then
   chown -R odoo: /var/log/odoo
 
   if [ -z "$MIGRATE" -o "$MIGRATE" = True ]; then
-      gosu odoo bin/migrate
+      gosu odoo migrate
   fi
   exec gosu odoo "$@"
 fi

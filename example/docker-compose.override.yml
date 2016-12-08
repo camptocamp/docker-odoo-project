@@ -12,6 +12,7 @@ services:
       - 8069
       - 8072
     volumes:
+      - "data-odoo-pytest-cache:/opt/odoo/.cache"
       - "./odoo/src:/opt/odoo/src"
       - "./odoo/local-src:/opt/odoo/local-src"
       - "./odoo/external-src:/opt/odoo/external-src"
@@ -29,3 +30,8 @@ services:
   nginx:
     ports:
       - 80:80
+
+volumes:
+  # store pytest cache, allowing to use --lf or --ff (replay last or first failures)
+  data-odoo-pytest-cache:
+

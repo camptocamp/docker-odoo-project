@@ -102,3 +102,19 @@ ENV ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/external-src/server-tools,/opt/odo
 By setting this value in the `Dockerfile`, it will be integrated into the build and thus will be consistent across each environment.
 
 By the way, you can add other `ENV` variables in your project's `Dockerfile` if you want to customize the default values of some variables for a project.
+
+## Running tests
+
+Inside the container, a script `runtests` is used for running the tests on Travis.
+It will create a new database, find the local addons, install them and run their tests.
+This is not the day-to-day tool for running the tests as a developer.
+
+pytest is included and can be invoked when starting a container. It needs an existing database to run the tests:
+
+```
+docker-compose run --rm -e DB_NAME=dbtest -e MIGRATE=False -e DEMO=True odoo odoo --workers=0 --log-level=warn --stop-after-init -i my_addon
+docker-compose run --rm -e DB_NAME=dbtest odoo pytest -s odoo/local-src/my_addon/tests/test_feature.py::TestFeature::test_it_passes
+```
+
+It uses a plugin (https://github.com/camptocamp/pytest-odoo) that corrects the
+Odoo namespaces (`openerp.addons`/`odoo.addons`) when running the tests.

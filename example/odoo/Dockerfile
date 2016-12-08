@@ -9,7 +9,7 @@ RUN set -x; \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
 
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+COPY ./requirements.txt /opt/odoo/
+RUN cd /opt/odoo && pip install -r requirements.txt
 
 ENV ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/src/addons
