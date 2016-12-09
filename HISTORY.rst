@@ -21,7 +21,45 @@ Release History
 Unreleased
 ++++++++++
 
+**Warning**
+
+Compatibility break:
+the Workdir of the container will be ``/opt`` instead of ``/opt/odoo``.
+The reason is that it allows a more natural transition between the project from
+the outside of the container and from the inside. Meaning, if we run the following command:
+
+::
+
+  docker-compose run --rm -e DB_NAME=dbtest odoo pytest -s odoo/local-src/my_addon/tests/test_feature.py::TestFeature::test_it_passes
+
+The path ``odoo/local-src...`` is the path you see in your project (with auto-completion),
+but it is valid from inside the container too.
+
+The implication is that the projects' Dockerfile need to be adapted, for instance:
+
+::
+
+  COPY ./requirements.txt ./
+  RUN pip install -r requirements.txt
+  COPY ./importer.sh bin/
+
+becomes:
+
+::
+
+  COPY ./requirements.txt /opt/odoo/
+  RUN cd /opt/odoo && pip install -r requirements.txt
+
+  COPY ./importer.sh /opt/odoo/bin/
+
+
 **Features and Improvements**
+
+* Include pytest
+* Add testdb-gen, command that generates a test database to be used with pytest
+* Add testdb-update, command to update the addons of a database created with testdb-gen
+* run 'chown' on the volumes only if the user is different, should make the boot faster
+* run 'chown' for any command, not only when starting odoo, needed to run testdb-gen
 
 **Bugfixes**
 
