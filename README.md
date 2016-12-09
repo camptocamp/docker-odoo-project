@@ -112,7 +112,7 @@ This is not the day-to-day tool for running the tests as a developer.
 pytest is included and can be invoked when starting a container. It needs an existing database to run the tests:
 
 ```
-docker-compose run --rm -e DB_NAME=dbtest -e MIGRATE=False -e DEMO=True odoo odoo --workers=0 --log-level=warn --stop-after-init -i my_addon
+docker-compose run --rm -e DB_NAME=dbtest odoo testdb-gen -i my_addon
 docker-compose run --rm -e DB_NAME=dbtest odoo pytest -s odoo/local-src/my_addon/tests/test_feature.py::TestFeature::test_it_passes
 ```
 

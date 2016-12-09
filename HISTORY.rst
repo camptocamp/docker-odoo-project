@@ -56,6 +56,7 @@ becomes:
 **Features and Improvements**
 
 * Include pytest
+* Add testdb-gen, command that generates a test database to be used with pytest
 
 **Bugfixes**
 
