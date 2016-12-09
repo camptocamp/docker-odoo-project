@@ -58,6 +58,8 @@ becomes:
 * Include pytest
 * Add testdb-gen, command that generates a test database to be used with pytest
 * Add testdb-update, command to update the addons of a database created with testdb-gen
+* run 'chown' on the volumes only if the user is different, should make the boot faster
+* run 'chown' for any command, not only when starting odoo, needed to run testdb-gen
 
 **Bugfixes**
 

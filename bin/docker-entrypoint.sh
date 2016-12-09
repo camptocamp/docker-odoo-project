@@ -92,12 +92,16 @@ fi
 # Wait until postgres is up
 $BINDIR/wait_postgres.sh
 
+mkdir -p /data/odoo/{addons,filestore,sessions}
+if [ ! "$(stat -c '%U' /data/odoo)" = "odoo" ]; then
+  chown -R odoo: /data/odoo
+fi
+if [ ! "$(stat -c '%U' /var/log/odoo)" = "odoo" ]; then
+  chown -R odoo: /var/log/odoo
+fi
+
 BASE_CMD=$(basename $1)
 if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] ; then
-
-  mkdir -p /data/odoo/{addons,filestore,sessions}
-  chown -R odoo: /data/odoo
-  chown -R odoo: /var/log/odoo
 
   if [ -z "$MIGRATE" -o "$MIGRATE" = True ]; then
       gosu odoo migrate
