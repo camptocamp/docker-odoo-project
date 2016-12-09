@@ -107,14 +107,33 @@ By the way, you can add other `ENV` variables in your project's `Dockerfile` if 
 
 Inside the container, a script `runtests` is used for running the tests on Travis.
 It will create a new database, find the local addons, install them and run their tests.
+
+```
+docker-compose run --rm odoo runtests
+```
+
+
 This is not the day-to-day tool for running the tests as a developer.
 
 pytest is included and can be invoked when starting a container. It needs an existing database to run the tests:
 
 ```
-docker-compose run --rm -e DB_NAME=dbtest odoo testdb-gen -i my_addon
-docker-compose run --rm -e DB_NAME=dbtest odoo pytest -s odoo/local-src/my_addon/tests/test_feature.py::TestFeature::test_it_passes
+docker-compose run --rm -e DB_NAME=testdb odoo testdb-gen -i my_addon
+docker-compose run --rm -e DB_NAME=testdb odoo pytest -s odoo/local-src/my_addon/tests/test_feature.py::TestFeature::test_it_passes
 ```
 
-It uses a plugin (https://github.com/camptocamp/pytest-odoo) that corrects the
+When you make changes in the addon, you need to update it in Odoo before running the tests again. You can use:
+
+```
+docker-compose run --rm -e DB_NAME=testdb odoo testdb-update -u my_addon
+```
+
+When you are done, you can drop the database with:
+
+```
+docker-compose run --rm odoo dropdb testdb
+```
+
+
+Pytest uses a plugin (https://github.com/camptocamp/pytest-odoo) that corrects the
 Odoo namespaces (`openerp.addons`/`odoo.addons`) when running the tests.

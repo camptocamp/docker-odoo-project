@@ -57,6 +57,7 @@ becomes:
 
 * Include pytest
 * Add testdb-gen, command that generates a test database to be used with pytest
+* Add testdb-update, command to update the addons of a database created with testdb-gen
 
 **Bugfixes**
 
