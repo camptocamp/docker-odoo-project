@@ -63,6 +63,8 @@ becomes:
 
 **Bugfixes**
 
+* Upgrade marabunta to 0.6.2 (https://github.com/camptocamp/marabunta/releases/tag/0.6.2)
+
 **Libraries**
 
 **Build**
