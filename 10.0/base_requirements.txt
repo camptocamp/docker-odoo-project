@@ -53,7 +53,7 @@ xlwt==0.7.5
 pydot==1.0.2
 
 # Migration tools
-marabunta==0.6.2
+marabunta==0.6.3
 anthem==0.5.0
 
 # test / lint
