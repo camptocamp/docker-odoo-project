@@ -67,6 +67,7 @@ COPY ./src_requirements.txt ./
 COPY ./bin bin
 COPY ./bin_compat bin_compat
 COPY ./etc etc
+COPY ./start-entrypoint.d start-entrypoint.d
 COPY ./MANIFEST.in ./
 
 VOLUME ["/data/odoo", "/var/log/odoo"]

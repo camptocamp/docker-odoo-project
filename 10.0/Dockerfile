@@ -66,6 +66,7 @@ RUN curl https://github.com/jwilder/dockerize/releases/download/v0.2.0/dockerize
 COPY ./src_requirements.txt ./
 COPY ./bin bin
 COPY ./etc etc
+COPY ./start-entrypoint.d start-entrypoint.d
 COPY ./MANIFEST.in ./
 
 VOLUME ["/data/odoo", "/var/log/odoo"]
