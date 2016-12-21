@@ -31,6 +31,12 @@ Ports 8069 and 8072 are exposed by default.
 
 ## Environment variables
 
+### ODOO_BASE_URL
+
+If this variable is set, the `ir.config_parameter` `web.base.url`
+will be automatically set to this domain when the container
+starts. `web.base.url.freeze` will be set to `True`.
+
 ### MIGRATE
 
 `MIGRATE` can be `True` or `False` and determines whether migration tool
@@ -137,3 +143,16 @@ docker-compose run --rm odoo dropdb testdb
 
 Pytest uses a plugin (https://github.com/camptocamp/pytest-odoo) that corrects the
 Odoo namespaces (`openerp.addons`/`odoo.addons`) when running the tests.
+
+## Start entrypoint
+
+Any script in any language placed in `/opt/odoo/start-entrypoint.d` will be
+executed just between the migration and the start of Odoo. The order of
+execution of the files is determined by the `run-parts` 's rules.
+
+The database is guaranteed to exist at this point so you can run queries on it.
+The scripts are run only if the command is `odoo`/`odoo.py`.
+
+You can add your own scripts in this directory. They must be named something
+like `010_abc` (`^[a-zA-Z0-9_-]+$`) and must have no extension (or it would not
+be picked up by `run-parts`).

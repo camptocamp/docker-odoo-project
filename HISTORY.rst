@@ -32,7 +32,7 @@ the outside of the container and from the inside. Meaning, if we run the followi
 
   docker-compose run --rm -e DB_NAME=dbtest odoo pytest -s odoo/local-src/my_addon/tests/test_feature.py::TestFeature::test_it_passes
 
-The path ``odoo/local-src...`` is the path you see in your project (with auto-completion),
+The path ``odoo/local-src...`` is the path you see in your local project (with auto-completion),
 but it is valid from inside the container too.
 
 The implication is that the projects' Dockerfile need to be adapted, for instance:
@@ -58,8 +58,13 @@ becomes:
 * Include pytest
 * Add testdb-gen, command that generates a test database to be used with pytest
 * Add testdb-update, command to update the addons of a database created with testdb-gen
-* run 'chown' on the volumes only if the user is different, should make the boot faster
-* run 'chown' for any command, not only when starting odoo, needed to run testdb-gen
+* 'chown' is executed on the volumes only if the user is different, should make the boot faster
+* 'chown' is executed for any command, not only when starting odoo, needed to run testdb-gen
+* Customizable ``web.base.url`` with environment variables ``ODOO_BASE_URL`` or
+  ``DOMAIN_NAME``
+* Allow to run custom scripts between ``migrate`` and the execution of
+  ``odoo``, by placing them in ``/opt/odoo/start-entrypoint.d`` (respecting
+  ``run-parts`` naming rules)
 
 **Bugfixes**
 

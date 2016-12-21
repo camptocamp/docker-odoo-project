@@ -106,6 +106,12 @@ if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] ; then
   if [ -z "$MIGRATE" -o "$MIGRATE" = True ]; then
       gosu odoo migrate
   fi
+
+  START_ENTRYPOINT_DIR=/opt/odoo/start-entrypoint.d
+  if [ -d "$START_ENTRYPOINT_DIR" ]; then
+    /bin/run-parts --verbose "$START_ENTRYPOINT_DIR"
+  fi
+
   exec gosu odoo "$@"
 fi
 

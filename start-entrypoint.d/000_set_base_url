@@ -1,0 +1,32 @@
+#!/bin/bash
+
+DOMAIN=${ODOO_BASE_URL:-${DOMAIN_NAME}}
+
+if [ -n "$DOMAIN" ]; then
+  echo "Setting Base URL to domain ${DOMAIN}"
+  psql --quiet -h db << EOF
+
+  WITH update_param AS (
+    UPDATE ir_config_parameter
+    SET value = '${DOMAIN}'
+    WHERE key = 'web.base.url'
+    RETURNING *
+  )
+  INSERT INTO ir_config_parameter
+  (value, key, create_uid, write_uid, create_date, write_date)
+  SELECT '${DOMAIN}', 'web.base.url', 1, 1, now(), now()
+  WHERE NOT EXISTS (SELECT * FROM update_param);
+
+  WITH update_param AS (
+    UPDATE ir_config_parameter
+    SET value = 'True'
+    WHERE key = 'web.base.url.freeze'
+    RETURNING *
+  )
+  INSERT INTO ir_config_parameter
+  (value, key, create_uid, write_uid, create_date, write_date)
+  SELECT 'True', 'web.base.url.freeze', 1, 1, now(), now()
+  WHERE NOT EXISTS (SELECT * FROM update_param);
+
+EOF
+fi
