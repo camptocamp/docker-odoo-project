@@ -21,10 +21,25 @@ Release History
 Unreleased
 ++++++++++
 
+**Features and Improvements**
+
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+
+2.0.0 (2016-12-22)
+++++++++++++++++++
+
 **Warning**
 
-Compatibility break:
-the Workdir of the container will be ``/opt`` instead of ``/opt/odoo``.
+This release might break compatibility with the images using it, it needs some
+little modifications in their ``Dockerfile``.
+The Workdir of the container will be ``/opt`` instead of ``/opt/odoo``.
 The reason is that it allows a more natural transition between the project from
 the outside of the container and from the inside. Meaning, if we run the following command:
 
@@ -66,15 +81,9 @@ becomes:
   ``odoo``, by placing them in ``/opt/odoo/start-entrypoint.d`` (respecting
   ``run-parts`` naming rules)
 
-**Bugfixes**
-
-* Upgrade marabunta to 0.6.3 (https://github.com/camptocamp/marabunta/releases/tag/0.6.3)
-
 **Libraries**
 
-**Build**
-
-**Documentation**
+* Upgrade marabunta to 0.6.3 (https://github.com/camptocamp/marabunta/releases/tag/0.6.3)
 
 
 1.7.1 (2016-11-25)
