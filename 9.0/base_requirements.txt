@@ -43,6 +43,7 @@ vobject==0.8.2
 wsgiref==0.1.2
 XlsxWriter==0.7.7
 xlwt==0.7.5
+XlsxWriter==0.9.3
 # version in debian has problems
 pydot==1.0.2
 suds-jurko==0.6
