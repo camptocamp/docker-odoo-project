@@ -2,11 +2,11 @@ FROM debian:jessie
 MAINTAINER Camptocamp
 
 # create the working directory and a place to set the logs (if wanted)
-RUN mkdir -p /opt/odoo /var/log/odoo
+RUN mkdir -p /opt/odoo/ /var/log/odoo
 
 WORKDIR "/opt/odoo"
+COPY ./requirements/ ./requirements/
 
-COPY ./base_requirements.txt ./
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
@@ -46,7 +46,7 @@ RUN set -x; \
         && echo '40e8b906de658a2221b15e4e8cd82565a47d7ee8 wkhtmltox.deb' | sha1sum -c - \
         && dpkg --force-depends -i wkhtmltox.deb \
         && apt-get -y install -f --no-install-recommends \
-        && pip install -U pip && pip install -r base_requirements.txt \
+        && pip install -U pip && pip install -r requirements/base_requirements.txt \
         && apt-get remove -y build-essential python-dev libfreetype6-dev libpq-dev libxml2-dev libxslt1-dev \
                              libsasl2-dev libldap2-dev libssl-dev libjpeg-dev zlib1g-dev libfreetype6-dev \
         && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false npm \
@@ -63,7 +63,6 @@ RUN gpg --keyserver pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4
 # grab dockerize for generation of the configuration file and wait on postgres
 RUN curl https://github.com/jwilder/dockerize/releases/download/v0.2.0/dockerize-linux-amd64-v0.2.0.tar.gz -L | tar xz -C /usr/local/bin
 
-COPY ./src_requirements.txt ./
 COPY ./bin bin
 COPY ./bin_compat bin_compat
 COPY ./etc etc
@@ -104,4 +103,4 @@ ONBUILD COPY ./setup.py /opt/odoo/
 ONBUILD COPY ./VERSION /opt/odoo/
 ONBUILD COPY ./migration.yml /opt/odoo/
 # need to be called at the end, because it installs . and src
-ONBUILD RUN cd /opt/odoo && pip install -r src_requirements.txt
+ONBUILD RUN cd /opt/odoo && pip install -r requirements/src_requirements.txt && find . -maxdepth 1 -name "*requirements.txt" -exec pip install -r {} \;
