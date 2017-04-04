@@ -2,10 +2,11 @@ FROM debian:jessie
 MAINTAINER Camptocamp
 
 # create the working directory and a place to set the logs (if wanted)
-RUN mkdir -p /opt/odoo/requirements /var/log/odoo
+RUN mkdir -p /opt/odoo/ /var/log/odoo
 
 WORKDIR "/opt/odoo"
-COPY ./requirements/*requirements.txt ./requirements/
+COPY ./requirements/ ./requirements/
+
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
@@ -101,4 +102,4 @@ ONBUILD COPY ./setup.py /opt/odoo/
 ONBUILD COPY ./VERSION /opt/odoo/
 ONBUILD COPY ./migration.yml /opt/odoo/
 # need to be called at the end, because it installs . and src
-ONBUILD RUN cd /opt/odoo && find . -maxdepth 1 -name "*requirements.txt" -exec pip install -r {} \;
+ONBUILD RUN cd /opt/odoo && pip install -r requirements/src_requirements.txt && find . -maxdepth 1 -name "*requirements.txt" -exec pip install -r {} \;
