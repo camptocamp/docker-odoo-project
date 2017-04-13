@@ -28,6 +28,7 @@ Unreleased
 **Libraries**
 
 * Upgrade Marabunta to 0.6.0
+* Upgrade Dockerize to 0.4.0
 
 **Build**
 

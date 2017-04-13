@@ -61,7 +61,7 @@ RUN gpg --keyserver pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4
         && chmod +x /usr/local/bin/gosu
 
 # grab dockerize for generation of the configuration file and wait on postgres
-RUN curl https://github.com/jwilder/dockerize/releases/download/v0.2.0/dockerize-linux-amd64-v0.2.0.tar.gz -L | tar xz -C /usr/local/bin
+RUN curl https://github.com/jwilder/dockerize/releases/download/v0.4.0/dockerize-linux-amd64-v0.4.0.tar.gz -L | tar xz -C /usr/local/bin
 
 COPY ./src_requirements.txt ./
 COPY ./bin bin
