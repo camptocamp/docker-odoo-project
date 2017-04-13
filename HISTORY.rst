@@ -23,6 +23,8 @@ Unreleased
 
 **Features and Improvements**
 
+* Possibility to change the hostname for database with ``$DB_HOST`` (default is ``db``)
+
 **Bugfixes**
 
 **Libraries**

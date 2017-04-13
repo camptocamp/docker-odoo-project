@@ -22,7 +22,7 @@ $ make VERSION=9.0  # generate image camptocamp/odoo-project:9.0-latest
 
 ## Configuration
 
-The host for the database is `db`.
+The host for the database is in `$DB_HOST` (`db` by default).
 
 A volume `/data/odoo` is declared, which is expected to contain Odoo's filestore
 (this path is set in `openerp.cfg`).

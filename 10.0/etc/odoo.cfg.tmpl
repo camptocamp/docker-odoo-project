@@ -2,7 +2,7 @@
 addons_path = {{ .Env.ADDONS_PATH }}
 data_dir = /data/odoo
 auto_reload = False
-db_host = db
+db_host = {{ .Env.DB_HOST }}
 db_name = {{ .Env.DB_NAME }}
 db_user = {{ .Env.DB_USER }}
 db_password = {{ .Env.DB_PASSWORD }}

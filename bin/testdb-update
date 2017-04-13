@@ -9,7 +9,7 @@
 
 set -e
 
-if ! psql -lqtA -h db | grep -q "^$DB_NAME|"; then
+if ! psql -lqtA -h ${DB_HOST} | grep -q "^$DB_NAME|"; then
   echo "database ${DB_NAME} does not exist"
   exit 1
 fi

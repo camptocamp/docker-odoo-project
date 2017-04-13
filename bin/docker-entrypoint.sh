@@ -12,7 +12,7 @@ id -u odoo &> /dev/null || useradd --shell /bin/bash -u $USER_ID -o -c "" -m odo
 BINDIR=$(dirname $0)
 BASEDIR=$(readlink -f $BINDIR/..)
 
-export PGHOST=db
+export PGHOST=${DB_HOST}
 export PGPORT=${DB_PORT}
 export PGUSER=${DB_USER}
 export PGPASSWORD=${DB_PASSWORD}

@@ -5,7 +5,7 @@ migration:
     - version: 9.0.0
       operations:
         pre:
-          - "sh -c 'PGPASSWORD=$DB_PASSWORD psql -h db -U $DB_USER -c \"CREATE EXTENSION pg_trgm;\" $DB_NAME'"
+          - "sh -c 'psql -c \"CREATE EXTENSION pg_trgm;\"'"
         post:
           - anthem songs.install.base::main
       addons:

@@ -9,12 +9,12 @@
 
 set -e
 
-if psql -lqtA -h db | grep -q "^$DB_NAME|"; then
+if psql -lqtA -h ${DB_HOST} | grep -q "^$DB_NAME|"; then
   echo "database ${DB_NAME} already exists"
   exit 1
 fi
 
 echo "creating database ${DB_NAME}"
-createdb -h db -O $DB_USER ${DB_NAME}
+createdb -h ${DB_HOST} -O ${DB_USER} ${DB_NAME}
 gosu odoo odoo --stop-after-init --workers=0 --log-level=warn --without-demo="" "$@"
 echo "done"
