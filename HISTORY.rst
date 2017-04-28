@@ -41,6 +41,8 @@ Unreleased
 * Set the ``list_db`` option to ``False`` by default.  This option can be
   unsafe and there is no reason to activate it as the image is designed to run
   on one database by default.
+* New option in configuration file replacing ``--load``: ``server_wide_modules`` can
+  be configured with the environment variable ``SERVER_WIDE_MODULES``
 
 **Libraries**
 
