@@ -57,7 +57,7 @@ pydot==1.0.2
 
 # Migration tools
 marabunta==0.6.3
-anthem==0.6.0
+anthem==0.7.0
 
 # test / lint
 flake8
