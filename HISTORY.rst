@@ -23,18 +23,31 @@ Unreleased
 
 **Features and Improvements**
 
-* Possibility to change the hostname for database with ``$DB_HOST`` (default is ``db``)
-
 **Bugfixes**
 
 **Libraries**
 
-* Upgrade Marabunta to 0.7.0
-* Upgrade Dockerize to 0.4.0
-
 **Build**
 
 **Documentation**
+
+
+2.1.0 (2017-04-28)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Possibility to change the hostname for database with ``$DB_HOST`` (default is ``db``)
+* Set the ``list_db`` option to ``False`` by default.  This option can be
+  unsafe and there is no reason to activate it as the image is designed to run
+  on one database by default.
+
+**Libraries**
+
+* Upgrade ``anthem`` to 0.7.0
+* Upgrade ``dockerize`` to 0.4.0
+* Add ``html2text`` (used in ``mail`` module)
+* Add ``odfpy`` and ``xlrd`` for xls/xlsx/ods imports
 
 
 2.0.0 (2016-12-22)
