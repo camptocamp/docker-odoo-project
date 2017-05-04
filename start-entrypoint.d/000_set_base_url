@@ -4,7 +4,7 @@ DOMAIN=${ODOO_BASE_URL:-${DOMAIN_NAME}}
 
 if [ -n "$DOMAIN" ]; then
   echo "Setting Base URL to domain ${DOMAIN}"
-  psql --quiet -h db << EOF
+  psql --quiet << EOF
 
   WITH update_param AS (
     UPDATE ir_config_parameter

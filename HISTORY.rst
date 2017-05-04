@@ -25,6 +25,9 @@ Unreleased
 
 **Bugfixes**
 
+* Remove a remaining occurence of hardcoded 'db' host in the start-entrypoint
+  that set the base URL.
+
 **Libraries**
 
 **Build**
