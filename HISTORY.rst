@@ -25,14 +25,20 @@ Unreleased
 
 **Bugfixes**
 
-* Remove a remaining occurence of hardcoded 'db' host in the start-entrypoint
-  that set the base URL.
-
 **Libraries**
 
 **Build**
 
 **Documentation**
+
+
+2.1.1 (2017-05-04)
+++++++++++++++++++
+
+**Bugfixes**
+
+* Remove a remaining occurence of hardcoded 'db' host in the start-entrypoint
+  that set the base URL.
 
 
 2.1.0 (2017-04-28)
