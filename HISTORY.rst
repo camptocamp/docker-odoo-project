@@ -23,6 +23,10 @@ Unreleased
 
 **Features and Improvements**
 
+* Upgrade postgres-client to 9.6
+* Add before-migrate-entrypoint.d, same principle than the start-entrypoint.d
+  but run before the migration
+
 **Bugfixes**
 
 **Libraries**

@@ -10,7 +10,8 @@ COPY ./base_requirements.txt ./
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
-        apt-get update \
+        sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
+        && apt-get update \
         && apt-get install -y --no-install-recommends \
             antiword \
             ca-certificates \
@@ -22,7 +23,6 @@ RUN set -x; \
             node-clean-css \
             node-less \
             poppler-utils \
-            postgresql-client \
             python \
             python-libxslt1 \
             python-pip \
@@ -32,7 +32,6 @@ RUN set -x; \
             build-essential \
             python-dev \
             libfreetype6-dev \
-            libpq-dev \
             libxml2-dev \
             libxslt1-dev \
             libsasl2-dev \
@@ -42,6 +41,11 @@ RUN set -x; \
             zlib1g-dev \
             libfreetype6-dev \
             tcl expect \
+        && curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+        && apt-get update \
+        && apt-get install -y --no-install-recommends \
+            postgresql-client \
+            libpq-dev \
         && curl -o wkhtmltox.deb -SL http://nightly.odoo.com/extra/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb \
         && echo '40e8b906de658a2221b15e4e8cd82565a47d7ee8 wkhtmltox.deb' | sha1sum -c - \
         && dpkg --force-depends -i wkhtmltox.deb \
