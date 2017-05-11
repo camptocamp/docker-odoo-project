@@ -103,6 +103,11 @@ fi
 BASE_CMD=$(basename $1)
 if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] ; then
 
+  BEFORE_MIGRATE_ENTRYPOINT_DIR=/opt/odoo/before-migrate-entrypoint.d
+  if [ -d "$BEFORE_MIGRATE_ENTRYPOINT_DIR" ]; then
+    /bin/run-parts --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
+  fi
+
   if [ -z "$MIGRATE" -o "$MIGRATE" = True ]; then
       gosu odoo migrate
   fi

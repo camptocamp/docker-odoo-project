@@ -66,6 +66,7 @@ RUN curl https://github.com/jwilder/dockerize/releases/download/v0.4.0/dockerize
 COPY ./src_requirements.txt ./
 COPY ./bin bin
 COPY ./etc etc
+COPY ./before-migrate-entrypoint.d before-migrate-entrypoint.d
 COPY ./start-entrypoint.d start-entrypoint.d
 COPY ./MANIFEST.in ./
 

@@ -147,12 +147,17 @@ Odoo namespaces (`openerp.addons`/`odoo.addons`) when running the tests.
 ## Start entrypoint
 
 Any script in any language placed in `/opt/odoo/start-entrypoint.d` will be
-executed just between the migration and the start of Odoo. The order of
-execution of the files is determined by the `run-parts` 's rules.
+executed just between the migration and the start of Odoo.
+Similarly, scripts placed in `/opt/odoo/before-migrate-entrypoint.d` will be
+executed just before the migration.
 
-The database is guaranteed to exist at this point so you can run queries on it.
+The order of execution of the files is determined by the `run-parts` 's rules.
+You can add your own scripts in those directories. They must be named
+something like `010_abc` (`^[a-zA-Z0-9_-]+$`) and must have no extension (or
+it would not be picked up by `run-parts`).
+
+Important: The database is guaranteed to exist when `start-entrypoint` are
+run, but, it might not exist when `before-migrate-entrypoint` scripts are run,
+so you must take that in account when writing them.
+
 The scripts are run only if the command is `odoo`/`odoo.py`.
-
-You can add your own scripts in this directory. They must be named something
-like `010_abc` (`^[a-zA-Z0-9_-]+$`) and must have no extension (or it would not
-be picked up by `run-parts`).
