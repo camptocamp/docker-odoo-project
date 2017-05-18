@@ -28,7 +28,7 @@ services:
 
   # can be useful for dev when longpolling is required
   nginx:
-    image: camptocamp/odoo-nginx:9.0
+    image: camptocamp/odoo-nginx:9.0-1.1.0
     depends_on:
       - odoo
 
