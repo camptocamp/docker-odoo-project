@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOMAIN=${ODOO_BASE_URL:-${DOMAIN_NAME}}
+DOMAIN="${ODOO_BASE_URL}"
 
 if [ -n "$DOMAIN" ]; then
   echo "Setting Base URL to domain ${DOMAIN}"
