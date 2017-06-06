@@ -89,6 +89,7 @@ ENV ODOO_VERSION=9.0 \
     DB_NAME=odoodb \
     DB_USER=odoo \
     DB_PASSWORD=odoo \
+    ODOO_BASE_URL=http://localhost:8069 \
     DEMO=False \
     ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/src/addons \
     OPENERP_SERVER=/opt/odoo/etc/odoo.cfg

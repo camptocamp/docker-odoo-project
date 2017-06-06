@@ -23,6 +23,9 @@ Unreleased
 
 **Features and Improvements**
 
+* Deprecate ``DOMAIN_NAME`` environment variable. Only ``ODOO_BASE_URL`` is now used.
+* Set a default value for ``ODOO_BASE_URL`` to ``http://localhost:8069``.
+
 **Bugfixes**
 
 **Libraries**

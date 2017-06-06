@@ -33,9 +33,10 @@ Ports 8069 and 8072 are exposed by default.
 
 ### ODOO_BASE_URL
 
-If this variable is set, the `ir.config_parameter` `web.base.url`
-will be automatically set to this domain when the container
-starts. `web.base.url.freeze` will be set to `True`.
+The `ir.config_parameter` `web.base.url` will be automatically set to this
+domain when the container starts. `web.base.url.freeze` will be set to `True`.
+Default url is `http://localhost:8069`. If `ODOO_BASE_URL` is set to an empty
+value, the configuration parameters will be left unchanged.
 
 ### MIGRATE
 
