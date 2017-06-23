@@ -21,6 +21,7 @@ html5lib==0.999
 lxml==3.4.1
 mock==1.0.1
 odfpy==1.3.4
+ofxparse==0.16
 passlib==1.6.2
 psutil==2.1.1
 psycopg2==2.5.4

@@ -30,6 +30,8 @@ Unreleased
 
 **Libraries**
 
+* Add ``ofxparse`` as found in odoo's requirements
+
 **Build**
 
 **Documentation**
