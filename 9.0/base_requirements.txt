@@ -57,4 +57,5 @@ anthem==0.7.0
 flake8
 pytest
 pytest-odoo
+pytest-cov
 watchdog
