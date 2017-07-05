@@ -23,18 +23,29 @@ Unreleased
 
 **Features and Improvements**
 
-* Deprecate ``DOMAIN_NAME`` environment variable. Only ``ODOO_BASE_URL`` is now used.
-* Set a default value for ``ODOO_BASE_URL`` to ``http://localhost:8069``.
-
 **Bugfixes**
 
 **Libraries**
 
-* Add ``ofxparse`` as found in odoo's requirements
-
 **Build**
 
 **Documentation**
+
+
+2.3.0 (2017-07-05)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Remove ``DOMAIN_NAME`` environment variable. Only ``ODOO_BASE_URL`` is now used.
+* Set a default value for ``ODOO_BASE_URL`` to ``http://localhost:8069``.
+
+**Libraries**
+
+* Add ``ofxparse`` as found in odoo's requirements
+* Upgrade ``psycopg2`` to 2.7.1
+* Add ``pytest-cov`` for tests
+* PyChart is no longer installed from gna.org (down) but from pypi
 
 
 2.2.0 (2017-05-18)
