@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 MAINTAINER Camptocamp
 
 # create the working directory and a place to set the logs (if wanted)
