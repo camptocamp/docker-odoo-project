@@ -27,6 +27,8 @@ Unreleased
 
 **Libraries**
 
+* Upgrade ``anthem`` to 0.9.0
+
 **Build**
 
 **Documentation**
