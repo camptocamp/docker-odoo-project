@@ -23,7 +23,7 @@ export PGDATABASE=${DB_NAME}
 # that's why we propose DEMO which exports WITHOUT_DEMO used in
 # openerp.cfg.tmpl
 if [ -z "$DEMO" ]; then
-  $DEMO=False
+  DEMO=False
 fi
 case "$(echo "${DEMO}" | tr '[:upper:]' '[:lower:]' )" in
   "false")
