@@ -23,13 +23,18 @@ Unreleased
 
 **Features and Improvements**
 
+* Now, a maintenance page is published on the same port than Odoo during
+  migration by marabunta (need anthem >= 0.10.0 and marabunta >= 0.7.2)
+
 **Bugfixes**
 
 **Libraries**
 
-* Upgrade ``anthem`` to 0.9.0
+* Upgrade ``anthem`` to 0.10.0
 
 **Build**
+
+* Upgrade ``marabunta`` to 0.7.2, includes a maintenance page during the upgrade!
 
 **Documentation**
 
