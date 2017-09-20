@@ -41,6 +41,9 @@ Unreleased
 * Upgrade ``marabunta`` to 0.7.2, includes a maintenance page during the upgrade!
 
 **Documentation**
+* Upgrade ``psycopg2`` to 2.7.3.1 with several bugfixes notably "Fixed
+  inconsistent state in externally closed connections" in
+  http://initd.org/psycopg/articles/2017/07/22/psycopg-272-released/
 
 
 2.3.0 (2017-07-05)
