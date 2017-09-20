@@ -3,6 +3,13 @@
 DOMAIN="${ODOO_BASE_URL}"
 
 if [ -n "$DOMAIN" ]; then
+
+  if [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" )" != '1' ]
+  then
+      echo "Database does not exist, ignoring script"
+      exit 0
+  fi
+
   echo "Setting Base URL to domain ${DOMAIN}"
   psql --quiet << EOF
 

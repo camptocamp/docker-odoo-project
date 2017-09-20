@@ -157,8 +157,16 @@ You can add your own scripts in those directories. They must be named
 something like `010_abc` (`^[a-zA-Z0-9_-]+$`) and must have no extension (or
 it would not be picked up by `run-parts`).
 
-Important: The database is guaranteed to exist when `start-entrypoint` are
-run, but, it might not exist when `before-migrate-entrypoint` scripts are run,
-so you must take that in account when writing them.
+Important: The database is guaranteed to exist when the scripts are run, so you
+must take that in account when writing them. Usually you'll want to use such
+check:
+
+```
+  if [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" )" != '1' ]
+  then
+      echo "Database does not exist, ignoring script"
+      exit 0
+  fi
+```
 
 The scripts are run only if the command is `odoo`/`odoo.py`.

@@ -28,6 +28,10 @@ Unreleased
 
 **Bugfixes**
 
+* The ``start-entrypoint./000_base_url`` script might fail when we don't run
+  marabunta migration and the database does not exist, ignore the script in
+  such case.
+
 **Libraries**
 
 * Upgrade ``anthem`` to 0.10.0
