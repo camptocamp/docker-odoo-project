@@ -23,24 +23,35 @@ Unreleased
 
 **Features and Improvements**
 
-* Now, a maintenance page is published on the same port than Odoo during
-  migration by marabunta (need anthem >= 0.10.0 and marabunta >= 0.7.2)
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+
+2.4.0 (2017-09-20)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* A maintenance page is published on the same port than Odoo (8069) during the
+  marabunta migration (need anthem >= 0.10.0 and marabunta >= 0.7.2)
+* Support installation of Odoo addons packaged as Python wheels
 
 **Bugfixes**
 
 * The ``start-entrypoint./000_base_url`` script might fail when we don't run
-  marabunta migration and the database does not exist, ignore the script in
-  such case.
+  marabunta migration and the database does not exist, the script is now
+  ignored in such case.
 
 **Libraries**
 
 * Upgrade ``anthem`` to 0.10.0
-
-**Build**
-
 * Upgrade ``marabunta`` to 0.7.2, includes a maintenance page during the upgrade!
-
-**Documentation**
+* Add ``odoo-autodiscover>=2.0.0b1`` to support Odoo addons packaged as wheels
 * Upgrade ``psycopg2`` to 2.7.3.1 with several bugfixes notably "Fixed
   inconsistent state in externally closed connections" in
   http://initd.org/psycopg/articles/2017/07/22/psycopg-272-released/
