@@ -6,6 +6,9 @@ endif
 IMAGE=$(NAME):$(VERSION)
 IMAGE_LATEST=$(IMAGE)-latest
 ODOO_URL=https://github.com/odoo/odoo/archive/$(VERSION).tar.gz
+ifeq (VERSION, "11.0")
+	ODOO_URL=https://github.com/odoo/odoo/archive/saas-18.tar.gz
+endif
 
 all: build
 
