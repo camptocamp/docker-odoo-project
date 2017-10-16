@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:strech
 MAINTAINER Camptocamp
 
 # create the working directory and a place to set the logs (if wanted)
@@ -46,7 +46,7 @@ RUN set -x; \
         && apt-get install -y --no-install-recommends \
             postgresql-client \
             libpq-dev \
-        && curl -o wkhtmltox.deb -SL http://nightly.odoo.com/extra/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb \
+        && curl -o wkhtmltox.tar.xz -SL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz \
         && echo '40e8b906de658a2221b15e4e8cd82565a47d7ee8 wkhtmltox.deb' | sha1sum -c - \
         && dpkg --force-depends -i wkhtmltox.deb \
         && apt-get -y install -f --no-install-recommends \
@@ -79,7 +79,7 @@ VOLUME ["/data/odoo", "/var/log/odoo"]
 # Expose Odoo services
 EXPOSE 8069 8072
 
-ENV ODOO_VERSION=10.0 \
+ENV ODOO_VERSION=11.0 \
     PATH=/opt/odoo/bin:$PATH \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
