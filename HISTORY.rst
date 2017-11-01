@@ -29,10 +29,16 @@ Unreleased
 
 **Build**
 
+**Documentation**
+
+
+2.4.1 (2017-11-01)
+++++++++++++++++++
+
+**Libraries**
+
 * Upgrade ``marabunta`` to 0.7.3, includes a bugfix for postgresql passwords
   with special chars
-
-**Documentation**
 
 
 2.4.0 (2017-09-20)
