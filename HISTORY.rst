@@ -27,6 +27,8 @@ Unreleased
 
 **Libraries**
 
+* Upgrade pip to the development version, to prevent unnecessary upgrades of libs
+
 **Build**
 
 **Documentation**
