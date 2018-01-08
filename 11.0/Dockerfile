@@ -22,6 +22,7 @@ RUN set -x; \
             antiword \
             ca-certificates \
             curl \
+            dirmngr \
             ghostscript \
             graphviz \
             gnupg2 \
@@ -37,10 +38,6 @@ RUN set -x; \
             xfonts-75dpi \
             xfonts-base \
             tcl expect \
-            # Added only for testing, can be removed later
-            git \
-            ssh \
-            dirmngr \
             # build packages to clean after the pip install
             build-essential \
             gcc \

@@ -30,8 +30,8 @@ Release History
 **Libraries**
 
 * Upgrade pip to the development version, to prevent unnecessary upgrades of libs
-* Upgrade ``anthem`` to 0.??
-* Upgrade ``marabunta`` to 0.??
+* Upgrade ``anthem`` to 0.11.0
+* Upgrade ``marabunta`` to 0.8.0
 
 **Build**
 
