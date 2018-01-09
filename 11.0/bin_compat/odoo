@@ -1,0 +1,9 @@
+#!/bin/bash
+# Compatibility with Odoo 11
+#
+# forcing to use python2 to be compatible with old versions and have it rapidly
+# done for Fred's tests
+
+set -e
+
+exec /opt/odoo "$@"

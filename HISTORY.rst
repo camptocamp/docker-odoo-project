@@ -23,9 +23,13 @@ Unreleased
 
 **Features and Improvements**
 
+* Base for odoo11 using: python3, debian stretch
+
 **Bugfixes**
 
 **Libraries**
+
+* Updated libraries for V11
 
 **Build**
 
