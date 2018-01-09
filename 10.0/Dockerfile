@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 MAINTAINER Camptocamp
 
 # create the working directory and a place to set the logs (if wanted)
@@ -10,7 +10,7 @@ COPY ./base_requirements.txt ./
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
-        sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
+        sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
         && apt-get update \
         && apt-get install -y --no-install-recommends \
             antiword \
@@ -41,6 +41,7 @@ RUN set -x; \
             zlib1g-dev \
             libfreetype6-dev \
             tcl expect \
+            gnupg2 \
         && curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
         && apt-get update \
         && apt-get install -y --no-install-recommends \
@@ -52,7 +53,7 @@ RUN set -x; \
         && apt-get -y install -f --no-install-recommends \
         && pip install -U pip && pip install -r base_requirements.txt \
         && apt-get remove -y build-essential python-dev libfreetype6-dev libpq-dev libxml2-dev libxslt1-dev \
-                             libsasl2-dev libldap2-dev libssl-dev libjpeg-dev zlib1g-dev libfreetype6-dev \
+                             libsasl2-dev libldap2-dev libssl-dev libjpeg-dev zlib1g-dev libfreetype6-dev gnupg2 \
         && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false npm \
         && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
 

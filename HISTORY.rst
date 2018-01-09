@@ -29,6 +29,8 @@ Unreleased
 
 **Build**
 
+* Use debian:stretch as base OS
+
 **Documentation**
 
 
