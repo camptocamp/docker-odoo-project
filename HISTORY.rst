@@ -32,9 +32,11 @@ Release History
 * Upgrade pip to the development version, to prevent unnecessary upgrades of libs
 * Upgrade ``anthem`` to 0.11.0
 * Upgrade ``marabunta`` to 0.8.0
-* Upgrade gosu to 1.10
 
 **Build**
+
+* Upgrade gosu to 1.10
+* Upgrade dockerize to 0.6.0 and run a checksum
 
 **Documentation**
 
