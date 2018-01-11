@@ -51,8 +51,8 @@ test:
 	mv $(TMP)/odoo/odoo-$(VERSION) $(TMP)/odoo/src
 	sed 's|FROM .*|FROM $(IMAGE_LATEST)|' -i $(TMP)/odoo/Dockerfile
 	cat $(TMP)/odoo/Dockerfile
-	cd $(TMP) && docker-compose run --rm -e LOCAL_USER_ID=$(shell id -u) odoo odoo --stop-after-init
-	cd $(TMP) && docker-compose run --rm -e LOCAL_USER_ID=$(shell id -u) odoo runtests
-	cd $(TMP) && docker-compose down
+	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) odoo odoo --stop-after-init
+	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) odoo runtests
+	cd $(TMP) && docker-compose -f docker-compose.yml down
 	rm -f /tmp/odoo.tar.gz
 	rm -rf $(TMP)

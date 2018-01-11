@@ -18,18 +18,25 @@
 Release History
 ---------------
 
-Unreleased
+2.5.0 (2017-11)
 ++++++++++
 
 **Features and Improvements**
+
+* Add an Odoo 11 version. which required upgrading dependencies to Python 3.
 
 **Bugfixes**
 
 **Libraries**
 
 * Upgrade pip to the development version, to prevent unnecessary upgrades of libs
+* Upgrade ``anthem`` to 0.11.0
+* Upgrade ``marabunta`` to 0.8.0
 
 **Build**
+
+* Upgrade gosu to 1.10
+* Upgrade dockerize to 0.6.0 and run a checksum
 
 **Documentation**
 

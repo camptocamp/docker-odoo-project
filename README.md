@@ -16,6 +16,7 @@ See also the [Changelog](HISTORY.rst).
 The images should be build with `make`:
 
 ```
+$ make VERSION=11.0  # generate image camptocamp/odoo-project:11.0-latest
 $ make VERSION=10.0  # generate image camptocamp/odoo-project:10.0-latest
 $ make VERSION=9.0  # generate image camptocamp/odoo-project:9.0-latest
 ```
@@ -69,7 +70,7 @@ is not the same (say 9.2.0).
 For a production server, it works, because usually you only want to upgrade to
 the last version N from N-1.  But for development or a test server, you might
 want to take the risk of running all the migration scripts consecutively, this
-is what `MARABUNTA_ALLOW_SERIE=True` is for. 
+is what `MARABUNTA_ALLOW_SERIE=True` is for.
 
 ### MARABUNTA_FORCE_VERSION
 
