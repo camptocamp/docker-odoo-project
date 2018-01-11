@@ -52,6 +52,7 @@ RUN set -x; \
             libjpeg-dev \
             libpng-dev \
             zlib1g-dev \
+            git \
         && curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
         && apt-get update \
         && apt-get install -y --no-install-recommends \
@@ -65,7 +66,7 @@ RUN set -x; \
         && cp -r wkhtmltox/share/man/man1 /usr/local/share/man/ \
         && apt-get -y install -f --no-install-recommends \
         && pip3 install -U pip && pip3 install wheel && pip3 install -r base_requirements.txt --ignore-installed \
-        && apt-get remove -y build-essential gcc python3.5-dev libevent-dev libfreetype6-dev libpq-dev libxml2-dev libxslt1-dev \
+        && apt-get remove -y build-essential gcc python3.5-dev libevent-dev libfreetype6-dev libpq-dev libxml2-dev libxslt1-dev git \
                              libsasl2-dev libldap2-dev libssl-dev libjpeg-dev libpng-dev zlib1g-dev \
         && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false \
         && ln -s $(which pip3) /usr/bin/pip \
