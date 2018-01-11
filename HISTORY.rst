@@ -18,14 +18,13 @@
 Release History
 ---------------
 
-2.5.0 (2017-11)
-++++++++++
+2.5.0 (2018-01-11)
+++++++++++++++++++
 
 **Features and Improvements**
 
-* Add an Odoo 11 version. which required upgrading dependencies to Python 3.
-
-**Bugfixes**
+* Add an Odoo 11.0 image version. Which required upgrading dependencies to
+  Python 3 for this image.
 
 **Libraries**
 
@@ -37,8 +36,6 @@ Release History
 
 * Upgrade gosu to 1.10
 * Upgrade dockerize to 0.6.0 and run a checksum
-
-**Documentation**
 
 
 2.4.1 (2017-11-01)
