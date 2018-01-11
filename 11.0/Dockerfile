@@ -31,10 +31,10 @@ RUN set -x; \
             node-clean-css \
             node-less \
             poppler-utils \
-            python-libxslt1 \
             python3-pip \
             python3-setuptools \
             python3-renderpm \
+            libxslt1.1 \
             xfonts-75dpi \
             xfonts-base \
             tcl expect \
@@ -61,16 +61,16 @@ RUN set -x; \
         && curl -o wkhtmltox.tar.xz -SL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz \
         && echo '3f923f425d345940089e44c1466f6408b9619562 wkhtmltox.tar.xz' | sha1sum -c - \
         && tar xvf wkhtmltox.tar.xz \
-        && cp wkhtmltox/lib/* /usr/local/lib/ \
-        && cp wkhtmltox/bin/* /usr/local/bin/ \
-        && cp -r wkhtmltox/share/man/man1 /usr/local/share/man/ \
+        && cp --no-dereference --preserve=link wkhtmltox/lib/* /usr/local/lib/ \
+        && cp wkhtmltox/bin/wkhtmltopdf /usr/local/bin/wkhtmltopdf \
+        && rm -rf wkhtmltox wkhtmltox.tar.xz \
         && apt-get -y install -f --no-install-recommends \
         && pip3 install -U pip && pip3 install wheel && pip3 install -r base_requirements.txt --ignore-installed \
         && apt-get remove -y build-essential gcc python3.5-dev libevent-dev libfreetype6-dev libpq-dev libxml2-dev libxslt1-dev git \
                              libsasl2-dev libldap2-dev libssl-dev libjpeg-dev libpng-dev zlib1g-dev \
         && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false \
         && ln -s $(which pip3) /usr/bin/pip \
-        && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
+        && rm -rf /var/lib/apt/lists/* /root/.cache/pip/*
 
 # grab gosu for easy step-down from root
  RUN gpg --keyserver pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \

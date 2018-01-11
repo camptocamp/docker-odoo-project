@@ -18,6 +18,13 @@
 Release History
 ---------------
 
+2.5.0.dev
++++++++++
+
+**Build**
+
+* Reduce size of the 11.0 image by cleaning and optimizing layers
+
 2.5.0 (2018-01-11)
 ++++++++++++++++++
 
