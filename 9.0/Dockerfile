@@ -41,6 +41,7 @@ RUN set -x; \
             zlib1g-dev \
             libfreetype6-dev \
             tcl expect \
+            git \
         && curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
         && apt-get update \
         && apt-get install -y --no-install-recommends \
@@ -52,7 +53,7 @@ RUN set -x; \
         && apt-get -y install -f --no-install-recommends \
         && pip install -U pip && pip install -r base_requirements.txt \
         && apt-get remove -y build-essential python-dev libfreetype6-dev libpq-dev libxml2-dev libxslt1-dev \
-                             libsasl2-dev libldap2-dev libssl-dev libjpeg-dev zlib1g-dev libfreetype6-dev \
+                             libsasl2-dev libldap2-dev libssl-dev libjpeg-dev zlib1g-dev libfreetype6-dev git \
         && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false npm \
         && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
 
