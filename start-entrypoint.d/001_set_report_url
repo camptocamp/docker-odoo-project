@@ -1,0 +1,28 @@
+#!/bin/bash
+
+DOMAIN="${ODOO_REPORT_URL}"
+
+if [ -n "$DOMAIN" ]; then
+
+  if [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" )" != '1' ]
+  then
+      echo "Database does not exist, ignoring script"
+      exit 0
+  fi
+
+  echo "Setting Report URL to domain ${DOMAIN}"
+  psql --quiet << EOF
+
+  WITH update_param AS (
+    UPDATE ir_config_parameter
+    SET value = '${DOMAIN}'
+    WHERE key = 'report.url'
+    RETURNING *
+  )
+  INSERT INTO ir_config_parameter
+  (value, key, create_uid, write_uid, create_date, write_date)
+  SELECT '${DOMAIN}', 'report.url', 1, 1, now(), now()
+  WHERE NOT EXISTS (SELECT * FROM update_param);
+
+EOF
+fi

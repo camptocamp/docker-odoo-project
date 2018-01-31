@@ -18,6 +18,13 @@
 Release History
 ---------------
 
+ unreleased
+ ++++++++++
+
+ **Features and Improvements**
+
+ * Add Script to set report.url if provided.
+
 2.5.1 (2018-01-11)
 ++++++++++++++++++
 
