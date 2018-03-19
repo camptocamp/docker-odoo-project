@@ -78,6 +78,35 @@ When you are developing / testing migrations with
 [Marabunta](https://github.com/camptocamp/marabunta), you can force the upgrade
 of a specific version with `MARABUNTA_FORCE_VERSION=<version>`.
 
+### ODOO_DATA_PATH
+
+Specifies path of data folder where to put base setup data for your project.
+In `anthem` songs this allows you to pass relative paths
+instead of recovering the full path via module resource paths.
+More precisely, if you set this var you can skip this in your songs:
+
+```
+  from pkg_resources import Requirement, resource_stream
+
+  req = Requirement.parse('my-odoo')
+
+
+  def load_csv(ctx, path, model, delimiter=',',
+               header=None, header_exclude=None):
+      content = resource_stream(req, path)
+      load_csv(ctx, content, ...)
+```
+
+and use `anthem` loader straight::
+
+```
+  from anthem.lyrics.loaders import load_csv
+
+  load_csv('relative/path/to/file', ...)
+```
+
+NOTE: `anthem > 0.11.0` is required.
+
 ### DEMO
 
 `DEMO` can be `True` or `False` and determines whether Odoo will load its Demo
