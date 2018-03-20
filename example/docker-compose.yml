@@ -19,7 +19,7 @@ services:
       - LOG_HANDLER=:WARN
 
   db:
-    image: camptocamp/postgresql:pg9.5-latest
+    image: postgres:9.6
     environment:
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo
@@ -28,7 +28,7 @@ services:
 
   # can be useful for dev when longpolling is required
   nginx:
-    image: camptocamp/odoo-nginx:9.0-1.1.0
+    image: camptocamp/odoo-nginx:9.0-1.2.1
     depends_on:
       - odoo
 
