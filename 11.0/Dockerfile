@@ -7,6 +7,7 @@ RUN mkdir -p /opt/odoo /var/log/odoo
 WORKDIR "/opt/odoo"
 
 COPY ./base_requirements.txt ./
+COPY ./install /install
 
 # Moved because there was a bug while installing `odoo-autodiscover`. There is
 # an accent in the contributor name
@@ -72,32 +73,9 @@ RUN set -x; \
         && ln -s $(which pip3) /usr/bin/pip \
         && rm -rf /var/lib/apt/lists/* /root/.cache/pip/*
 
-# grab gosu for easy step-down from root
-# fix intermittent gpg server error from https://github.com/tianon/gosu/issues/35
-RUN export GNUPGHOME="$(mktemp -d)" \
-    && for server in $(shuf -e ha.pool.sks-keyservers.net \
-                               hkp://p80.pool.sks-keyservers.net:80 \
-                               keyserver.ubuntu.com \
-                               hkp://keyserver.ubuntu.com:80 \
-                               pgp.mit.edu) ; do \
-         ks_options="" && \
-         if [ -n "$http_proxy" ] ; then \
-           ks_options="--keyserver-options http-proxy=$http_proxy" ; \
-         fi \
-         && gpg --keyserver "$server" $ks_options --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 && break || : ; \
-       done \
-    && curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.10/gosu-$(dpkg --print-architecture)" \
-    && curl -o /usr/local/bin/gosu.asc -SL "https://github.com/tianon/gosu/releases/download/1.10/gosu-$(dpkg --print-architecture).asc" \
-    && gpg --verify /usr/local/bin/gosu.asc \
-    && rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc \
-    && chmod +x /usr/local/bin/gosu \
-    # verify that the binary works
-    && gosu nobody true
-
-# grab dockerize for generation of the configuration file and wait on postgres
-RUN curl -o dockerize-linux-amd64-v0.6.0.tar.gz https://github.com/jwilder/dockerize/releases/download/v0.6.0/dockerize-linux-amd64-v0.6.0.tar.gz -SL \
-    && echo 'a13ff2aa6937f45ccde1f29b1574744930f5c9a5 dockerize-linux-amd64-v0.6.0.tar.gz' | sha1sum -c - \
-    && tar xvfz dockerize-linux-amd64-v0.6.0.tar.gz -C /usr/local/bin && rm dockerize-linux-amd64-v0.6.0.tar.gz
+# grab gosu for easy step-down from root and dockerize to generate template and
+# wait on postgres
+RUN /install/gosu.sh && /install/dockerize.sh && rm -rf /install
 
 COPY ./src_requirements.txt ./
 COPY ./bin bin
