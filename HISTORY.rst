@@ -18,12 +18,15 @@
 Release History
 ---------------
 
- unreleased
- ++++++++++
+Unreleased
+++++++++++
 
- **Features and Improvements**
+**Features and Improvements**
 
- * Add Script to set report.url if provided.
+* Add Script to set report.url if provided.
+* The http_proxy environment variable will be honored by 'gpg' when reaching the
+  key for the gosu key.
+
 
 2.5.1 (2018-01-11)
 ++++++++++++++++++

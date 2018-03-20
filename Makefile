@@ -15,6 +15,7 @@ build:
 	$(eval TMP := $(shell mktemp -u))
 	cp -r $(VERSION) $(TMP)
 	cp -r bin/ $(TMP)
+	cp -r install/ $(TMP)
 	cp -r start-entrypoint.d/ $(TMP)
 	cp -r before-migrate-entrypoint.d/ $(TMP)
 	docker build --no-cache -t $(IMAGE_LATEST) $(TMP)
