@@ -32,6 +32,10 @@ Unreleased
 * Upgrade setuptools, otherwise the pip installs fail with
   NameError: name 'platform_system' is not defined
 
+**Libraries**
+
+* Upgrade six to 1.10.0
+
 2.5.1 (2018-01-11)
 ++++++++++++++++++
 
