@@ -66,6 +66,7 @@ anthem==0.12.0
 # test / lint
 flake8
 pytest
+coverage
 pytest-odoo
 pytest-cov
 watchdog

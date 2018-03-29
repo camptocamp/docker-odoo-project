@@ -63,5 +63,6 @@ anthem==0.12.0
 flake8
 pytest
 pytest-odoo
+coverage
 pytest-cov
 watchdog

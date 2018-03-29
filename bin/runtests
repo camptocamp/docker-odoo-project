@@ -13,6 +13,12 @@ BASEDIR=$(dirname $0)
 $BASEDIR/wait_postgres.sh
 ROOT_DIR=$BASEDIR/..
 LOCAL_SRC_DIR=${ROOT_DIR}/local-src
+ODOO_BIN_PATH=/opt/odoo/src/odoo-bin
+if [ "$ODOO_VERSION" == "9.0" ]
+then
+  ODOO_BIN_PATH=/opt/odoo/src/odoo.py
+fi
+
 
 if [ -z $1 ]
 then
@@ -26,6 +32,8 @@ fi
 DB_NAME_TEST=${DB_NAME}_test
 
 PGPASSWORD=$DB_PASSWORD createdb -h $DB_HOST -U $DB_USER -O $DB_USER ${DB_NAME_TEST}
-odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" -i ${LOCAL_ADDONS}
-odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" -u ${LOCAL_ADDONS}
+"${ODOO_BIN_PATH}" --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" -i ${LOCAL_ADDONS}
+coverage run --source="${LOCAL_SRC_DIR}" "${ODOO_BIN_PATH}" --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" -u ${LOCAL_ADDONS}
 PGPASSWORD=$DB_PASSWORD dropdb -h $DB_HOST -U $DB_USER ${DB_NAME_TEST}
+
+coverage report -m
