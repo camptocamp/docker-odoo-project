@@ -23,9 +23,26 @@ Unreleased
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+
+2.6.0 (2018-03-29)
+++++++++++++++++++
+
+**Features and Improvements**
+
 * Add Script to set report.url if provided.
 * The http_proxy environment variable will be honored by 'gpg' when reaching the
   key for the gosu key.
+* With the new version of anthem, CSV files can be loaded from a relative path
+  (starting from /opt/odoo/data): https://github.com/camptocamp/anthem/pull/36
+* The runtests script shows the coverage at the end
 
 **Build**
 
@@ -36,6 +53,10 @@ Unreleased
 **Libraries**
 
 * Upgrade six to 1.10.0
+* Upgrade ``anthem`` to 0.11.0 in every odoo version
+* Upgrade ``marabunta`` to 0.8.0 in every odoo version
+* Install the ``phonenumbers`` library for odoo 11.0
+
 
 2.5.1 (2018-01-11)
 ++++++++++++++++++
