@@ -48,7 +48,7 @@ reportlab==3.1.44
 requests==2.6.0
 roman==2.0.0
 simplejson==3.6.5
-six==1.9.0
+six==1.10.0
 suds-jurko==0.6
 unittest2==0.5.1
 urllib3==1.9.1
