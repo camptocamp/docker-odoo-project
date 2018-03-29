@@ -32,7 +32,7 @@ fi
 DB_NAME_TEST=${DB_NAME}_test
 
 PGPASSWORD=$DB_PASSWORD createdb -h $DB_HOST -U $DB_USER -O $DB_USER ${DB_NAME_TEST}
-"${ODOO_BIN_PATH}" --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" -i ${LOCAL_ADDONS}
+odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" -i ${LOCAL_ADDONS}
 coverage run --source="${LOCAL_SRC_DIR}" "${ODOO_BIN_PATH}" --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" -u ${LOCAL_ADDONS}
 PGPASSWORD=$DB_PASSWORD dropdb -h $DB_HOST -U $DB_USER ${DB_NAME_TEST}
 
