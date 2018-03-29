@@ -66,7 +66,7 @@ RUN set -x; \
         && cp wkhtmltox/bin/wkhtmltopdf /usr/local/bin/wkhtmltopdf \
         && rm -rf wkhtmltox wkhtmltox.tar.xz \
         && apt-get -y install -f --no-install-recommends \
-        && pip3 install -U pip && pip3 install wheel && pip3 install -r base_requirements.txt --ignore-installed \
+        && pip3 install -U pip setuptools && pip3 install wheel && pip3 install -r base_requirements.txt --ignore-installed \
         && apt-get remove -y build-essential gcc python3.5-dev libevent-dev libfreetype6-dev libpq-dev libxml2-dev libxslt1-dev git \
                              libsasl2-dev libldap2-dev libssl-dev libjpeg-dev libpng-dev zlib1g-dev \
         && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false \
