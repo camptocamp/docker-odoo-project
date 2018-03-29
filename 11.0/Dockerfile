@@ -54,6 +54,7 @@ RUN set -x; \
             libpng-dev \
             zlib1g-dev \
             git \
+        && /install/setup-pip.sh \
         && curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
         && apt-get update \
         && apt-get install -y --no-install-recommends \

@@ -31,6 +31,7 @@ Unreleased
 
 * Upgrade setuptools, otherwise the pip installs fail with
   NameError: name 'platform_system' is not defined
+* Disable pip cache directory to reduce image size
 
 **Libraries**
 

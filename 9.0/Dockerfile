@@ -43,6 +43,7 @@ RUN set -x; \
             libfreetype6-dev \
             tcl expect \
             git \
+        && /install/setup-pip.sh \
         && curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
         && apt-get update \
         && apt-get install -y --no-install-recommends \
