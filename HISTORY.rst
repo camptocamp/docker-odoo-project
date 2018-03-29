@@ -27,6 +27,10 @@ Unreleased
 * The http_proxy environment variable will be honored by 'gpg' when reaching the
   key for the gosu key.
 
+**Build**
+
+* Upgrade setuptools, otherwise the pip installs fail with
+  NameError: name 'platform_system' is not defined
 
 2.5.1 (2018-01-11)
 ++++++++++++++++++
