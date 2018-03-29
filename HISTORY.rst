@@ -32,6 +32,14 @@ Unreleased
 **Documentation**
 
 
+2.6.1 (2018-03-29)
+++++++++++++++++++
+
+**Bugfixes**
+
+* Fix permission issue when running 'runtests' if odoo-bin has no executable flag
+
+
 2.6.0 (2018-03-29)
 ++++++++++++++++++
 
