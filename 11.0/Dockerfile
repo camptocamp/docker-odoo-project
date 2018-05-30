@@ -60,12 +60,9 @@ RUN set -x; \
         && apt-get install -y --no-install-recommends \
             postgresql-client \
             libpq-dev \
-        && curl -o wkhtmltox.tar.xz -SL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz \
-        && echo '3f923f425d345940089e44c1466f6408b9619562 wkhtmltox.tar.xz' | sha1sum -c - \
-        && tar xvf wkhtmltox.tar.xz \
-        && cp --no-dereference --preserve=link wkhtmltox/lib/* /usr/local/lib/ \
-        && cp wkhtmltox/bin/wkhtmltopdf /usr/local/bin/wkhtmltopdf \
-        && rm -rf wkhtmltox wkhtmltox.tar.xz \
+        && curl -o wkhtmltox.deb -SL https://builds.wkhtmltopdf.org/0.12.5-rc/wkhtmltox_0.12.5-0.20180529.138.rc~37e9f91~stretch_amd64.deb \
+        && echo 'fa8c93ee40592701bf1ee18a3c95bde2538bdcae wkhtmltox.deb' | sha1sum -c - \
+        && dpkg --force-depends -i wkhtmltox.deb \
         && apt-get -y install -f --no-install-recommends \
         && pip3 install -U pip setuptools && pip3 install wheel && pip3 install -r base_requirements.txt --ignore-installed \
         && apt-get remove -y build-essential gcc python3.5-dev libevent-dev libfreetype6-dev libpq-dev libxml2-dev libxslt1-dev git \

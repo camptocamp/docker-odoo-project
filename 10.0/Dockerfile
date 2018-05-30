@@ -49,8 +49,8 @@ RUN set -x; \
         && apt-get install -y --no-install-recommends \
             postgresql-client \
             libpq-dev \
-        && curl -o wkhtmltox.deb -SL http://nightly.odoo.com/extra/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb \
-        && echo '40e8b906de658a2221b15e4e8cd82565a47d7ee8 wkhtmltox.deb' | sha1sum -c - \
+        && curl -o wkhtmltox.deb -SL https://builds.wkhtmltopdf.org/0.12.5-rc/wkhtmltox_0.12.5-0.20180529.138.rc~37e9f91~jessie_amd64.deb \
+        && echo '390ae8b32c527eac1ae52b3a6b3157367adbb14e wkhtmltox.deb' | sha1sum -c - \
         && dpkg --force-depends -i wkhtmltox.deb \
         && apt-get -y install -f --no-install-recommends \
         && pip install -U pip setuptools && pip install -r base_requirements.txt \
