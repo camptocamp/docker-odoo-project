@@ -100,6 +100,7 @@ ENV ODOO_VERSION=11.0 \
     DB_USER=odoo \
     DB_PASSWORD=odoo \
     ODOO_BASE_URL=http://localhost:8069 \
+    ODOO_REPORT_URL=http://localhost:8069 \
     ODOO_DATA_PATH=/opt/odoo/data \
     DEMO=False \
     ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/src/addons \
