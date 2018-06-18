@@ -19,27 +19,32 @@ build:
 	cp -r start-entrypoint.d/ $(TMP)
 	cp -r before-migrate-entrypoint.d/ $(TMP)
 	docker build --no-cache -t $(IMAGE_LATEST) $(TMP)
+	docker build --no-cache -f $(TMP)/Dockerfile-onbuild -t $(IMAGE_LATEST)-onbuild $(TMP)
 	rm -rf $(TMP)
 
 
 .PHONY: tag
 tag:
 	docker tag $(IMAGE_LATEST) $(IMAGE)-$(TAG)
+	docker tag $(IMAGE_LATEST)-onbuild $(IMAGE)-onbuild-$(TAG)
 
 
 .PHONY: push
 push:
 	docker push $(IMAGE)-$(TAG)
+	docker push $(IMAGE)-onbuild-$(TAG)
 
 
 .PHONY: tag_latest_main
 tag_latest_main:
 	docker tag $(IMAGE_LATEST) $(NAME):latest
+	docker tag $(IMAGE_LATEST) $(NAME)-onbuild:latest
 
 
 .PHONY: push_latest_main
 push_latest_main:
 	docker push $(NAME):latest
+	docker push $(NAME)-onbuild:latest
 
 
 .PHONY: test
@@ -50,7 +55,7 @@ test:
 	wget -nv -O /tmp/odoo.tar.gz $(ODOO_URL)
 	tar xfz /tmp/odoo.tar.gz -C $(TMP)/odoo/
 	mv $(TMP)/odoo/odoo-$(VERSION) $(TMP)/odoo/src
-	sed 's|FROM .*|FROM $(IMAGE_LATEST)|' -i $(TMP)/odoo/Dockerfile
+	sed 's|FROM .*|FROM $(IMAGE_LATEST)-onbuild|' -i $(TMP)/odoo/Dockerfile
 	cat $(TMP)/odoo/Dockerfile
 	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) odoo odoo --stop-after-init
 	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) odoo runtests
