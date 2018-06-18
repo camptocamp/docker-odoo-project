@@ -111,16 +111,3 @@ ENV ODOO_VERSION=11.0 \
 WORKDIR "/opt"
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["odoo"]
-
-# intermediate images should help speed up builds when only local-src, or only
-# external-src changes
-ONBUILD COPY ./src /opt/odoo/src
-ONBUILD COPY ./external-src /opt/odoo/external-src
-ONBUILD COPY ./local-src /opt/odoo/local-src
-ONBUILD COPY ./data /opt/odoo/data
-ONBUILD COPY ./songs /opt/odoo/songs
-ONBUILD COPY ./setup.py /opt/odoo/
-ONBUILD COPY ./VERSION /opt/odoo/
-ONBUILD COPY ./migration.yml /opt/odoo/
-# need to be called at the end, because it installs . and src
-ONBUILD RUN cd /opt/odoo && pip3 install -r src_requirements.txt
