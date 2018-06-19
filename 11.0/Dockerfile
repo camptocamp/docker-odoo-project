@@ -60,8 +60,8 @@ RUN set -x; \
         && apt-get install -y --no-install-recommends \
             postgresql-client \
             libpq-dev \
-        && curl -o wkhtmltox.deb -SL https://builds.wkhtmltopdf.org/0.12.5-rc/wkhtmltox_0.12.5-0.20180529.138.rc~37e9f91~stretch_amd64.deb \
-        && echo 'fa8c93ee40592701bf1ee18a3c95bde2538bdcae wkhtmltox.deb' | sha1sum -c - \
+        && curl -o wkhtmltox.deb -SL https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb \
+        && echo '7e35a63f9db14f93ec7feeb0fce76b30c08f2057 wkhtmltox.deb' | sha1sum -c - \
         && dpkg --force-depends -i wkhtmltox.deb \
         && apt-get -y install -f --no-install-recommends \
         && pip3 install -U pip setuptools && pip3 install wheel && pip3 install -r base_requirements.txt --ignore-installed \
