@@ -1,5 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
-# TODO FULL VERSION WITH IF
-python3 -m pip install --force-reinstall pip setuptools && pip3 install -r base_requirements.txt  --ignore-installed
+python3 -m pip install --force-reinstall pip setuptools && pip3 install -r base_requirements.txt --ignore-installed
+if $FULL
+  then python3 -m pip install -r extra_requirements.txt
+fi

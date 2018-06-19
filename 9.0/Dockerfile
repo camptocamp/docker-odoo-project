@@ -7,12 +7,14 @@ RUN mkdir -p /opt/odoo /var/log/odoo
 WORKDIR "/opt/odoo"
 
 COPY ./base_requirements.txt ./
+COPY ./extra_requirements.txt ./
 COPY ./install /install
 
 # build and dev packages
 ENV BUILD_PACKAGE \
     build-essential \
     python-dev \
+    libffi-dev \
     libfreetype6-dev \
     libxml2-dev \
     libxslt1-dev \
@@ -29,7 +31,7 @@ ENV PURGE_PACKAGE npm
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
         sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
-        && /install/package_p2.sh \
+        && /install/package_9.0_10.0.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
         && /install/wkhtml_12_1_2.sh \
