@@ -9,55 +9,33 @@ WORKDIR "/opt/odoo"
 COPY ./base_requirements.txt ./
 COPY ./install /install
 
+# build and dev packages
+ENV BUILD_PACKAGE \
+    build-essential \
+    python-dev \
+    libfreetype6-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    libsasl2-dev \
+    libldap2-dev \
+    libssl-dev \
+    libjpeg-dev \
+    zlib1g-dev \
+    libfreetype6-dev \
+    git
+
+ENV PURGE_PACKAGE npm
+
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
         sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
-        && apt-get update \
-        && apt-get install -y --no-install-recommends \
-            antiword \
-            ca-certificates \
-            curl \
-            ghostscript \
-            graphviz \
-            less \
-            nano \
-            node-clean-css \
-            node-less \
-            poppler-utils \
-            python \
-            python-libxslt1 \
-            python-pip \
-            xfonts-75dpi \
-            xfonts-base \
-            # build packages to clean after the pip install
-            build-essential \
-            python-dev \
-            libfreetype6-dev \
-            libxml2-dev \
-            libxslt1-dev \
-            libsasl2-dev \
-            libldap2-dev \
-            libssl-dev \
-            libjpeg-dev \
-            zlib1g-dev \
-            libfreetype6-dev \
-            tcl expect \
-            git \
+        && /install/package_p2.sh \
         && /install/setup-pip.sh \
-        && curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
-        && apt-get update \
-        && apt-get install -y --no-install-recommends \
-            postgresql-client \
-            libpq-dev \
-        && curl -o wkhtmltox.deb -SL http://nightly.odoo.com/extra/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb \
-        && echo '40e8b906de658a2221b15e4e8cd82565a47d7ee8 wkhtmltox.deb' | sha1sum -c - \
-        && dpkg --force-depends -i wkhtmltox.deb \
-        && apt-get -y install -f --no-install-recommends \
-        && pip install -U pip setuptools && python -m pip install -r base_requirements.txt \
-        && apt-get remove -y build-essential python-dev libfreetype6-dev libpq-dev libxml2-dev libxslt1-dev \
-                             libsasl2-dev libldap2-dev libssl-dev libjpeg-dev zlib1g-dev libfreetype6-dev git \
-        && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false npm \
-        && rm -rf /var/lib/apt/lists/* wkhtmltox.deb
+        && /install/postgres.sh \
+        && /install/wkhtml_12_1_2.sh \
+        && /install/dev_package.sh \
+        && /install/pip_package.sh \
+        && /install/purge_dev_package_and_cache.sh
 
 # grab gosu for easy step-down from root and dockerize to generate template and
 # wait on postgres
