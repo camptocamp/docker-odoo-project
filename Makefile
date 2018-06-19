@@ -3,7 +3,11 @@ ifndef VERSION
 $(error VERSION is not set)
 endif
 
-IMAGE=$(NAME):$(VERSION)
+ifeq ($(FULL), True)
+  IMAGE=$(NAME):$(VERSION)-full
+else
+  IMAGE=$(NAME):$(VERSION)
+endif
 IMAGE_LATEST=$(IMAGE)-latest
 ODOO_URL=https://github.com/odoo/odoo/archive/$(VERSION).tar.gz
 
@@ -59,6 +63,7 @@ test:
 	cat $(TMP)/odoo/Dockerfile
 	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) odoo odoo --stop-after-init
 	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) odoo runtests
+	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) bin/check_package
 	cd $(TMP) && docker-compose -f docker-compose.yml down
 	rm -f /tmp/odoo.tar.gz
 	rm -rf $(TMP)
