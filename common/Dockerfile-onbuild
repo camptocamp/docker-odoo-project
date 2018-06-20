@@ -1,4 +1,3 @@
-FROM camptocamp/odoo-project:9.0-latest
 MAINTAINER Camptocamp
 
 # intermediate images should help speed up builds when only local-src, or only

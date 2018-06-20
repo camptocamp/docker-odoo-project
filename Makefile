@@ -5,8 +5,10 @@ endif
 
 ifeq ($(FULL), True)
   IMAGE=$(NAME):$(VERSION)-full
+  DOCKERFILE='Dockerfile-full'
 else
   IMAGE=$(NAME):$(VERSION)
+  DOCKERFILE='Dockerfile'
 endif
 IMAGE_LATEST=$(IMAGE)-latest
 ODOO_URL=https://github.com/odoo/odoo/archive/$(VERSION).tar.gz
@@ -19,10 +21,13 @@ build:
 	$(eval TMP := $(shell mktemp -u))
 	cp -r $(VERSION) $(TMP)
 	cp -r bin/ $(TMP)
+	cp -r common/* $(TMP)
+	sed -i "1i FROM $(IMAGE_LATEST)" $(TMP)/Dockerfile-onbuild
+	sed -i "1i FROM $(NAME):$(VERSION)-latest" $(TMP)/Dockerfile-full
 	cp -r install/ $(TMP)
 	cp -r start-entrypoint.d/ $(TMP)
 	cp -r before-migrate-entrypoint.d/ $(TMP)
-	docker build --no-cache -t $(IMAGE_LATEST) $(TMP)
+	docker build --no-cache -f $(TMP)/$(DOCKERFILE) -t $(IMAGE_LATEST) $(TMP)
 	docker build --no-cache -f $(TMP)/Dockerfile-onbuild -t $(IMAGE_LATEST)-onbuild $(TMP)
 	rm -rf $(TMP)
 
@@ -63,7 +68,6 @@ test:
 	cat $(TMP)/odoo/Dockerfile
 	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) odoo odoo --stop-after-init
 	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) odoo runtests
-	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) bin/check_package
 	cd $(TMP) && docker-compose -f docker-compose.yml down
 	rm -f /tmp/odoo.tar.gz
 	rm -rf $(TMP)
