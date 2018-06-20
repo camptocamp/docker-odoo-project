@@ -1,6 +1,8 @@
 FROM debian:jessie
 MAINTAINER Camptocamp
 
+ENV ODOO_VERSION 10.0
+
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /opt/odoo /var/log/odoo
 
@@ -37,6 +39,7 @@ RUN set -x; \
         && /install/dev_package.sh \
         && pip install -U pip setuptools \
         && pip install -r base_requirements.txt \
+        && /install/preinstall_odoo.sh \
         && /install/purge_dev_package_and_cache.sh
 
 # grab gosu for easy step-down from root and dockerize to generate template and
