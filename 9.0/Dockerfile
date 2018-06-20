@@ -31,17 +31,18 @@ ENV PURGE_PACKAGE npm
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
         sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
-        && /install/package_9.0_10.0.sh \
+        && /install/package_odoo_9.0_10.0.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
         && /install/wkhtml_12_1_2.sh \
         && /install/dev_package.sh \
-        && /install/pip_package.sh \
+        && pip install -U pip setuptools \
+        && pip install -r base_requirements.txt \
         && /install/purge_dev_package_and_cache.sh
 
 # grab gosu for easy step-down from root and dockerize to generate template and
 # wait on postgres
-RUN /install/gosu.sh && /install/dockerize.sh && rm -rf /install
+RUN /install/gosu.sh && /install/dockerize.sh
 
 COPY ./src_requirements.txt ./
 COPY ./bin bin

@@ -8,7 +8,7 @@ fi
 
 sed -i '/^\s*$/d' requirements.txt
 
-pip freeze -r requirements.txt > installed_package.txt
+pip freeze -r requirements.txt | grep -v odoo > installed_package.txt
 
 sed -i '/^\s*$/d' installed_package.txt
 
