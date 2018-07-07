@@ -9,10 +9,8 @@ set -e
 
 # TODO: if we are not in TRAVIS, make a template then run tests on a copy
 
-BASEDIR=$(dirname $0)
-$BASEDIR/wait_postgres.sh
-ROOT_DIR=$BASEDIR/..
-LOCAL_SRC_DIR=${ROOT_DIR}/local-src
+wait_postgres.sh
+LOCAL_SRC_DIR=/opt/odoo/local-src
 ODOO_BIN_PATH=/opt/odoo/src/odoo-bin
 if [ "$ODOO_VERSION" == "9.0" ]
 then

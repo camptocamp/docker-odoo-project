@@ -45,11 +45,11 @@ RUN set -x; \
 RUN /install/gosu.sh && /install/dockerize.sh
 
 COPY ./src_requirements.txt ./
-COPY ./bin bin
-COPY ./bin_compat bin_compat
-COPY ./etc etc
-COPY ./before-migrate-entrypoint.d before-migrate-entrypoint.d
-COPY ./start-entrypoint.d start-entrypoint.d
+COPY ./bin /opt/bin
+COPY ./bin_compat /opt/bin_compat
+COPY ./etc /opt/etc
+COPY ./before-migrate-entrypoint.d /opt/before-migrate-entrypoint.d
+COPY ./start-entrypoint.d /opt/start-entrypoint.d
 COPY ./MANIFEST.in ./
 
 VOLUME ["/data/odoo", "/var/log/odoo"]
@@ -58,7 +58,7 @@ VOLUME ["/data/odoo", "/var/log/odoo"]
 EXPOSE 8069 8072
 
 ENV ODOO_VERSION=9.0 \
-    PATH=/opt/odoo/bin:/opt/odoo/bin_compat:$PATH \
+    PATH=/opt/bin:/opt/bin_compat:$PATH \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     DB_HOST=db \
@@ -69,7 +69,7 @@ ENV ODOO_VERSION=9.0 \
     ODOO_BASE_URL=http://localhost:8069 \
     DEMO=False \
     ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/src/addons \
-    OPENERP_SERVER=/opt/odoo/etc/odoo.cfg
+    OPENERP_SERVER=/opt/etc/odoo.cfg
 
 # set to /opt so we can have the same path outside and inside of the container:
 # docker run --rm odoo pytest odoo/external-src/abc/xyz/tests/test.py
