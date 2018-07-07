@@ -64,6 +64,14 @@ test:
 	wget -nv -O /tmp/odoo.tar.gz $(ODOO_URL)
 	tar xfz /tmp/odoo.tar.gz -C $(TMP)/odoo/
 	mv $(TMP)/odoo/odoo-$(VERSION) $(TMP)/odoo/src
+	echo '>>> Run test for base image'
+	sed 's|FROM .*|FROM $(IMAGE_LATEST)|' -i $(TMP)/odoo/Dockerfile
+	cat $(TMP)/odoo/Dockerfile
+	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) odoo odoo --stop-after-init
+	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) odoo runtests
+	cd $(TMP) && docker-compose -f docker-compose.yml down
+	echo '>>> Run test for onbuild image'
+	cp $(TMP)/odoo/Dockerfile-onbuild $(TMP)/odoo/Dockerfile
 	sed 's|FROM .*|FROM $(IMAGE_LATEST)-onbuild|' -i $(TMP)/odoo/Dockerfile
 	cat $(TMP)/odoo/Dockerfile
 	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) odoo odoo --stop-after-init

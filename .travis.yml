@@ -10,8 +10,8 @@ env:
 
 script:
   - make VERSION=$VERSION build
-  - make VERSION=$VERSION FULL=$FULL build
-  - make VERSION=$VERSION FULL=$FULL test
+  - make VERSION=$VERSION FULL=True build
+  - make VERSION=$VERSION test
 
 after_success:
   - travis/publish.sh
