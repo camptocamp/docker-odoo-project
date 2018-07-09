@@ -3,14 +3,15 @@ ifndef VERSION
 $(error VERSION is not set)
 endif
 
+IMAGE=$(NAME):$(VERSION)
 ifeq ($(FULL), True)
-  IMAGE=$(NAME):$(VERSION)-full
+  $TAG=$(TAG)-full
+  IMAGE_LATEST=$(IMAGE)-latest-full
   DOCKERFILE='Dockerfile-full'
 else
-  IMAGE=$(NAME):$(VERSION)
+  IMAGE_LATEST=$(IMAGE)-latest
   DOCKERFILE='Dockerfile'
 endif
-IMAGE_LATEST=$(IMAGE)-latest
 ODOO_URL=https://github.com/odoo/odoo/archive/$(VERSION).tar.gz
 
 all: build
@@ -35,19 +36,19 @@ build:
 .PHONY: tag
 tag:
 	docker tag $(IMAGE_LATEST) $(IMAGE)-$(TAG)
-	docker tag $(IMAGE_LATEST)-onbuild $(IMAGE)-onbuild-$(TAG)
+	docker tag $(IMAGE_LATEST)-onbuild $(IMAGE)-$(TAG)-onbuild
 
 
 .PHONY: push
 push:
 	docker push $(IMAGE)-$(TAG)
-	docker push $(IMAGE)-onbuild-$(TAG)
+	docker push $(IMAGE)-$(TAG)-onbuild
 
 
 .PHONY: tag_latest_main
 tag_latest_main:
 	docker tag $(IMAGE_LATEST) $(NAME):latest
-	docker tag $(IMAGE_LATEST) $(NAME)-onbuild:latest
+	docker tag $(IMAGE_LATEST)-onbuild $(NAME)-onbuild:latest
 
 
 .PHONY: push_latest_main
