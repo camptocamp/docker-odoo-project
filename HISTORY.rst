@@ -23,6 +23,8 @@ Unreleased
 
 **Features and Improvements**
 
+* allow to use the PostgreSQL extension 'unaccent'
+
 **Bugfixes**
 
 **Libraries**
