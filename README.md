@@ -20,6 +20,45 @@ $ make VERSION=11.0  # generate image camptocamp/odoo-project:11.0-latest
 $ make VERSION=10.0  # generate image camptocamp/odoo-project:10.0-latest
 $ make VERSION=9.0  # generate image camptocamp/odoo-project:9.0-latest
 ```
+## Image version
+
+There are 4 flavors of the image:
+- odoo-project:${odoo_version}-${tag_version}
+- odoo-project:${odoo_version}-${tag_version}-onbuild
+- odoo-project:${odoo_version}-${tag_version}-full
+- odoo-project:${odoo_version}-${tag_version}-full-onbuild
+
+Note: in production, docker docs strongly recommend to never use "latest" tags. Instead use a specific version in order to be able to rebuild identical images.
+
+### Full vs Normal
+
+Full version is exactly the same image but with a list of pre-install python package.
+
+The list of package (with their version) is defined in the extra_requirements.txt file.
+
+Ex for 10.0 image: [10.0/extra_requirements.txt](10.0/extra_requirements.txt)
+
+you can also see the Dockerfile that generate this image here: [common/Dockerfile-full](common/Dockerfile-full)
+
+### Onbuild vs Normal
+
+Onbuild version add default *ONBUILD* command in the dockerfile in order to simplify the generation of custom image.
+
+For more information on *ONBUILD* command please read Docker documentation
+
+The dockerfile of onbuild image is here:  [common/Dockerfile-onbuild](common/Dockerfile-onbuild)
+
+
+Two example of Dockerfile have been proposed in the project example here:
+
+- using normal version: [example/odoo/Dockerfile](example/odoo/Dockerfile)
+- using onbuild version: [example/odoo/Dockerfile-onbuild](example/odoo/Dockerfile-onbuild)
+
+Note: the dockerfile of the Onbuild version is shorter but
+
+- you can not create intermediary custom image based on it (as ONBUILD instruction need to be played).
+- onbuild tag seem to be deprecated : https://github.com/docker-library/official-images/issues/2076
+
 
 ## Configuration
 
