@@ -186,6 +186,49 @@ Instead, you can set the ID of the host's system in `LOCAL_USER_ID`, which will
 then be shared by the container. All the files created in host volumes will
 then share the same user.
 
+### CREATE_DB_CACHE
+
+Used in `bin/runtests` and `bin/runmigration`.
+
+If set to "true", will create a dump in `.cachedb` of an intermediate state of the tests or migration.
+By default not set, thus unactivated.
+
+### LOAD_DB_CACHE
+
+Used in `bin/runtests` and `bin/runmigration`.
+
+If set to "false", will skip trying to reload a cached dump from `.cachedb`.
+
+### SUBS_MD5
+
+This value is used in `bin/runtests` to determine the name of the intermediate state to
+load or create.
+
+Value to tag a database dump of `bin/runtests`, for instance it can be based on
+submodules in .travis.yml of your git repositories in odoo/src and in odoo/external-src:
+
+```
+export SUBS_MD5=$(git submodule status | md5sum | cut -d ' ' -f1)
+```
+
+You want this value to be unique and identify your dependencies, thus if a
+dependency change you need to generate a new one.
+
+### MIG_LOAD_VERSION_CEIL
+
+Used in `bin/runmigration` to specify from which dump we want to play the migration.
+In case you have a dump per version, you can play the migration against the version of your choice.
+If the version specified does not exists, it will search for a lower occurence.
+
+It will load a dump lower than "odoo_sample_$MIG_LOAD_VERSION_CEIL.dmp"
+This is useful if you bumped odoo/VERSION as it won't match existing
+dumps.
+
+For instance you have made a dump 10.1.0, you are now on the version
+10.2.0, if you pass your current version it will search for a dump
+lower than 10.2.0 and restore the 10.1.0. Then play the remaining
+steps on top of it.
+
 ### Odoo Configuration Options
 
 The main configuration options of Odoo can be configured through environment variables. The name of the environment variables are the same of the options but uppercased (eg. `workers` becomes `WORKERS`).
@@ -205,15 +248,24 @@ By the way, you can add other `ENV` variables in your project's `Dockerfile` if 
 
 ## Running tests
 
+### runtests
+
 Inside the container, a script `runtests` is used for running the tests on Travis.
-It will create a new database, find the local addons, install them and run their tests.
+
+Unless `LOAD_DB_CACHE is set to `false` it will search for a dump of dependencies and restore it.
+Otherwise, will create a new database, find the `odoo/external-src` and `odoo/src` dependencies of the local addons and
+if `CREATE_DB_CACHE` is activated creates a dump of that state.
+
+Then it will install local addons, run their tests and show the code coverage.
 
 ```
-docker-compose run --rm odoo runtests
+docker-compose run --rm [-e CREATE_DB_CACHE=true] [-e LOAD_DB_CACHE=false] [-e SUBS_MD5=<hash>] odoo runtests
 ```
 
 
 This is not the day-to-day tool for running the tests as a developer.
+
+### pytests
 
 pytest is included and can be invoked when starting a container. It needs an existing database to run the tests:
 
@@ -237,6 +289,37 @@ docker-compose run --rm odoo dropdb testdb
 
 Pytest uses a plugin (https://github.com/camptocamp/pytest-odoo) that corrects the
 Odoo namespaces (`openerp.addons`/`odoo.addons`) when running the tests.
+
+### runmigration
+
+Inside the container, a script `runmigration` is used to run the migration steps on Travis.
+
+Then when launched, it will search for database dump of the content of `odoo/VERSION` file.
+Or if you provided `MIG_LOAD_VERSION_CEIL` which will allow you to search for an other version.
+If no dump is available (or `LOAD_DB_CACHE` is set to `false`), migration will start from scratch.
+
+The migration steps are then run.
+
+If migration succeed a dump is created if `CREATE_DB_CACHE` is set to `true`.
+
+```
+docker-compose run --rm [-e CREATE_DB_CACHE=true] [-e LOAD_DB_CACHE=false] [-e MIG_LOAD_VERSION_CEIL=x.y.z] odoo runmigration
+```
+
+This tools really speed up the process of testing migration steps as you can be executing only a single step instead of redoing all.
+
+### cached dumps (runtests / runmigration)
+
+To use database dumps you will need a volume on `/opt/.cachedb` to have persistant dumps.
+
+On travis you will also want to activate the cache, if your volume definition is `- "$HOME/.cachedb:/opt/.cachedb"`
+add this in `.travis.yml`:
+
+```
+cache:
+  directories:
+    - $HOME/.cachedb
+```
 
 ## Start entrypoint
 
