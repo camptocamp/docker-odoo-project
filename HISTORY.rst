@@ -29,6 +29,10 @@ Unreleased
 
 **Libraries**
 
+* Upgrade python libs; either to the version in odoo's requirements.txt, either
+  to a more recent version if there is no breaking change. It should fix a few
+  potential security issues.
+
 **Build**
 
 **Documentation**
