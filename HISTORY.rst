@@ -24,6 +24,14 @@ Unreleased
 
 **Features and Improvements**
 
+* Refactor code to be able to share code between version (see common directory and bin directory)
+* Split image in two type with or without onbuild feature
+* Add a full version of the image with more python package (see extra_requirements.txt)
+* The two previous change introduce 4 flavor of image see the readme file and pick the right one. Do not use lastest anymore
+* Python build package are now available in the variable $BUILD_PACKAGE and add a script to install and remove all build package (see install/dev_package.sh and install/purge_dev_package_and_cache.sh)
+* Change directory organisation. Move /opt/odoo/etc => /opt/etc, /opt/odoo/bin => /opt/bin. So now you can mount the whole odoo directory
+* Adapt example with the previous change
+
 **Bugfixes**
 
 **Libraries**
