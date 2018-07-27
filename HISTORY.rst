@@ -18,24 +18,42 @@
 Release History
 ---------------
 
+
 Unreleased
 ++++++++++
 
 **Features and Improvements**
 
-* allow to use the PostgreSQL extension 'unaccent'
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+
+2.7.0 (2018-07-27)
+++++++++++++++++++
+
+This is the last release before 3.0.0, which will provide different flavors
+if the image, without onbuild instructions, with onbuild and full.
+
+**Features and Improvements**
+
+* Allow to set the odoo's unaccent option with the environment variable UNACCENT
+  in order to use the PostgreSQL extension 'unaccent'
+* ``ODOO_REPORT_URL`` is now ``http://localhost:8069`` by default
 
 **Bugfixes**
+
+* Fix error with python3/pip (ImportError: cannot import name 'main')
 
 **Libraries**
 
 * Upgrade python libs; either to the version in odoo's requirements.txt, either
   to a more recent version if there is no breaking change. It should fix a few
   potential security issues.
-
-**Build**
-
-**Documentation**
 
 
 2.6.1 (2018-03-29)
