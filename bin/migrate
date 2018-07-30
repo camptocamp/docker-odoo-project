@@ -5,8 +5,7 @@ if ! PGPASSWORD=$DB_PASSWORD psql -lqtA -h $DB_HOST -U $DB_USER | grep -q "^$DB_
   PGPASSWORD=$DB_PASSWORD createdb -h $DB_HOST -U $DB_USER -O $DB_USER $DB_NAME
 fi
 
-BASEDIR=$(dirname $0)
-CONFIGFILE=$(dirname $0)/../migration.yml
+CONFIGFILE=/opt/odoo/migration.yml
 MARABUNTA_DB_HOST=$DB_HOST \
   MARABUNTA_DATABASE=$DB_NAME \
   MARABUNTA_DB_USER=$DB_USER \

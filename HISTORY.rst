@@ -24,6 +24,21 @@ Unreleased
 
 **Features and Improvements**
 
+* Refactor code to be able to share code between versions (see common and bin directories)
+* Introduce Flavors of the image:
+
+  * normal image without "onbuild"
+  * normal image with "onbuild" instructions
+  * batteries-included image without "unbuild"
+  * batteries-included with "unbuild" instructions
+
+* Batteries-included flavor includes a selected list of python packages commonly used in OCA addons (see extra_requirements.txt)
+* Do not use the "latest" image, pick your flavor after you read the readme
+* Python build package are now available in the variable $BUILD_PACKAGE
+* New script to install and remove all build package (see install/dev_package.sh and install/purge_dev_package_and_cache.sh) from $BUILD_PACKAGE
+* Change directory organisation. Move /opt/odoo/etc => /opt/etc, /opt/odoo/bin => /opt/bin. So now you can mount the whole odoo directory from your dev environment (instead of directory by directory)
+* Adapt example with the previous change
+
 **Bugfixes**
 
 **Libraries**

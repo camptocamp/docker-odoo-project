@@ -60,7 +60,7 @@ case "$(echo "${DEMO}" | tr '[:upper:]' '[:lower:]' )" in
 esac
 
 # Create configuration file from the template
-CONFIGDIR=$BASEDIR/etc
+CONFIGDIR=/opt/etc
 if [ -e $CONFIGDIR/openerp.cfg.tmpl ]; then
   dockerize -template $CONFIGDIR/openerp.cfg.tmpl:$CONFIGDIR/odoo.cfg
 fi
@@ -82,12 +82,22 @@ if [ -z "$(pip list --format=columns | grep "/opt/odoo/src")" ]; then
   # the install everytime because it would slow the start of the containers
   echo '/opt/odoo/src/odoo.egg-info is missing, probably because the directory is a volume.'
   echo 'Running pip install -e /opt/odoo/src to restore odoo.egg-info'
-  pip install -e $BASEDIR/src
+  pip install -e /opt/odoo/src
   # As we write in a volume, ensure it has the same user.
   # So when the src is a host volume and we set the LOCAL_USER_ID to be the
   # host user, the files are owned by the host user
   chown -R odoo: /opt/odoo/src/odoo.egg-info
 fi
+
+
+# Same logic but for your custom project
+if [ -z "$(pip list --format=columns | grep "/opt/odoo" | grep -v "/opt/odoo/src")" ]; then
+  echo '/opt/src/*.egg-info is missing, probably because the directory is a volume.'
+  echo 'Running pip install -e /opt/odoo to restore *.egg-info'
+  pip install -e /opt/odoo
+  chown -R odoo: /opt/odoo/*.egg-info
+fi
+
 
 # Wait until postgres is up
 $BINDIR/wait_postgres.sh
@@ -105,16 +115,16 @@ if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] ; then
 
   BEFORE_MIGRATE_ENTRYPOINT_DIR=/opt/odoo/before-migrate-entrypoint.d
   if [ -d "$BEFORE_MIGRATE_ENTRYPOINT_DIR" ]; then
-    /bin/run-parts --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
+    run-parts --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
   fi
 
   if [ -z "$MIGRATE" -o "$MIGRATE" = True ]; then
-      gosu odoo migrate
+    gosu odoo migrate
   fi
 
   START_ENTRYPOINT_DIR=/opt/odoo/start-entrypoint.d
   if [ -d "$START_ENTRYPOINT_DIR" ]; then
-    /bin/run-parts --verbose "$START_ENTRYPOINT_DIR"
+    run-parts --verbose "$START_ENTRYPOINT_DIR"
   fi
 
   exec gosu odoo "$@"

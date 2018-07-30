@@ -5,21 +5,83 @@
 A base image for our Odoo projects.
 
 This image alone does nothing because it doesn't contain any Odoo's code. The
-code should be added in a Docker inheriting from this image.
+code should be added in a Dockerfile inheriting from this image.
 
-A project has to respect a structure, look at the [example](example).
+A project using this image has to respect a defined structure, look at the [example](example).
 
 See also the [Changelog](HISTORY.rst).
+
+## Image Flavors
+
+There are 4 flavors of the image:
+
+- normal: `odoo-project:${odoo_version}-${tag_version}`
+- normal-unbuild: `odoo-project:${odoo_version}-${tag_version}-onbuild`
+- batteries-included: `odoo-project:${odoo_version}-${tag_version}-batteries`
+- batteries-included-onbuild: `odoo-project:${odoo_version}-${tag_version}-batteries-onbuild`
+
+Note: in production, we strongly recommend to never use the "latest" tag.
+Instead use a specific version in order to be able to rebuild identical images.
+
+### Normal or Batteries-included?
+
+The batteries-included image is exactly the same image, with a list of
+additional pre-installed python packages. The packages have been chosen because
+of their prevalent usage in OCA addons.
+
+The list of package (with their version) is defined in the extra_requirements.txt file.
+
+* [9.0/extra_requirements.txt](9.0/extra_requirements.txt)
+* [10.0/extra_requirements.txt](10.0/extra_requirements.txt)
+* [11.0/extra_requirements.txt](11.0/extra_requirements.txt)
+
+you can also see the Dockerfile that generate this image here: [common/Dockerfile-batteries](common/Dockerfile-batteries)
+
+### With or without onbuild?
+
+The `onbuild` flavors add default *ONBUILD* instructions in the Dockerfile in
+order to simplify the generation of custom image.
+
+For more information on the *ONBUILD* command please read Docker documentation
+
+The dockerfile for this flavor is here:  [common/Dockerfile-onbuild](common/Dockerfile-onbuild)
+
+For comparison, two example of Dockerfile are shown in the project example here:
+
+- without onbuild: [example/odoo/Dockerfile](example/odoo/Dockerfile)
+- with onbuild: [example/odoo/Dockerfile-onbuild](example/odoo/Dockerfile-onbuild)
+
+Note: the Dockerfile of the onbuild flavor is shorter but
+
+- you can not create intermediary custom image based on it (as ONBUILD instruction need to be played).
+- the official docker images have deprecated their `-onbuild` images: https://github.com/docker-library/official-images/issues/2076
+
 
 ## Build
 
 The images should be build with `make`:
 
+Normal flavors:
+
 ```
-$ make VERSION=11.0  # generate image camptocamp/odoo-project:11.0-latest
-$ make VERSION=10.0  # generate image camptocamp/odoo-project:10.0-latest
-$ make VERSION=9.0  # generate image camptocamp/odoo-project:9.0-latest
+# generate image camptocamp/odoo-project:11.0-latest and camptocamp/odoo-project:11.0-latest-onbuild
+$ make VERSION=11.0
+# generate image camptocamp/odoo-project:10.0-latest and camptocamp/odoo-project:10.0-latest-onbuild
+$ make VERSION=10.0
+# generate image camptocamp/odoo-project:9.0-latest and camptocamp/odoo-project:9.0-latest-onbuild
+$ make VERSION=9.0
 ```
+
+Batteries-included flavors:
+```
+# generate image camptocamp/odoo-project:11.0-batteries-latest and camptocamp/odoo-project:11.0-latest-batteries-onbuild
+$ make VERSION=11.0 BATTERIES=True
+# generate image camptocamp/odoo-project:10.0-batteries-latest and camptocamp/odoo-project:10.0-latest-batteries-onbuild
+$ make VERSION=10.0 BATTERIES=True
+# generate image camptocamp/odoo-project:9.0-batteries-latest and camptocamp/odoo-project:9.0-latest-batteries-onbuild
+$ make VERSION=9.0 BATTERIES=True
+```
+
 
 ## Configuration
 
@@ -139,6 +201,7 @@ ENV ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/external-src/server-tools,/opt/odo
 By setting this value in the `Dockerfile`, it will be integrated into the build and thus will be consistent across each environment.
 
 By the way, you can add other `ENV` variables in your project's `Dockerfile` if you want to customize the default values of some variables for a project.
+
 
 ## Running tests
 
