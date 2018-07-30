@@ -1,0 +1,45 @@
+# Composition used to run automated tests on the images
+# Used by the Makefile at the repository's root
+
+version: '2'
+
+services:
+  odoo:
+    build: ./odoo/
+    depends_on:
+      - db
+    volumes:
+      - "data-odoo:/data/odoo"
+    environment:
+      - DB_USER=odoo
+      - DB_PASS=odoo
+      - DB_NAME=odoodb
+      - RUNNING_ENV=dev
+      - LOG_HANDLER=:WARN
+      - MARABUNTA_MODE=demo  # could be 'full' for the db with all the data
+      # cached database dumps config for `runmigration` and `runtests`
+      - CREATE_DB_CACHE=false  # set it to 'true' to create dumps
+      - LOAD_DB_CACHE=true # by default will always search for existing dumps
+      # SUBS_MD5 is `runtests` only, you need to define it to identify dumps,
+      # a good practice is to generate it based on the content you have in
+      # your dependencies (`odoo/src`, `odoo/external-src`)
+      # See README.md for more.
+      - SUBS_MD5=
+      # MIG_LOAD_VERSION is `runmigration` only, define it if you want to load
+      # a prior release dump that doesn't match `odoo/VERSION` number.
+      # See README.md for more.
+      - MIG_LOAD_VERSION_CEIL=
+
+  db:
+    image: postgres:9.6
+    ports:
+      - 5432
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+    volumes:
+      - "data-db:/var/lib/postgresql/data"
+
+volumes:
+  data-odoo:
+  data-db:
