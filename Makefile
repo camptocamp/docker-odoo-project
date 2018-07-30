@@ -4,10 +4,10 @@ $(error VERSION is not set)
 endif
 
 IMAGE=$(NAME):$(VERSION)
-ifeq ($(FULL), True)
-  $TAG=$(TAG)-full
-  IMAGE_LATEST=$(IMAGE)-latest-full
-  DOCKERFILE='Dockerfile-full'
+ifeq ($(BATTERIES), True)
+  $TAG=$(TAG)-batteries
+  IMAGE_LATEST=$(IMAGE)-latest-batteries
+  DOCKERFILE='Dockerfile-batteries'
 else
   IMAGE_LATEST=$(IMAGE)-latest
   DOCKERFILE='Dockerfile'
@@ -24,7 +24,7 @@ build:
 	cp -r bin/ $(TMP)
 	cp -r common/* $(TMP)
 	sed -i "1i FROM $(IMAGE_LATEST)" $(TMP)/Dockerfile-onbuild
-	sed -i "1i FROM $(NAME):$(VERSION)-latest" $(TMP)/Dockerfile-full
+	sed -i "1i FROM $(NAME):$(VERSION)-latest" $(TMP)/Dockerfile-batteries
 	cp -r install/ $(TMP)
 	cp -r start-entrypoint.d/ $(TMP)
 	cp -r before-migrate-entrypoint.d/ $(TMP)

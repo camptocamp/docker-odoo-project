@@ -10,9 +10,9 @@ env:
 
 script:
   - make VERSION=$VERSION build
-  - make VERSION=$VERSION FULL=True build
+  - make VERSION=$VERSION BATTERIES=True build
   - make VERSION=$VERSION test
 
 after_success:
   - travis/publish.sh
-  - FULL=True bash -c 'travis/publish.sh'
+  - BATTERIES=True bash -c 'travis/publish.sh'
