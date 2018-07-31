@@ -2,11 +2,9 @@ FROM debian:jessie
 MAINTAINER Camptocamp
 
 # create the working directory and a place to set the logs (if wanted)
-RUN mkdir -p /opt/odoo /var/log/odoo
+RUN mkdir -p /odoo /var/log/odoo
 
-WORKDIR "/opt/odoo"
-
-COPY ./base_requirements.txt ./
+COPY ./base_requirements.txt /odoo
 COPY ./install /install
 
 # build and dev packages
@@ -36,19 +34,19 @@ RUN set -x; \
         && /install/wkhtml_12_1_2.sh \
         && /install/dev_package.sh \
         && pip install -U pip setuptools \
-        && pip install -r base_requirements.txt \
+        && pip install -r /odoo/base_requirements.txt \
         && /install/purge_dev_package_and_cache.sh
 
 # grab gosu for easy step-down from root and dockerize to generate template and
 # wait on postgres
 RUN /install/gosu.sh && /install/dockerize.sh
 
-COPY ./src_requirements.txt ./
-COPY ./bin /opt/bin
-COPY ./etc /opt/etc
-COPY ./before-migrate-entrypoint.d /opt/before-migrate-entrypoint.d
-COPY ./start-entrypoint.d /opt/start-entrypoint.d
-COPY ./MANIFEST.in ./
+COPY ./src_requirements.txt /odoo
+COPY ./bin /odoo-bin
+COPY ./templates /templates
+COPY ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
+COPY ./start-entrypoint.d /start-entrypoint.d
+COPY ./MANIFEST.in /odoo
 
 VOLUME ["/data/odoo", "/var/log/odoo"]
 
@@ -56,7 +54,7 @@ VOLUME ["/data/odoo", "/var/log/odoo"]
 EXPOSE 8069 8072
 
 ENV ODOO_VERSION=10.0 \
-    PATH=/opt/bin:$PATH \
+    PATH=/odoo-bin:$PATH \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     DB_HOST=db \
@@ -67,11 +65,8 @@ ENV ODOO_VERSION=10.0 \
     ODOO_BASE_URL=http://localhost:8069 \
     ODOO_REPORT_URL=http://localhost:8069 \
     DEMO=False \
-    ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/src/addons \
-    OPENERP_SERVER=/opt/etc/odoo.cfg
+    ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
+    OPENERP_SERVER=/etc/odoo.cfg
 
-# set to /opt so we can have the same path outside and inside of the container:
-# docker run --rm odoo pytest odoo/external-src/abc/xyz/tests/test.py
-WORKDIR "/opt"
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["odoo"]

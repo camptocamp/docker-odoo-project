@@ -1,9 +1,11 @@
 #!/bin/bash
 
-cat /opt/odoo/base_requirements.txt > requirements.txt
+set -e
+
+cat /odoo/base_requirements.txt > requirements.txt
 
 if [ "$BATTERIES" = "True" ]
-  then cat /opt/odoo/extra_requirements.txt >> requirements.txt
+  then cat /odoo/extra_requirements.txt >> requirements.txt
 fi
 
 sed -i '/^\s*$/d' requirements.txt
