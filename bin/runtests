@@ -1,9 +1,28 @@
 #!/bin/bash
 #
-# mainly used from Travis, it creates a database, runs tests on it and drops it.
+# Run unit tests of local-src modules
+#
+# mainly used from Travis,
+# it creates a database,
+# if a cached dump of official and oca modules exists restore it
+# otherwise install dependencies and create a dump to cache
+# then install local addons
+# runs tests on it and drops it.
 #
 # Arguments:
 #   optional: name of the addons to test, separated by ,
+#
+# Environment variables:
+#
+# CREATE_DB_CACHE:
+#   if set to "true", will create a dump named "odoo_test_$VERSION.dmp"
+#
+# LOAD_DB_CACHE:
+#   if set to "false", will skip trying to reload cached dump named "odoo_test_$VERSION.dmp"
+#
+# SUBS_MD5:
+#   value to tag the database dump. Will search for a dump named
+#   "odoo_test_$SUBS_MD5.dmp" if not found it will create one.
 #
 set -e
 
@@ -16,7 +35,7 @@ if [ "$ODOO_VERSION" == "9.0" ]
 then
   ODOO_BIN_PATH=/opt/odoo/src/odoo.py
 fi
-
+CACHE_DIR=/opt/.cachedb
 
 if [ -z $1 ]
 then
@@ -27,11 +46,43 @@ else
   LOCAL_ADDONS=$1
 fi
 
+DEPS_ADDONS=$(list_dependencies.py "$LOCAL_ADDONS")
+
 DB_NAME_TEST=${DB_NAME}_test
 
-PGPASSWORD=$DB_PASSWORD createdb -h $DB_HOST -U $DB_USER -O $DB_USER ${DB_NAME_TEST}
+
+echo "Create database"
+createdb -O $DB_USER ${DB_NAME_TEST}
+
+if [[ ! -z "$SUBS_MD5" ]]; then
+    CACHED_DUMP="$CACHE_DIR/odoo_test_$SUBS_MD5.dmp"
+fi
+
+echo "Submodule addons MD5 is: $SUBS_MD5"
+
+if [ "$LOAD_DB_CACHE" != "false" -a -f "$CACHED_DUMP" ]; then
+    echo "🐘 🐘 Database dump ${CACHED_DUMP} found 🐘 🐘"
+    echo "Restore Database dump from cache matching MD5 📦⮕ 🐘"
+    psql -q -o /dev/null -d $DB_NAME_TEST -f "$CACHED_DUMP"
+    psql -d $DB_NAME_TEST -P pager=off -c "SELECT name as installed_module FROM ir_module_module WHERE state = 'installed' ORDER BY name"
+else
+    if [ "$LOAD_DB_CACHE" == "false" ]; then
+        echo "Dump cache load disabled."
+    else
+        echo "No cached dump found matching MD5 🐢 🐢 🐢"
+    fi
+    echo "🔨🔨 Install official/OCA modules 🔨🔨"
+    odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" -i ${DEPS_ADDONS}
+    if [ "$CREATE_DB_CACHE" == "true" -a ! -z "$CACHED_DUMP" ]; then
+        echo "Generate dump $CACHED_DUMP into cache 🐘⮕ 📦"
+        mkdir -p "$CACHE_DIR"
+        pg_dump -Fp -d $DB_NAME_TEST -O -f "$CACHED_DUMP"
+    fi
+fi
+echo "🔧🔧 Install local-src modules 🔧🔧"
 odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" -i ${LOCAL_ADDONS}
+odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" -u ${LOCAL_ADDONS}
 coverage run --source="${LOCAL_SRC_DIR}" "${ODOO_BIN_PATH}" --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" -u ${LOCAL_ADDONS}
-PGPASSWORD=$DB_PASSWORD dropdb -h $DB_HOST -U $DB_USER ${DB_NAME_TEST}
+dropdb ${DB_NAME_TEST}
 
 coverage report -m
