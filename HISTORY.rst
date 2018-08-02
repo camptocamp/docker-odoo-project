@@ -38,6 +38,7 @@ Unreleased
 * New script to install and remove all build package (see install/dev_package.sh and install/purge_dev_package_and_cache.sh) from $BUILD_PACKAGE
 * Change directory organisation. Move /opt/odoo/etc => /opt/etc, /opt/odoo/bin => /opt/bin. So now you can mount the whole odoo directory from your dev environment (instead of directory by directory)
 * Adapt example with the previous change
+* Update `cryptography` dependency to a newer version as security vulnerability was found in the one we used
 
 **Bugfixes**
 
