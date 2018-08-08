@@ -1,0 +1,27 @@
+'''Gunicorn configuration script'''
+import openerp
+bind = '0.0.0.0:8069'
+pidfile = 'gunicorn_openerp' + '.pid'
+workers = 16
+on_starting = openerp.wsgi.core.on_starting
+try:
+  when_ready = openerp.wsgi.core.when_ready
+except AttributeError: # not in current head of 6.1
+  pass
+pre_request = openerp.wsgi.core.pre_request
+post_request = openerp.wsgi.core.post_request
+timeout = 2000
+max_requests = 2000
+openerp.conf.server_wide_modules = ['web']
+conf = openerp.tools.config
+conf['addons_path'] = '{{ .Env.ADDONS_PATH }}'
+conf['db_host'] = '{{ .Env.DB_HOST }}'
+conf['db_name'] = '{{ .Env.DB_NAME }}'
+conf['db_user'] = '{{ .Env.DB_USER }}'
+conf['db_password'] = '{{ .Env.DB_PASSWORD }}'
+conf['cpu_time_limit'] = 600
+conf['xmlrpcs_port'] = 8071
+conf['netrpc_port'] = 8070
+conf['ftp_server_port'] = "8021"
+conf['db_user'] = 'erp_prod'
+conf['xmlrpc_port'] = 8069
