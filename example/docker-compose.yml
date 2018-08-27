@@ -13,9 +13,9 @@ services:
       - db
     volumes:
       - "data-odoo:/data/odoo"
-      - "data-odoo-pytest-cache:/opt/odoo/.cache"
+      - "data-odoo-pytest-cache:/odoo/.cache"
       # to speed build of image customise your .dockerignore (this is an help there)
-      - "./odoo:/opt/odoo"
+      - "./odoo:/odoo"
     environment:
       - DB_USER=odoo
       - DB_PASS=odoo
