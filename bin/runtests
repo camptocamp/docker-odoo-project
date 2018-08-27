@@ -35,7 +35,7 @@ if [ "$ODOO_VERSION" == "9.0" ]
 then
   ODOO_BIN_PATH=/odoo/src/odoo.py
 fi
-CACHE_DIR=/opt/.cachedb
+CACHE_DIR=/.cachedb
 
 if [ -z $1 ]
 then
