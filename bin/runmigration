@@ -35,11 +35,11 @@
 set -e
 
 wait_postgres.sh
-CACHE_DIR=/opt/.cachedb
+CACHE_DIR=/.cachedb
 
 echo $CACHE_DIR
 
-VERSION=$(cat /opt/odoo/VERSION)
+VERSION=$(cat /odoo/VERSION)
 
 CACHED_DUMP="$CACHE_DIR/odoo_sample_$VERSION.dmp"
 

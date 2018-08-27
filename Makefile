@@ -72,10 +72,10 @@ test:
 	# migration: standard
 	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) -e LOAD_DB_CACHE="false" odoo odoo --stop-after-init
 	# runmigration: create the dump
-	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) -v $(TMP)/.cachedb:/opt/.cachedb -e CREATE_DB_CACHE="true" odoo runmigration
+	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) -v $(TMP)/.cachedb:/.cachedb -e CREATE_DB_CACHE="true" odoo runmigration
 	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) odoo dropdb odoodb
 	# runmigration: use dump
-	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) -v $(TMP)/.cachedb:/opt/.cachedb -e LOAD_DB_CACHE="true" odoo runmigration
+	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) -v $(TMP)/.cachedb:/.cachedb -e LOAD_DB_CACHE="true" odoo runmigration
 	cd $(TMP) && docker-compose -f docker-compose.yml down
 	echo "    - version: 9.0.1" >> $(TMP)/odoo/migration.yml
 	echo "      operations:">> $(TMP)/odoo/migration.yml
@@ -83,13 +83,13 @@ test:
 	echo "          - anthem songs.install.demo::create_partners" >> $(TMP)/odoo/migration.yml
 	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) odoo dropdb odoodb
 	# runmigration: ceil
-	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) -v $(TMP)/.cachedb:/opt/.cachedb -e LOAD_DB_CACHE="true" -e MIG_LOAD_VERSION_CEIL="9.0.1" odoo runmigration
+	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) -v $(TMP)/.cachedb:/.cachedb -e LOAD_DB_CACHE="true" -e MIG_LOAD_VERSION_CEIL="9.0.1" odoo runmigration
 	# runtests: standard
 	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) -e LOAD_DB_CACHE="false" -e CREATE_DB_CACHE="false" odoo runtests
 	## runtests: create the dump
-	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) -v $(TMP)/.cachedb:/opt/.cachedb -e CREATE_DB_CACHE="true" -e SUBS_MD5=testcache odoo runtests
+	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) -v $(TMP)/.cachedb:/.cachedb -e CREATE_DB_CACHE="true" -e SUBS_MD5=testcache odoo runtests
 	## runtests: use dump
-	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) -v $(TMP)/.cachedb:/opt/.cachedb -e LOAD_DB_CACHE="true" -e SUBS_MD5=testcache  odoo runtests
+	cd $(TMP) && docker-compose -f docker-compose.yml run --rm -e LOCAL_USER_ID=$(shell id -u) -v $(TMP)/.cachedb:/.cachedb -e LOAD_DB_CACHE="true" -e SUBS_MD5=testcache  odoo runtests
 	cd $(TMP) && docker-compose -f docker-compose.yml down
 	echo '>>> Run test for onbuild image'
 	cp $(TMP)/odoo/Dockerfile-onbuild $(TMP)/odoo/Dockerfile

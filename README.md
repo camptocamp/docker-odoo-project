@@ -310,9 +310,9 @@ This tools really speed up the process of testing migration steps as you can be 
 
 ### cached dumps (runtests / runmigration)
 
-To use database dumps you will need a volume on `/opt/.cachedb` to have persistant dumps.
+To use database dumps you will need a volume on `/.cachedb` to have persistant dumps.
 
-On travis you will also want to activate the cache, if your volume definition is `- "$HOME/.cachedb:/opt/.cachedb"`
+On travis you will also want to activate the cache, if your volume definition is `- "$HOME/.cachedb:/.cachedb"`
 add this in `.travis.yml`:
 
 ```
