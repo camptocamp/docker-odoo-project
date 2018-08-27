@@ -22,6 +22,22 @@ Release History
 Unreleased
 ++++++++++
 
+.. DANGER:: Breaking changes
+
+      Flavors: you have either to use the ``onbuild`` flavor, either to add the
+      ``COPY`` instructions in your projects Dockerfiles.
+
+      Directories have been re-arranged, you must adapt addons-path, volumes or COPY instructions:
+
+      * /opt/odoo/etc/odoo.cfg.tmpl → /templates/odoo.cfg.tmpl
+      * /opt/odoo/etc/odoo.cfg → /etc/odoo.cfg
+      * /opt/odoo → /odoo
+      * /opt/odoo/bin → /odoo-bin
+      * /opt/odoo/bin_compat → /odoo-bin-compat (for 9.0)
+      * /opt/odoo/before-migrate-entrypoint.d → /before-migrate-entrypoint.d
+      * /opt/odoo/start-entrypoint.d → /start-entrypoint.d
+
+
 **Features and Improvements**
 
 * Refactor code to be able to share code between versions (see common and bin directories)
@@ -29,8 +45,8 @@ Unreleased
 
   * normal image without "onbuild"
   * normal image with "onbuild" instructions
-  * batteries-included image without "unbuild"
-  * batteries-included with "unbuild" instructions
+  * batteries-included image without "onbuild"
+  * batteries-included with "onbuild" instructions
 
 * Batteries-included flavor includes a selected list of python packages commonly used in OCA addons (see extra_requirements.txt)
 * Do not use the "latest" image, pick your flavor after you read the readme

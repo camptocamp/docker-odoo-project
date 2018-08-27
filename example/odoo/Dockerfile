@@ -2,21 +2,21 @@ FROM camptocamp/odoo-project:10.0-latest
 MAINTAINER Camptocamp
 
 # For installing odoo you have two possibility adding the whole root directory
-#COPY . /opt/odoo
+#COPY . /odoo
 
 # or adding each directory, this solution will reduce the download time
 # of the image on the server (we can reuse layout)
-COPY ./src /opt/odoo/src
-COPY ./external-src /opt/odoo/external-src
-COPY ./local-src /opt/odoo/local-src
-COPY ./data /opt/odoo/data
-COPY ./songs /opt/odoo/songs
-COPY ./setup.py /opt/odoo/
-COPY ./VERSION /opt/odoo/
-COPY ./migration.yml /opt/odoo/
+COPY ./src /odoo/src
+COPY ./external-src /odoo/external-src
+COPY ./local-src /odoo/local-src
+COPY ./data /odoo/data
+COPY ./songs /odoo/songs
+COPY ./setup.py /odoo/
+COPY ./VERSION /odoo/
+COPY ./migration.yml /odoo/
 
-RUN pip install -e /opt/odoo
-RUN pip install -e /opt/odoo/src
+RUN pip install -e /odoo
+RUN pip install -e /odoo/src
 
 # Project's specifics packages
 RUN set -x; \
@@ -26,7 +26,7 @@ RUN set -x; \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
 
-COPY ./requirements.txt /opt/odoo/
-RUN cd /opt/odoo && pip install -r requirements.txt
+COPY ./requirements.txt /odoo/
+RUN cd /odoo && pip install -r requirements.txt
 
-ENV ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/src/addons
+ENV ADDONS_PATH=/odoo/local-src,/odoo/src/addons

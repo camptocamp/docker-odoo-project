@@ -29,11 +29,11 @@ set -e
 # TODO: if we are not in TRAVIS, make a template then run tests on a copy
 
 wait_postgres.sh
-LOCAL_SRC_DIR=/opt/odoo/local-src
-ODOO_BIN_PATH=/opt/odoo/src/odoo-bin
+LOCAL_SRC_DIR=/odoo/local-src
+ODOO_BIN_PATH=/odoo/src/odoo-bin
 if [ "$ODOO_VERSION" == "9.0" ]
 then
-  ODOO_BIN_PATH=/opt/odoo/src/odoo.py
+  ODOO_BIN_PATH=/odoo/src/odoo.py
 fi
 CACHE_DIR=/opt/.cachedb
 

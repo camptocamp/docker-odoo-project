@@ -4,9 +4,6 @@
 #
 set -e
 
-BASEDIR=$(dirname $0)
-CONFIGDIR=/opt/etc
-
 dockerize -timeout 30s -wait tcp://${DB_HOST}:${DB_PORT}
 
 # now the port is up but sometimes postgres is not totally ready yet:

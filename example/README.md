@@ -30,7 +30,7 @@ Follow the steps:
         FROM camptocamp/odoo-project:9.0
         MAINTAINER <name>
 
-        ENV ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/external-src/server-tools,/opt/odoo/src/addons
+        ENV ADDONS_PATH=/odoo/local-src,/odoo/external-src/server-tools,/odoo/src/addons
 
 7. Build your image
 

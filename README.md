@@ -233,12 +233,12 @@ steps on top of it.
 
 The main configuration options of Odoo can be configured through environment variables. The name of the environment variables are the same of the options but uppercased (eg. `workers` becomes `WORKERS`).
 
-Look in [9.0/etc/openerp.cfg.tmpl](9.0/etc/openerp.cfg.tmpl) to see the full list.
+Look in [11.0/templates/odoo.cfg.tmpl](11.0/templates/odoo.cfg.tmpl) to see the full list.
 
 While most of the variables can be set in the docker-compose file so we can have different values for different environments, the `ADDONS_PATH` **must** be set in the `Dockerfile` of your project with a line such as:
 
 ```
-ENV ADDONS_PATH=/opt/odoo/local-src,/opt/odoo/external-src/server-tools,/opt/odoo/src/addons
+ENV ADDONS_PATH=/odoo/local-src,/odoo/external-src/server-tools,/odoo/src/addons
 ```
 
 By setting this value in the `Dockerfile`, it will be integrated into the build and thus will be consistent across each environment.
@@ -323,9 +323,9 @@ cache:
 
 ## Start entrypoint
 
-Any script in any language placed in `/opt/odoo/start-entrypoint.d` will be
+Any script in any language placed in `/start-entrypoint.d` will be
 executed just between the migration and the start of Odoo.
-Similarly, scripts placed in `/opt/odoo/before-migrate-entrypoint.d` will be
+Similarly, scripts placed in `/before-migrate-entrypoint.d` will be
 executed just before the migration.
 
 The order of execution of the files is determined by the `run-parts` 's rules.
