@@ -37,7 +37,7 @@ multidict==4.3.1
 pdfminer.six==20170720
 pyasn1==0.4.3
 pycparser==2.18
-pycryptodome==3.6.3
+pycryptodome==3.6.6
 PyNaCl==1.2.1
 pytesseract==0.2.2
 regex==2018.6.9
