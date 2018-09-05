@@ -1,4 +1,4 @@
-FROM camptocamp/odoo-project:10.0-latest-onbuild
+FROM camptocamp/odoo-project:11.0-latest-onbuild
 MAINTAINER Camptocamp
 
 # Project's specifics packages

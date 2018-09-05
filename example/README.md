@@ -8,7 +8,7 @@ Follow the steps:
 
 1. Create directories. This is mandatory, they will be copied in the image
 
-        mkdir -p odoo/external-src odoo/local-src odoo/data odoo/features
+        mkdir -p odoo/external-src odoo/local-src odoo/data odoo/songs
 
 2. Add a submodule for Odoo (official or OCA/OCB)
 
@@ -21,13 +21,10 @@ Follow the steps:
 
 4. Optionally add custom addons in `odoo/local-src`
 
-5. Copy the configuration template `etc/openerp.cfg.tmpl` in your project, see [the example file](odoo/etc/openerp.cfg.tmpl).
-   Adapt the `addons_path` and the other options if needed.
-
 6. Create the Dockerfile, the bare minimum being (see also [the example
    file](odoo/Dockerfile) that installs additional dependencies):
 
-        FROM camptocamp/odoo-project:9.0
+        FROM camptocamp/odoo-project:11.0
         MAINTAINER <name>
 
         ENV ADDONS_PATH=/odoo/local-src,/odoo/external-src/server-tools,/odoo/src/addons

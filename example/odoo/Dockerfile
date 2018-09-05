@@ -1,11 +1,12 @@
-FROM camptocamp/odoo-project:10.0-latest
+FROM camptocamp/odoo-project:11.0-latest
 MAINTAINER Camptocamp
 
-# For installing odoo you have two possibility adding the whole root directory
+# For installing odoo you have two possibility
+# 1. either adding the whole root directory
 #COPY . /odoo
 
-# or adding each directory, this solution will reduce the download time
-# of the image on the server (we can reuse layout)
+# 2. or adding each directory, this solution will reduce the build and download
+# time of the image on the server (layers are reused)
 COPY ./src /odoo/src
 COPY ./external-src /odoo/external-src
 COPY ./local-src /odoo/local-src
