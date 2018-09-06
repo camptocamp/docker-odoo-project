@@ -37,6 +37,13 @@ Unreleased
       * /opt/odoo/before-migrate-entrypoint.d → /before-migrate-entrypoint.d
       * /opt/odoo/start-entrypoint.d → /start-entrypoint.d
 
+      Marabunta:
+      * 1st version is now "setup"
+      * Support of 5 digits versions (11.0.1.2.3), consistent with Odoo addons
+      See
+      https://github.com/camptocamp/marabunta/blob/master/HISTORY.rst#090-2018-09-04
+      for more information
+
 
 **Features and Improvements**
 
@@ -59,6 +66,8 @@ Unreleased
 **Bugfixes**
 
 **Libraries**
+
+* Upgrade marabunta to 0.9.0 (https://github.com/camptocamp/marabunta/blob/master/HISTORY.rst#090-2018-09-04)
 
 **Build**
 
