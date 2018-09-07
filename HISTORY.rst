@@ -22,6 +22,20 @@ Release History
 Unreleased
 ++++++++++
 
+**Features and Improvements**
+
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+
+3.0.0 (2018-09-07)
+++++++++++++++++++
+
 .. DANGER:: Breaking changes
 
       Flavors: you have either to use the ``onbuild`` flavor, either to add the
@@ -38,6 +52,7 @@ Unreleased
       * /opt/odoo/start-entrypoint.d → /start-entrypoint.d
 
       Marabunta:
+
       * 1st version is now "setup"
       * Support of 5 digits versions (11.0.1.2.3), consistent with Odoo addons
       See
@@ -61,17 +76,11 @@ Unreleased
 * New script to install and remove all build package (see install/dev_package.sh and install/purge_dev_package_and_cache.sh) from $BUILD_PACKAGE
 * Change directory organisation. Move /opt/odoo/etc => /opt/etc, /opt/odoo/bin => /opt/bin. So now you can mount the whole odoo directory from your dev environment (instead of directory by directory)
 * Adapt example with the previous change
-* Update `cryptography` dependency to a newer version as security vulnerability was found in the one we used
-
-**Bugfixes**
 
 **Libraries**
 
-* Upgrade marabunta to 0.9.0 (https://github.com/camptocamp/marabunta/blob/master/HISTORY.rst#090-2018-09-04)
-
-**Build**
-
-**Documentation**
+* Update marabunta to 0.9.0 (https://github.com/camptocamp/marabunta/blob/master/HISTORY.rst#090-2018-09-04)
+* Update `cryptography` dependency to a newer version as security vulnerability was found in the one we used
 
 
 2.7.0 (2018-07-27)
