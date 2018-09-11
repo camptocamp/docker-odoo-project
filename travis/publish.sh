@@ -6,7 +6,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
   docker login --username="$DOCKER_USERNAME" --password="$DOCKER_PASSWORD"
 
   if [ "$TRAVIS_BRANCH" == "master" ]; then
-    if [ "$VERSION" == "10.0" ]; then
+    if [ "$VERSION" == "11.0" ]; then
       make VERSION=$VERSION TAG=$TRAVIS_TAG BATTERIES=$BATTERIES tag_latest_main push_latest_main
     fi
     make VERSION=$VERSION TAG=latest BATTERIES=$BATTERIES tag push
