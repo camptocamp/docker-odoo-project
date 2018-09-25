@@ -1,4 +1,4 @@
-NAME=camptocamp/odoo-project
+NAME=robertredcor/odoo-project
 ifndef VERSION
 $(error VERSION is not set)
 endif
