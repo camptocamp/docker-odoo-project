@@ -1,0 +1,12 @@
+MAINTAINER Camptocamp
+
+WORKDIR "/odoo"
+COPY ./extra_requirements.txt ./
+
+# Install extra requirement
+RUN set -x; \
+        /install/dev_package.sh \
+        && pip install -r extra_requirements.txt \
+        && /install/purge_dev_package_and_cache.sh
+
+WORKDIR "/"

@@ -1,7 +1,4 @@
 #!/bin/bash
 set -e
 
-BINDIR=$(dirname $0)
-BASEDIR=$(readlink -f $BINDIR/..)
-
-flake8 $BASEDIR/local-src --exclude=__init__.py
+flake8 /odoo/local-src --exclude=__init__.py

@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -e
+
+cat /odoo/base_requirements.txt > requirements.txt
+
+if [ "$BATTERIES" = "True" ]
+  then cat /odoo/extra_requirements.txt >> requirements.txt
+fi
+
+sed -i '/^\s*$/d' requirements.txt
+
+pip freeze -r requirements.txt | grep -v odoo > installed_package.txt
+
+sed -i '/^\s*$/d' installed_package.txt
+
+if head -n -1 installed_package.txt | grep -Fq "The following requirements were added by pip freeze:"
+then
+  echo "Some python library have been installed but there are not listed in the requirements, please fix it"
+  cat installed_package.txt
+  exit 1
+else
+  sed -i '$ d' installed_package.txt
+  diff installed_package.txt requirements.txt > requirements.diff
+  if [ -s requirements.diff ]
+  then
+      echo "You have some diff in your requirement, maybe some version are not freeze"
+      cat requirements.diff
+  else
+    echo "Package are correctly frozen"
+  fi
+fi

@@ -1,0 +1,82 @@
+#!/bin/bash
+#
+# Run marabunta steps
+#
+# Mainly used from Travis,
+#
+# If a cached dump of previous version is found, restore it.
+# Then play remaining marabunta steps from this state.
+#
+# Otherwise install from scratch.
+#
+# And finally make a database dump if none exists for current VERSION.
+#
+# TODO: store cache on S3 to store one DB per version
+#
+# Environment variables:
+#
+# CREATE_DB_CACHE:
+#   if set to "true", will create a dump named "odoo_sample_$VERSION.dmp"
+#
+# LOAD_DB_CACHE:
+#   if set to "false", will skip trying to reload cached dump named "odoo_sample_$VERSION.dmp"
+#
+# MIG_LOAD_VERSION_CEIL:
+#   Version number passed to search for an older dump.
+#
+#   It will load a dump lower than "odoo_sample_$MIG_LOAD_VERSION_CEIL.dmp"
+#   This is useful if you bumped odoo/VERSION as it won't match existing
+#   dumps.
+#
+#   For instance you have made a dump 10.1.0, you are now on the version
+#   10.2.0, if you pass your current version it will search for a dump
+#   lower than 10.2.0 and restore the 10.1.0. Then play the remaining
+#   steps on top of it.
+set -e
+
+wait_postgres.sh
+CACHE_DIR=/.cachedb
+
+echo $CACHE_DIR
+
+VERSION=$(cat /odoo/VERSION)
+
+CACHED_DUMP="$CACHE_DIR/odoo_sample_$VERSION.dmp"
+
+if [ "$LOAD_DB_CACHE" != "false" ]; then
+
+    # If we want to run the migration steps on top of a previous dump
+    # useful when odoo/VERSION was edited
+    if [ -n "$MIG_LOAD_VERSION_CEIL" ]; then
+        echo "New version - Searching for previous version dump 🔭"
+        if [ -d "$CACHE_DIR" ]; then
+            # Filter dumps of higher releases
+            export MAX_DUMP="$CACHE_DIR/odoo_sample_${MIG_LOAD_VERSION_CEIL}.dmp"
+            CACHED_DUMP=$(ls -v $CACHE_DIR/odoo_sample_*.dmp | awk '$0 < ENVIRON["MAX_DUMP"]' | tail -n1)
+        else
+            echo "No cached migration sample dump found"
+        fi
+    fi
+else
+    echo "Dump cache load disabled."
+fi
+
+if [ "$LOAD_DB_CACHE" != "false" -a -f "$CACHED_DUMP" ]; then
+    echo "🐘 🐘 Database dump ${CACHED_DUMP} found 🐘 🐘"
+    echo "Restore Database dump from cache 📦⮕ 🐘"
+    createdb -O $DB_USER $DB_NAME
+    psql -q -o /dev/null -f "$CACHED_DUMP"
+    echo "Do migration on top of restored dump"
+else
+    echo "Do migration from scratch 🐢 🐢 🐢"
+fi
+
+migrate
+
+# Create a dump if none exist for the current VERSION
+if [ "$CREATE_DB_CACHE" == "true" -a ! -f "$CACHED_DUMP" ]; then
+    echo "Save DB to cache $CACHED_DUMP 🐘⮕ 📦"
+    mkdir -p "$CACHE_DIR"
+    pg_dump -Fp -O -f "$CACHED_DUMP"
+    ls -l $CACHED_DUMP
+fi

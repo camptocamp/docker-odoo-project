@@ -18,6 +18,7 @@
 Release History
 ---------------
 
+
 Unreleased
 ++++++++++
 
@@ -30,6 +31,141 @@ Unreleased
 **Build**
 
 **Documentation**
+
+
+3.0.0 (2018-09-07)
+++++++++++++++++++
+
+.. DANGER:: Breaking changes
+
+      Flavors: you have either to use the ``onbuild`` flavor, either to add the
+      ``COPY`` instructions in your projects Dockerfiles.
+
+      Directories have been re-arranged, you must adapt addons-path, volumes or COPY instructions:
+
+      * /opt/odoo/etc/odoo.cfg.tmpl → /templates/odoo.cfg.tmpl
+      * /opt/odoo/etc/odoo.cfg → /etc/odoo.cfg
+      * /opt/odoo → /odoo
+      * /opt/odoo/bin → /odoo-bin
+      * /opt/odoo/bin_compat → /odoo-bin-compat (for 9.0)
+      * /opt/odoo/before-migrate-entrypoint.d → /before-migrate-entrypoint.d
+      * /opt/odoo/start-entrypoint.d → /start-entrypoint.d
+
+      Marabunta:
+
+      * 1st version is now "setup"
+      * Support of 5 digits versions (11.0.1.2.3), consistent with Odoo addons
+      See
+      https://github.com/camptocamp/marabunta/blob/master/HISTORY.rst#090-2018-09-04
+      for more information
+
+
+**Features and Improvements**
+
+* Refactor code to be able to share code between versions (see common and bin directories)
+* Introduce Flavors of the image:
+
+  * normal image without "onbuild"
+  * normal image with "onbuild" instructions
+  * batteries-included image without "onbuild"
+  * batteries-included with "onbuild" instructions
+
+* Batteries-included flavor includes a selected list of python packages commonly used in OCA addons (see extra_requirements.txt)
+* Do not use the "latest" image, pick your flavor after you read the readme
+* Python build package are now available in the variable $BUILD_PACKAGE
+* New script to install and remove all build package (see install/dev_package.sh and install/purge_dev_package_and_cache.sh) from $BUILD_PACKAGE
+* Change directory organisation. Move /opt/odoo/etc => /opt/etc, /opt/odoo/bin => /opt/bin. So now you can mount the whole odoo directory from your dev environment (instead of directory by directory)
+* Adapt example with the previous change
+* Helpers for running tests on cached databases / preinstalled addons
+
+**Libraries**
+
+* Update marabunta to 0.9.0 (https://github.com/camptocamp/marabunta/blob/master/HISTORY.rst#090-2018-09-04)
+* Update `cryptography` dependency to a newer version as security vulnerability was found in the one we used
+
+
+2.7.0 (2018-07-27)
+++++++++++++++++++
+
+This is the last release before 3.0.0, which will provide different flavors
+if the image, without onbuild instructions, with onbuild and full.
+
+**Features and Improvements**
+
+* Allow to set the odoo's unaccent option with the environment variable UNACCENT
+  in order to use the PostgreSQL extension 'unaccent'
+* ``ODOO_REPORT_URL`` is now ``http://localhost:8069`` by default
+
+**Bugfixes**
+
+* Fix error with python3/pip (ImportError: cannot import name 'main')
+
+**Libraries**
+
+* Upgrade python libs; either to the version in odoo's requirements.txt, either
+  to a more recent version if there is no breaking change. It should fix a few
+  potential security issues.
+
+
+2.6.1 (2018-03-29)
+++++++++++++++++++
+
+**Bugfixes**
+
+* Fix permission issue when running 'runtests' if odoo-bin has no executable flag
+
+
+2.6.0 (2018-03-29)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Add Script to set report.url if provided.
+* The http_proxy environment variable will be honored by 'gpg' when reaching the
+  key for the gosu key.
+* With the new version of anthem, CSV files can be loaded from a relative path
+  (starting from /opt/odoo/data): https://github.com/camptocamp/anthem/pull/36
+* The runtests script shows the coverage at the end
+
+**Build**
+
+* Upgrade setuptools, otherwise the pip installs fail with
+  NameError: name 'platform_system' is not defined
+* Disable pip cache directory to reduce image size
+
+**Libraries**
+
+* Upgrade six to 1.10.0
+* Upgrade ``anthem`` to 0.11.0 in every odoo version
+* Upgrade ``marabunta`` to 0.8.0 in every odoo version
+* Install the ``phonenumbers`` library for odoo 11.0
+
+
+2.5.1 (2018-01-11)
+++++++++++++++++++
+
+**Build**
+
+* Reduce size of the 11.0 image by cleaning and optimizing layers
+
+2.5.0 (2018-01-11)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Add an Odoo 11.0 image version. Which required upgrading dependencies to
+  Python 3 for this image.
+
+**Libraries**
+
+* Upgrade pip to the development version, to prevent unnecessary upgrades of libs
+* Upgrade ``anthem`` to 0.11.0
+* Upgrade ``marabunta`` to 0.8.0
+
+**Build**
+
+* Upgrade gosu to 1.10
+* Upgrade dockerize to 0.6.0 and run a checksum
 
 
 2.4.1 (2017-11-01)

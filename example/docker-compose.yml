@@ -4,22 +4,32 @@ version: '2'
 
 services:
   odoo:
+    tty: true
+    stdin_open: true
     build: ./odoo/
+    ports:
+      - 8069
     depends_on:
       - db
     volumes:
       - "data-odoo:/data/odoo"
+      - "data-odoo-pytest-cache:/odoo/.cache"
+      # to speed build of image customise your .dockerignore (this is an help there)
+      - "./odoo:/odoo"
     environment:
       - DB_USER=odoo
       - DB_PASS=odoo
       - DB_NAME=odoodb
       - ADMIN_PASSWD=# set me
       - RUNNING_ENV=dev
-      - MARABUNTA_MODE=demo
       - LOG_HANDLER=:WARN
+      - MARABUNTA_MODE=demo  # could be 'full' for the db with all the data
+      - MARABUNTA_ALLOW_SERIE=True  # should not be set in production
 
   db:
-    image: camptocamp/postgresql:pg9.5-latest
+    image: postgres:9.6
+    ports:
+      - 5432
     environment:
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo
@@ -28,10 +38,14 @@ services:
 
   # can be useful for dev when longpolling is required
   nginx:
-    image: camptocamp/odoo-nginx:9.0-1.1.0
+    image: camptocamp/odoo-nginx:11.0-1.3.0
+    ports:
+      - 80:80
     depends_on:
       - odoo
 
 volumes:
   data-odoo:
   data-db:
+  # store pytest cache, allowing to use --lf or --ff (replay last or first failures)
+  data-odoo-pytest-cache:

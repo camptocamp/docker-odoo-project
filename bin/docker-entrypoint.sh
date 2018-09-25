@@ -9,9 +9,6 @@ USER_ID=${LOCAL_USER_ID:-999}
 echo "Starting with UID : $USER_ID"
 id -u odoo &> /dev/null || useradd --shell /bin/bash -u $USER_ID -o -c "" -m odoo
 
-BINDIR=$(dirname $0)
-BASEDIR=$(readlink -f $BINDIR/..)
-
 export PGHOST=${DB_HOST}
 export PGPORT=${DB_PORT}
 export PGUSER=${DB_USER}
@@ -60,37 +57,48 @@ case "$(echo "${DEMO}" | tr '[:upper:]' '[:lower:]' )" in
 esac
 
 # Create configuration file from the template
-CONFIGDIR=$BASEDIR/etc
-if [ -e $CONFIGDIR/openerp.cfg.tmpl ]; then
-  dockerize -template $CONFIGDIR/openerp.cfg.tmpl:$CONFIGDIR/odoo.cfg
+TEMPLATES_DIR=/templates
+CONFIG_TARGET=/etc/odoo.cfg
+if [ -e $TEMPLATES_DIR/openerp.cfg.tmpl ]; then
+  dockerize -template $TEMPLATES_DIR/openerp.cfg.tmpl:$CONFIG_TARGET
 fi
-if [ -e $CONFIGDIR/odoo.cfg.tmpl ]; then
-  dockerize -template $CONFIGDIR/odoo.cfg.tmpl:$CONFIGDIR/odoo.cfg
+if [ -e $TEMPLATES_DIR/odoo.cfg.tmpl ]; then
+  dockerize -template $TEMPLATES_DIR/odoo.cfg.tmpl:$CONFIG_TARGET
 fi
 
-if [ ! -f "$CONFIGDIR/odoo.cfg" ]; then
-  echo "Error: one of etc/openerp.cfg.tmpl, etc/odoo.cfg.tmpl, etc/odoo.cfg is required"
+if [ ! -f "/etc/odoo.cfg" ]; then
+  echo "Error: one of /templates/openerp.cfg.tmpl, /templates/odoo.cfg.tmpl, /etc/odoo.cfg is required"
   exit 1
 fi
 
-if [ -z "$(pip list --format=columns | grep "/opt/odoo/src")" ]; then
+if [ -z "$(pip list --format=columns | grep "/odoo/src")" ]; then
   # The build runs 'pip install -e' on the odoo src, which creates an
-  # odoo.egg-info directory *inside /opt/odoo/src*. So when we run a container
+  # odoo.egg-info directory *inside /odoo/src*. So when we run a container
   # with a volume shared with the host, we don't have this .egg-info (at least
   # the first time).
   # When it happens, we reinstall the odoo python package. We don't want to run
   # the install everytime because it would slow the start of the containers
-  echo '/opt/odoo/src/odoo.egg-info is missing, probably because the directory is a volume.'
-  echo 'Running pip install -e /opt/odoo/src to restore odoo.egg-info'
-  pip install -e $BASEDIR/src
+  echo '/odoo/src/odoo.egg-info is missing, probably because the directory is a volume.'
+  echo 'Running pip install -e /odoo/src to restore odoo.egg-info'
+  pip install -e /odoo/src
   # As we write in a volume, ensure it has the same user.
   # So when the src is a host volume and we set the LOCAL_USER_ID to be the
   # host user, the files are owned by the host user
-  chown -R odoo: /opt/odoo/src/odoo.egg-info
+  chown -R odoo: /odoo/src/odoo.egg-info
 fi
 
+
+# Same logic but for your custom project
+if [ -z "$(pip list --format=columns | grep "/odoo" | grep -v "/odoo/src")" ]; then
+  echo '/src/*.egg-info is missing, probably because the directory is a volume.'
+  echo 'Running pip install -e /odoo to restore *.egg-info'
+  pip install -e /odoo
+  chown -R odoo: /odoo/*.egg-info
+fi
+
+
 # Wait until postgres is up
-$BINDIR/wait_postgres.sh
+wait_postgres.sh
 
 mkdir -p /data/odoo/{addons,filestore,sessions}
 if [ ! "$(stat -c '%U' /data/odoo)" = "odoo" ]; then
@@ -103,18 +111,18 @@ fi
 BASE_CMD=$(basename $1)
 if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] ; then
 
-  BEFORE_MIGRATE_ENTRYPOINT_DIR=/opt/odoo/before-migrate-entrypoint.d
+  BEFORE_MIGRATE_ENTRYPOINT_DIR=/odoo/before-migrate-entrypoint.d
   if [ -d "$BEFORE_MIGRATE_ENTRYPOINT_DIR" ]; then
-    /bin/run-parts --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
+    run-parts --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
   fi
 
   if [ -z "$MIGRATE" -o "$MIGRATE" = True ]; then
-      gosu odoo migrate
+    gosu odoo migrate
   fi
 
-  START_ENTRYPOINT_DIR=/opt/odoo/start-entrypoint.d
+  START_ENTRYPOINT_DIR=/odoo/start-entrypoint.d
   if [ -d "$START_ENTRYPOINT_DIR" ]; then
-    /bin/run-parts --verbose "$START_ENTRYPOINT_DIR"
+    run-parts --verbose "$START_ENTRYPOINT_DIR"
   fi
 
   exec gosu odoo "$@"
