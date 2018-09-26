@@ -33,7 +33,7 @@ ENV BUILD_PACKAGE \
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
         sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
-        && /install/package_odoo_11.0.sh \
+        && /install/package_odoo_11.0_12.0.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
         && /install/wkhtml_12_4.sh \
