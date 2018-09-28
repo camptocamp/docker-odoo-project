@@ -1,0 +1,8 @@
+[run]
+
+omit =
+  # omit all manifest files
+  */__manifest__.py
+  */__openerp__.py
+  # omit all test files
+  */tests/*
