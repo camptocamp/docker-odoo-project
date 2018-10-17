@@ -65,8 +65,11 @@ marabunta==0.9
 anthem==0.12.0
 
 # test / lint
+# those libs and their dependencies are unpinned
+# to always test with the last version of it
 flake8
 pytest
+pluggy
 pytest-odoo
 coverage
 pytest-cov
@@ -84,7 +87,6 @@ mccabe==0.6.1
 more-itertools==4.2.0
 pathtools==0.1.2
 pexpect==4.6.0
-pluggy==0.6.0
 ptyprocess==0.5.2
 py==1.5.3
 pycodestyle==2.3.1
