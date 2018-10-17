@@ -66,6 +66,8 @@ marabunta==0.9
 anthem==0.12.0
 
 # test / lint
+# those libs and their dependencies are unpinned
+# to always test with the last version of it
 flake8
 pytest
 pluggy
