@@ -24,13 +24,36 @@ Unreleased
 
 **Features and Improvements**
 
+* Launch tests only once
+
 **Bugfixes**
+
+* Fix Travis build, batteries overriding normal build
+* Fix broken build chain
+* Fix BEFORE_MIGRATE_ENTRYPOINT_DIR & START_ENTRYPOINT_DIR to remove /odoo
 
 **Libraries**
 
+* Adapt requirements for system and python 3.5
+* Bump paramiko version
+* Unfreeze pluggy version
+
 **Build**
 
+* Change latest docker tag to 11.0
+* Use setup version for marabunta in example
+* Add coveragerc in working directory
+
 **Documentation**
+
+**Support of 12.0**
+
+* Copy settings from 11.0 to 12.0
+* Rename package odoo file for odoo v12
+* Copy v12 requirements from odoo requirements
+* Add version 12.0 in travis.yml
+* Temporary fix test waiting Odoo release 12.0
+* Remove useless install of pip from github in version 12.0
 
 
 3.0.0 (2018-09-07)
