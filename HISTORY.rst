@@ -22,6 +22,20 @@ Release History
 Unreleased
 ++++++++++
 
+.. **Features and Improvements**
+
+.. **Bugfixes**
+
+.. **Libraries**
+
+.. **Build**
+
+.. **Documentation**
+
+
+3.1.0 (2018-10-19)
+++++++++++++++++++
+
 **Features and Improvements**
 
 * Launch tests only once
@@ -43,8 +57,6 @@ Unreleased
 * Change latest docker tag to 11.0
 * Use setup version for marabunta in example
 * Add coveragerc in working directory
-
-**Documentation**
 
 **Support of 12.0**
 
