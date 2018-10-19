@@ -346,3 +346,17 @@ check:
 ```
 
 The scripts are run only if the command is `odoo`/`odoo.py`.
+
+
+## New release
+
+* Check if [HISTORY file](https://github.com/camptocamp/docker-odoo-project/blob/master/HISTORY.rst) match with  [commits](https://github.com/camptocamp/docker-odoo-project/commits/master) else create PR to resolves this
+
+* Cleaning HISTORY.rst. Remove the empty sections, empty lines...
+
+* Check the diff then run:
+ * `git add ... # pick the files`
+ * `git commit -m"Release [version]"`
+ * `git tag -a [version] # optionally -s to sign the tag`
+ * `# copy-paste the content of the release from HISTORY.rst in the annotation of the tag`
+ * `git push --tags && git push`
