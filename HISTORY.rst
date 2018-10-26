@@ -26,6 +26,10 @@ Unreleased
 
 .. **Bugfixes**
 
+* Remove bad copy of extra_requirements in Dockerfile
+
+  * Must be done only in batteries flavor (see Dockerfile-batteries)
+
 .. **Libraries**
 
 .. **Build**
