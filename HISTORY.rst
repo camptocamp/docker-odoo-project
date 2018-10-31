@@ -26,7 +26,7 @@ Unreleased
 
 .. **Bugfixes**
 
-.. **Libraries**
+**Libraries**
 
 * Bump requests version
 
