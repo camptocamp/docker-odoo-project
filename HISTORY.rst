@@ -28,6 +28,8 @@ Unreleased
 
 .. **Libraries**
 
+* Bump requests version
+
 .. **Build**
 
 .. **Documentation**
