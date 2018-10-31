@@ -44,7 +44,7 @@ pytz==2016.7
 pyusb==1.0.0
 qrcode==5.3
 reportlab==3.3.0
-requests==2.11.1
+requests==2.20.0
 roman==2.0.0
 simplejson==3.6.5
 six==1.10.0
