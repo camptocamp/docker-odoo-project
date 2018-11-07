@@ -24,7 +24,9 @@ Unreleased
 
 .. **Features and Improvements**
 
-.. **Bugfixes**
+**Bugfixes**
+
+* Remove the NO_DATABASE_LIST option, does not exist, the sole option is DB_LIST
 
 **Libraries**
 
