@@ -30,7 +30,8 @@ on_exit() {
 }
 
 trap on_exit EXIT
-
+# as executable bit will be inherited to the docker image we explicitly set executable bit on scripts
+chmod +x start-entrypoint.d/* before-migrate-entrypoint.d/*
 cp -r ${VERSION}/. ${TMP}/
 cp -r bin/ ${TMP}
 cp -rT common/ ${TMP}
