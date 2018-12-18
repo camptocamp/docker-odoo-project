@@ -40,7 +40,8 @@ RUN set -x; \
         && /install/dev_package.sh \
         && python3 -m pip install --force-reinstall pip setuptools \
         && pip3 install -r /odoo/base_requirements.txt --ignore-installed \
-        && /install/purge_dev_package_and_cache.sh
+        && /install/purge_dev_package_and_cache.sh \
+        && /install/reportlab_init.sh
 
 # grab gosu for easy step-down from root and dockerize to generate template and
 # wait on postgres
