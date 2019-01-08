@@ -16,7 +16,7 @@ See also the [Changelog](HISTORY.rst).
 There are 4 flavors of the image:
 
 - normal: `odoo-project:${odoo_version}-${tag_version}`
-- normal-unbuild: `odoo-project:${odoo_version}-${tag_version}-onbuild`
+- normal-onbuild: `odoo-project:${odoo_version}-${tag_version}-onbuild`
 - batteries-included: `odoo-project:${odoo_version}-${tag_version}-batteries`
 - batteries-included-onbuild: `odoo-project:${odoo_version}-${tag_version}-batteries-onbuild`
 
