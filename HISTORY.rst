@@ -31,6 +31,7 @@ Unreleased
 **Libraries**
 
 * Bump requests version
+* Remove duplicate magento
 
 .. **Build**
 
