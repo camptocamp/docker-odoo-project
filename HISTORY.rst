@@ -31,6 +31,7 @@ Unreleased
 **Libraries**
 
 * Bump requests version
+* Bump PyYAML version for CVE-2017-18342
 
 .. **Build**
 
