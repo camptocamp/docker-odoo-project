@@ -1,7 +1,7 @@
 # the latest released version of pip might upgrade too much libs
 # see https://github.com/pypa/pip/pull/4500/
 # the development version will upgrade only if needed
-git+https://github.com/pypa/pip.git#egg=pip
+https://github.com/pypa/pip/archive/18.1.tar.gz
 
 # Odoo dependencies
 Babel==2.3.4

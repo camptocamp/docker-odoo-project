@@ -15,7 +15,7 @@ do
   then
     ks_options="--keyserver-options http-proxy=$http_proxy"
   fi
-  gpg --keyserver "$server" $ks_options --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 && break || :
+  gpg --keyserver "$server" $ks_options --batch --no-tty --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 && break || :
 done
 curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.10/gosu-$(dpkg --print-architecture)"
 curl -o /usr/local/bin/gosu.asc -SL "https://github.com/tianon/gosu/releases/download/1.10/gosu-$(dpkg --print-architecture).asc"
