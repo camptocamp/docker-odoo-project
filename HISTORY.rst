@@ -22,7 +22,19 @@ Release History
 Unreleased
 ++++++++++
 
-.. **Features and Improvements**
+**Features and Improvements**
+
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+
+3.1.1 (2019-01-09)
+++++++++++++++++++
 
 **Bugfixes**
 
@@ -36,10 +48,6 @@ Unreleased
 * Remove bad copy of extra_requirements in Dockerfile
 
   * Must be done only in batteries flavor (see Dockerfile-batteries)
-
-.. **Build**
-
-.. **Documentation**
 
 
 3.1.0 (2018-10-19)
