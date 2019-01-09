@@ -33,7 +33,9 @@ Unreleased
 * Bump `requests` version
 * Remove duplicated `magento` dependency
 * Bump `PyYAML` version for CVE-2017-18342
+* Remove bad copy of extra_requirements in Dockerfile
 
+  * Must be done only in batteries flavor (see Dockerfile-batteries)
 
 .. **Build**
 

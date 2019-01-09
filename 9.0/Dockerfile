@@ -5,7 +5,6 @@ MAINTAINER Camptocamp
 RUN mkdir -p /odoo /var/log/odoo
 
 COPY ./base_requirements.txt /odoo
-COPY ./extra_requirements.txt /odoo
 COPY ./install /install
 
 # build and dev packages
