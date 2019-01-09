@@ -30,8 +30,10 @@ Unreleased
 
 **Libraries**
 
-* Bump requests version
-* Bump PyYAML version for CVE-2017-18342
+* Bump `requests` version
+* Remove duplicated `magento` dependency
+* Bump `PyYAML` version for CVE-2017-18342
+
 
 .. **Build**
 
