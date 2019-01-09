@@ -10,7 +10,7 @@ Mako==1.0.4
 MarkupSafe==0.23
 Pillow==3.4.1
 Python-Chart==1.39
-PyYAML==3.12
+PyYAML>=4.2b1
 Werkzeug==0.11.11
 chardet==3.0.4
 colorama==0.3.9
@@ -44,7 +44,7 @@ pytz==2016.7
 pyusb==1.0.0
 qrcode==5.3
 reportlab==3.3.0
-requests==2.11.1
+requests==2.20.0
 roman==2.0.0
 simplejson==3.6.5
 six==1.10.0

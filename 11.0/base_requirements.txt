@@ -1,7 +1,7 @@
 # the latest released version of pip might upgrade too much libs
 # see https://github.com/pypa/pip/pull/4500/
 # the development version will upgrade only if needed
-git+https://github.com/pypa/pip.git#egg=pip
+https://github.com/pypa/pip/archive/18.1.tar.gz
 
 # Odoo dependencies
 Babel==2.3.4
@@ -34,11 +34,10 @@ pyserial==3.1.1
 python-dateutil==2.5.3
 pytz==2016.7
 pyusb==1.0.0
-PyYAML==3.12 ; python_version < '3.7'
-PyYAML==3.13 ; python_version >= '3.7'
+PyYAML>=4.2b1
 qrcode==5.3
 reportlab==3.3.0
-requests==2.11.1
+requests==2.20.0
 six==1.10.0
 suds-jurko==0.6
 vatnumber==1.2

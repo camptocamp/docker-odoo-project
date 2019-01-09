@@ -28,10 +28,9 @@ pyserial==3.1.1
 python-dateutil==2.5.3
 pytz==2016.7
 pyusb==1.0.0
-PyYAML==3.12 ; python_version < '3.7'
 qrcode==5.3
 reportlab==3.3.0
-requests==2.11.1
+requests==2.20.0
 suds-jurko==0.6
 vatnumber==1.2
 vobject==0.9.3
@@ -82,5 +81,6 @@ ptyprocess==0.5.2
 py==1.5.3
 pycodestyle==2.3.1
 pyflakes==1.6.0
+PyYAML>=4.2b1
 unicodecsv==0.14.1
 wrapt==1.10.11

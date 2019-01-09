@@ -21,13 +21,7 @@ if [ -z "$VERSION" ]; then
     exit 1
 fi
 
-# Temporary fix test waiting Odoo release 12.0
-if [ "$VERSION" = "12.0" ]
-then
-    ODOO_URL="https://github.com/odoo/odoo/archive/master.tar.gz"
-else
-    ODOO_URL="https://github.com/odoo/odoo/archive/${VERSION}.tar.gz"
-fi
+ODOO_URL="https://github.com/odoo/odoo/archive/${VERSION}.tar.gz"
 
 TMP=$(mktemp -d)
 echo "Working in $TMP"
@@ -68,13 +62,7 @@ echo '>>> Downloading Odoo src'
 rm -rf "$TMP/odoo/src"
 wget -nv -O /tmp/odoo.tar.gz "$ODOO_URL"
 tar xfz /tmp/odoo.tar.gz -C odoo/
-# Temporary fix test waiting Odoo release 12.0
-if [ "$VERSION" = "12.0" ]
-then
-    mv "odoo/odoo-master" odoo/src
-else
-    mv "odoo/odoo-$VERSION" odoo/src
-fi
+mv "odoo/odoo-$VERSION" odoo/src
 
 echo '>>> Run test for base image'
 sed "s|FROM .*|FROM ${IMAGE_LATEST}|" -i odoo/Dockerfile

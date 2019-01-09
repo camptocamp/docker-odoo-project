@@ -24,13 +24,18 @@ Unreleased
 
 .. **Features and Improvements**
 
-.. **Bugfixes**
+**Bugfixes**
 
+* Remove the NO_DATABASE_LIST option, does not exist, the sole option is DB_LIST
+
+**Libraries**
+
+* Bump `requests` version
+* Remove duplicated `magento` dependency
+* Bump `PyYAML` version for CVE-2017-18342
 * Remove bad copy of extra_requirements in Dockerfile
 
   * Must be done only in batteries flavor (see Dockerfile-batteries)
-
-.. **Libraries**
 
 .. **Build**
 
