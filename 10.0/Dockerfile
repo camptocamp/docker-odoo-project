@@ -66,6 +66,8 @@ ENV ODOO_VERSION=10.0 \
     DB_PASSWORD=odoo \
     ODOO_BASE_URL=http://localhost:8069 \
     ODOO_REPORT_URL=http://localhost:8069 \
+    # the place where you put the data of your project (csv, ...)
+    ODOO_DATA_PATH=/odoo/data \
     DEMO=False \
     ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
     OPENERP_SERVER=/etc/odoo.cfg
