@@ -7,6 +7,9 @@ RUN mkdir -p /odoo /var/log/odoo
 COPY ./base_requirements.txt /odoo
 COPY ./install /install
 
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8
+
 # build and dev packages
 ENV BUILD_PACKAGE \
     build-essential \
