@@ -31,7 +31,8 @@ Unreleased
 **Build**
 
 * Pin PyYAML to 4.2b4
-
+* Unpin pip on all images
+ 
 **Documentation**
 
 
