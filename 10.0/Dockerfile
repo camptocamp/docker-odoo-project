@@ -7,6 +7,11 @@ RUN mkdir -p /odoo /var/log/odoo
 COPY ./base_requirements.txt /odoo
 COPY ./install /install
 
+# Set Locale it needs to be present when installing python packages.
+# Otherwise it can lead to issues. eg. when reading the setup.cfg
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8
+
 # build and dev packages
 ENV BUILD_PACKAGE \
     build-essential \
@@ -57,8 +62,6 @@ EXPOSE 8069 8072
 
 ENV ODOO_VERSION=10.0 \
     PATH=/odoo-bin:$PATH \
-    LANG=C.UTF-8 \
-    LC_ALL=C.UTF-8 \
     DB_HOST=db \
     DB_PORT=5432 \
     DB_NAME=odoodb \
