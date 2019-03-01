@@ -24,6 +24,8 @@ Unreleased
 
 **Features and Improvements**
 
+* Add script to allow the setting of the mail catchall domain
+
 **Bugfixes**
 
 **Libraries**
