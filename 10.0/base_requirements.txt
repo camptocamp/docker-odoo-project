@@ -61,7 +61,7 @@ xlrd==1.0.0
 pydot==1.2.3
 
 # Migration tools
-marabunta==0.9
+marabunta==0.10.4
 anthem==0.12.0
 
 # test / lint

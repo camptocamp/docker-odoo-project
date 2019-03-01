@@ -18,6 +18,14 @@
 Release History
 ---------------
 
+.. DANGER:: Breaking changes
+
+      Marabunta:
+      * In the migration yaml file, the `install_command` and `install_args`
+        options are now all merged into `install_command`
+      See
+      https://github.com/camptocamp/marabunta/blob/master/HISTORY.rst#0100-2018-11-06
+      for more information
 
 Unreleased
 ++++++++++
@@ -27,6 +35,8 @@ Unreleased
 **Bugfixes**
 
 **Libraries**
+
+* Update marabunta to 0.10.4 (https://github.com/camptocamp/marabunta/blob/master/HISTORY.rst#0100-2018-11-06)
 
 **Build**
 
