@@ -52,7 +52,16 @@ DB_NAME_TEST=${DB_NAME}_test
 
 
 echo "Create database"
-createdb -O $DB_USER ${DB_NAME_TEST}
+if [[ ! -z "$DB_TEST_TEMPLATE" ]];
+then
+  # When running tests locally you might want to not start from scratch every time.
+  # Tip: create the template w/ only `base` or few core modules installed
+  # to still replicate more or less the same behavior as on travis.
+  echo "using template: ${DB_TEST_TEMPLATE}"
+  createdb -O $DB_USER ${DB_NAME_TEST} -T ${DB_TEST_TEMPLATE}
+else
+  createdb -O $DB_USER ${DB_NAME_TEST}
+fi
 
 if [[ ! -z "$SUBS_MD5" ]]; then
     CACHED_DUMP="$CACHE_DIR/odoo_test_$SUBS_MD5.dmp"

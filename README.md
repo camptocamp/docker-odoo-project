@@ -263,7 +263,13 @@ docker-compose run --rm [-e CREATE_DB_CACHE=true] [-e LOAD_DB_CACHE=false] [-e S
 ```
 
 
-This is not the day-to-day tool for running the tests as a developer.
+This is not the day-to-day tool for running the tests as a developer but you can use it to simulate tests as on Travis.
+
+To save time you can reuse an existing DB (ready with few core modules installed) by passing `DB_TEST_TEMPLATE=db_name`:
+
+```
+docker-compose run --rm -e DB_TEST_TEMPLATE=mytest_base odoo runtests
+```
 
 ### pytests
 
