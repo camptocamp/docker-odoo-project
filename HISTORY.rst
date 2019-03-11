@@ -30,6 +30,8 @@ Unreleased
 
 **Build**
 
+* Pin PyYAML to 4.2b4
+
 **Documentation**
 
 
