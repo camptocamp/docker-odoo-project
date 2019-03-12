@@ -21,12 +21,21 @@ Release History
 
 Unreleased
 ++++++++++
+.. DANGER:: Breaking changes
+
+      Marabunta:
+      * `install_command` and `install_args` options are now all merged into `install_command`
+      Please update your migration.yml and docker-compose files accordingly.
+      See https://github.com/camptocamp/marabunta/blob/master/HISTORY.rst#0100-2018-11-06
+      for more information
 
 **Features and Improvements**
 
 **Bugfixes**
 
 **Libraries**
+
+* Update marabunta to have fixed marabunta_serie
 
 **Build**
 
