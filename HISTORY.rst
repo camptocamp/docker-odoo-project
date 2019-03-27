@@ -21,6 +21,21 @@ Release History
 
 Unreleased
 ++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+
+3.1.2 (2019-03-27)
+++++++++++++++++++
+
 .. DANGER:: Breaking changes
 
       Marabunta:
@@ -28,10 +43,6 @@ Unreleased
       Please update your migration.yml and docker-compose files accordingly.
       See https://github.com/camptocamp/marabunta/blob/master/HISTORY.rst#0100-2018-11-06
       for more information
-
-**Features and Improvements**
-
-**Bugfixes**
 
 **Libraries**
 
@@ -41,8 +52,6 @@ Unreleased
 
 * Pin PyYAML to 4.2b4
 * Unpin pip on all images
- 
-**Documentation**
 
 
 3.1.1 (2019-01-09)
