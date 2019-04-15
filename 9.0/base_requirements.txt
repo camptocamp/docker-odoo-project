@@ -1,6 +1,6 @@
 # Odoo dependencies
 Babel==2.3.4
-Jinja2==2.8
+Jinja2==2.10.1
 Mako==1.0.4
 MarkupSafe==0.23
 Pillow==3.4.2
