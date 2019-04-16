@@ -28,6 +28,8 @@ Unreleased
 
 **Libraries**
 
+* Bump `Jinja2` version to 2.10.1
+
 **Build**
 
 **Documentation**

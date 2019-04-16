@@ -2,6 +2,8 @@
 set -eo pipefail
 
 apt-get update
+# authentication error for libc-ares2
+apt-get install -y --force-yes --no-install-recommends libc-ares2
 apt-get install -y --no-install-recommends \
     antiword \
     ca-certificates \
