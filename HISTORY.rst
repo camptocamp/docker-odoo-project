@@ -29,6 +29,7 @@ Unreleased
 **Libraries**
 
 * Bump `Jinja2` version to 2.10.1
+* Bump `urllib3` version to 1.24.2
 
 **Build**
 
