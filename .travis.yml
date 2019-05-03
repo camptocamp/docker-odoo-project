@@ -9,6 +9,7 @@ env:
     - VERSION=10.0
     - VERSION=9.0
     - VERSION=8.0
+    - VERSION=7.0
 
 script:
   - make VERSION=$VERSION build

@@ -84,7 +84,7 @@ if [ -z "$(pip list --format=columns | grep "/odoo/src")" ]; then
   # As we write in a volume, ensure it has the same user.
   # So when the src is a host volume and we set the LOCAL_USER_ID to be the
   # host user, the files are owned by the host user
-  chown -R odoo: /odoo/src/odoo.egg-info
+  chown -R odoo: /odoo/src/*.egg-info
 fi
 
 
