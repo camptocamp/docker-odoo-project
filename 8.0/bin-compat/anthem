@@ -1,0 +1,6 @@
+#!/bin/bash
+# "Hack" to avoid crashing tests on legacy Odoo versions
+
+set -e
+echo "WARNING! Legacy project => Anthem will not do anything"
+exit 0

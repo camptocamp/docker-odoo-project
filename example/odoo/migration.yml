@@ -1,6 +1,6 @@
 migration:
   options:
-    install_command: odoo
+    install_command: odoo --without-demo=${WITHOUT_DEMO:-True}
   versions:
     - version: setup
       operations:
