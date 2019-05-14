@@ -293,8 +293,8 @@ Odoo namespaces (`openerp.addons`/`odoo.addons`) when running the tests.
 ### pytest-cov
 
 pytest-cov is also included and can be used to generate a coverage report. 
-You can simply add --cov=MODULE_PATH to your pytest to get a text version in the shell, or export it as HTML so you can browse the results.
-To export it to HTML, simply add --cov-report=HTML:EXPORT_PATH
+You can add --cov=MODULE_PATH to your pytest to get a text version in the shell, or export it as HTML so you can browse the results.
+To export it to HTML, add --cov-report=HTML:EXPORT_PATH
 
 ### runmigration
 
