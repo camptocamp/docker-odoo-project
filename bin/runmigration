@@ -71,7 +71,7 @@ else
     echo "Do migration from scratch 🐢 🐢 🐢"
 fi
 
-migrate
+gosu odoo migrate
 
 # Create a dump if none exist for the current VERSION
 if [ "$CREATE_DB_CACHE" == "true" -a ! -f "$CACHED_DUMP" ]; then
