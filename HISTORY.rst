@@ -26,12 +26,17 @@ Unreleased
 
 **Bugfixes**
 
+* Use user `odoo` instead of `root` when running tests and coverage
+  **! Warning !** Because of this change, the file previously `/.coverage` is now in `/home/odoo/.coverage`
+
 **Libraries**
 
 * Bump `Jinja2` version to 2.10.1
 * Bump `urllib3` version to 1.24.2
 
 **Build**
+
+* Add images for versions 7 & 8 (check Legacy Images section in documentation)
 
 **Documentation**
 

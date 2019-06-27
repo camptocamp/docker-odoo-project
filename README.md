@@ -346,3 +346,27 @@ check:
 ```
 
 The scripts are run only if the command is `odoo`/`odoo.py`.
+
+## Legacy images
+
+Legacy images are used for projects using deprecated Odoo versions (7 & 8).
+They work the same as the newer ones, with a few differences.
+
+### Anthem
+
+`anthem` is not available in these images as the Odoo API is too old to use it.
+If you want to script migration parts, you can write a script using `erppeek`.
+
+Sidenote: You can still use SQL scripts the same as before
+
+### Python Libraries
+
+If you use the official Odoo V7 or the OCA prior to https://github.com/OCA/OCB/commit/b2e48ad8b7cbd62d366e6ffee1861a6085999ce0,
+you will need to run the script `replace_dependencies.sh` in your Dockerfile (check [Dockerfile](example/odoo/Dockerfile) as example)
+in order to use renamed version of old Python libraries (e.g. *PIL* and *pychart*, now named *Pillow* and *Python-Chart*).
+
+### Demo Data
+
+In Odoo 8, the configuration parameter `without_demo` can be sometimes buggy (Odoo will still install demo data even if it is told not to do so).
+
+To circumvent this behavior, you can force this parameter in the command line used to start Odoo (check [migration.yml](example/odoo/migration.yml) as example).
