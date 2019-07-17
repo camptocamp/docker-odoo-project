@@ -245,6 +245,15 @@ By setting this value in the `Dockerfile`, it will be integrated into the build 
 
 By the way, you can add other `ENV` variables in your project's `Dockerfile` if you want to customize the default values of some variables for a project.
 
+You can also use environment variable `ADDITIONAL_ODOO_RC` for any additional parameters that must go in the `odoo.cfg` file.
+e.g.:
+```
+ADDITIONAL_ODOO_RC="
+custom_param=42
+other_param='some value'
+"
+```
+
 
 ## Running tests
 

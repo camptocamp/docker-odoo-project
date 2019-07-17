@@ -24,6 +24,8 @@ Unreleased
 
 **Features and Improvements**
 
+* Add support for additional Odoo configuration parameters with environment variable `ADDITIONAL_ODOO_RC`
+
 **Bugfixes**
 
 * Use user `odoo` instead of `root` when running tests and coverage
