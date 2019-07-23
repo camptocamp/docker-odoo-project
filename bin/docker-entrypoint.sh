@@ -15,6 +15,17 @@ export PGUSER=${DB_USER}
 export PGPASSWORD=${DB_PASSWORD}
 export PGDATABASE=${DB_NAME}
 
+# As docker-compose exec do not launch the entrypoint
+# init PG variable into .bashrc so it will be initialized
+# when doing docker-compose exec odoo gosu odoo bash
+echo "
+export PGHOST=${DB_HOST}
+export PGPORT=${DB_PORT}
+export PGUSER=${DB_USER}
+export PGPASSWORD=${DB_PASSWORD}
+export PGDATABASE=${DB_NAME}
+" >> /home/odoo/.bashrc
+
 # Accepted values for DEMO: True / False
 # Odoo use a reverse boolean for the demo, which is not handy,
 # that's why we propose DEMO which exports WITHOUT_DEMO used in
