@@ -2,7 +2,6 @@
 set -eo pipefail
 
 apt-get update
-apt-get purge python2.7 python2.7-minimal
 apt-get install -y --no-install-recommends \
     antiword \
     ca-certificates \
@@ -15,10 +14,10 @@ apt-get install -y --no-install-recommends \
     nano \
     node-clean-css \
     node-less \
+    postgresql-11 \
     poppler-utils \
-    python \
+    python3 \
     python-libxslt1 \
-    python-pip \
     python3-pip \
     python3-setuptools \
     python3-renderpm \
