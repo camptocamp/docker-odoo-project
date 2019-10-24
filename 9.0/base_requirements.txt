@@ -3,7 +3,7 @@ Babel==2.3.4
 Jinja2==2.10.1
 Mako==1.0.4
 MarkupSafe==0.23
-Pillow==3.4.2
+Pillow==6.2.0
 Python-Chart==1.39
 PyYAML==4.2b4
 Werkzeug==0.16.0
