@@ -38,6 +38,8 @@ Unreleased
 * Bump `wkhtmltopdf` version to 0.12.5.1 (for odoo 12 only)
 * Bump `werkzeug` version to 0.16.0
 * Bump various libraries to get rid of security alerts (v7+8 only)
+* Bump `Pillow` version to 6.2.0 (v8-13)
+* Bump `Pillow` version to 3.4.2 (v7)
 
 **Build**
 
