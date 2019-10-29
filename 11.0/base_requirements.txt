@@ -57,7 +57,7 @@ urllib3==1.24.2
 
 # Migration tools
 marabunta==0.10.4
-anthem==0.12.0
+anthem==0.13.0
 
 # test / lint
 # those libs and their dependencies are unpinned
