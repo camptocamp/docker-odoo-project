@@ -36,7 +36,8 @@ Unreleased
 * Bump `Jinja2` version to 2.10.1
 * Bump `urllib3` version to 1.24.2
 * Bump `wkhtmltopdf` version to 0.12.5.1 (for odoo 12 only)
-* Bump `werkzeug` version to 0.16.0
+* Bump `werkzeug` version to 0.16.0 (v9-13)
+* Bump `werkzeug` version to 0.9.6 (v7-8)
 * Bump various libraries to get rid of security alerts (v7+8 only)
 * Bump `Pillow` version to 6.2.0 (v9-13)
 * Bump `Pillow` version to 3.4.2 (v7-8)
