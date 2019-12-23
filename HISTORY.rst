@@ -24,6 +24,20 @@ Unreleased
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+
+4.0.0 (2019-12-23)
+++++++++++++++++++
+
+**Features and Improvements**
+
 * Add support for additional Odoo configuration parameters with environment variable `ADDITIONAL_ODOO_RC`
 
 **Bugfixes**
@@ -46,8 +60,6 @@ Unreleased
 **Build**
 
 * Add images for versions 7 & 8 (check Legacy Images section in documentation)
-
-**Documentation**
 
 
 3.1.2 (2019-03-27)
