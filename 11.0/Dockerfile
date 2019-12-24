@@ -52,8 +52,6 @@ COPY ./templates /templates
 COPY ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
 COPY ./start-entrypoint.d /start-entrypoint.d
 COPY ./MANIFEST.in /odoo
-# Place coveragerc in workdir where coverage will be launched from
-COPY ./.coveragerc /
 
 VOLUME ["/data/odoo", "/var/log/odoo"]
 
