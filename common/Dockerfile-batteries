@@ -2,6 +2,7 @@ MAINTAINER Camptocamp
 
 WORKDIR "/odoo"
 COPY ./extra_requirements.txt ./
+COPY ./.coveragerc ./
 
 # Install extra requirement
 RUN set -x; \
