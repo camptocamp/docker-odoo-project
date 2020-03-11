@@ -11,4 +11,4 @@ ONBUILD COPY ./setup.py /odoo/
 ONBUILD COPY ./VERSION /odoo/
 ONBUILD COPY ./migration.yml /odoo/
 # need to be called at the end, because it installs . and src
-ONBUILD RUN cd /odoo && pip install -r src_requirements.txt
+ONBUILD RUN cd /odoo && pip install --disable-pip-version-check -r src_requirements.txt

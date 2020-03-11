@@ -36,8 +36,8 @@ RUN set -x; \
         && /install/postgres.sh \
         && /install/wkhtml_12_5_1.sh \
         && /install/dev_package.sh \
-        && python3 -m pip install --force-reinstall pip setuptools \
-        && pip install -r /odoo/base_requirements.txt --ignore-installed \
+        && python3 -m pip install --disable-pip-version-check --force-reinstall pip setuptools \
+        && pip install --disable-pip-version-check -r /odoo/base_requirements.txt --ignore-installed \
         && /install/purge_dev_package_and_cache.sh
 
 # grab gosu for easy step-down from root and dockerize to generate template and
