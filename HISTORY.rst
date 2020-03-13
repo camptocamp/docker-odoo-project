@@ -31,6 +31,8 @@ Unreleased
 
 **Libraries**
 
+* Bump `psutil` version to 5.7.0
+
 **Build**
 
 **Documentation**
