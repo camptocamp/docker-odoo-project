@@ -27,6 +27,7 @@ Unreleased
 **Bugfixes**
 
 * Pin `setuptools<45` and other dependencies to ensure Python 2 support in Odoo<=10
+* Fix deprecated download links for wkhtmltopdf
 
 **Libraries**
 
