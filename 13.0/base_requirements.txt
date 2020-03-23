@@ -19,7 +19,7 @@ ofxparse==0.16
 passlib==1.6.5
 Pillow==6.2.0
 polib==1.1.0
-psutil==4.3.1; sys_platform != 'win32'
+psutil==5.7.0; sys_platform != 'win32'
 psycopg2==2.7.3.1; sys_platform != 'win32'
 pydot==1.2.3
 pyldap==2.4.28; sys_platform != 'win32'
