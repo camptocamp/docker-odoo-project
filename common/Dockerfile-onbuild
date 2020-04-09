@@ -1,5 +1,7 @@
 MAINTAINER Camptocamp
 
+COPY ./.coveragerc /odoo/
+
 # intermediate images should help speed up builds when only local-src, or only
 # external-src changes
 ONBUILD COPY ./src /odoo/src
