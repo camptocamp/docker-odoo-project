@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
-apt-get update
+apt-get update -o Acquire::AllowInsecureRepositories=true
 apt-get install -y --no-install-recommends \
     antiword \
     ca-certificates \
@@ -14,7 +14,6 @@ apt-get install -y --no-install-recommends \
     nano \
     node-clean-css \
     node-less \
-    postgresql-11 \
     poppler-utils \
     python3 \
     python-libxslt1 \
