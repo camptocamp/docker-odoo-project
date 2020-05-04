@@ -35,6 +35,7 @@ Unreleased
 
 * Bump `psutil` version to 5.7.0
 * Bump `Pillow` version to 6.2.2 (v9-13)
+* Bump various libraries in v13 to match Odoo's requirements
 
 **Build**
 
