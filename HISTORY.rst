@@ -24,6 +24,20 @@ Unreleased
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+
+4.1.0 (2020-05-05)
+++++++++++++++++++
+
+**Features and Improvements**
+
 * Add support for socket connection to PostgreSQL
 
 **Bugfixes**
@@ -38,10 +52,6 @@ Unreleased
 * Bump `psutil` version to 5.7.0
 * Bump `Pillow` version to 6.2.2 (v9-13)
 * Bump various libraries in v13 to match Odoo's requirements
-
-**Build**
-
-**Documentation**
 
 
 4.0.0 (2019-12-23)
