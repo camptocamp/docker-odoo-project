@@ -63,7 +63,7 @@ anthem==0.13.0
 # those libs and their dependencies are unpinned
 # to always test with the last version of it
 flake8
-pytest
+pytest==4.6
 pluggy
 pytest-odoo
 coverage

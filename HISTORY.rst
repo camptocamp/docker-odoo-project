@@ -26,6 +26,8 @@ Unreleased
 
 **Bugfixes**
 
+* [<= 10.0] Fix pytest version to 4.6, last supported version in Python 2.7
+
 **Libraries**
 
 **Build**
