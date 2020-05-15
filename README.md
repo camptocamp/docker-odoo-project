@@ -106,6 +106,13 @@ value, the configuration parameters will be left unchanged.
 `MIGRATE` can be `True` or `False` and determines whether migration tool
 marabunta will be launched. By default migration will be launched.
 
+Migration is *not* launched when using:
+
+```
+    docker-compose run --rm odoo odoo shell [...]
+    docker-compose run --rm odoo odoo [...] --help [...]
+```
+
 ### MARABUNTA_MODE
 
 In [Marabunta](https://github.com/camptocamp/marabunta) versions, you can
