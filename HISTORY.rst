@@ -24,6 +24,8 @@ Unreleased
 
 **Features and Improvements**
 
+* disable pip version checks (required network access, can timeout)
+
 **Bugfixes**
 
 **Libraries**

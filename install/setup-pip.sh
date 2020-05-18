@@ -7,4 +7,5 @@ cat << EOF > /etc/pip.conf
 # "To enable the boolean options --no-compile and --no-cache-dir, falsy values have to be used"
 # https://pip.pypa.io/en/stable/user_guide/#configuration
 no-cache-dir = false
+disable-pip-version-check = True
 EOF
