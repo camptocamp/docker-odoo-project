@@ -50,7 +50,7 @@ ERPpeek==1.7.1
 # those libs and their dependencies are unpinned
 # to always test with the last version of it
 flake8
-pytest
+pytest==4.6
 pytest-odoo
 coverage
 pytest-cov
