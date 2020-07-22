@@ -49,6 +49,7 @@ fi
 DEPS_ADDONS=$(list_dependencies.py "$LOCAL_ADDONS")
 
 DB_NAME_TEST=${DB_NAME}_test
+sed -i "s/= ^${DB_NAME}/= ^${DB_NAME_TEST}/g" /etc/odoo.cfg
 
 
 echo "Create database"
