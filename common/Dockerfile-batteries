@@ -7,7 +7,7 @@ COPY ./.coveragerc ./
 # Install extra requirement
 RUN set -x; \
         /install/dev_package.sh \
-        && pip install -r extra_requirements.txt \
+        && pip install --no-cache-dir -r extra_requirements.txt \
         && /install/purge_dev_package_and_cache.sh
 
 WORKDIR "/"

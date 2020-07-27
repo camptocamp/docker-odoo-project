@@ -91,7 +91,7 @@ if [ -z "$(pip list --format=columns | grep "/odoo/src")" ]; then
   # the install everytime because it would slow the start of the containers
   echo '/odoo/src/odoo.egg-info is missing, probably because the directory is a volume.'
   echo 'Running pip install -e /odoo/src to restore odoo.egg-info'
-  pip install -e /odoo/src
+  pip install --no-cache-dir -e /odoo/src
   # As we write in a volume, ensure it has the same user.
   # So when the src is a host volume and we set the LOCAL_USER_ID to be the
   # host user, the files are owned by the host user
@@ -103,7 +103,7 @@ fi
 if [ -z "$(pip list --format=columns | grep "/odoo" | grep -v "/odoo/src")" ]; then
   echo '/src/*.egg-info is missing, probably because the directory is a volume.'
   echo 'Running pip install -e /odoo to restore *.egg-info'
-  pip install -e /odoo
+  pip install --no-cache-dir -e /odoo
   chown -R odoo: /odoo/*.egg-info
 fi
 

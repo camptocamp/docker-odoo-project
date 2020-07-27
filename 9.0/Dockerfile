@@ -38,8 +38,8 @@ RUN set -x; \
         && /install/postgres.sh \
         && /install/wkhtml_12_1_2.sh \
         && /install/dev_package.sh \
-        && pip install -U pip "setuptools<45" \
-        && pip install -r /odoo/base_requirements.txt \
+        && pip install --no-cache-dir -U pip "setuptools<45" \
+        && pip install --no-cache-dir -r /odoo/base_requirements.txt \
         && /install/purge_dev_package_and_cache.sh
 
 # grab gosu for easy step-down from root and dockerize to generate template and

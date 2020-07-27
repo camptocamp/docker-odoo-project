@@ -25,6 +25,7 @@ Unreleased
 **Features and Improvements**
 
 * disable pip version checks (required network access, can timeout)
+* disable cache for pip instead of filling and erasing
 * Bypass migration when using:
 
     docker-compose run --rm odoo odoo shell [...]
