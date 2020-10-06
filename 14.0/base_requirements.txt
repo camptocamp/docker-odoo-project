@@ -41,7 +41,6 @@ qrcode==6.1
 reportlab==3.5.13
 requests==2.21.0
 zeep==3.2.0
-python-stdnum==1.8
 vobject==0.9.6.1
 Werkzeug==0.16.1
 XlsxWriter==1.1.2
