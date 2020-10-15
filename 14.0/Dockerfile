@@ -57,7 +57,7 @@ VOLUME ["/data/odoo", "/var/log/odoo"]
 # Expose Odoo services
 EXPOSE 8069 8072
 
-ENV ODOO_VERSION=13.0 \
+ENV ODOO_VERSION=14.0 \
     PATH=/odoo-bin:$PATH \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \

@@ -38,6 +38,8 @@ Unreleased
 
 **Build**
 
+* BSRD-355: Add new version for Odoo 14.0
+
 **Documentation**
 
 
