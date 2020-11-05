@@ -31,9 +31,9 @@ ENV BUILD_PACKAGE \
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
-        sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
-        && /install/package_odoo_11.0_12.0.sh \
+        /install/package_odoo_11.0_12.0.sh \
         && /install/setup-pip.sh \
+        && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
         && /install/postgres.sh \
         && /install/wkhtml_12_5.sh \
         && /install/dev_package.sh \
