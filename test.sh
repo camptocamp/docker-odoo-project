@@ -21,6 +21,9 @@ if [ -z "$VERSION" ]; then
     exit 1
 fi
 
+# Allow version flavor like 12.0-buster
+VERSION=$(echo $VERSION | cut -d '-' -f '1')
+
 ODOO_URL="https://github.com/odoo/odoo/archive/${VERSION}.tar.gz"
 
 TMP=$(mktemp -d)
