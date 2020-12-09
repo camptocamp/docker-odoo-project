@@ -36,6 +36,8 @@ Unreleased
 
 **Libraries**
 
++* Update Marabunta to 0.10.5
+
 **Build**
 
 * BSRD-355: Add new version for Odoo 14.0
