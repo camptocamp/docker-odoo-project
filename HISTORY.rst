@@ -45,6 +45,7 @@ Unreleased
 * [<= 10.0] Pin `watchdog` to last Py2 compatible version
 * [<= 10.0] Pin `ruamel.yaml` to last Py2 compatible version
 * [<= 10.0] Pin `importlib-metadata` to last Py2 compatible version
+* [<= 10.0] Pin `zipp` to last Py2 compatible version
 
 **Build**
 
