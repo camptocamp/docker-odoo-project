@@ -43,7 +43,7 @@ wsgiref==0.1.2
 xlwt==0.7.5
 
 # Migration tools
-marabunta==0.10.4
+marabunta==0.10.5
 ERPpeek==1.7.1
 
 # test / lint
