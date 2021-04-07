@@ -41,6 +41,7 @@ Unreleased
 * [14.0] Downgrade `urllib3` to a compatible version with Odoo supported `requests` version.
 * [>= 12.0] Remove `odoo-autodiscover` as it's not necessary since Odoo 12.0.
 * [12.0] Pin `watchdog` to Py3.5 compatible versions
+* [<= 10.0] Pin `watchdog` to last Py2 compatible version
 
 **Build**
 

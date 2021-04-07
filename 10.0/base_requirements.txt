@@ -67,8 +67,8 @@ pytest==4.6
 pluggy
 pytest-odoo
 coverage
+watchdog==0.10.6
 pytest-cov
-watchdog
 
 # Library dependency
 argh==0.26.2
