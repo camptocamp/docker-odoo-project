@@ -43,6 +43,7 @@ wsgiref==0.1.2
 xlwt==0.7.5
 
 # Migration tools
+ruamel.yaml==0.16.13
 marabunta==0.10.5
 ERPpeek==1.7.1
 
@@ -53,8 +54,8 @@ flake8
 pytest==4.6
 pytest-odoo
 coverage
+watchdog==0.10.6
 pytest-cov
-watchdog
 
 # Library dependency
 argh==0.26.2
@@ -64,6 +65,7 @@ beautifulsoup4==4.6.0
 configparser==3.5.0
 enum34==1.1.6
 funcsigs==1.0.2
+importlib-metadata==2.1.1
 mccabe==0.6.1
 more-itertools==4.2.0
 pathtools==0.1.2
@@ -74,3 +76,4 @@ pycodestyle==2.3.1
 pyflakes==1.6.0
 unicodecsv==0.14.1
 wrapt==1.10.11
+zipp==1.2.0
