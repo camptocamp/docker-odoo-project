@@ -33,14 +33,16 @@ Unreleased
 **Bugfixes**
 
 * [<= 10.0] Fix pytest version to 4.6, last supported version in Python 2.7
+* Fix dbfilter in test environment
 
 **Libraries**
 
-+* Update Marabunta to 0.10.5
+* Update Marabunta to 0.10.5
 
 **Build**
 
-* BSRD-355: Add new version for Odoo 14.0
+* Add new version for Odoo 14.0
+* Add new 12.0 flavor based on debian:buster
 
 **Documentation**
 
