@@ -6,6 +6,7 @@ RUN mkdir -p /odoo /var/log/odoo
 
 COPY ./base_requirements.txt /odoo
 COPY ./install /install
+COPY ./install-extra/wkhtmltox_12_1_2.deb /install
 
 # Set Locale it needs to be present when installing python packages.
 # Otherwise it can lead to issues. eg. when reading the setup.cfg

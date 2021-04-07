@@ -66,8 +66,9 @@ pytest
 pluggy
 coverage
 pytest-odoo
+# watchdog 1.0.0 drops compatibility with Python 3.5
+watchdog<1.0.0
 pytest-cov
-watchdog
 
 # Library dependency
 argh==0.26.2
