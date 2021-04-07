@@ -72,7 +72,7 @@ else
         echo "No cached dump found matching MD5 🐢 🐢 🐢"
     fi
     echo "🔨🔨 Install official/OCA modules 🔨🔨"
-    gosu odoo odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" -i ${DEPS_ADDONS}
+    gosu odoo odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" --db-filter=$DB_NAME_TEST -i ${DEPS_ADDONS}
     if [ "$CREATE_DB_CACHE" == "true" -a ! -z "$CACHED_DUMP" ]; then
         echo "Generate dump $CACHED_DUMP into cache 🐘⮕ 📦"
         mkdir -p "$CACHE_DIR"
@@ -80,10 +80,10 @@ else
     fi
 fi
 echo "🔧🔧 Install local-src modules 🔧🔧"
-gosu odoo odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" -i ${LOCAL_ADDONS}
++gosu odoo odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" --db-filter=$DB_NAME_TEST -i ${LOCAL_ADDONS}
 
 export COVERAGE_FILE=/home/odoo/.coverage
-gosu odoo coverage run --source="${LOCAL_SRC_DIR}" "${ODOO_BIN_PATH}" --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" -u ${LOCAL_ADDONS}
++gosu odoo coverage run --source="${LOCAL_SRC_DIR}" "${ODOO_BIN_PATH}" --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" --db-filter=$DB_NAME_TEST -u ${LOCAL_ADDONS}
 dropdb ${DB_NAME_TEST}
 
 coverage report -m
