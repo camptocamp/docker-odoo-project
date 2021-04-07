@@ -42,6 +42,7 @@ Unreleased
 * [>= 12.0] Remove `odoo-autodiscover` as it's not necessary since Odoo 12.0.
 * [12.0] Pin `watchdog` to Py3.5 compatible versions
 * [<= 10.0] Pin `watchdog` to last Py2 compatible version
+* [<= 10.0] Pin `ruamel.yaml` to last Py2 compatible version
 
 **Build**
 

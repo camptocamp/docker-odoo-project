@@ -50,6 +50,7 @@ pydot==1.2.3
 suds-jurko==0.6
 
 # Migration tools
+ruamel.yaml==0.16.13
 marabunta==0.10.5
 anthem==0.13.0
 
