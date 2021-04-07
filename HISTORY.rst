@@ -38,6 +38,7 @@ Unreleased
 **Libraries**
 
 * Update Marabunta to 0.10.5
+* [14.0] Downgrade `urllib3` to a compatible version with Odoo supported `requests` version.
 
 **Build**
 

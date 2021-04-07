@@ -57,7 +57,7 @@ odoo-autodiscover==2.0.0
 pyinotify==0.9.6
 python-stdnum==1.13
 simplejson==3.17.0
-urllib3==1.25.9
+urllib3==1.24.3
 
 # Migration tools
 marabunta==0.10.5
