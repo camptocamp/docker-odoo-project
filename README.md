@@ -306,6 +306,12 @@ docker-compose run --rm odoo dropdb testdb
 Pytest uses a plugin (https://github.com/camptocamp/pytest-odoo) that corrects the
 Odoo namespaces (`openerp.addons`/`odoo.addons`) when running the tests.
 
+### pytest-cov
+
+pytest-cov is also included and can be used to generate a coverage report. 
+You can add --cov=MODULE_PATH to your pytest to get a text version in the shell, or export it as HTML so you can browse the results.
+To export it to HTML, add --cov-report=HTML:EXPORT_PATH
+
 ### runmigration
 
 Inside the container, a script `runmigration` is used to run the migration steps on Travis.
