@@ -53,7 +53,6 @@ xlrd==1.2.0; python_version >= '3.8'
 gdata==2.0.18
 html5lib==1.0.1
 odfpy==1.4.1
-odoo-autodiscover==2.0.0
 pyinotify==0.9.6
 python-stdnum==1.13
 simplejson==3.17.0
