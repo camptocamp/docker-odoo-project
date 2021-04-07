@@ -65,6 +65,7 @@ beautifulsoup4==4.6.0
 configparser==3.5.0
 enum34==1.1.6
 funcsigs==1.0.2
+importlib-metadata==2.1.1
 mccabe==0.6.1
 more-itertools==4.2.0
 pathtools==0.1.2
