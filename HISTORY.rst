@@ -33,7 +33,7 @@ Unreleased
 **Documentation**
 
 
-4.2.0 (2020-05-05)
+4.2.0 (2021-04-08)
 ++++++++++++++++++
 
 **Features and Improvements**
