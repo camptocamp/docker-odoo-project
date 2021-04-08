@@ -24,6 +24,20 @@ Unreleased
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+
+4.2.0 (2020-05-05)
+++++++++++++++++++
+
+**Features and Improvements**
+
 * disable pip version checks (required network access, can timeout)
 * Bypass migration when using:
 
