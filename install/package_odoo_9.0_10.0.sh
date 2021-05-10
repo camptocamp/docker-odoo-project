@@ -6,6 +6,7 @@ apt-get update
 apt-get install -y --force-yes --no-install-recommends libc-ares2
 apt-get install -y --no-install-recommends \
     antiword \
+    apt-transport-https \
     ca-certificates \
     curl \
     ghostscript \

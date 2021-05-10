@@ -33,8 +33,8 @@ ENV PURGE_PACKAGE npm
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
-        sh -c 'echo "deb http://apt-archive.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
-        && /install/package_odoo_9.0_10.0.sh \
+        /install/package_odoo_9.0_10.0.sh \
+        && sh -c 'echo "deb http://apt-archive.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
         && /install/wkhtml_12_1_2.sh \
