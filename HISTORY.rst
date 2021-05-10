@@ -26,6 +26,8 @@ Unreleased
 
 **Bugfixes**
 
+* switch apt url for PostgreSQL to apt-archive for jessie-based images
+    see https://www.postgresql.org/message-id/YBMtd6nRuXyU2zS4%40msg.df7cb.de
 **Libraries**
 
 **Build**
