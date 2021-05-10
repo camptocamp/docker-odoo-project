@@ -36,7 +36,7 @@ ENV PURGE_PACKAGE npm
 RUN set -x; \
         /install/package_odoo_9.0_10.0.sh \
         && /install/setup-pip.sh \
-        && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
+        && sh -c 'echo "deb http://apt-archive.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
         && /install/postgres.sh \
         && /install/wkhtml_12_1_2.sh \
         && /install/dev_package.sh \
