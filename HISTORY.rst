@@ -64,6 +64,11 @@ Unreleased
 * [14.0] Downgrade `urllib3` to a compatible version with Odoo supported `requests` version.
 * [>= 12.0] Remove `odoo-autodiscover` as it's not necessary since Odoo 12.0.
 * [11.0,12.0] Pin `watchdog` to Py3.5 compatible versions
+* [>= 10.0] Bump odoo requirements
+  * Bump jinja2 to fix security issue
+  * Bump lxml to fix security issue
+  * Bump Pillow to fix security issue
+  * Bump PyYAML to fix security issue
 * [<= 10.0] Pin `pip` to last Py2 compatible version
 * [<= 10.0] Pin `watchdog` to last Py2 compatible version
 * [<= 10.0] Pin `ruamel.yaml` to last Py2 compatible version

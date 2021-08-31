@@ -1,4 +1,7 @@
 # Odoo dependencies
+# python_version = 2.7
+# sys_platform != 'win32'
+# this is a copy of Odoo dependencies with some bumped versions
 Babel==1.3
 Jinja2==2.10.1
 Mako==1.0.0

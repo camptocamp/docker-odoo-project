@@ -1,59 +1,65 @@
 # Odoo dependencies
+# python_version = 2.7
+# sys_platform != 'win32'
+# this is a copy of Odoo dependencies with some bumped versions
 Babel==2.3.4
-Jinja2==2.10.1
-Mako==1.0.4
-MarkupSafe==0.23
-Pillow==6.2.2
-Python-Chart==1.39
-PyYAML==4.2b4
-Werkzeug==0.16.0
-chardet==3.0.4
-colorama==0.3.9
 decorator==4.0.10
 docutils==0.12
+ebaysdk==2.1.4
 feedparser==5.2.1
-future==0.16.0
 gevent==1.1.2
-gdata==2.0.18
 greenlet==0.4.10
-html2text==2018.1.9
-html5lib==1.0.1
-lxml==3.5.0
+jcconv==0.2.3
+Jinja2==2.11.3 # official 2.10.1
+lxml==4.6.3 # official 3.5.0
+Mako==1.0.4
+MarkupSafe==0.23
 mock==2.0.0
-odfpy==1.3.4
-odoo-autodiscover>=2.0.0
 ofxparse==0.16
 passlib==1.6.5
-psutil==5.7.0
-psycopg2==2.7.3.1
+Pillow==6.2.2 # official 3.4.1
+psutil==5.7.0 # official 4.3.1
 psycogreen==1.0
-pyPdf==1.13
-pyinotify==0.9.4
+psycopg2==2.7.3.1
+pydot==1.2.3
 pyparsing==2.1.10
+pyPdf==1.13
 pyserial==3.1.1
+Python-Chart==1.39
 python-dateutil==2.5.3
 python-ldap==2.4.27
 python-openid==2.2.5
-python-stdnum==1.9
 pytz==2016.7
 pyusb==1.0.0
+PyYAML==5.4 # official 3.12
 qrcode==5.3
 reportlab==3.3.0
 requests==2.20.0
-roman==2.0.0
-simplejson==3.6.5
 six==1.10.0
 suds-jurko==0.6
-unittest2==1.1.0
-urllib3==1.24.2
 vatnumber==1.2
 vobject==0.9.3
+Werkzeug==0.16.0 # official 0.11.11
 wsgiref==0.1.2
 XlsxWriter==0.9.3
 xlwt==1.1.2
 xlrd==1.0.0
-# version in debian has problems
-pydot==1.2.3
+
+# Not part of official requirements, but used by some addons
+chardet==3.0.4
+colorama==0.3.9
+future==0.16.0
+gdata==2.0.18
+html2text==2018.1.9
+html5lib==1.0.1
+odfpy==1.3.4
+odoo-autodiscover>=2.0.0
+pyinotify==0.9.4
+python-stdnum==1.9
+roman==2.0.0
+simplejson==3.6.5
+unittest2==1.1.0
+urllib3==1.24.2
 
 # Migration tools
 ruamel.yaml==0.16.13
