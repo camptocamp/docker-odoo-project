@@ -12,7 +12,6 @@ id -u odoo &> /dev/null || useradd --shell /bin/bash -u $USER_ID -o -c "" -m odo
 export PGHOST=${DB_HOST}
 export PGPORT=${DB_PORT}
 export PGUSER=${DB_USER}
-export PGPASSWORD=${DB_PASSWORD}
 export PGDATABASE=${DB_NAME}
 
 # As docker-compose exec do not launch the entrypoint
@@ -22,9 +21,16 @@ echo "
 export PGHOST=${DB_HOST}
 export PGPORT=${DB_PORT}
 export PGUSER=${DB_USER}
-export PGPASSWORD=${DB_PASSWORD}
 export PGDATABASE=${DB_NAME}
 " >> /home/odoo/.bashrc
+
+# Only set PGPASSWORD if there is no .pgpass file
+if [ ! -f /home/odoo/.pgpass ]; then
+    export PGPASSWORD=${DB_PASSWORD}
+    echo "
+    export PGPASSWORD=${DB_PASSWORD}
+    " >> /home/odoo/.bashrc
+fi
 
 # Accepted values for DEMO: True / False
 # Odoo use a reverse boolean for the demo, which is not handy,
