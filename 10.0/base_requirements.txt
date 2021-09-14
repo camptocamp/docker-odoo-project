@@ -64,7 +64,7 @@ urllib3==1.24.2
 # Migration tools
 ruamel.yaml==0.16.13
 ruamel.yaml.clib==0.2.2
-marabunta==0.10.5
+marabunta==0.10.6
 anthem==0.13.0
 
 # test / lint

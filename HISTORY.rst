@@ -24,6 +24,8 @@ Unreleased
 
 **Features and Improvements**
 
+* Update marabunta to 0.10.6
+
 **Bugfixes**
 
 * [15.0] Fix bullseye src repo for postgresql

@@ -70,7 +70,7 @@ simplejson==3.17.0
 urllib3==1.24.3
 
 # Migration tools
-marabunta==0.10.5
+marabunta==0.10.6
 anthem==0.13.0
 
 # test / lint

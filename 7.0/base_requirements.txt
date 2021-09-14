@@ -48,7 +48,7 @@ xlwt==0.7.5
 # Migration tools
 ruamel.yaml==0.16.13
 ruamel.yaml.clib==0.2.2
-marabunta==0.10.5
+marabunta==0.10.6
 ERPpeek==1.7.1
 
 # test / lint
