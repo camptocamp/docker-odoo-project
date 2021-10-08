@@ -1,5 +1,6 @@
-FROM debian:buster
-MAINTAINER Camptocamp
+ARG  PY_VERSION=3.7
+ARG  VERSION=14.0
+FROM python:${PY_VERSION}-slim-buster 
 
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /odoo /var/log/odoo
@@ -12,11 +13,14 @@ COPY ./install /install
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8
 
+# ARG ODOO_SOURCE=OCA/OCB
+ARG ODOO_SOURCE=odoo/odoo
+ENV ODOO_VERSION="${VERSION:-14.0}"
+
 # build and dev packages
 ENV BUILD_PACKAGE \
     build-essential \
     gcc \
-    python3.7-dev \
     libevent-dev \
     libfreetype6-dev \
     libxml2-dev \

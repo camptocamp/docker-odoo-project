@@ -1,0 +1,26 @@
+
+build:
+  image: docker:19.03.12
+
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+
+  services:
+    - docker:19.03.12-dind
+
+  before_script:
+    # - docker info
+    - apk add --update make gcc bash
+    # - which gcc
+    # - echo "NAME(CI_REGISTRY_IMAGE)=$CI_REGISTRY_IMAGE"
+  script:
+    - |
+      if [[ -n "$CI_REGISTRY" && -n "$CI_REGISTRY_USER" ]]; then
+        echo "Logging in to GitLab Container Registry with CI credentials..."
+        echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+      fi
+    - make VERSION=14.0 PY_VERSION=3.7 build tag push
+    # - make VERSION=14.0 PY_VERSION=3.8 build tag push
+    # - make VERSION=14.0 PY_VERSION=3.8 BATTERIES=True build tag push
