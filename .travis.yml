@@ -4,6 +4,7 @@ services: docker
 
 env:
   matrix:
+    - VERSION=15.0
     - VERSION=14.0
     - VERSION=13.0
     - VERSION=12.0
