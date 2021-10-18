@@ -30,6 +30,8 @@ Unreleased
 
 **Libraries**
 
+* [13.0-15.0] Remove python2 package python-libxslt1
+
 **Build**
 
 * Add new version for Odoo 15.0
