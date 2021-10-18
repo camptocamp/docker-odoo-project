@@ -1,8 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
-apt-get update
-apt-get purge python2.7 python2.7-minimal
+apt-get update -o Acquire::AllowInsecureRepositories=true
 apt-get install -y --no-install-recommends \
     antiword \
     ca-certificates \
@@ -16,13 +15,10 @@ apt-get install -y --no-install-recommends \
     node-clean-css \
     node-less \
     poppler-utils \
-    python \
-    python-libxslt1 \
-    python-pip \
+    python3 \
     python3-pip \
     python3-setuptools \
     python3-renderpm \
-    libssl1.0.2 \
     libxslt1.1 \
     xfonts-75dpi \
     xfonts-base \

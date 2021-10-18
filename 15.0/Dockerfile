@@ -31,7 +31,7 @@ ENV BUILD_PACKAGE \
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
-        sh -c /install/package_odoo_13.0_14.0.sh \
+        sh -c /install/package_odoo-bullseye.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
         && /install/wkhtml_12_5_1.sh \

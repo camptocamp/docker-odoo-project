@@ -34,6 +34,7 @@ ENV PURGE_PACKAGE npm
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
         /install/package_odoo_9.0_10.0.sh \
+        && /install/disable_dst_root_cert-jessie.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
         && /install/wkhtml_12_1_2.sh \

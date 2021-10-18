@@ -27,6 +27,7 @@ Unreleased
 **Bugfixes**
 
 * [15.0] Fix bullseye src repo for postgresql
+* [*] Fix error NO_PUBKEY for postgres packages
 
 **Libraries**
 
