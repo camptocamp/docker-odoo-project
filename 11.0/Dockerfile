@@ -36,7 +36,7 @@ RUN set -x; \
         && /install/postgres.sh \
         && /install/wkhtml_12_4.sh \
         && /install/dev_package.sh \
-        && python3 -m pip install --force-reinstall pip setuptools \
+        && python3 -m pip install --force-reinstall pip "setuptools<58" \
         && pip3 install -r /odoo/base_requirements.txt --ignore-installed \
         && /install/purge_dev_package_and_cache.sh \
         && /install/reportlab_init.sh

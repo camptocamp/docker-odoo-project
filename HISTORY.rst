@@ -33,6 +33,7 @@ Unreleased
 
 * [13.0-15.0] Remove python2 package python-libxslt1
 * [11.0-14.0] Remove obsolete feedparser package
+* [11.0-14.0] Fix setuptools for compat with 2to3 still in used in pinned dependencies
 
 **Build**
 
