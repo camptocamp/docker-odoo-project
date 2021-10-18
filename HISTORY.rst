@@ -32,6 +32,7 @@ Unreleased
 **Libraries**
 
 * [13.0-15.0] Remove python2 package python-libxslt1
+* [11.0-14.0] Remove obsolete feedparser package
 
 **Build**
 
