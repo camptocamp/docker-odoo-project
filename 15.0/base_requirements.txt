@@ -56,6 +56,9 @@ xlrd==1.2.0; python_version >= '3.8'
 pypiwin32 ; sys_platform == 'win32'
 pyopenssl==19.0.0
 
+# See https://github.com/pypa/setuptools/issues/2787#issuecomment-922781810
+setuptools<58
+
 # Not part of official requirements, but used by some addons
 # colorama==0.3.9
 gdata==2.0.18
