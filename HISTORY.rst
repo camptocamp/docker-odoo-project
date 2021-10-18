@@ -30,6 +30,8 @@ Unreleased
 
 **Build**
 
+* Add new version for Odoo 15.0
+
 **Documentation**
 
 
