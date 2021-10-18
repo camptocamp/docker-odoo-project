@@ -26,6 +26,8 @@ Unreleased
 
 **Bugfixes**
 
+* [15.0] Fix bullseye src repo for postgresql
+
 **Libraries**
 
 **Build**
