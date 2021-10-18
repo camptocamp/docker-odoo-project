@@ -28,6 +28,7 @@ Unreleased
 
 * [15.0] Fix bullseye src repo for postgresql
 * [*] Fix error NO_PUBKEY for postgres packages
+* [15.0] Fix python-dev version to use 3.9 as it is the default python version on bullseye
 
 **Libraries**
 
