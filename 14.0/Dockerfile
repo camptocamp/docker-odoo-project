@@ -34,7 +34,7 @@ RUN set -x; \
         sh -c /install/package_odoo_13.0_14.0.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
-        && /install/wkhtml_12_5_1.sh \
+        && /install/wkhtml_12_5-buster.sh \
         && /install/dev_package.sh \
         && python3 -m pip install --force-reinstall pip "setuptools<58" \
         && pip install -r /odoo/base_requirements.txt --ignore-installed \

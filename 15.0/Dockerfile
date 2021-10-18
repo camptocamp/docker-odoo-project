@@ -30,11 +30,12 @@ ENV BUILD_PACKAGE \
     git
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
+# wkhtml-buster is kept as in offical image, no deb available for bullseye
 RUN set -x; \
         sh -c /install/package_odoo-bullseye.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
-        && /install/wkhtml_12_5_1.sh \
+        && /install/wkhtml_12_5-buster.sh \
         && /install/dev_package.sh \
         && python3 -m pip install --force-reinstall pip setuptools \
         && pip install -r /odoo/base_requirements.txt --ignore-installed \
