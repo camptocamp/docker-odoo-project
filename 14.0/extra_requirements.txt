@@ -41,7 +41,6 @@ PyNaCl==1.2.1
 pytesseract==0.2.2
 regex==2018.6.9
 s3transfer==0.1.13
-suds-jurko==0.6
 tzlocal==1.5.1
 Unidecode==1.0.22
 yarl==1.2.6

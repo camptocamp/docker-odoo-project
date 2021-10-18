@@ -36,6 +36,7 @@ Unreleased
 * [11.0-14.0] Remove obsolete feedparser package
 * [11.0-14.0] Fix setuptools for compat with 2to3 still in used in pinned dependencies
 * [12.0-15.0] Get proper wkhtml version for >= buster releases (includes bullseye)
+* [15.0] zeep replaces suds-jurko
 
 **Build**
 
