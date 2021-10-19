@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Provide a list of module which are dependencies
 # of local-src modules excluding local-src modules
