@@ -42,6 +42,7 @@ Unreleased
 **Build**
 
 * Add new version for Odoo 15.0
+* [15.0] Need docker-ce 20 instead of docker-ce 18 for building Odoo 15 on debian:bullseye
 
 **Documentation**
 
