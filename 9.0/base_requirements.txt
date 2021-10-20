@@ -54,6 +54,7 @@ suds-jurko==0.6
 
 # Migration tools
 ruamel.yaml==0.16.13
+ruamel.yaml.clib==0.2.2
 marabunta==0.10.5
 anthem==0.13.0
 
@@ -63,9 +64,9 @@ anthem==0.13.0
 flake8
 pytest==4.6
 pytest-odoo
-coverage
+coverage==5.5
 watchdog==0.10.6
-pytest-cov
+pytest-cov==2.12.1
 
 # Library dependency
 argh==0.26.2

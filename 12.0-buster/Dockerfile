@@ -31,13 +31,12 @@ ENV BUILD_PACKAGE \
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
-        /install/package_odoo_11.0_12.0.sh \
+        /install/package_odoo_12.0-buster.sh \
         && /install/setup-pip.sh \
-        && sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
         && /install/postgres.sh \
-        && /install/wkhtml_12_5.sh \
+        && /install/wkhtml_12_5-buster.sh \
         && /install/dev_package.sh \
-        && python3 -m pip install --force-reinstall pip setuptools \
+        && python3 -m pip install --force-reinstall pip "setuptools<58" \
         && pip3 install -r /odoo/base_requirements.txt --ignore-installed \
         && /install/purge_dev_package_and_cache.sh
 

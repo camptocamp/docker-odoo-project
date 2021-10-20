@@ -22,6 +22,8 @@ apt-get install -y --no-install-recommends \
     python3-pip \
     python3-setuptools \
     python3-renderpm \
+    python3-wheel \
+    libssl1.0.2 \
     libxslt1.1 \
     xfonts-75dpi \
     xfonts-base \

@@ -16,7 +16,7 @@ ENV LANG=C.UTF-8 \
 ENV BUILD_PACKAGE \
     build-essential \
     gcc \
-    python3.7-dev \
+    python3.9-dev \
     libevent-dev \
     libfreetype6-dev \
     libxml2-dev \
@@ -30,14 +30,14 @@ ENV BUILD_PACKAGE \
     git
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
+# wkhtml-buster is kept as in offical image, no deb available for bullseye
 RUN set -x; \
-        sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
-        && sh -c /install/package_odoo_13.0_14.0.sh \
+        sh -c /install/package_odoo-bullseye.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
-        && /install/wkhtml_12_5_1.sh \
+        && /install/wkhtml_12_5-buster.sh \
         && /install/dev_package.sh \
-        && python3 -m pip install --force-reinstall pip setuptools \
+        && python3 -m pip install --force-reinstall pip "setuptools<58" \
         && pip install -r /odoo/base_requirements.txt --ignore-installed \
         && /install/purge_dev_package_and_cache.sh
 

@@ -26,11 +26,25 @@ Unreleased
 
 **Bugfixes**
 
+* [15.0] Fix bullseye src repo for postgresql
+* [*] Fix error NO_PUBKEY for postgres packages
+* [15.0] Fix python-dev version to use 3.9 as it is the default python version on bullseye
+* [15.0] Change bin/list_dependencies.py script to use `python3` instead of `python` as the latest does not exist on bullseye
+
 **Libraries**
+
+* [13.0-15.0] Remove python2 package python-libxslt1
+* [11.0-14.0] Remove obsolete feedparser package
+* [11.0-15.0] Fix setuptools for compat with 2to3 still in used in pinned dependencies
+* [12.0-15.0] Get proper wkhtml version for >= buster releases (includes bullseye)
+* [15.0] zeep replaces suds-jurko
+* [9.0,10.0] pin libraries that dropped python2.7 support (pytest-cov, watchdog and ruamel.yaml.clib)
+* [15.0] upgrade extra dep cffi to 1.15.0
 
 **Build**
 
 * Add new version for Odoo 15.0
+* [15.0] Need docker-ce 20 instead of docker-ce 18 for building Odoo 15 on debian:bullseye
 
 **Documentation**
 
