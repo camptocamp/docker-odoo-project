@@ -24,7 +24,7 @@ RUN pip install -e /odoo/src
 RUN set -x; \
         apt-get update \
         && apt-get install -y --no-install-recommends \
-        python-shapely \
+        python3-shapely \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
 
