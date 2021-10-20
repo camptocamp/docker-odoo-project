@@ -11,7 +11,7 @@ set -euxo pipefail
 # It expects the following variables to be set:
 #
 # * VERSION (9.0, 10.0, 11.0, ...)
-# * IMAGE_LATEST (tag of the 'latest' image built)
+# * BUILD_TAG (tag of the 'latest' image built)
 # * DOCKERFILE (name of the file used for the Docker build)
 #
 
@@ -35,15 +35,15 @@ cp -r ${VERSION}/. ${TMP}/
 cp -r bin/ ${TMP}
 cp -rT common/ ${TMP}
 cp ${TMP}/Dockerfile-onbuild ${TMP}/Dockerfile-batteries-onbuild
-sed -i "1i FROM ${IMAGE_LATEST}" ${TMP}/Dockerfile-onbuild
-sed -i "1i FROM ${IMAGE_LATEST}" ${TMP}/Dockerfile-batteries
-sed -i "1i FROM ${IMAGE_LATEST}-batteries" ${TMP}/Dockerfile-batteries-onbuild
+sed -i "1i FROM ${BUILD_TAG}" ${TMP}/Dockerfile-onbuild
+sed -i "1i FROM ${BUILD_TAG}" ${TMP}/Dockerfile-batteries
+sed -i "1i FROM ${BUILD_TAG}-batteries" ${TMP}/Dockerfile-batteries-onbuild
 cp -r install/ ${TMP}
 cp -r install-extra/ ${TMP}
 cp -r start-entrypoint.d/ ${TMP}
 cp -r before-migrate-entrypoint.d/ ${TMP}
 
-docker build --no-cache -f ${TMP}/Dockerfile -t ${IMAGE_LATEST} ${TMP}
-docker build --no-cache -f ${TMP}/Dockerfile-onbuild -t ${IMAGE_LATEST}-onbuild ${TMP}
-docker build --no-cache -f ${TMP}/Dockerfile-batteries -t ${IMAGE_LATEST}-batteries ${TMP}
-docker build --no-cache -f ${TMP}/Dockerfile-batteries-onbuild -t ${IMAGE_LATEST}-batteries-onbuild ${TMP}
+docker build --no-cache -f ${TMP}/Dockerfile -t ${BUILD_TAG} ${TMP}
+docker build --no-cache -f ${TMP}/Dockerfile-onbuild -t ${BUILD_TAG}-onbuild ${TMP}
+docker build --no-cache -f ${TMP}/Dockerfile-batteries -t ${BUILD_TAG}-batteries ${TMP}
+docker build --no-cache -f ${TMP}/Dockerfile-batteries-onbuild -t ${BUILD_TAG}-batteries-onbuild ${TMP}

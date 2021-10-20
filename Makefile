@@ -3,8 +3,13 @@ ifndef VERSION
 $(error VERSION is not set)
 endif
 
+ifeq ($(TARGET), "GHCR" ]
+    NAME=ghcr.io/$(NAME)
+endif
+
 IMAGE=$(NAME):$(VERSION)
 IMAGE_LATEST=$(IMAGE)-latest
+BUILD_TAG=$(IMAGE_LATEST)
 
 export
 
@@ -18,10 +23,10 @@ build:
 
 .PHONY: tag
 tag:
-	docker tag $(IMAGE_LATEST) $(IMAGE)-$(TAG)
-	docker tag $(IMAGE_LATEST)-onbuild $(IMAGE)-$(TAG)-onbuild
-	docker tag $(IMAGE_LATEST)-batteries $(IMAGE)-$(TAG)-batteries
-	docker tag $(IMAGE_LATEST)-batteries-onbuild $(IMAGE)-$(TAG)-batteries-onbuild
+	docker tag $(BUILD_TAG) $(IMAGE)-$(TAG)
+	docker tag $(BUILD_TAG)-onbuild $(IMAGE)-$(TAG)-onbuild
+	docker tag $(BUILD_TAG)-batteries $(IMAGE)-$(TAG)-batteries
+	docker tag $(BUILD_TAG)-batteries-onbuild $(IMAGE)-$(TAG)-batteries-onbuild
 
 
 .PHONY: push
@@ -34,10 +39,10 @@ push:
 
 .PHONY: tag_latest_main
 tag_latest_main:
-	docker tag $(IMAGE_LATEST) $(NAME):latest
-	docker tag $(IMAGE_LATEST)-onbuild $(NAME):latest-onbuild
-	docker tag $(IMAGE_LATEST)-batteries $(NAME):latest-batteries
-	docker tag $(IMAGE_LATEST)-batteries-onbuild $(NAME):latest-batteries-onbuild
+	docker tag $(BUILD_TAG) $(NAME):latest
+	docker tag $(BUILD_TAG)-onbuild $(NAME):latest-onbuild
+	docker tag $(BUILD_TAG)-batteries $(NAME):latest-batteries
+	docker tag $(BUILD_TAG)-batteries-onbuild $(NAME):latest-batteries-onbuild
 
 
 .PHONY: push_latest_main
