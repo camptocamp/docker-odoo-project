@@ -49,6 +49,7 @@ RUN /install/gosu.sh && /install/dockerize.sh
 
 COPY ./src_requirements.txt /odoo
 COPY ./bin /odoo-bin
+COPY ./bin-py2 /odoo-bin/
 COPY ./bin-compat /odoo-bin-compat
 COPY ./templates /templates
 COPY ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
