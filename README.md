@@ -15,16 +15,20 @@ See also the [Changelog](HISTORY.rst).
 
 To limit the amount of memory required on each containers to print report
 
-We have switch to kwkhtmltopdf project : https://github.com/acsone/kwkhtmltopdf
+We have switched to kwkhtmltopdf project: https://github.com/acsone/kwkhtmltopdf
 
-the kwkhtmltopdf client is included in the base image, you must set the
-env variable :
+The kwkhtmltopdf client is included in the base image, you must set the
+env variable:
 
+```
 KWKHTMLTOPDF_SERVER_URL=<url of your KWKHTMLTOPDF server>:<port>
+```
 
 and you also need to specify report url to let kwkhtmltopdf server to retrive images/header etc... from odoo:
 
+```
 ODOO_REPORT_URL=<url of you odoo:8069>
+```
 
 ## ⚠️ Images moved to ghcr.io
 
@@ -51,9 +55,9 @@ of their prevalent usage in OCA addons.
 
 The list of package (with their version) is defined in the extra_requirements.txt file.
 
-* [9.0/extra_requirements.txt](9.0/extra_requirements.txt)
-* [10.0/extra_requirements.txt](10.0/extra_requirements.txt)
-* [11.0/extra_requirements.txt](11.0/extra_requirements.txt)
+* [17.0/extra_requirements.txt](17.0/extra_requirements.txt)
+* [18.0/extra_requirements.txt](18.0/extra_requirements.txt)
+* [19.0/extra_requirements.txt](19.0/extra_requirements.txt)
 
 you can also see the Dockerfile that generate this image here: [common/Dockerfile-batteries](common/Dockerfile-batteries)
 
@@ -246,7 +250,7 @@ The main configuration options of Odoo can be configured through environment var
 
 Look in [11.0/templates/odoo.cfg.tmpl](11.0/templates/odoo.cfg.tmpl) to see the full list.
 
-While most of the variables can be set in the docker compose file so we can have different values for different environments, the `ADDONS_PATH` **must** be set in the `Dockerfile` of your project with a line such as:
+While most of the variables can be set in the `docker-compose.yml` file so we can have different values for different environments, the `ADDONS_PATH` **must** be set in the `Dockerfile` of your project with a line such as:
 
 ```
 ENV ADDONS_PATH=/odoo/local-src,/odoo/external-src/server-tools,/odoo/src/addons
@@ -359,9 +363,9 @@ You can add your own scripts in those directories. They must be named
 something like `010_abc` (`^[a-zA-Z0-9_-]+$`) and must have no extension (or
 it would not be picked up by `run-parts`).
 
-Important: The database is guaranteed to exist when the scripts are run, so you
-must take that in account when writing them. Usually you'll want to use such
-check:
+Important: The database is not guaranteed to exist when the scripts are run,
+so you must take that in account when writing them. Usually you'll want to use
+such check:
 
 ```
   if [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" )" != '1' ]
@@ -372,21 +376,3 @@ check:
 ```
 
 The scripts are run only if the command is `odoo`/`odoo.py`.
-
-## Legacy images
-
-Legacy images are used for projects using deprecated Odoo versions (7 & 8).
-They work the same as the newer ones, with a few differences.
-
-### Anthem
-
-`anthem` is not available in these images as the Odoo API is too old to use it.
-If you want to script migration parts, you can write a script using `erppeek`.
-
-Sidenote: You can still use SQL scripts the same as before
-
-### Demo Data
-
-In Odoo 8, the configuration parameter `without_demo` can be sometimes buggy (Odoo will still install demo data even if it is told not to do so).
-
-To circumvent this behavior, you can force this parameter in the command line used to start Odoo (check [migration.yml](example/odoo/migration.yml) as example).

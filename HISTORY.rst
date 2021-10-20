@@ -23,20 +23,33 @@ Release History
 4.5.x (unreleased)
 ++++++++++++++++++
 
+**Features and Improvements**
+
+
+**Bugfixes**
+
+
+**Libraries**
+
+
+**Build**
+
+* Switch project example to Python 3
+
 
 4.5.16 (2026-03-26)
 +++++++++++++++++++
 
-** Features and Improvements **
+**Features and Improvements**
 
 * Port DB_FILTER to all Odoo versions
 
-** Build **
+**Build**
 
 * Update platform dependencies
 * Trigger build every time it is needed
 
-** Bugfixes **
+**Bugfixes**
 
 * Odoo 19: adapt odoo.cfg.tmpl to suppress deprecation warnings
 * Odoo 19: set configuration option with_demo
@@ -44,25 +57,23 @@ Release History
 * Update requirements to fix vulnerabilities
 
 
-
 4.5.15 (2025-12-19)
 +++++++++++++++++++
 
-** Build **
+**Build**
 
 * Odoo 19: Install rlPyCairo for printing instead of rl-renderPM
   (Same as previous Odoo versions)
 
-** Bugfixes **
+**Bugfixes**
 
 * Fix issues with the database migration scripts in the CI
-
 
 
 4.5.14 (2025-11-18)
 ++++++++++++++++++
 
-** Build **
+**Build**
 
 * Odoo 12 and 13: pin Pip 25.2, to support outdated 'vatnumber' package
 * Odoo 19: Add missing requirement for printing reports
@@ -71,7 +82,7 @@ Release History
 4.5.13 (2025-09-25)
 ++++++++++++++++++
 
-** Build **
+**Build**
 
 * Change PostgreSQL deb repo to 'apt-archive' for debian stretch based images
 * fix: install extra-requirement by default
@@ -81,7 +92,7 @@ Release History
 4.5.12 (2025-08-27)
 ++++++++++++++++++
 
-** Build **
+**Build**
 
 * Update Python dependencies for security issue
 * set the postgresql client version to 14.0
@@ -90,15 +101,16 @@ Release History
 4.5.11 (2025-04-01)
 ++++++++++++++++++
 
-** Build **
+**Build**
 
 * Update Python dependencies, for all version except V11
 * fix security issues
 
+
 4.5.10 (2024-09-19)
 ++++++++++++++++++
 
-** Build **
+**Build**
 
 * Update Python dependencies, for all version except V11
 * V15, V16, V17: Update Python to Version 3.12
@@ -110,14 +122,13 @@ Release History
 4.5.9 (2024-05-22)
 ++++++++++++++++++
 
-** Build **
+**Build**
 
-Update Python dependencies
+* Update Python dependencies
 
   sync the requirements of the different versions of python packages
   with Odoo's own requirements, and update some with our own.
   Done for 11.0 -> 17.0
-
 
 
 4.5.8 (2024-03-05)
@@ -127,12 +138,14 @@ Update Python dependencies
 
 * Add Version 17.0
 
+
 4.5.7 (2023-10-26)
 ++++++++++++++++++
 
 **Build**
 
 * [16.0] upgrade python to 3.10
+
 
 4.5.6 (2023-06-12)
 ++++++++++++++++++
@@ -593,6 +606,7 @@ if the image, without onbuild instructions, with onbuild and full.
 **Build**
 
 * Reduce size of the 11.0 image by cleaning and optimizing layers
+
 
 2.5.0 (2018-01-11)
 ++++++++++++++++++

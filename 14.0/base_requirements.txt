@@ -1,7 +1,3 @@
-# Odoo dependencies
-# python_version = 3.7
-# sys_platform != 'win32'
-# this is a copy of Odoo dependencies with some bumped versions
 # unused official dependencies are commented to avoid dependabot alerts
 Babel==2.11.0
 chardet==3.0.4

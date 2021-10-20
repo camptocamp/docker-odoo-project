@@ -36,13 +36,3 @@ regex==2025.9.1
 s3transfer==0.14.0
 tzlocal==5.3.1
 yarl==1.22.0
-
-# Odoo external services dependencies
-## PLATFORM
-redis==6.2.*
-python-json-logger==3.3.*
-prometheus-client==0.22.*
-
-# PLATFORM, for azure blob storage
-azure-storage-blob==12.16.*
-azure-identity==1.13.*

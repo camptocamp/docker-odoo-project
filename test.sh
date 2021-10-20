@@ -1,5 +1,5 @@
 #!/bin/bash
-set -Eeuo pipefail
+set -Exeuo pipefail
 
 #
 # Run tests on the image
@@ -12,15 +12,18 @@ set -Eeuo pipefail
 #
 # It expects the following variables to be set:
 #
-# * VERSION (9.0, 10.0, 11.0, ...)
+# * VERSION (16.0, 17.0, ...)
 # * IMAGE_LATEST (tag of the 'latest' image built)
 #
-
 
 if [ -z "$VERSION" ]; then
     echo "VERSION environment variable is missing"
     exit 1
 fi
+if [ -z "$IMAGE_LATEST" ]; then
+    export IMAGE_LATEST=odoo:${VERSION}
+fi
+
 
 # Allow version flavor like 12.0-buster
 VERSION=$(echo $VERSION | cut -d '-' -f '1')
@@ -82,10 +85,12 @@ docoruncmd odoo dropdb odoodb
 echo '>>> * migration: use the dump and migrate to new version'
 docorunmigration -e LOAD_DB_CACHE="true"
 docodown
-echo "    - version: 15.0.1" >>odoo/migration.yml
-echo "      operations:" >>odoo/migration.yml
-echo "        post:" >>odoo/migration.yml
-echo "          - anthem songs.install.demo::create_partners" >>odoo/migration.yml
+cat <<EOT >>migration.yml
+    - version: ${VERSION}.0.1
+      operations:
+        post:
+          - anthem songs.install.demo::create_partners
+EOT
 docoruncmd odoo dropdb odoodb
 
 echo '>>> * run unit tests with runtests'

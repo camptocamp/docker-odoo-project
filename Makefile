@@ -13,6 +13,9 @@ all: build
 setup:
 	bash setup.sh
 
+.PHONY: build
+build:
+	bash build.sh
 
 .PHONY: test
 test:

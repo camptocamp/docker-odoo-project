@@ -30,8 +30,8 @@ export PGAPPNAME=${HOSTNAME}
 
 # Only set PGPASSWORD if there is no .pgpass file
 if [ ! -f /home/odoo/.pgpass ]; then
-    export PGPASSWORD=${DB_PASSWORD}
-    echo "
+  export PGPASSWORD=${DB_PASSWORD}
+  echo "
     export PGPASSWORD=${DB_PASSWORD}
     " >> /home/odoo/.bashrc
 fi
@@ -64,15 +64,11 @@ esac
 # Create configuration file from the template
 TEMPLATES_DIR=/templates
 CONFIG_TARGET=/etc/odoo.cfg
-if [ -e $TEMPLATES_DIR/openerp.cfg.tmpl ]; then
-  dockerize -template $TEMPLATES_DIR/openerp.cfg.tmpl:$CONFIG_TARGET
-fi
 if [ -e $TEMPLATES_DIR/odoo.cfg.tmpl ]; then
   dockerize -template $TEMPLATES_DIR/odoo.cfg.tmpl:$CONFIG_TARGET
 fi
-
-if [ ! -f "/etc/odoo.cfg" ]; then
-  echo "Error: one of /templates/openerp.cfg.tmpl, /templates/odoo.cfg.tmpl, /etc/odoo.cfg is required"
+if [ ! -f "${CONFIG_TARGET}" ]; then
+  echo "Error: $TEMPLATES_DIR/odoo.cfg.tmpl is required"
   exit 1
 fi
 
@@ -116,23 +112,23 @@ fi
 if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || ([ "$BASE_CMD" = "gosu" ] && [[ "${ARGS[@]}" =~ "odoo migrate" ]] ); then
   BEFORE_MIGRATE_ENTRYPOINT_DIR=/before-migrate-entrypoint.d
   if [ -d "$BEFORE_MIGRATE_ENTRYPOINT_DIR" ]; then
-    run-parts --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
+    run-parts --exit-on-error --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
   fi
 fi
-if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]  ; then
+if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]; then
 
   # Bypass migrate when `odoo shell` or `odoo --help` are used
   if [[ ! " ${ARGS[@]} " =~ " --help " ]] && [[ ! " ${ARGS[@]:0:1} " =~ " shell " ]]; then
 
-      if [ -z "$MIGRATE" -o "$MIGRATE" = True ]; then
-        gosu odoo migrate
-      fi
+    if [ -z "$MIGRATE" -o "$MIGRATE" = True ]; then
+      gosu odoo migrate
+    fi
 
   fi
 
   START_ENTRYPOINT_DIR=/start-entrypoint.d
   if [ -d "$START_ENTRYPOINT_DIR" ]; then
-    run-parts --verbose "$START_ENTRYPOINT_DIR"
+    run-parts --exit-on-error --verbose "$START_ENTRYPOINT_DIR"
   fi
 
   exec gosu odoo "$@"
