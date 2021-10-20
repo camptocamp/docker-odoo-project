@@ -1,5 +1,8 @@
-FROM python:3.9-slim-trixie
+# hadolint ignore=DL3006  # Use `docker build --build-context ...`
+FROM python
 LABEL maintainer="Camptocamp"
+
+ARG VERSION=12.0
 
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /odoo /var/log/odoo
@@ -13,7 +16,7 @@ ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8
 
 # build and dev packages
-ENV BUILD_PACKAGE \
+ENV BUILD_PACKAGE="\
     build-essential \
     gcc \
     libevent-dev \
@@ -26,20 +29,20 @@ ENV BUILD_PACKAGE \
     libjpeg-dev \
     libpng-dev \
     zlib1g-dev \
-    git
+    git"
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
-        /install/package_odoo.sh \
-        && /install/setup-pip.sh \
-        && /install/postgres.sh \
-        && /install/kwkhtml_client.sh \
-        && /install/kwkhtml_client_force_python3.sh \
-        && /install/dev_package.sh \
-        && python3 -m pip install --force-reinstall "pip==25.2" "setuptools<58" \
-        && pip3 install -r /odoo/base_requirements.txt --ignore-installed \
-        && pip3 install -r /odoo/platform_requirements.txt --ignore-installed \
-        && /install/purge_dev_package_and_cache.sh
+    /install/package_odoo.sh \
+    && /install/setup-pip.sh \
+    && /install/postgres.sh \
+    && /install/kwkhtml_client.sh \
+    && /install/kwkhtml_client_force_python3.sh \
+    && /install/dev_package.sh \
+    && python3 -m pip install --force-reinstall "pip==25.2" "setuptools<58" \
+    && pip3 install -r /odoo/base_requirements.txt --ignore-installed \
+    && pip3 install -r /odoo/platform_requirements.txt --ignore-installed \
+    && /install/purge_dev_package_and_cache.sh
 
 # grab gosu for easy step-down from root and dockerize to generate template and
 # wait on postgres
@@ -52,12 +55,7 @@ COPY ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
 COPY ./start-entrypoint.d /start-entrypoint.d
 COPY ./MANIFEST.in /odoo
 
-VOLUME ["/data/odoo", "/var/log/odoo"]
-
-# Expose Odoo services
-EXPOSE 8069 8072
-
-ENV ODOO_VERSION=12.0 \
+ENV ODOO_VERSION=$VERSION \
     PATH=/odoo-bin:$PATH \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
@@ -74,6 +72,9 @@ ENV ODOO_VERSION=12.0 \
     DEMO=False \
     ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
     OPENERP_SERVER=/etc/odoo.cfg
+
+VOLUME ["/data/odoo", "/var/log/odoo"]
+EXPOSE 8069 8072
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["odoo"]
