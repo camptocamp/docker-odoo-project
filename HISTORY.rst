@@ -42,6 +42,7 @@ Unreleased
 * [15.0] upgrade extra dep cffi to 1.15.0
 * [14.0,15.0] Upgrade to same Psycopg2 and Jinja2 versions
 * [15.0] Bump lxml to version 4.6.3
+* [13.0-15.0] Bump Pillow and urllib3 to fix potential security issues
 
 **Build**
 
