@@ -3,7 +3,12 @@
 set -e
 
 if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-  docker login --username="$DOCKER_USERNAME" --password="$DOCKER_PASSWORD"
+  if [ "$TARGET" = "GHCR" ]
+  then
+      echo $GHCR_TOKEN | docker login --username="$GHCR_USER" --password-stdin https://ghcr.io
+  else
+      echo $DOCKER_PASSWORD | docker login --username="$DOCKER_USERNAME" --password-stdin
+  fi
 
   if [ "$TRAVIS_BRANCH" == "master" ]; then
     if [ "$VERSION" == "15.0" ]; then
