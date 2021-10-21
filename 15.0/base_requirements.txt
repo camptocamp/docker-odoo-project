@@ -47,6 +47,7 @@ reportlab==3.5.13; python_version < '3.8'
 reportlab==3.5.55; python_version >= '3.8'
 requests==2.21.0
 zeep==3.2.0
+python-stdnum==1.13  # official 1.8
 vobject==0.9.6.1
 Werkzeug==0.16.1
 XlsxWriter==1.1.2
@@ -65,7 +66,6 @@ gdata==2.0.18
 html5lib==1.0.1
 odfpy==1.4.1
 pyinotify==0.9.6
-python-stdnum==1.13
 simplejson==3.17.0
 urllib3==1.24.3
 
