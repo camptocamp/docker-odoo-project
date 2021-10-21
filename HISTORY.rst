@@ -40,9 +40,9 @@ Unreleased
 * [15.0] zeep replaces suds-jurko
 * [9.0,10.0] pin libraries that dropped python2.7 support (pytest-cov, watchdog and ruamel.yaml.clib)
 * [15.0] upgrade extra dep cffi to 1.15.0
+* [13.0-15.0] Bump Pillow, urllib3 and requests to fix potential security issues
 * [14.0,15.0] Upgrade to same Psycopg2 and Jinja2 versions
 * [15.0] Bump lxml to version 4.6.3
-* [13.0-15.0] Bump Pillow and urllib3 to fix potential security issues
 
 **Build**
 
