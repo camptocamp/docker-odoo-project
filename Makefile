@@ -3,7 +3,7 @@ ifndef VERSION
 $(error VERSION is not set)
 endif
 
-ifeq ($(TARGET), "GHCR" ]
+ifeq ($(TARGET), "GHCR")
     NAME=ghcr.io/$(NAME)
 endif
 
