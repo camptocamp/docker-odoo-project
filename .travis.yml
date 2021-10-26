@@ -3,7 +3,8 @@ sudo: required
 services: docker
 
 env:
-  - TARGET="GHCR"
+  global:
+    - TARGET="GHCR"
 
   matrix:
     - VERSION=15.0
