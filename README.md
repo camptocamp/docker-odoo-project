@@ -11,6 +11,13 @@ A project using this image has to respect a defined structure, look at the [exam
 
 See also the [Changelog](HISTORY.rst).
 
+## ⚠️ Images moved to ghcr.io
+
+Due to pull limitation on docker.io the images are now pushed exclusively on ghcr.io.
+
+Images can be found under the github link "Packages".
+https://github.com/camptocamp/docker-odoo-project/pkgs/container/odoo-project
+
 ## Image Flavors
 
 There are 4 flavors of the image:
