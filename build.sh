@@ -14,7 +14,6 @@ set -euxo pipefail
 # * BUILD_TAG (tag of the 'latest' image built)
 # * DOCKERFILE (name of the file used for the Docker build)
 #
-
 if [ -z "$VERSION" ]; then
     echo "VERSION environment variable is missing"
     exit 1
