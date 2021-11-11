@@ -30,7 +30,7 @@ ENV BUILD_PACKAGE \
     git
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
-# wkhtml-buster is kept as in offical image, no deb available for bullseye
+# wkhtml-buster is kept as in official image, no deb available for bullseye
 RUN set -x; \
         sh -c /install/package_odoo-bullseye.sh \
         && /install/setup-pip.sh \
