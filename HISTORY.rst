@@ -18,9 +18,21 @@
 Release History
 ---------------
 
-
 Unreleased
 ++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+4.3.0 (2021-12-02)
+++++++++++++++++++
 
 **Features and Improvements**
 
@@ -53,6 +65,8 @@ Unreleased
 * Publish images on ghcr.io
 
 **Documentation**
+
+* Document change to ghcr.io
 
 
 4.2.1 (2021-05-10)
