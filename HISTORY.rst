@@ -27,6 +27,8 @@ Unreleased
 
 **Libraries**
 
+* [14.0] Add copy of extra_requirements in Dockerfile
+
 **Build**
 
 **Documentation**

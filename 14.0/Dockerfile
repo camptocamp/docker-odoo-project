@@ -45,6 +45,7 @@ RUN set -x; \
 RUN /install/gosu.sh && /install/dockerize.sh
 
 COPY ./src_requirements.txt /odoo
+COPY ./extra_requirements.txt /odoo
 COPY ./bin /odoo-bin
 COPY ./templates /templates
 COPY ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
