@@ -123,6 +123,18 @@ domain when the container starts. `web.base.url.freeze` will be set to `True`.
 Default url is `http://localhost:8069`. If `ODOO_BASE_URL` is set to an empty
 value, the configuration parameters will be left unchanged.
 
+### ODOO_REPORT_URL
+
+The `ir.config_parameter` `report.url` will be automatically set to this
+domain when the container starts..
+Default url is `http://localhost:8069`. As soon as we use kwkhtmltopdf
+we must set this URL to be accessible by you kwkhtmltopdf server
+
+### KWKHTMLTOPDF_SERVER_URL
+
+It point to the server that host the kwktmltopdf server to serve files
+
+
 ### MIGRATE
 
 `MIGRATE` can be `True` or `False` and determines whether migration tool
