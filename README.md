@@ -11,6 +11,21 @@ A project using this image has to respect a defined structure, look at the [exam
 
 See also the [Changelog](HISTORY.rst).
 
+## ⚠️ Reporting now use kwkhtmltopdf instead of wkhtmltopdf
+
+To limit the amount of memory required on each containers to print report
+
+We have switch to kwkhtmltopdf project : https://github.com/acsone/kwkhtmltopdf
+
+the kwkhtmltopdf client is included in the base image, you must set the 
+env variable :
+
+KWKHTMLTOPDF_SERVER_URL=<url of your KWKHTMLTOPDF server>:<port>
+
+and you also need to specify report url to let kwkhtmltopdf server to retrive images/header etc... from odoo:
+
+ODOO_REPORT_URL=<url of you odoo:8069>
+
 ## ⚠️ Images moved to ghcr.io
 
 Due to pull limitation on docker.io the images are now pushed exclusively on ghcr.io.

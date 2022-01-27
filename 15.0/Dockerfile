@@ -36,7 +36,6 @@ RUN set -x; \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
         && /install/kwkhtml_client.sh \
-        && /install/kwkhtml_client_force_python3.sh \
         && /install/dev_package.sh \
         && python3 -m pip install --force-reinstall pip "setuptools<58" \
         && pip install -r /odoo/base_requirements.txt --ignore-installed \
