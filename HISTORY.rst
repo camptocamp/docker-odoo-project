@@ -59,6 +59,7 @@ Unreleased
 * [13.0-15.0] Bump Pillow, urllib3 and requests to fix potential security issues
 * [14.0,15.0] Upgrade to same Psycopg2 and Jinja2 versions
 * [15.0] Bump lxml to version 4.6.3
+* [14.0] Bump reportlab version to fix printing qr code
 
 **Build**
 
