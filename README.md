@@ -11,6 +11,21 @@ A project using this image has to respect a defined structure, look at the [exam
 
 See also the [Changelog](HISTORY.rst).
 
+## ⚠️ Reporting now use kwkhtmltopdf instead of wkhtmltopdf
+
+To limit the amount of memory required on each containers to print report
+
+We have switch to kwkhtmltopdf project : https://github.com/acsone/kwkhtmltopdf
+
+the kwkhtmltopdf client is included in the base image, you must set the 
+env variable :
+
+KWKHTMLTOPDF_SERVER_URL=<url of your KWKHTMLTOPDF server>:<port>
+
+and you also need to specify report url to let kwkhtmltopdf server to retrive images/header etc... from odoo:
+
+ODOO_REPORT_URL=<url of you odoo:8069>
+
 ## ⚠️ Images moved to ghcr.io
 
 Due to pull limitation on docker.io the images are now pushed exclusively on ghcr.io.
@@ -107,6 +122,18 @@ The `ir.config_parameter` `web.base.url` will be automatically set to this
 domain when the container starts. `web.base.url.freeze` will be set to `True`.
 Default url is `http://localhost:8069`. If `ODOO_BASE_URL` is set to an empty
 value, the configuration parameters will be left unchanged.
+
+### ODOO_REPORT_URL
+
+The `ir.config_parameter` `report.url` will be automatically set to this
+domain when the container starts..
+Default url is `http://localhost:8069`. As soon as we use kwkhtmltopdf
+we must set this URL to be accessible by you kwkhtmltopdf server
+
+### KWKHTMLTOPDF_SERVER_URL
+
+It point to the server that host the kwktmltopdf server to serve files
+
 
 ### MIGRATE
 

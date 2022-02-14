@@ -23,6 +23,8 @@ Unreleased
 
 **Features and Improvements**
 
+* Use kwkhtmltopdf server instead of wkhtmltopdf binary for reporting
+
 **Bugfixes**
 
 **Libraries**
