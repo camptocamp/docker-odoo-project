@@ -23,7 +23,6 @@ Unreleased
 
 **Features and Improvements**
 
-* Use kwkhtmltopdf server instead of wkhtmltopdf binary for reporting
 
 **Bugfixes**
 
@@ -32,6 +31,24 @@ Unreleased
 **Build**
 
 **Documentation**
+
+4.4.0 (2022-02-05)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Use kwkhtmltopdf server instead of wkhtmltopdf binary for reporting
+
+**Bugfixes**
+
+* Fix lab entry point
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
 
 4.3.0 (2021-12-02)
 ++++++++++++++++++
