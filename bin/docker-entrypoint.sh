@@ -131,12 +131,14 @@ BASE_CMD=$(basename $1)
 CMD_ARRAY=($*)
 ARGS=(${CMD_ARRAY[@]:1})
 
-if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] ; then
+if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || ([ "$BASE_CMD" = "gosu" ] && [ "$CMD_ARRAY" = "odoo migrate" ] ); then
 
   BEFORE_MIGRATE_ENTRYPOINT_DIR=/before-migrate-entrypoint.d
   if [ -d "$BEFORE_MIGRATE_ENTRYPOINT_DIR" ]; then
     run-parts --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
   fi
+fi
+if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]  ; then
 
   # Bypass migrate when `odoo shell` or `odoo --help` are used
   if [[ ! " ${ARGS[@]} " =~ " --help " ]] && [[ ! " ${ARGS[@]:0:1} " =~ " shell " ]]; then
