@@ -32,6 +32,21 @@ Unreleased
 
 **Documentation**
 
+4.4.1 (2022-02-16)
+++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
+* Fix execute flag wkhtmltopdf 
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
 4.4.0 (2022-02-05)
 ++++++++++++++++++
 
