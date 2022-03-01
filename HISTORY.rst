@@ -32,6 +32,21 @@ Unreleased
 
 **Documentation**
 
+4.4.2 (2022-03-01)
+++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
+* Fix python3 for version 15 
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
 4.4.1 (2022-02-16)
 ++++++++++++++++++
 
