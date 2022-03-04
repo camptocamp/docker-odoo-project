@@ -32,6 +32,21 @@ Unreleased
 
 **Documentation**
 
+4.4.3 (2022-03-04)
+++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
+* Fix reportlab version for label 
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
 4.4.2 (2022-03-01)
 ++++++++++++++++++
 
