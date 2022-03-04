@@ -47,8 +47,8 @@ python-dateutil==2.7.3
 pytz==2019.1
 pyusb==1.0.2
 qrcode==6.1
-reportlab==3.5.54; python_version < '3.8' # official 3.5.13
-# reportlab==3.5.55; python_version >= '3.8'
+feedparser==6.0.8
+reportlab==3.5.55; python_version >= '3.8'
 requests==2.25.1  # official 2.21.0
 zeep==3.2.0
 python-stdnum==1.13  # official 1.8
