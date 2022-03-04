@@ -39,7 +39,6 @@ python-dateutil==2.5.3
 pytz==2016.7
 pyusb==1.0.0
 qrcode==5.3
-feedparser==6.0.8
 reportlab==3.5.55; python_version >= '3.8'
 requests==2.20.0
 suds-jurko==0.6
