@@ -23,6 +23,7 @@ Unreleased
 
 **Features and Improvements**
 
+* Set PostgreSQL application name using hostname
 
 **Bugfixes**
 
