@@ -22,6 +22,7 @@ ENV BUILD_PACKAGE \
     libxml2-dev \
     libxslt1-dev \
     libsasl2-dev \
+    libffi-dev \
     libldap2-dev \
     libssl-dev \
     libjpeg-dev \
