@@ -133,7 +133,7 @@ BASE_CMD=$(basename $1)
 CMD_ARRAY=($*)
 ARGS=(${CMD_ARRAY[@]:1})
 
-if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || ([ "$BASE_CMD" = "gosu" ] && [ "${ARGS[@]}" = "odoo migrate" ] ); then
+if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || ([ "$BASE_CMD" = "gosu" ] && [ "${ARGS[*]}" = "odoo migrate" ] ); then
 
   BEFORE_MIGRATE_ENTRYPOINT_DIR=/before-migrate-entrypoint.d
   if [ -d "$BEFORE_MIGRATE_ENTRYPOINT_DIR" ]; then
