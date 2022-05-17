@@ -70,9 +70,10 @@ anthem==0.13.0
 # test / lint
 # those libs and their dependencies are unpinned
 # to always test with the last version of it
-flake8
+# DISCLAIMER: those are pinned to the last Python 2.7 compatible version
+flake8==3.9.2
 pytest==4.6
-pluggy
+pluggy==0.13.1
 pytest-odoo
 coverage==5.5
 watchdog==0.10.6
@@ -98,3 +99,4 @@ pyflakes==1.6.0
 unicodecsv==0.14.1
 wrapt==1.10.11
 zipp==1.2.0
+contextlib2==0.6.0
