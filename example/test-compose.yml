@@ -8,6 +8,7 @@ services:
     build: ./odoo/
     depends_on:
       - db
+      - kwkhtmltopdf
     volumes:
       - "data-odoo:/data/odoo"
     environment:
@@ -17,6 +18,8 @@ services:
       - RUNNING_ENV=dev
       - LOG_HANDLER=:WARN
       - MARABUNTA_MODE=demo  # could be 'full' for the db with all the data
+      - KWKHTMLTOPDF_SERVER_URL=http://kwkhtmltopdf:8080
+      - ODOO_REPORT_URL=http://odoo:8069
       # cached database dumps config for `runmigration` and `runtests`
       - CREATE_DB_CACHE=false  # set it to 'true' to create dumps
       - LOAD_DB_CACHE=true # by default will always search for existing dumps
@@ -39,6 +42,11 @@ services:
       - POSTGRES_PASSWORD=odoo
     volumes:
       - "data-db:/var/lib/postgresql/data"
+  
+  kwkhtmltopdf:
+    image: acsone/kwkhtmltopdf
+    ports:
+      - 8080
 
 volumes:
   data-odoo:
