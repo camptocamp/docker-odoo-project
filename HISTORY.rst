@@ -23,9 +23,27 @@ Unreleased
 
 **Features and Improvements**
 
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+4.4.4 (2022-05-23)
+++++++++++++++++++
+
+**Features and Improvements**
+
 * Set PostgreSQL application name using hostname
 
 **Bugfixes**
+
+* Fix args unpacking in docker-entrypoint.sh
+* Replace deprecated URL in requirements.txt for V15
+* Pin contextlib2 requirement for Odoo <= V10
+* Add kwkhtmltopdf in test composition to avoid issues when testing reports
 
 **Libraries**
 
