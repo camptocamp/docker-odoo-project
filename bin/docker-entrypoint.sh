@@ -17,7 +17,7 @@ export PGAPPNAME=${HOSTNAME}
 
 # As docker-compose exec do not launch the entrypoint
 # init PG variable into .bashrc so it will be initialized
-# when doing docker-compose exec odoo gosu odoo bash
+# when doing docker-compose exec odoo su-exec odoo bash
 touch /home/odoo/.bashrc
 chown odoo:odoo /home/odoo/.bashrc
 echo "
@@ -146,7 +146,7 @@ if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]  ; then
   if [[ ! " ${ARGS[@]} " =~ " --help " ]] && [[ ! " ${ARGS[@]:0:1} " =~ " shell " ]]; then
 
       if [ -z "$MIGRATE" -o "$MIGRATE" = True ]; then
-        gosu odoo migrate
+        su-exec odoo migrate
       fi
 
   fi
@@ -156,7 +156,7 @@ if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]  ; then
     run-parts --verbose "$START_ENTRYPOINT_DIR"
   fi
 
-  exec gosu odoo "$@"
+  exec su-exec odoo "$@"
 fi
 
 exec "$@"
