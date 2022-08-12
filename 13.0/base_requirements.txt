@@ -17,7 +17,7 @@ html2text==2018.1.9
 Jinja2==2.11.3 # official 2.10.1
 libsass==0.17.0
 # lxml==3.7.1 ; sys_platform != 'win32' and python_version < '3.7'
-lxml==4.6.3 ; sys_platform != 'win32' and python_version >= '3.7' # official 4.3.2
+lxml==4.9.1 ; sys_platform != 'win32' and python_version >= '3.7' # official 4.3.2
 # lxml ; sys_platform == 'win32'
 Mako==1.0.7
 MarkupSafe==1.1.1 # official 1.1.0
