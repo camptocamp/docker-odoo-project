@@ -41,7 +41,7 @@ roman==2.0.0
 simplejson==3.6.5
 six==1.10.0
 unittest2==1.1.0
-urllib3==1.24.2
+urllib3==1.26.5
 vatnumber==1.2
 vobject==0.9.3
 wsgiref==0.1.2
