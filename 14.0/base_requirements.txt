@@ -24,7 +24,7 @@ Jinja2==2.11.3; python_version < '3.8' # official 2.10.1
 # Jinja2==2.11.3; python_version >= '3.8'  # official 2.11.2
 libsass==0.17.0
 # lxml==3.7.1 ; sys_platform != 'win32' and python_version < '3.7'
-lxml==4.6.3 ; sys_platform != 'win32' and python_version == '3.7' # official 4.3.2
+lxml==4.9.1 ; sys_platform != 'win32' and python_version == '3.7' # official 4.3.2
 # lxml==4.6.3 ; sys_platform != 'win32' and python_version > '3.7' # official 4.6.1
 # lxml ; sys_platform == 'win32'
 Mako==1.0.7
