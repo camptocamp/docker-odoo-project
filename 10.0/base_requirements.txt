@@ -84,6 +84,7 @@ argh==0.26.2
 atomicwrites==1.1.5
 attrs==18.1.0
 beautifulsoup4==4.6.0
+certifi==2020.4.5.1
 configparser==3.5.0
 enum34==1.1.6
 funcsigs==1.0.2
