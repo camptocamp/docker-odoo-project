@@ -1,13 +1,8 @@
 #!/bin/bash
 set -e
 
-# allow to customize the UID of the odoo user,
-# so we can share the same than the host's.
-# If no user id is set, we use 999
-USER_ID=${LOCAL_USER_ID:-999}
-
-echo "Starting with UID : $USER_ID"
-id -u odoo &> /dev/null || useradd --shell /bin/bash -u $USER_ID -o -c "" -m odoo
+# Display the user_id used by odoo
+echo "Starting with UID : $(id -u)"
 
 export PGHOST=${DB_HOST}
 export PGPORT=${DB_PORT}
@@ -18,22 +13,20 @@ export PGAPPNAME=${HOSTNAME}
 # As docker-compose exec do not launch the entrypoint
 # init PG variable into .bashrc so it will be initialized
 # when doing docker-compose exec odoo gosu odoo bash
-touch /home/odoo/.bashrc
-chown odoo:odoo /home/odoo/.bashrc
 echo "
 export PGHOST=${DB_HOST}
 export PGPORT=${DB_PORT}
 export PGUSER=${DB_USER}
 export PGDATABASE=${DB_NAME}
 export PGAPPNAME=${HOSTNAME}
-" >> /home/odoo/.bashrc
+" >>/odoo/.bashrc
 
 # Only set PGPASSWORD if there is no .pgpass file
-if [ ! -f /home/odoo/.pgpass ]; then
+if [ ! -f /odoo/.pgpass ]; then
+  export PGPASSWORD=${DB_PASSWORD}
+  echo "
     export PGPASSWORD=${DB_PASSWORD}
-    echo "
-    export PGPASSWORD=${DB_PASSWORD}
-    " >> /home/odoo/.bashrc
+    " >>/odoo/.bashrc
 fi
 
 # Accepted values for DEMO: True / False
@@ -43,43 +36,43 @@ fi
 if [ -z "$DEMO" ]; then
   DEMO=False
 fi
-case "$(echo "${DEMO}" | tr '[:upper:]' '[:lower:]' )" in
-  "false")
-    echo "Running without demo data"
-    export WITHOUT_DEMO=all
-    ;;
-  "true")
-    echo "Running with demo data"
-    export WITHOUT_DEMO=
-    ;;
+case "$(echo "${DEMO}" | tr '[:upper:]' '[:lower:]')" in
+"false")
+  echo "Running without demo data"
+  export WITHOUT_DEMO=all
+  ;;
+"true")
+  echo "Running with demo data"
+  export WITHOUT_DEMO=
+  ;;
   # deprecated options:
-  "odoo")
-    echo "Running with demo data"
-    echo "DEMO=odoo is deprecated, use DEMO=True"
-    export WITHOUT_DEMO=
-    ;;
-  "none")
-    echo "Running without demo data"
-    echo "DEMO=none is deprecated, use DEMO=False"
-    export WITHOUT_DEMO=all
-    ;;
-  "scenario")
-    echo "DEMO=scenario is deprecated, use DEMO=False and MARABUNTA_MODE=demo with a demo mode in migration.yml"
-    exit 1
-    ;;
-  "all")
-    echo "DEMO=all is deprecated, use DEMO=True and MARABUNTA_MODE=demo with a demo mode in migration.yml"
-    exit 1
-    ;;
-  *)
-    echo "Value '${DEMO}' for DEMO is not a valid value in 'False', 'True'"
-    exit 1
-    ;;
+"odoo")
+  echo "Running with demo data"
+  echo "DEMO=odoo is deprecated, use DEMO=True"
+  export WITHOUT_DEMO=
+  ;;
+"none")
+  echo "Running without demo data"
+  echo "DEMO=none is deprecated, use DEMO=False"
+  export WITHOUT_DEMO=all
+  ;;
+"scenario")
+  echo "DEMO=scenario is deprecated, use DEMO=False and MARABUNTA_MODE=demo with a demo mode in migration.yml"
+  exit 1
+  ;;
+"all")
+  echo "DEMO=all is deprecated, use DEMO=True and MARABUNTA_MODE=demo with a demo mode in migration.yml"
+  exit 1
+  ;;
+*)
+  echo "Value '${DEMO}' for DEMO is not a valid value in 'False', 'True'"
+  exit 1
+  ;;
 esac
 
 # Create configuration file from the template
 TEMPLATES_DIR=/templates
-CONFIG_TARGET=/etc/odoo.cfg
+CONFIG_TARGET=/odoo/odoo.cfg
 if [ -e $TEMPLATES_DIR/openerp.cfg.tmpl ]; then
   dockerize -template $TEMPLATES_DIR/openerp.cfg.tmpl:$CONFIG_TARGET
 fi
@@ -87,7 +80,7 @@ if [ -e $TEMPLATES_DIR/odoo.cfg.tmpl ]; then
   dockerize -template $TEMPLATES_DIR/odoo.cfg.tmpl:$CONFIG_TARGET
 fi
 
-if [ ! -f "/etc/odoo.cfg" ]; then
+if [ ! -f "${CONFIG_TARGET}" ]; then
   echo "Error: one of /templates/openerp.cfg.tmpl, /templates/odoo.cfg.tmpl, /etc/odoo.cfg is required"
   exit 1
 fi
@@ -108,7 +101,6 @@ if [ -z "$(pip list --format=columns | grep "/odoo/src")" ]; then
   chown -R odoo: /odoo/src/*.egg-info
 fi
 
-
 # Same logic but for your custom project
 if [ -z "$(pip list --format=columns | grep "/odoo" | grep -v "/odoo/src")" ]; then
   echo '/src/*.egg-info is missing, probably because the directory is a volume.'
@@ -117,37 +109,27 @@ if [ -z "$(pip list --format=columns | grep "/odoo" | grep -v "/odoo/src")" ]; t
   chown -R odoo: /odoo/*.egg-info
 fi
 
-
 # Wait until postgres is up
 wait_postgres.sh
-
-mkdir -p /data/odoo/{addons,filestore,sessions}
-if [ ! "$(stat -c '%U' /data/odoo)" = "odoo" ]; then
-  chown -R odoo: /data/odoo
-fi
-if [ ! "$(stat -c '%U' /var/log/odoo)" = "odoo" ]; then
-  chown -R odoo: /var/log/odoo
-fi
 
 BASE_CMD=$(basename $1)
 CMD_ARRAY=($*)
 ARGS=(${CMD_ARRAY[@]:1})
 
-if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || ([ "$BASE_CMD" = "gosu" ] && [[ "${ARGS[@]}" =~ "odoo migrate" ]] ); then
-
+if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || [ "$BASE_CMD" = "migrate" ]; then
   BEFORE_MIGRATE_ENTRYPOINT_DIR=/before-migrate-entrypoint.d
   if [ -d "$BEFORE_MIGRATE_ENTRYPOINT_DIR" ]; then
     run-parts --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
   fi
 fi
-if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]  ; then
+if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]; then
 
   # Bypass migrate when `odoo shell` or `odoo --help` are used
   if [[ ! " ${ARGS[@]} " =~ " --help " ]] && [[ ! " ${ARGS[@]:0:1} " =~ " shell " ]]; then
 
-      if [ -z "$MIGRATE" -o "$MIGRATE" = True ]; then
-        gosu odoo migrate
-      fi
+    if [ -z "$MIGRATE" -o "$MIGRATE" = True ]; then
+      migrate
+    fi
 
   fi
 
@@ -156,7 +138,7 @@ if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]  ; then
     run-parts --verbose "$START_ENTRYPOINT_DIR"
   fi
 
-  exec gosu odoo "$@"
+  exec "$@"
 fi
 
 exec "$@"

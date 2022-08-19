@@ -35,7 +35,7 @@
 set -e
 
 wait_postgres.sh
-CACHE_DIR=/.cachedb
+CACHE_DIR=/tmp
 
 echo $CACHE_DIR
 
@@ -71,7 +71,7 @@ else
     echo "Do migration from scratch 🐢 🐢 🐢"
 fi
 
-gosu odoo migrate
+migrate
 
 # Create a dump if none exist for the current VERSION
 if [ "$CREATE_DB_CACHE" == "true" -a ! -f "$CACHED_DUMP" ]; then

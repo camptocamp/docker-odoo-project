@@ -23,6 +23,10 @@ Unreleased
 
 **Features and Improvements**
 
+* Remove old version (python 2.7) 7.0/8.0/9.0/10.0
+* Remove Gosu.sh
+* Run container with odoo user
+
 **Bugfixes**
 
 **Libraries**

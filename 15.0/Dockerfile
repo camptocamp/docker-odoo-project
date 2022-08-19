@@ -1,6 +1,6 @@
 FROM debian:bullseye
 MAINTAINER Camptocamp
-
+ARG UID=999
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /odoo /var/log/odoo
 
@@ -42,24 +42,32 @@ RUN set -x; \
         && pip install -r /odoo/base_requirements.txt --ignore-installed \
         && /install/purge_dev_package_and_cache.sh
 
-# grab gosu for easy step-down from root and dockerize to generate template and
+# grab dockerize to generate template and
 # wait on postgres
-RUN /install/gosu.sh && /install/dockerize.sh
+RUN /install/dockerize.sh
+
+RUN /install/dockerize.sh
 
 COPY ./src_requirements.txt /odoo
-COPY ./bin /odoo-bin
+COPY ./bin /odoo/odoo-bin
 COPY ./templates /templates
-COPY ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
-COPY ./start-entrypoint.d /start-entrypoint.d
+COPY ./before-migrate-entrypoint.d /odoo/before-migrate-entrypoint.d
+COPY ./start-entrypoint.d /odoo/start-entrypoint.d
 COPY ./MANIFEST.in /odoo
+RUN adduser --disabled-password -u $UID --gecos '' odoo
+RUN touch /odoo/odoo.cfg
+RUN mkdir -p /odoo/data/odoo/{addons,filestore,sessions} 
+RUN chown -R odoo:odoo /odoo
+RUN usermod odoo --home /odoo
+RUN chown -R odoo:odoo /var/log/odoo
 
 VOLUME ["/data/odoo", "/var/log/odoo"]
-
+USER odoo
 # Expose Odoo services
 EXPOSE 8069 8072
 
 ENV ODOO_VERSION=15.0 \
-    PATH=/odoo-bin:$PATH \
+    PATH=/odoo/odoo-bin:/odoo/.local/bin:$PATH \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     DB_HOST=db \
@@ -73,7 +81,7 @@ ENV ODOO_VERSION=15.0 \
     ODOO_DATA_PATH=/odoo/data \
     DEMO=False \
     ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
-    OPENERP_SERVER=/etc/odoo.cfg
+    OPENERP_SERVER=/odoo/odoo.cfg
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["odoo"]
