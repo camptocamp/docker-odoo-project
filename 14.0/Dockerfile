@@ -41,9 +41,27 @@ RUN set -x; \
         && pip install -r /odoo/base_requirements.txt --ignore-installed \
         && /install/purge_dev_package_and_cache.sh
 
-# grab gosu for easy step-down from root and dockerize to generate template and
+ARG OS=buster
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ ${OS}-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
+    && curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+    && curl -o /usr/local/bin/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c; \
+    \
+    fetch_deps='gcc libc-dev'; \
+    apt-get update; \
+    apt-get install --no-install-recommends -y \
+      $fetch_deps \
+      postgresql-client-14 \
+      && apt-get clean all \
+      && rm -rf /var/lib/apt/lists/* \
+    gcc -Wall \
+      /usr/local/bin/su-exec.c -o/usr/local/bin/su-exec; \
+    chown root:root /usr/local/bin/su-exec; \
+    chmod 0755 /usr/local/bin/su-exec; \
+    rm /usr/local/bin/su-exec.c;
+
+# dockerize to generate template # and gosu for easy step-down from root and  /install/gosu.sh && 
 # wait on postgres
-RUN /install/gosu.sh && /install/dockerize.sh
+RUN /install/dockerize.sh 
 
 COPY ./src_requirements.txt /odoo
 COPY ./bin /odoo-bin
