@@ -31,6 +31,25 @@ Unreleased
 
 **Documentation**
 
+
+4.4.5 (2022-08-29)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Add +x on start-entrypoint.d/001_set_report_url (#192)
+
+**Bugfixes**
+
+* Pin certifi library for Odoo<=10.0 to avoid python compatibility issue
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+
 4.4.4 (2022-05-23)
 ++++++++++++++++++
 
