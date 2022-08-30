@@ -35,6 +35,22 @@ Unreleased
 
 **Documentation**
 
+5.0.0 (2022-08-30)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Remove old version (python 2.7) 7.0/8.0/9.0/10.0
+* Remove Gosu.sh
+* Run container with odoo user
+
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
 
 4.4.5 (2022-08-29)
 ++++++++++++++++++
