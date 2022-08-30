@@ -43,6 +43,3 @@ cp -r start-entrypoint.d/ ${TMP}
 cp -r before-migrate-entrypoint.d/ ${TMP}
 
 docker build --no-cache -f ${TMP}/Dockerfile -t ${BUILD_TAG} ${TMP}
-docker build --no-cache -f ${TMP}/Dockerfile-onbuild -t ${BUILD_TAG}-onbuild ${TMP}
-docker build --no-cache -f ${TMP}/Dockerfile-batteries -t ${BUILD_TAG}-batteries ${TMP}
-docker build --no-cache -f ${TMP}/Dockerfile-batteries-onbuild -t ${BUILD_TAG}-batteries-onbuild ${TMP}

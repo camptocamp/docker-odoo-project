@@ -15,12 +15,7 @@ COPY ./songs /odoo/songs
 COPY ./setup.py /odoo/
 COPY ./VERSION /odoo/
 COPY ./migration.yml /odoo/
-
-RUN replace_dependencies.sh
-RUN pip install -e /odoo
-RUN pip install -e /odoo/src
-
-# Project's specifics packages
+USER root
 RUN set -x; \
         apt-get update \
         && apt-get install -y --no-install-recommends \
@@ -29,6 +24,13 @@ RUN set -x; \
         && rm -rf /var/lib/apt/lists/*
 
 COPY ./requirements.txt /odoo/
+RUN chown -R odoo:odoo /odoo
+USER odoo
+RUN pip install -e /odoo
+RUN pip install -e /odoo/src
+
+# Project's specifics packages
 RUN cd /odoo && pip install -r requirements.txt
 
 ENV ADDONS_PATH=/odoo/local-src,/odoo/src/addons
+

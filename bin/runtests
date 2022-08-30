@@ -30,26 +30,20 @@ set -e
 
 wait_postgres.sh
 LOCAL_SRC_DIR=/odoo/local-src
-case "$ODOO_VERSION" in
-    "7.0")          ODOO_BIN_PATH=/odoo/src/openerp-server ;;
-    "8.0"|"9.0")    ODOO_BIN_PATH=/odoo/src/odoo.py ;;
-    *)              ODOO_BIN_PATH=/odoo/src/odoo-bin ;;
-esac
-CACHE_DIR=/.cachedb
+ODOO_BIN_PATH=/odoo/src/odoo-bin
+CACHE_DIR=/tmp
 
-if [ -z $1 ]
-then
-  LOCAL_ADDONS=$(find ${LOCAL_SRC_DIR}/* -maxdepth 0 -type d -and -not -name server_environment_files -printf "%f\n"\
-                | awk -vORS=, '{print $1}'\
-                | sed 's/,$/\n/')
+if [ -z $1 ]; then
+    LOCAL_ADDONS=$(find ${LOCAL_SRC_DIR}/* -maxdepth 0 -type d -and -not -name server_environment_files -printf "%f\n" |
+        awk -vORS=, '{print $1}' |
+        sed 's/,$/\n/')
 else
-  LOCAL_ADDONS=$1
+    LOCAL_ADDONS=$1
 fi
 
 DEPS_ADDONS=$(list_dependencies.py "$LOCAL_ADDONS")
 
 DB_NAME_TEST=${DB_NAME}_test
-
 
 echo "Create database"
 createdb -O $DB_USER ${DB_NAME_TEST}
@@ -72,7 +66,7 @@ else
         echo "No cached dump found matching MD5 🐢 🐢 🐢"
     fi
     echo "🔨🔨 Install official/OCA modules 🔨🔨"
-    gosu odoo odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" --db-filter=$DB_NAME_TEST -i ${DEPS_ADDONS}
+    odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" --db-filter=$DB_NAME_TEST -i ${DEPS_ADDONS}
     if [ "$CREATE_DB_CACHE" == "true" -a ! -z "$CACHED_DUMP" ]; then
         echo "Generate dump $CACHED_DUMP into cache 🐘⮕ 📦"
         mkdir -p "$CACHE_DIR"
@@ -80,10 +74,10 @@ else
     fi
 fi
 echo "🔧🔧 Install local-src modules 🔧🔧"
-gosu odoo odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" --db-filter=$DB_NAME_TEST -i ${LOCAL_ADDONS}
+odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" --db-filter=$DB_NAME_TEST -i ${LOCAL_ADDONS}
 
 export COVERAGE_FILE=/home/odoo/.coverage
-gosu odoo coverage run --source="${LOCAL_SRC_DIR}" "${ODOO_BIN_PATH}" --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" --db-filter=$DB_NAME_TEST -u ${LOCAL_ADDONS}
+coverage run --source="${LOCAL_SRC_DIR}" "${ODOO_BIN_PATH}" --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" --db-filter=$DB_NAME_TEST -u ${LOCAL_ADDONS}
 dropdb ${DB_NAME_TEST}
 
 coverage report -m

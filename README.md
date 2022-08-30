@@ -11,6 +11,13 @@ A project using this image has to respect a defined structure, look at the [exam
 
 See also the [Changelog](HISTORY.rst).
 
+## ⚠️ Version 5.0.0 : Some Breaking changes
+  - We not longer use gosu
+  - The `odoo` user is created during the build of the image, and no longer in the entrypoint
+  - All odoo related files are moved in /odoo
+  - odoo runs with uid 999; if you need to change this, use for instance `docker-compose --build-arg UID=$(id -u)
+  - Odoo versions 7.0, 8.0, 9.0 and 10.0 are no longer supported
+
 ## ⚠️ Reporting now use kwkhtmltopdf instead of wkhtmltopdf
 
 To limit the amount of memory required on each containers to print report
@@ -90,8 +97,6 @@ Normal flavors:
 $ make VERSION=11.0
 # generate image camptocamp/odoo-project:10.0-latest and camptocamp/odoo-project:10.0-latest-onbuild
 $ make VERSION=10.0
-# generate image camptocamp/odoo-project:9.0-latest and camptocamp/odoo-project:9.0-latest-onbuild
-$ make VERSION=9.0
 ```
 
 Batteries-included flavors:
@@ -100,8 +105,6 @@ Batteries-included flavors:
 $ make VERSION=11.0 BATTERIES=True
 # generate image camptocamp/odoo-project:10.0-batteries-latest and camptocamp/odoo-project:10.0-latest-batteries-onbuild
 $ make VERSION=10.0 BATTERIES=True
-# generate image camptocamp/odoo-project:9.0-batteries-latest and camptocamp/odoo-project:9.0-latest-batteries-onbuild
-$ make VERSION=9.0 BATTERIES=True
 ```
 
 
@@ -215,17 +218,16 @@ NOTE: `anthem > 0.11.0` is required.
 `DEMO` can be `True` or `False` and determines whether Odoo will load its Demo
 data. It has effect only at the creation of the database.
 
-### LOCAL_USER_ID
+### User id
 
-By default, the user ID inside of the container will be 9001. There is little
+By default, the user ID inside of the container will be 999. There is little
 concern with this ID until we setup a host volume: the same user ID will be
-used to write the files on the host's filesystem. 9001 will probably be
+used to write the files on the host's filesystem. 999 will probably be
 inexistent on the host system but at least it will not collide with an actual
 user.
 
-Instead, you can set the ID of the host's system in `LOCAL_USER_ID`, which will
-then be shared by the container. All the files created in host volumes will
-then share the same user.
+If you need you can make an image that inherit from this one and made
+an alter user odoo -u your udi
 
 ### CREATE_DB_CACHE
 
@@ -414,12 +416,6 @@ They work the same as the newer ones, with a few differences.
 If you want to script migration parts, you can write a script using `erppeek`.
 
 Sidenote: You can still use SQL scripts the same as before
-
-### Python Libraries
-
-If you use the official Odoo V7 or the OCA prior to https://github.com/OCA/OCB/commit/b2e48ad8b7cbd62d366e6ffee1861a6085999ce0,
-you will need to run the script `replace_dependencies.sh` in your Dockerfile (check [Dockerfile](example/odoo/Dockerfile) as example)
-in order to use renamed version of old Python libraries (e.g. *PIL* and *pychart*, now named *Pillow* and *Python-Chart*).
 
 ### Demo Data
 
