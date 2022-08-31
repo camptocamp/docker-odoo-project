@@ -30,6 +30,20 @@ Unreleased
 **Build**
 
 **Documentation**
+5.0.2 (2022-08-31)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Fix path in instance dependencies 
+
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
 
 5.0.1 (2022-08-30)
 ++++++++++++++++++
