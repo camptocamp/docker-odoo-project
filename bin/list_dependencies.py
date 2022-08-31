@@ -13,24 +13,23 @@ import sys
 import os
 import ast
 
-BASE_DIR = os.getcwd()
-LOCAL_SRC_DIR = os.path.join(BASE_DIR, 'odoo', 'local-src')
+LOCAL_SRC_DIR = os.path.join("/odoo", "local-src")
 
 dependencies = set()
 local_modules = os.listdir(LOCAL_SRC_DIR)
 if len(sys.argv) > 1:
-    modules = sys.argv[1].split(',')
+    modules = sys.argv[1].split(",")
 else:
     modules = local_modules
 for mod in modules:
     # read __manifest__
-    manifest_path = os.path.join(LOCAL_SRC_DIR, mod, '__manifest__.py')
+    manifest_path = os.path.join(LOCAL_SRC_DIR, mod, "__manifest__.py")
     if not os.path.isfile(manifest_path):
         continue
     with open(manifest_path) as manifest:
         data = ast.literal_eval(manifest.read())
-    dependencies.update(data['depends'])
+    dependencies.update(data["depends"])
 
 # remove local-src from list of dependencies
 dependencies = dependencies.difference(local_modules)
-print(','.join(dependencies) or 'base')
+print(",".join(dependencies) or "base")
