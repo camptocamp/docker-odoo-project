@@ -14,7 +14,7 @@ parse-accept-language==0.1.2
 paypalrestsdk==1.13.1
 phonenumbers==8.9.8
 pyquerystring==1.0.2
-pyOpenSSL==18.0.0
+pyOpenSSL==22.0.0
 pyquerystring==1.0.2
 pysimplesoap==1.16.2
 requests-mock==1.5.0
