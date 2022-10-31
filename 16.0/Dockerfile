@@ -1,4 +1,4 @@
-FROM python:3.10-bullseye 
+FROM python:3.11-bullseye 
 MAINTAINER Camptocamp
 ARG UID=999
 # create the working directory and a place to set the logs (if wanted)
