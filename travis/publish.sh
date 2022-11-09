@@ -10,7 +10,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
       echo $DOCKER_PASSWORD | docker login --username="$DOCKER_USERNAME" --password-stdin
   fi
 
-  if [ "$TRAVIS_BRANCH" == "master" ]; then
+  if [ "$TRAVIS_BRANCH" == "stable-4.x.y" ]; then
     if [ "$VERSION" == "15.0" ]; then
       make VERSION=$VERSION TAG=$TRAVIS_TAG tag_latest_main push_latest_main
     fi
