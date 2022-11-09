@@ -16,6 +16,10 @@ if [ $OS_CODENAME = "jessie" ]
 then
     APT_REPO="apt-archive.postgresql.org"
 fi
+if [ $OS_CODENAME = "stretch" ]
+then
+    APT_REPO="apt-archive.postgresql.org"
+fi
 
 echo "deb http://${APT_REPO}/pub/repos/apt/ ${OS_CODENAME}-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
