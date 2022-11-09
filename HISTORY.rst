@@ -13,6 +13,8 @@
 
 .. **Build**
 
+* Change PostgreSQL deb repo to 'apt-archive' for debian stretch based images
+
 .. **Documentation**
 
 Release History
