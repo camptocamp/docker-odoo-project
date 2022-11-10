@@ -33,6 +33,20 @@ Unreleased
 
 **Documentation**
 
+4.4.6 (2022-11-10)
+++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
+* Debian Stretch switch to archive repo
+
+**Libraries**
+
+**Build**
+
+**Documentation**
 
 4.4.5 (2022-08-29)
 ++++++++++++++++++
