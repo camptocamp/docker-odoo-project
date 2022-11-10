@@ -4,6 +4,7 @@ set -eo pipefail
 apt-get update
 apt-get purge python2.7 python2.7-minimal
 apt-get install -y --no-install-recommends \
+    apt-transport-https \
     antiword \
     ca-certificates \
     curl \
