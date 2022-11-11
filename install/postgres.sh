@@ -12,7 +12,7 @@ fi
 
 
 APT_REPO="apt.postgresql.org"
-if [ $OS_CODENAME = "jessie" ]
+if [ $OS_CODENAME = "jessie" ] || [ $OS_CODENAME = "stretch" ]
 then
     APT_REPO="apt-archive.postgresql.org"
 fi
