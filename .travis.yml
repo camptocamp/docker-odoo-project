@@ -9,6 +9,7 @@ env:
   matrix:
     - VERSION=15.0
     - VERSION=14.0
+    - VERSION=14.0-bullseye
     - VERSION=13.0
     - VERSION=12.0
     - VERSION=12.0-buster

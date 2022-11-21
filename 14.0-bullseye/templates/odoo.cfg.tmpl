@@ -1,0 +1,51 @@
+[options]
+addons_path = {{ .Env.ADDONS_PATH }}
+data_dir = /data/odoo
+auto_reload = False
+db_host = {{ .Env.DB_HOST }}
+db_name = {{ .Env.DB_NAME }}
+db_user = {{ .Env.DB_USER }}
+db_password = {{ .Env.DB_PASSWORD }}
+db_sslmode = {{ default .Env.DB_SSLMODE "prefer" }}
+dbfilter = ^{{ default .Env.DB_FILTER .Env.DB_NAME }}$
+list_db = {{ default .Env.LIST_DB "False" }}
+admin_passwd = {{ default .Env.ADMIN_PASSWD "" }}
+db_maxconn = {{ default .Env.DB_MAXCONN "64" }}
+limit_memory_soft = {{ default .Env.LIMIT_MEMORY_SOFT "2147483648" }}
+limit_memory_hard = {{ default .Env.LIMIT_MEMORY_HARD "2684354560" }}
+limit_request = {{ default .Env.LIMIT_REQUEST "8192" }}
+limit_time_cpu = {{ default .Env.LIMIT_TIME_CPU "60" }}
+limit_time_real = {{ default .Env.LIMIT_TIME_REAL "120" }}
+limit_time_real_cron = {{ default .Env.LIMIT_TIME_REAL_CRON "120" }}
+log_handler = {{ default .Env.LOG_HANDLER "':INFO'" }}
+log_level = {{ default .Env.LOG_LEVEL "info" }}
+max_cron_threads = {{ default .Env.MAX_CRON_THREADS "2" }}
+workers = {{ default .Env.WORKERS "4" }}
+logfile = {{ default .Env.LOGFILE "None" }}
+log_db = {{ default .Env.LOG_DB "False" }}
+logrotate = True
+syslog = {{ default .Env.SYSLOG "False" }}
+running_env = {{ default .Env.RUNNING_ENV "dev" }}
+without_demo = {{ default .Env.WITHOUT_DEMO "True" }}
+server_wide_modules = {{ default .Env.SERVER_WIDE_MODULES "" }}
+; db_sslmode =
+; We can activate proxy_mode even if we are not behind a proxy, because
+; it is used only if HTTP_X_FORWARDED_HOST is set in environ
+proxy_mode = True
+; csv_internal_sep = ,
+; db_template = template1
+; debug_mode = False
+; email_from = False
+; http_port = 8069
+; http_enable = True
+; http_interface =
+; longpolling_port = 8072
+; osv_memory_age_limit = 1.0
+; osv_memory_count_limit = False
+; smtp_password = False
+; smtp_port = 25
+; smtp_server = localhost
+; smtp_ssl = False
+; smtp_user = False
+unaccent = {{ default .Env.UNACCENT "False" }}
+{{ default .Env.ADDITIONAL_ODOO_RC "" }}
