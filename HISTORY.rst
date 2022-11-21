@@ -33,6 +33,14 @@ Unreleased
 
 **Documentation**
 
+4.5.0 (2022-11-21)
+++++++++++++++++++
+
+**Build**
+
+* [14.0-bullseye] Added version build for 14.0 based on debian:bullseye
+
+
 4.4.6 (2022-11-10)
 ++++++++++++++++++
 
