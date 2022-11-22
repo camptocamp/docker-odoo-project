@@ -33,6 +33,21 @@ Unreleased
 
 **Documentation**
 
+4.5.1 (2022-11-22)
+++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
+* [14.0-bullseye][FIX] Avoid vcr issue by changing pyOpenSSL version to 22.0.0
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
 4.5.0 (2022-11-21)
 ++++++++++++++++++
 
