@@ -33,6 +33,21 @@ Unreleased
 
 **Documentation**
 
+5.0.4 (2022-11-23)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Fix for V16 pypi
+
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
 5.0.3 (2022-09-01)
 ++++++++++++++++++
 
