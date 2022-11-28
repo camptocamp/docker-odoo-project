@@ -16,11 +16,13 @@ export
 
 all: build
 
+.PHONY: setup
+setup:
+	bash setup.sh
 
 .PHONY: build
 build:
 	bash build.sh
-
 
 .PHONY: tag
 tag:

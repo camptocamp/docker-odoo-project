@@ -1,0 +1,88 @@
+name: build
+
+on:
+  push:
+    branches:
+      - "main"
+      - "master"
+    tags:
+      - "*.*.*.*.*"
+      - "stable"
+
+  pull_request:
+    branches:
+      - "main"
+      - "master"
+
+env:
+  TARGET: GHCR
+  DOCKER_BUILDKIT: 1
+  COMPOSE_DOCKER_CLI_BUILD: 1
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+        - odoo_serie: "14.0"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/camptocamp/docker-odoo-project
+          flavor: |
+              prefix=${{ matrix.odoo_serie }}-,onlatest=true
+          tags: |
+              type=raw,value=${{ matrix.odoo_serie }}latest
+              type=raw,value=${{ matrix.odoo_serie }}{{date 'YYYYMMDD'}}
+              type=ref,event=tag
+
+      - name: Setup build dir
+        run: |
+          VERSION=${{ matrix.odoo_serie }} SRC=build make setup
+
+      - name: Build
+        uses: docker/build-push-action@v3
+        with:
+          context: ./build
+          push: false
+          load: true
+          tags: ${{ matrix.odoo_serie }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Test
+        run: export BASE_IMAGE=${{ matrix.odoo_serie }}:latest; make VERSION=${{ matrix.odoo_serie }} test
+
+      - name: Login to GitHub Container Registry
+        if: github.event_name == 'push'
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GHCR_USER }}
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      - name: Tag & Push
+        if: github.event_name == 'push'
+        id: docker_push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./build
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Image digest
+        run: echo ${{ steps.docker_push.outputs.digest }}
