@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:buster
 MAINTAINER Camptocamp
 ARG UID=999
 # create the working directory and a place to set the logs (if wanted)
@@ -16,7 +16,7 @@ ENV LANG=C.UTF-8 \
 ENV BUILD_PACKAGE \
     build-essential \
     gcc \
-    python3.5-dev \
+    python3.7-dev \
     libevent-dev \
     libfreetype6-dev \
     libxml2-dev \
@@ -31,7 +31,7 @@ ENV BUILD_PACKAGE \
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
-        /install/package_odoo_11.0_12.0.sh \
+        /install/package_odoo_12.0.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
         && /install/kwkhtml_client.sh \
@@ -79,5 +79,6 @@ ENV ODOO_VERSION=12.0 \
     DEMO=False \
     ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
     OPENERP_SERVER=/odoo/odoo.cfg
+
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["odoo"]
