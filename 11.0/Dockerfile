@@ -31,16 +31,16 @@ ENV BUILD_PACKAGE \
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
-        /install/package_odoo_11.0_12.0.sh \
-        && /install/setup-pip.sh \
-        && /install/postgres.sh \
-        && /install/kwkhtml_client.sh \
-        && /install/kwkhtml_client_force_python3.sh \
-        && /install/dev_package.sh \
-        && python3 -m pip install --force-reinstall pip "setuptools<58" \
-        && pip3 install -r /odoo/base_requirements.txt --ignore-installed \
-        && /install/purge_dev_package_and_cache.sh \
-        && /install/reportlab_init.sh
+    /install/package_odoo_11.0_12.0.sh \
+    && /install/setup-pip.sh \
+    && /install/postgres.sh \
+    && /install/kwkhtml_client.sh \
+    && /install/kwkhtml_client_force_python3.sh \
+    && /install/dev_package.sh \
+    && python3 -m pip install --force-reinstall pip "setuptools<58" \
+    && pip3 install -r /odoo/base_requirements.txt --ignore-installed \
+    && /install/purge_dev_package_and_cache.sh \
+    && /install/reportlab_init.sh
 
 # grab dockerize to generate template and
 # wait on postgres
