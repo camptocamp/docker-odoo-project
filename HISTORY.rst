@@ -33,6 +33,21 @@ Unreleased
 
 **Documentation**
 
+5.0.5 (2022-12-05)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Fix package version for all versions 
+
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
 5.0.4 (2022-11-23)
 ++++++++++++++++++
 
