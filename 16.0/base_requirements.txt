@@ -1,0 +1,85 @@
+# Odoo dependencies
+Babel==2.11.0
+chardet==5.0.0
+decorator==5.1.1
+docutils==0.19
+ebaysdk==2.2.0
+freezegun==1.2.2
+gevent==22.10.2
+greenlet==2.0.1
+html2text==2020.1.16
+idna==3.4
+Jinja2==3.1.2 
+libsass==0.21.0
+lxml==4.9.1 
+Mako==1.2.3
+MarkupSafe==2.1.1
+num2words==0.5.12
+ofxparse==0.21
+passlib==1.7.4
+Pillow==9.3.0 
+polib==1.1.1
+psutil==5.9.4
+psycopg2==2.9.5
+pydot==1.4.2
+python-ldap==3.4.3
+PyPDF2==1.27.12
+pyserial==3.5
+python-dateutil==2.8.2
+pytz==2022.6
+pyusb==1.2.1
+qrcode==7.3.1
+reportlab==3.6.12
+requests==2.28.1
+zeep==4.2.0
+python-stdnum==1.17
+vobject==0.9.6.1
+Werkzeug==0.16.1
+XlsxWriter==3.0.3
+xlwt==1.3.0
+xlrd==2.0.1
+pyOpenSSL==22.1.0
+
+setuptools<58
+
+# Not part of official requirements, but used by some addons
+# colorama==0.3.9
+gdata==2.0.18
+html5lib==1.1
+odfpy==1.4.1
+pyinotify==0.9.6
+simplejson==3.17.6
+urllib3==1.26.7
+
+# Migration tools
+marabunta==0.10.6
+-e git+https://github.com/camptocamp/anthem@master#egg=anthem
+
+# test / lint
+# those libs and their dependencies are unpinned
+# to always test with the last version of it
+flake8
+pytest>=5.4.2
+pluggy
+coverage
+pytest-odoo>=0.4.7
+pytest-cov>=2.10.0
+watchdog
+
+# Library dependency
+argh==0.26.2
+atomicwrites==1.4.1
+attrs==22.1.0
+beautifulsoup4==4.11.1
+future==0.18.2
+mccabe==0.7.0
+more-itertools==9.0.0
+pathtools==0.1.2
+pbr==5.11.0
+pexpect==4.8.0
+ptyprocess==0.7.0
+py==1.11.0
+pycodestyle==2.9.1
+pyflakes==2.5.0
+unicodecsv==0.14.1
+wrapt==1.14.1
