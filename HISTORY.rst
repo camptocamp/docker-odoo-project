@@ -33,6 +33,23 @@ Unreleased
 
 **Documentation**
 
+4.5.2 (2022-12-07)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Add build for V16
+
+**Bugfixes**
+
+* Remove old version (7 -> 10) from travis 
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
 4.5.1 (2022-11-22)
 ++++++++++++++++++
 
