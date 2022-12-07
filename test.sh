@@ -39,7 +39,6 @@ on_exit() {
 
 trap on_exit EXIT
 
-
 # run 'runtests' in the container
 # extra arguments are passed to the 'run' command (example: -e FOO=bar is added to the list of args)
 docoruntests() {
@@ -81,10 +80,10 @@ docoruncmd odoo dropdb odoodb
 echo '>>> * migration: use the dump and migrate to new version'
 docorunmigration -v ${TMP}/.cachedb:/.cachedb -e LOAD_DB_CACHE="true"
 docodown
-echo "    - version: 9.0.1" >> odoo/migration.yml
-echo "      operations:">> odoo/migration.yml
-echo "        post:" >> odoo/migration.yml
-echo "          - anthem songs.install.demo::create_partners" >> odoo/migration.yml
+echo "    - version: 15.0.1" >>odoo/migration.yml
+echo "      operations:" >>odoo/migration.yml
+echo "        post:" >>odoo/migration.yml
+echo "          - anthem songs.install.demo::create_partners" >>odoo/migration.yml
 docoruncmd odoo dropdb odoodb
 
 echo '>>> * migration: use a ceil version'
