@@ -73,6 +73,6 @@ else
     fi
 fi
 echo "🔧🔧 Install local-src modules 🔧🔧"
-odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" --db-filter=$DB_NAME_TEST -i ${LOCAL_ADDONS}
+odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" --without-demo="" --db-filter=$DB_NAME_TEST -i ${LOCAL_ADDONS}
 
 dropdb ${DB_NAME_TEST}
