@@ -51,12 +51,11 @@ COPY ./templates /templates
 COPY ./before-migrate-entrypoint.d /odoo/before-migrate-entrypoint.d
 COPY ./start-entrypoint.d /odoo/start-entrypoint.d
 COPY ./MANIFEST.in /odoo
-RUN adduser --disabled-password -u $UID --gecos '' odoo
-RUN touch /odoo/odoo.cfg
-RUN mkdir -p /odoo/data/odoo/{addons,filestore,sessions} 
-RUN chown -R odoo:odoo /odoo
-RUN usermod odoo --home /odoo
-RUN chown -R odoo:odoo /var/log/odoo
+RUN adduser --disabled-password -u $UID --gecos '' odoo \
+  && touch /odoo/odoo.cfg \
+  && mkdir -p /odoo/data/odoo/{addons,filestore,sessions} \
+  && chown -R odoo:odoo /odoo && usermod odoo --home /odoo \
+  && chown -R odoo:odoo /var/log/odoo
 
 VOLUME ["/data/odoo", "/var/log/odoo"]
 USER odoo
