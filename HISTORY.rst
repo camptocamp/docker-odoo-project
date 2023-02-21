@@ -27,6 +27,8 @@ Unreleased
 
 **Bugfixes**
 
+* [16.0] Fix: xlrd version
+
 **Libraries**
 
 **Build**
