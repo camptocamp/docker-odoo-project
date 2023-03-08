@@ -37,7 +37,8 @@ vobject==0.9.6.1
 Werkzeug==0.16.1
 XlsxWriter==3.0.3
 xlwt==1.3.0
-xlrd==2.0.1
+xlrd==1.1.0; python_version < '3.8'
+xlrd==1.2.0; python_version >= '3.8'
 pyOpenSSL==22.1.0
 
 setuptools<58
