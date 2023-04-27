@@ -27,6 +27,19 @@ Unreleased
 
 **Bugfixes**
 
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+4.5.3 (2023-04-27)
+++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
 * [16.0] Fix: xlrd version
 
 **Libraries**
