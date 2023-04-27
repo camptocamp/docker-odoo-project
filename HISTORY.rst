@@ -44,6 +44,8 @@ Unreleased
 
 **Libraries**
 
+* [15.0] Pin pyOpenSSL version to 22.1.0
+
 **Build**
 
 **Documentation**
