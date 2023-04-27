@@ -33,6 +33,21 @@ Unreleased
 
 **Documentation**
 
+4.5.4 (2023-04-27)
+++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
+**Libraries**
+
+* [15.0] Pin pyOpenSSL version to 22.1.0
+
+**Build**
+
+**Documentation**
+
 4.5.3 (2023-04-27)
 ++++++++++++++++++
 
@@ -44,7 +59,6 @@ Unreleased
 
 **Libraries**
 
-* [15.0] Pin pyOpenSSL version to 22.1.0
 
 **Build**
 
