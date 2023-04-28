@@ -4,7 +4,6 @@ set -eo pipefail
 apt-get update
 apt-get purge python2.7 python2.7-minimal
 apt-get install -y --no-install-recommends \
-    apt-transport-https \
     antiword \
     ca-certificates \
     curl \
@@ -24,7 +23,6 @@ apt-get install -y --no-install-recommends \
     python3-setuptools \
     python3-renderpm \
     python3-wheel \
-    libssl1.0.2 \
     libxslt1.1 \
     xfonts-75dpi \
     xfonts-base \
