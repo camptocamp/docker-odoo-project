@@ -32,6 +32,20 @@ Unreleased
 **Build**
 
 **Documentation**
+5.0.6 (2023-04-28)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Switch to buster for version 11.0 
+
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
 
 5.0.5 (2022-12-05)
 ++++++++++++++++++
