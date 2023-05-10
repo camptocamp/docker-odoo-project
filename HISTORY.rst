@@ -31,6 +31,8 @@ Unreleased
 
 **Build**
 
+* [12.0-15.0] Pin ReportLab to 3.6.9
+
 **Documentation**
 
 4.5.4 (2023-04-27)
