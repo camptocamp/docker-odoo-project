@@ -59,7 +59,7 @@ simplejson==3.19.3
 # Migration tools
 marabunta==0.12.0
 -e git+https://github.com/camptocamp/anthem@master#egg=anthem
-
+click-odoo-contrib==1.23.1
 
 # Library dependency
 argh==0.31.3
