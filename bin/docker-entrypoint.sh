@@ -85,7 +85,7 @@ if [ ! -f "${CONFIG_TARGET}" ]; then
   exit 1
 fi
 
-if [ -z "$(pip list --format=columns | grep "/odoo/src")" ]; then
+if [ -z "$(pip list --format=columns | grep "/odoo/src/odoo")" ]; then
   # The build runs 'pip install -e' on the odoo src, which creates an
   # odoo.egg-info directory *inside /odoo/src*. So when we run a container
   # with a volume shared with the host, we don't have this .egg-info (at least
@@ -93,16 +93,16 @@ if [ -z "$(pip list --format=columns | grep "/odoo/src")" ]; then
   # When it happens, we reinstall the odoo python package. We don't want to run
   # the install everytime because it would slow the start of the containers
   echo '/odoo/src/odoo.egg-info is missing, probably because the directory is a volume.'
-  echo 'Running pip install -e /odoo/src to restore odoo.egg-info'
-  pip install -e /odoo/src
+  echo 'Running pip install -e /odoo/src/odoo to restore odoo.egg-info'
+  pip install -e /odoo/src/odoo
   # As we write in a volume, ensure it has the same user.
   # So when the src is a host volume and we set the LOCAL_USER_ID to be the
   # host user, the files are owned by the host user
-  chown -R odoo: /odoo/src/*.egg-info
+  chown -R odoo: /odoo/src/odoo/*.egg-info
 fi
 
 # Same logic but for your custom project
-if [ -z "$(pip list --format=columns | grep "/odoo" | grep -v "/odoo/src")" ]; then
+if [ -z "$(pip list --format=columns | grep "/odoo" | grep -v "/odoo/src/odoo")" ]; then
   echo '/src/*.egg-info is missing, probably because the directory is a volume.'
   echo 'Running pip install -e /odoo to restore *.egg-info'
   pip install -e /odoo
