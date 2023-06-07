@@ -27,6 +27,8 @@ Unreleased
 
 **Bugfixes**
 
+* Fix entrypoint path for odoo
+
 **Libraries**
 
 **Build**
