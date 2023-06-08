@@ -1,20 +1,22 @@
 # Odoo dependencies
-# python_version = 3.5
+# python_version = 3.7
 # sys_platform != 'win32'
 # this is a copy of Odoo dependencies with some bumped versions
 # unused official dependencies are commented to avoid dependabot alerts
 Babel==2.3.4
+chardet==3.0.4
 decorator==4.0.10
 docutils==0.12
 ebaysdk==2.1.5
-gevent==1.1.2 ; sys_platform != 'win32' and python_version < '3.7'
-# gevent==1.5.0 ; python_version >= '3.7'
-greenlet==0.4.10 ; python_version < '3.7'
-# greenlet==0.4.14 ; python_version >= '3.7'
+# gevent==1.1.2 ; sys_platform != 'win32' and python_version < '3.7'
+gevent==1.5.0 ; python_version >= '3.7'
+# greenlet==0.4.10 ; python_version < '3.7'
+greenlet==0.4.14 ; python_version >= '3.7'
 html2text==2016.9.19
 Jinja2==2.11.3 # official 2.10.1
-lxml==4.6.3 ; sys_platform != 'win32' and python_version < '3.7' # official 3.7.1
-# lxml==4.2.3 ; sys_platform != 'win32' and python_version >= '3.7'
+libsass==0.12.3
+# lxml==3.7.1 ; sys_platform != 'win32' and python_version < '3.7'
+lxml==4.6.3 ; sys_platform != 'win32' and python_version >= '3.7' # official 4.2.3
 # lxml ; sys_platform == 'win32'
 Mako==1.0.4
 MarkupSafe==0.23
@@ -22,36 +24,35 @@ mock==2.0.0
 num2words==0.5.6
 ofxparse==0.16
 passlib==1.6.5
-Pillow==7.2.0 ; python_version < '3.7' # official 4.0.0
-# Pillow==6.1.0 ; python_version >= '3.7'
+# Pillow==6.2.2 ; python_version < '3.7' # official 4.0.0
+Pillow==8.1.1 ; python_version >= '3.7' # official 6.1.0
 psutil==5.7.0; sys_platform != 'win32' # official 4.3.1
 # psutil==5.6.3; sys_platform == 'win32'
-psycopg2==2.7.3.1; sys_platform != 'win32'
-# psycopg2==2.8.3; sys_platform == 'win32'
+psycopg2==2.7.3.1; sys_platform != 'win32' and python_version < '3.8'
+# psycopg2==2.8.3; sys_platform == 'win32' or python_version >= '3.8'
 pydot==1.2.3
 pyldap==2.4.28; sys_platform != 'win32'
 pyparsing==2.1.10
 PyPDF2==1.26.0
 pyserial==3.1.1
 python-dateutil==2.5.3
-# vatnumber requirement. Last version compatible
-python-stdnum<=1.14
 pytz==2016.7
 pyusb==1.0.0
-PyYAML==4.2b4 ; python_version < '3.7' # official 3.12
-# PyYAML==3.13 ; python_version >= '3.7'
 qrcode==5.3
-reportlab==3.3.0
+reportlab==3.6.9
 requests==2.20.0
 suds-jurko==0.6
 vatnumber==1.2
 vobject==0.9.3
-Werkzeug==0.11.15 ; sys_platform != 'win32' # official 0.11.15
+Werkzeug==0.16.0 ; sys_platform != 'win32' # official 0.11.15
 # Werkzeug==0.16.0  ; sys_platform == 'win32'
 XlsxWriter==0.9.3
 xlwt==1.3.*
 xlrd==1.0.0
 # pypiwin32 ; sys_platform == 'win32'
+
+# last version compatible with 2to3 (for vatnumber)
+setuptools<58
 
 # Not part of official requirements, but used by some addons
 chardet==3.0.4
@@ -60,6 +61,7 @@ gdata==2.0.18
 html5lib==1.0.1
 odfpy==1.3.5
 pyinotify==0.9.6
+python-stdnum==1.9
 simplejson==3.11.1
 urllib3==1.24.2
 
@@ -75,9 +77,8 @@ pytest
 pluggy
 coverage
 pytest-odoo
-# watchdog 1.0.0 drops compatibility with Python 3.5
-watchdog<1.0.0
 pytest-cov
+watchdog
 
 # Library dependency
 argh==0.26.2
@@ -96,3 +97,5 @@ pycodestyle==2.3.1
 pyflakes==1.6.0
 unicodecsv==0.14.1
 wrapt==1.10.11
+pyyaml==5.4.1
+
