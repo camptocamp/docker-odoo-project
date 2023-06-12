@@ -31,6 +31,8 @@ Unreleased
 
 **Build**
 
+* 11.0 with buster
+
 **Documentation**
 
 4.5.5 (2023-05-12)
