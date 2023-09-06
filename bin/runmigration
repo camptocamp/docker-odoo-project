@@ -11,8 +11,6 @@
 #
 # And finally make a database dump if none exists for current VERSION.
 #
-# TODO: store cache on S3 to store one DB per version
-#
 # Environment variables:
 #
 # CREATE_DB_CACHE:
