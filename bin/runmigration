@@ -40,6 +40,7 @@ echo $CACHE_DIR
 VERSION=$(cat /odoo/VERSION)
 
 CACHED_DUMP="$CACHE_DIR/odoo_sample_$VERSION.dmp"
+NEW_CACHED_DUMP=$CACHED_DUMP
 
 if [ "$LOAD_DB_CACHE" != "false" ]; then
 
@@ -72,9 +73,9 @@ fi
 gosu odoo migrate
 
 # Create a dump if none exist for the current VERSION
-if [ "$CREATE_DB_CACHE" == "true" -a ! -f "$CACHED_DUMP" ]; then
-    echo "Save DB to cache $CACHED_DUMP 🐘⮕ 📦"
+if [ "$CREATE_DB_CACHE" == "true" -a ! -f "$NEW_CACHED_DUMP" ]; then
+    echo "Save DB to cache $NEW_CACHED_DUMP 🐘⮕ 📦"
     mkdir -p "$CACHE_DIR"
-    pg_dump -Fp -O -f "$CACHED_DUMP"
-    ls -l $CACHED_DUMP
+    pg_dump -Fp -O -f "$NEW_CACHED_DUMP"
+    ls -l $NEW_CACHED_DUMP
 fi
