@@ -30,7 +30,7 @@ set -e
 
 wait_postgres.sh
 LOCAL_SRC_DIR=/odoo/local-src
-CACHE_DIR=/tmp
+CACHE_DIR=/tmp/cachedb
 
 if [ -z $1 ]; then
     LOCAL_ADDONS=$(find ${LOCAL_SRC_DIR}/* -maxdepth 0 -type d -and -not -name server_environment_files -printf "%f\n" |

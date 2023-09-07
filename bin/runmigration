@@ -35,7 +35,7 @@
 set -e
 
 wait_postgres.sh
-CACHE_DIR=/tmp
+CACHE_DIR=/tmp/cachedb
 
 echo $CACHE_DIR
 
