@@ -35,7 +35,7 @@
 set -e
 
 wait_postgres.sh
-CACHE_DIR=/.cachedb
+CACHE_DIR=/tmp/cachedb
 
 echo $CACHE_DIR
 
@@ -45,38 +45,38 @@ CACHED_DUMP="$CACHE_DIR/odoo_sample_$VERSION.dmp"
 
 if [ "$LOAD_DB_CACHE" != "false" ]; then
 
-    # If we want to run the migration steps on top of a previous dump
-    # useful when odoo/VERSION was edited
-    if [ -n "$MIG_LOAD_VERSION_CEIL" ]; then
-        echo "New version - Searching for previous version dump 🔭"
-        if [ -d "$CACHE_DIR" ]; then
-            # Filter dumps of higher releases
-            export MAX_DUMP="$CACHE_DIR/odoo_sample_${MIG_LOAD_VERSION_CEIL}.dmp"
-            CACHED_DUMP=$(ls -v $CACHE_DIR/odoo_sample_*.dmp | awk '$0 < ENVIRON["MAX_DUMP"]' | tail -n1)
-        else
-            echo "No cached migration sample dump found"
-        fi
+  # If we want to run the migration steps on top of a previous dump
+  # useful when odoo/VERSION was edited
+  if [ -n "$MIG_LOAD_VERSION_CEIL" ]; then
+    echo "New version - Searching for previous version dump 🔭"
+    if [ -d "$CACHE_DIR" ]; then
+      # Filter dumps of higher releases
+      export MAX_DUMP="$CACHE_DIR/odoo_sample_${MIG_LOAD_VERSION_CEIL}.dmp"
+      CACHED_DUMP=$(ls -v $CACHE_DIR/odoo_sample_*.dmp | awk '$0 < ENVIRON["MAX_DUMP"]' | tail -n1)
+    else
+      echo "No cached migration sample dump found"
     fi
+  fi
 else
-    echo "Dump cache load disabled."
+  echo "Dump cache load disabled."
 fi
 
 if [ "$LOAD_DB_CACHE" != "false" -a -f "$CACHED_DUMP" ]; then
-    echo "🐘 🐘 Database dump ${CACHED_DUMP} found 🐘 🐘"
-    echo "Restore Database dump from cache 📦⮕ 🐘"
-    createdb -O $DB_USER $DB_NAME
-    psql -q -o /dev/null -f "$CACHED_DUMP"
-    echo "Do migration on top of restored dump"
+  echo "🐘 🐘 Database dump ${CACHED_DUMP} found 🐘 🐘"
+  echo "Restore Database dump from cache 📦⮕ 🐘"
+  createdb -O $DB_USER $DB_NAME
+  psql -q -o /dev/null -f "$CACHED_DUMP"
+  echo "Do migration on top of restored dump"
 else
-    echo "Do migration from scratch 🐢 🐢 🐢"
+  echo "Do migration from scratch 🐢 🐢 🐢"
 fi
 
 gosu odoo migrate
 
 # Create a dump if none exist for the current VERSION
 if [ "$CREATE_DB_CACHE" == "true" -a ! -f "$CACHED_DUMP" ]; then
-    echo "Save DB to cache $CACHED_DUMP 🐘⮕ 📦"
-    mkdir -p "$CACHE_DIR"
-    pg_dump -Fp -O -f "$CACHED_DUMP"
-    ls -l $CACHED_DUMP
+  echo "Save DB to cache $CACHED_DUMP 🐘⮕ 📦"
+  mkdir -p "$CACHE_DIR"
+  pg_dump -Fp -O -f "$CACHED_DUMP"
+  ls -l $CACHED_DUMP
 fi
