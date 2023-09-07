@@ -27,10 +27,8 @@
 set -e
 
 # TODO: if we are not in TRAVIS, make a template then run tests on a copy
-
+source db.sh
 wait_postgres.sh
-LOCAL_SRC_DIR=/odoo/local-src
-CACHE_DIR=/tmp/cachedb
 
 if [ -z $1 ]; then
     LOCAL_ADDONS=$(find ${LOCAL_SRC_DIR}/* -maxdepth 0 -type d -and -not -name server_environment_files -printf "%f\n" |
@@ -40,39 +38,46 @@ else
     LOCAL_ADDONS=$1
 fi
 
+CREATE_DB_CACHE=${CREATE_DB_CACHE:=false}
+LOAD_DB_CACHE=${LOAD_DB_CACHE:=true}
+
+LOCAL_SRC_DIR=${LOCAL_SRC_DIR:=/odoo/local-src}
+CACHE_DIR=${CACHE_DIR:=/tmp/cachedb}
+
 DEPS_ADDONS=$(list_dependencies.py "$LOCAL_ADDONS")
 
-DB_NAME_TEST=${DB_NAME}_test
+DB_NAME=${DB_NAME:=odoo_test}
 
 echo "Create database"
-createdb -O $DB_USER ${DB_NAME_TEST}
+createdb -O $DB_USER $DB_NAME
 
 if [[ ! -z "$SUBS_MD5" ]]; then
-    CACHED_DUMP="$CACHE_DIR/odoo_test_$SUBS_MD5.dmp"
+    DUMP="$CACHE_DIR/odoo_test_$SUBS_MD5.dmp"
 fi
 
 echo "Submodule addons MD5 is: $SUBS_MD5"
 
-if [ "$LOAD_DB_CACHE" != "false" -a -f "$CACHED_DUMP" ]; then
-    echo "🐘 🐘 Database dump ${CACHED_DUMP} found 🐘 🐘"
-    echo "Restore Database dump from cache matching MD5 📦⮕ 🐘"
-    psql -q -o /dev/null -d $DB_NAME_TEST -f "$CACHED_DUMP"
-    psql -d $DB_NAME_TEST -P pager=off -c "SELECT name as installed_module FROM ir_module_module WHERE state = 'installed' ORDER BY name"
-else
-    if [ "$LOAD_DB_CACHE" == "false" ]; then
-        echo "Dump cache load disabled."
+DUMP_LOADED=false
+if [ "$LOAD_DB_CACHE" != "false" ]; then
+    db_restore $DUMP $DB_NAME
+    DUMP_LOADED=$?
+    if [ $DUMP_LOADED = 1 ]; then
+        echo "Use restored dump with official/OCA modules"
     else
-        echo "No cached dump found matching MD5 🐢 🐢 🐢"
+        echo "Reinstall all addons from scratch 🐢 🐢 🐢"
     fi
+else
+    echo "DB cache load disabled."
+fi
+
+if [ "$DUMP_LOADED" = 0 ]; then
     echo "🔨🔨 Install official/OCA modules 🔨🔨"
-    odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" --db-filter=$DB_NAME_TEST -i ${DEPS_ADDONS}
-    if [ "$CREATE_DB_CACHE" == "true" -a ! -z "$CACHED_DUMP" ]; then
-        echo "Generate dump $CACHED_DUMP into cache 🐘⮕ 📦"
-        mkdir -p "$CACHE_DIR"
-        pg_dump -Fp -d $DB_NAME_TEST -O -f "$CACHED_DUMP"
+    odoo --stop-after-init --workers=0 --database $DB_NAME --log-level=warn --without-demo="" --db-filter=$DB_NAME -i ${DEPS_ADDONS}
+    if [ "$CREATE_DB_CACHE" != "false" ]; then
+        db_save $DB_NAME $DUMP
     fi
 fi
 echo "🔧🔧 Install local-src modules 🔧🔧"
-odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" --without-demo="" --db-filter=$DB_NAME_TEST -i ${LOCAL_ADDONS}
+odoo --stop-after-init --workers=0 --database $DB_NAME --test-enable --log-level=test --log-handler=":INFO" --without-demo="" --db-filter=$DB_NAME_TEST -i ${LOCAL_ADDONS}
 
-dropdb ${DB_NAME_TEST}
+dropdb ${DB_NAME}

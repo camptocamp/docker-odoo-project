@@ -11,8 +11,6 @@
 #
 # And finally make a database dump if none exists for current VERSION.
 #
-# TODO: store cache on S3 to store one DB per version
-#
 # Environment variables:
 #
 # CREATE_DB_CACHE:
@@ -34,14 +32,17 @@
 #   steps on top of it.
 set -e
 
+source ./db.sh
 wait_postgres.sh
-CACHE_DIR=/tmp/cachedb
 
+CREATE_DB_CACHE=${CREATE_DB_CACHE:=false}
+LOAD_DB_CACHE=${LOAD_DB_CACHE:=true}
+
+CACHE_DIR=${CACHE_DIR:=/tmp/cachedb}
 echo $CACHE_DIR
+DB_NAME=${DB_NAME:=odoo_mig}
 
 VERSION=$(cat /odoo/VERSION)
-
-CACHED_DUMP="$CACHE_DIR/odoo_sample_$VERSION.dmp"
 
 if [ "$LOAD_DB_CACHE" != "false" ]; then
 
@@ -52,31 +53,30 @@ if [ "$LOAD_DB_CACHE" != "false" ]; then
         if [ -d "$CACHE_DIR" ]; then
             # Filter dumps of higher releases
             export MAX_DUMP="$CACHE_DIR/odoo_sample_${MIG_LOAD_VERSION_CEIL}.dmp"
-            CACHED_DUMP=$(ls -v $CACHE_DIR/odoo_sample_*.dmp | awk '$0 < ENVIRON["MAX_DUMP"]' | tail -n1)
-        else
+            CACHED_DUMP=$(ls -v $CACHE_DIR/odoo_sample_*.dmp || true | awk '$0 < ENVIRON["MAX_DUMP"]' | tail -n1)
+        fi
+        if [ -n "$CACHED_DUMP" ]; then
             echo "No cached migration sample dump found"
         fi
     fi
 else
-    echo "Dump cache load disabled."
+    echo "DB cache load disabled."
 fi
 
-if [ "$LOAD_DB_CACHE" != "false" -a -f "$CACHED_DUMP" ]; then
-    echo "🐘 🐘 Database dump ${CACHED_DUMP} found 🐘 🐘"
-    echo "Restore Database dump from cache 📦⮕ 🐘"
-    createdb -O $DB_USER $DB_NAME
-    psql -q -o /dev/null -f "$CACHED_DUMP"
-    echo "Do migration on top of restored dump"
-else
-    echo "Do migration from scratch 🐢 🐢 🐢"
+if [ "$LOAD_DB_CACHE" != "false" ]; then
+    db_restore $CACHED_DUMP $DB_NAME_TEST
+    if [ $? = 1 ]; then
+        echo "Do migration on top of restored dump"
+    else
+        echo "Do migration from scratch 🐢 🐢 🐢"
+    fi
 fi
 
 migrate
 
+DUMP="$CACHE_DIR/odoo_sample_$VERSION.dmp"
 # Create a dump if none exist for the current VERSION
-if [ "$CREATE_DB_CACHE" == "true" -a ! -f "$CACHED_DUMP" ]; then
-    echo "Save DB to cache $CACHED_DUMP 🐘⮕ 📦"
+if [ "$CREATE_DB_CACHE" == "true" -a ! -f $DUMP ]; then
     mkdir -p "$CACHE_DIR"
-    pg_dump -Fp -O -f "$CACHED_DUMP"
-    ls -l $CACHED_DUMP
+    db_save $DB_NAME_TEST $DUMP
 fi
