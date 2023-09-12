@@ -20,8 +20,23 @@
 Release History
 ---------------
 
-Unreleased
-++++++++++
+5.0.8 (2023-09-12)
+++++++++++++++++++
+
+**Features and Improvements**
+
+**Bugfixes**
+
+* Remove pip install of src
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+5.0.7 (2023-06-07)
+++++++++++++++++++
 
 **Features and Improvements**
 
