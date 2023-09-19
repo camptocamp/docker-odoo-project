@@ -25,8 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
-        - odoo_serie: "14.0"
+        odoo_serie: ["11.0", "12.0", "13.0", "14.0", "14.0-bullseye", "15.0", "16.0"]
 
     steps:
       - uses: actions/checkout@v4
