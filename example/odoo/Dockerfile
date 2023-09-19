@@ -25,7 +25,6 @@ RUN set -x; \
         && rm -rf /var/lib/apt/lists/*
 
 COPY ./requirements.txt /odoo/
-RUN chown -R odoo:odoo /odoo
 USER odoo
 RUN pip install -e /odoo
 RUN pip install -e /odoo/src/odoo
