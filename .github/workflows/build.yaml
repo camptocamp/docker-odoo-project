@@ -42,8 +42,8 @@ jobs:
           flavor: |
               prefix=${{ matrix.odoo_serie }}-,onlatest=true
           tags: |
-              type=raw,value=${{ matrix.odoo_serie }}latest
-              type=raw,value=${{ matrix.odoo_serie }}{{date 'YYYYMMDD'}}
+              type=raw,value=latest
+              type=raw,value={{date 'YYYYMMDD'}}
               type=ref,event=tag
 
       - name: Setup build dir
