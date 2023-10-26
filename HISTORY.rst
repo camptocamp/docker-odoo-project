@@ -20,66 +20,37 @@
 Release History
 ---------------
 
-Unreleased
-++++++++++
-
-**Features and Improvements**
-
-**Bugfixes**
-
-**Libraries**
+4.5.6 (2023-06-12)
+++++++++++++++++++
 
 **Build**
 
 * 11.0 with buster
 
-**Documentation**
 
 4.5.5 (2023-05-12)
 ++++++++++++++++++
-
-**Features and Improvements**
-
-**Bugfixes**
-
-**Libraries**
 
 **Build**
 
 * [12.0-15.0] Pin ReportLab to 3.6.9
 
-**Documentation**
 
 4.5.4 (2023-04-27)
 ++++++++++++++++++
-
-**Features and Improvements**
-
-**Bugfixes**
 
 **Libraries**
 
 * [15.0] Pin pyOpenSSL version to 22.1.0
 
-**Build**
-
-**Documentation**
 
 4.5.3 (2023-04-27)
 ++++++++++++++++++
-
-**Features and Improvements**
 
 **Bugfixes**
 
 * [16.0] Fix: xlrd version
 
-**Libraries**
-
-
-**Build**
-
-**Documentation**
 
 4.5.2 (2022-12-07)
 ++++++++++++++++++
@@ -92,26 +63,14 @@ Unreleased
 
 * Remove old version (7 -> 10) from travis 
 
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 4.5.1 (2022-11-22)
 ++++++++++++++++++
-
-**Features and Improvements**
 
 **Bugfixes**
 
 * [14.0-bullseye][FIX] Avoid vcr issue by changing pyOpenSSL version to 22.0.0
 
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 4.5.0 (2022-11-21)
 ++++++++++++++++++
@@ -124,17 +83,10 @@ Unreleased
 4.4.6 (2022-11-10)
 ++++++++++++++++++
 
-**Features and Improvements**
-
 **Bugfixes**
 
 * Debian Stretch switch to archive repo
 
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 4.4.5 (2022-08-29)
 ++++++++++++++++++
@@ -146,12 +98,6 @@ Unreleased
 **Bugfixes**
 
 * Pin certifi library for Odoo<=10.0 to avoid python compatibility issue
-
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 
 4.4.4 (2022-05-23)
@@ -168,56 +114,30 @@ Unreleased
 * Pin contextlib2 requirement for Odoo <= V10
 * Add kwkhtmltopdf in test composition to avoid issues when testing reports
 
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 4.4.3 (2022-03-04)
 ++++++++++++++++++
-
-**Features and Improvements**
 
 **Bugfixes**
 
 * Fix reportlab version for label 
 
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 4.4.2 (2022-03-01)
 ++++++++++++++++++
-
-**Features and Improvements**
 
 **Bugfixes**
 
 * Fix python3 for version 15 
 
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 4.4.1 (2022-02-16)
 ++++++++++++++++++
-
-**Features and Improvements**
 
 **Bugfixes**
 
 * Fix execute flag wkhtmltopdf 
 
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 4.4.0 (2022-02-05)
 ++++++++++++++++++
@@ -229,12 +149,6 @@ Unreleased
 **Bugfixes**
 
 * Fix lab entry point
-
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 
 4.3.0 (2021-12-02)
