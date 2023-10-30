@@ -34,7 +34,7 @@
 #   steps on top of it.
 set -e
 
-pg_isready
+wait_postgres.sh
 CACHE_DIR=${CACHE_DIR:=/tmp/cachedb}
 
 echo $CACHE_DIR
