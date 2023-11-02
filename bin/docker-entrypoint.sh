@@ -86,7 +86,7 @@ if [ ! -f "${CONFIG_TARGET}" ]; then
 fi
 
 # Wait until postgres is up
-pg_isready
+wait_postgres.sh
 
 BASE_CMD=$(basename $1)
 CMD_ARRAY=($*)

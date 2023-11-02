@@ -3,7 +3,7 @@ $(error VERSION is not set)
 endif
 
 ifeq ($(TARGET), GHCR)
-    NAME=ghcr.io/camptocamp/odoo-project
+    NAME=ghcr.io/camptocamp/docker-odoo-project
 else
     NAME=camptocamp/odoo-project
 endif

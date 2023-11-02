@@ -28,7 +28,7 @@ set -e
 
 # TODO: if we are not in TRAVIS, make a template then run tests on a copy
 
-pg_isready
+wait_postgres.sh
 
 LOCAL_SRC_DIR=/odoo/local-src
 CACHE_DIR=${CACHE_DIR:=/tmp/cachedb}

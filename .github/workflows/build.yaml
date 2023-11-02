@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        odoo_serie: ["11.0", "12.0", "13.0", "14.0", "14.0-bullseye", "15.0", "16.0"]
+        odoo_serie: ["11.0", "12.0", "13.0", "14.0", "14.0-bullseye", "15.0", "16.0", "17.0"]
 
     steps:
       - uses: actions/checkout@v4
@@ -56,7 +56,8 @@ jobs:
           context: ./build
           push: false
           load: true
-          tags: ${{ matrix.odoo_serie }}:latest
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
