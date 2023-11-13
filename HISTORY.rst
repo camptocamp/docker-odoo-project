@@ -20,13 +20,29 @@
 Release History
 ---------------
 
-5.1.0 (2023-11-13)
-++++++++++++++++++
+5.1.0.0.0 (2023-11-13)
+++++++++++++++++++++++
 
 **Features and Improvements**
 
 * 17.0 version 
 * Switch to github action
+* Image pushed to github repository
+  
+
+**Bugfixes**
+
+**Libraries**
+
+**Build**
+
+**Documentation**
+
+5.1.0 (2023-11-13) move to 5.1.0.0.0
+++++++++++++++++++++++++++++++++++++
+
+**Features and Improvements**
+
 * Image pushed to github repository
   
 
