@@ -93,7 +93,7 @@ CMD_ARRAY=($*)
 ARGS=(${CMD_ARRAY[@]:1})
 
 if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || [ "$BASE_CMD" = "migrate" ]; then
-  BEFORE_MIGRATE_ENTRYPOINT_DIR=/before-migrate-entrypoint.d
+  BEFORE_MIGRATE_ENTRYPOINT_DIR=/odoo/before-migrate-entrypoint.d
   if [ -d "$BEFORE_MIGRATE_ENTRYPOINT_DIR" ]; then
     run-parts --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
   fi
@@ -109,7 +109,7 @@ if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]; then
 
   fi
 
-  START_ENTRYPOINT_DIR=/start-entrypoint.d
+  START_ENTRYPOINT_DIR=/odoo/start-entrypoint.d
   if [ -d "$START_ENTRYPOINT_DIR" ]; then
     run-parts --verbose "$START_ENTRYPOINT_DIR"
   fi
