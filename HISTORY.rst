@@ -20,6 +20,14 @@
 Release History
 ---------------
 
+5.1.0.0.1 (2023-12-11)
+++++++++++++++++++++++
+
+**Bugfixes**
+
+* fix the entrypoint path in the entrypoint script
+
+
 5.1.0.0.0 (2023-11-13)
 ++++++++++++++++++++++
 
