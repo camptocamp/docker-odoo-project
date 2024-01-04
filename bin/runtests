@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Run unit tests of local-src modules
+# Run unit tests of odoo/addons modules
 #
 # mainly used from Travis,
 # it creates a database,
@@ -30,11 +30,10 @@ set -e
 
 wait_postgres.sh
 
-LOCAL_SRC_DIR=/odoo/local-src
 CACHE_DIR=${CACHE_DIR:=/tmp/cachedb}
 
 if [ -z $1 ]; then
-    LOCAL_ADDONS=$(find ${LOCAL_SRC_DIR}/* -maxdepth 0 -type d -and -not -name server_environment_files -printf "%f\n" |
+    LOCAL_ADDONS=$(find ${LOCAL_CODE_PATH}/* -maxdepth 0 -type d -and -not -name server_environment_files -printf "%f\n" |
         awk -vORS=, '{print $1}' |
         sed 's/,$/\n/')
 else
@@ -73,7 +72,7 @@ else
         pg_dump -Fp -d $DB_NAME_TEST -O -f "$CACHED_DUMP"
     fi
 fi
-echo "🔧🔧 Install local-src modules 🔧🔧"
+echo "🔧🔧 Install odoo/addons modules 🔧🔧"
 odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" --without-demo="" --db-filter=$DB_NAME_TEST -i ${LOCAL_ADDONS}
 
 dropdb ${DB_NAME_TEST}

@@ -12,4 +12,4 @@ RUN set -x; \
 COPY ./requirements.txt /odoo/
 RUN cd /odoo && pip install -r requirements.txt
 
-ENV ADDONS_PATH=/odoo/local-src,/odoo/src/addons
+ENV ADDONS_PATH=/odoo/odoo/addons,/odoo/src/addons

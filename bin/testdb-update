@@ -15,5 +15,5 @@ if ! psql -lqtA -h ${DB_HOST} | grep -q "^$DB_NAME|"; then
 fi
 
 echo "updating database ${DB_NAME}"
-gosu odoo odoo --stop-after-init --workers=0 --log-level=warn --without-demo="" "$@"
+odoo --stop-after-init --workers=0 --log-level=warn --without-demo="" "$@"
 echo "done"

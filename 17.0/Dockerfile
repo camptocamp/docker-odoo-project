@@ -76,7 +76,7 @@ ENV ODOO_VERSION=17.0 \
     # the place where you put the data of your project (csv, ...)
     ODOO_DATA_PATH=/odoo/data \
     DEMO=False \
-    ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
+    ADDONS_PATH=/odoo/odoo/addons,/odoo/odoo/src/odoo/addons \
     OPENERP_SERVER=/odoo/odoo.cfg
 
 ENTRYPOINT ["docker-entrypoint.sh"]

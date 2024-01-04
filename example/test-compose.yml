@@ -1,18 +1,17 @@
 # Composition used to run automated tests on the images
 # Used by the Makefile at the repository's root
 
-version: '2'
+version: '3.8'
 
 services:
   odoo:
-    build: ./odoo/
+    build: .
     depends_on:
       - db
       - kwkhtmltopdf
     volumes:
       - "data-odoo:/data/odoo"
-      - "./odoo/src/odoo:/odoo/src/odoo/odoo"
-      - "./odoo/src/addons:/odoo/src/odoo/addons"
+      - "./odoo/addons:/odoo/odoo/addons"
     environment:
       - DB_USER=odoo
       - DB_PASS=odoo
@@ -22,6 +21,8 @@ services:
       - MARABUNTA_MODE=demo  # could be 'full' for the db with all the data
       - KWKHTMLTOPDF_SERVER_URL=http://kwkhtmltopdf:8080
       - ODOO_REPORT_URL=http://odoo:8069
+      - LOCAL_CODE_PATH=/odoo/odoo/addons
+      - MIGRATION_CONFIG_FILE=/odoo/migration.yml
       # cached database dumps config for `runmigration` and `runtests`
       - CREATE_DB_CACHE=false  # set it to 'true' to create dumps
       - LOAD_DB_CACHE=true # by default will always search for existing dumps
