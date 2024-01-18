@@ -8,7 +8,7 @@ Follow the steps:
 
 1. Create directories. This is mandatory, they will be copied in the image
 
-        mkdir -p odoo/external-src odoo/local-src odoo/data odoo/songs
+        mkdir -p  odoo/addons data songs
 
 2. Add a submodule for Odoo (official or OCA/OCB)
 
@@ -16,10 +16,10 @@ Follow the steps:
         git submodule add git@github.com:odoo/odoo.git odoo/src
 
 3. Optionally add submodules for external addons in `odoo/external-src`
- 
+
         git submodule add git@github.com:OCA/server-tools.git odoo/external-src/server-tools
 
-4. Optionally add custom addons in `odoo/local-src`
+4. Optionally add custom addons in `odoo/addons`
 
 6. Create the Dockerfile, the bare minimum being (see also [the example
    file](odoo/Dockerfile) that installs additional dependencies):
@@ -27,7 +27,7 @@ Follow the steps:
         FROM camptocamp/odoo-project:11.0
         MAINTAINER <name>
 
-        ENV ADDONS_PATH=/odoo/local-src,/odoo/external-src/server-tools,/odoo/src/addons
+        ENV ADDONS_PATH=/odoo/odoo/addons,/odoo/external-src/server-tools,/odoo/src/odoo/addons
 
 7. Build your image
 

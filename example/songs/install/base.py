@@ -30,5 +30,5 @@ def setup_company(ctx, req):
 
 def main(ctx):
     """Create demo data"""
-    req = Requirement.parse("my-project-name")
+    req = Requirement.parse("odoo-project")
     setup_company(ctx, req)

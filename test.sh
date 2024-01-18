@@ -1,5 +1,5 @@
 #!/bin/bash
-set -Eeuo pipefail
+set -Exeuo pipefail
 
 #
 # Run tests on the image
@@ -62,11 +62,18 @@ cd "$TMP"
 echo '>>> Downloading Odoo src'
 rm -rf "$TMP/odoo/src"
 wget -nv -O /tmp/odoo.tar.gz "$ODOO_URL"
-tar xfz /tmp/odoo.tar.gz -C odoo/
-mv "odoo/odoo-$VERSION" odoo/src
-ls odoo/src
+mkdir -p odoo/src
+tar xfz /tmp/odoo.tar.gz -C odoo/src
+mv "odoo/src/odoo-$VERSION" odoo/src/odoo
+ls odoo/src/odoo
 echo '>>> Run test for base image'
-sed "s|FROM .*|FROM ${IMAGE_LATEST}|" -i odoo/Dockerfile
+sed "s|FROM .*|FROM ${IMAGE_LATEST}|" -i Dockerfile
+sed "s|version=.*|version=""'""${VERSION}"".1.0.0""'"",|" -i setup.py
+sed "s|\(.version.: .\)[0-9.]*\(.*\)|\\1$VERSION.0.0.0\\2|" -i odoo/addons/dummy_test/__manifest__.py
+echo $VERSION.0.0.0 > VERSION
+
+cat setup.py
+cat odoo/addons/dummy_test/__manifest__.py
 mkdir .cachedb
 
 echo '>>> * migration: standard'
@@ -79,10 +86,10 @@ docoruncmd odoo dropdb odoodb
 echo '>>> * migration: use the dump and migrate to new version'
 docorunmigration -e LOAD_DB_CACHE="true"
 docodown
-echo "    - version: 15.0.1" >>odoo/migration.yml
-echo "      operations:" >>odoo/migration.yml
-echo "        post:" >>odoo/migration.yml
-echo "          - anthem songs.install.demo::create_partners" >>odoo/migration.yml
+echo "    - version: 15.0.1" >>migration.yml
+echo "      operations:" >>migration.yml
+echo "        post:" >>migration.yml
+echo "          - anthem songs.install.demo::create_partners" >>migration.yml
 docoruncmd odoo dropdb odoodb
 
 echo '>>> * migration: use a ceil version'

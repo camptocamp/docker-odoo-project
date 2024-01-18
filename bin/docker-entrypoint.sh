@@ -12,7 +12,7 @@ export PGAPPNAME=${HOSTNAME}
 
 # As docker-compose exec do not launch the entrypoint
 # init PG variable into .bashrc so it will be initialized
-# when doing docker-compose exec odoo gosu odoo bash
+# when doing docker-compose exec odoo odoo bash
 echo "
 export PGHOST=${DB_HOST}
 export PGPORT=${DB_PORT}

@@ -8,9 +8,8 @@ MAINTAINER Camptocamp
 # 2. or adding each directory, this solution will reduce the build and download
 # time of the image on the server (layers are reused)
 RUN mkdir -p /odoo/src/odoo
-COPY ./src /odoo/src/odoo
-COPY ./external-src /odoo/external-src
-COPY ./local-src /odoo/local-src
+COPY ./odoo/src/odoo /odoo/src/odoo
+COPY ./odoo/addons /odoo/odoo/addons
 COPY ./data /odoo/data
 COPY ./songs /odoo/songs
 COPY ./setup.py /odoo/
@@ -26,11 +25,11 @@ RUN set -x; \
 
 COPY ./requirements.txt /odoo/
 USER odoo
-RUN pip install -e /odoo
-RUN pip install -e /odoo/src/odoo
+WORKDIR /odoo
+RUN pip install --user -e .
+RUN pip install --user -r requirements.txt 
 
 # Project's specifics packages
-RUN cd /odoo && pip install -r requirements.txt
 
-ENV ADDONS_PATH=/odoo/local-src,/odoo/src/odoo/addons
+ENV ADDONS_PATH=/odoo/odoo/addons,/odoo/src/odoo/addons
 
