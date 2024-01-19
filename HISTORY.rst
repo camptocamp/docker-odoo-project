@@ -20,6 +20,18 @@
 Release History
 ---------------
 
+5.2.0.0.0 (2024-01-19)
+++++++++++++++++++++++
+
+**Features and Improvements**
+
+* add env variable for LOCAL_CODE_PATH and MIGRATION_CONFIG_FILE
+* /bin script to remove gosu dependencies
+* clean local-src reference
+* print DEPS_ADDONS for debugging
+
+**Bugfixes**
+
 5.1.0.0.1 (2023-12-11)
 ++++++++++++++++++++++
 

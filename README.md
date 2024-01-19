@@ -213,6 +213,14 @@ and use `anthem` loader straight::
 
 NOTE: `anthem > 0.11.0` is required.
 
+### LOCAL_CODE_PATH
+
+Specifies path for local(custom) code to be used, by default is /odoo/odoo/addons
+
+### MIGRATION_CONFIG_FILE
+
+Specifies path for migration config file, by default is /odoo/migration.yml
+
 ### DEMO
 
 `DEMO` can be `True` or `False` and determines whether Odoo will load its Demo
