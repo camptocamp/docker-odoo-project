@@ -66,6 +66,7 @@ urllib3==1.24.2
 # Migration tools
 marabunta==0.12.0
 anthem==0.13.0
+click-odoo-contrib==1.16.1
 
 # test / lint
 # those libs and their dependencies are unpinned

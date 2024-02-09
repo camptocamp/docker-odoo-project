@@ -51,6 +51,7 @@ urllib3==1.26.11
 
 marabunta==0.12.0
 anthem==0.13.0
+click-odoo-contrib==1.16.1
 
 flake8
 pytest>=5.4.2
