@@ -7,8 +7,9 @@ env:
     - TARGET="GHCR"
 
   matrix:
-    - VERSION=15.0
+    - VERSION=17.0
     - VERSION=16.0
+    - VERSION=15.0
     - VERSION=14.0
     - VERSION=14.0-bullseye
     - VERSION=13.0
@@ -26,10 +27,10 @@ script:
 # Need docker-ce 20 instead of docker-ce 18 for building Odoo 15 on debian:bullseye
 # https://docs.travis-ci.com/user/docker/#installing-a-newer-docker-version
 before_install:
-  - if [ "$VERSION" = "15.0" OR "$VERSION" = "16.0" ] ; then curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - ; fi
-  - if [ "$VERSION" = "15.0" OR "$VERSION" = "16.0" ] ; then sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" ; fi
-  - if [ "$VERSION" = "15.0" OR "$VERSION" = "16.0" ] ; then sudo apt-get update ; fi
-  - if [ "$VERSION" = "15.0" OR "$VERSION" = "16.0" ] ; then sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce ; fi
+  - if [ "$VERSION" = "15.0" OR "$VERSION" = "16.0" OR "$VERSION" = "17.0" ] ; then curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - ; fi
+  - if [ "$VERSION" = "15.0" OR "$VERSION" = "16.0" OR "$VERSION" = "17.0" ] ; then sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" ; fi
+  - if [ "$VERSION" = "15.0" OR "$VERSION" = "16.0" OR "$VERSION" = "17.0" ] ; then sudo apt-get update ; fi
+  - if [ "$VERSION" = "15.0" OR "$VERSION" = "16.0" OR "$VERSION" = "17.0" ] ; then sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce ; fi
   - docker --version
 
 after_success:
