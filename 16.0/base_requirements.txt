@@ -6,18 +6,18 @@ docutils==0.19
 ebaysdk==2.2.0
 freezegun==1.2.2
 gevent==22.10.2
-greenlet==2.0.1
+greenlet==2.0.2
 html2text==2020.1.16
 idna==3.4
 Jinja2==3.1.2 
 libsass==0.21.0
-lxml==4.9.1 
-Mako==1.2.3
-MarkupSafe==2.1.1
+lxml==4.9.2
+Mako==1.2.3   # XXX no longer in the official requirements.txt
+MarkupSafe==2.1.2
 num2words==0.5.12
 ofxparse==0.21
 passlib==1.7.4
-Pillow==9.3.0 
+Pillow==9.4.0 
 polib==1.1.1
 psutil==5.9.4
 psycopg2==2.9.5
@@ -26,7 +26,7 @@ python-ldap==3.4.3
 PyPDF2==1.27.12
 pyserial==3.5
 python-dateutil==2.8.2
-pytz==2022.6
+pytz==2024.1
 pyusb==1.2.1
 qrcode==7.3.1
 reportlab==3.6.12
@@ -34,11 +34,10 @@ requests==2.28.1
 zeep==4.2.0
 python-stdnum==1.17
 vobject==0.9.6.1
-Werkzeug==0.16.1
+Werkzeug==2.0.3
 XlsxWriter==3.0.3
 xlwt==1.3.0
-xlrd==1.1.0; python_version < '3.8'
-xlrd==1.2.0; python_version >= '3.8'
+xlrd==1.2.0
 pyOpenSSL==22.1.0
 
 setuptools<58
@@ -53,14 +52,14 @@ simplejson==3.17.6
 urllib3==1.26.7
 
 # Migration tools
-marabunta==0.10.6
+marabunta==0.12.0
 -e git+https://github.com/camptocamp/anthem@master#egg=anthem
 
 # test / lint
 # those libs and their dependencies are unpinned
 # to always test with the last version of it
 flake8
-pytest>=5.4.2
+pytest==7.4.4
 pluggy
 coverage
 pytest-odoo>=0.4.7

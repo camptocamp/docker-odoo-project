@@ -36,7 +36,7 @@ pyparsing==2.1.10
 PyPDF2==1.26.0
 pyserial==3.1.1
 python-dateutil==2.5.3
-pytz==2016.7
+pytz==2024.1
 pyusb==1.0.0
 qrcode==5.3
 reportlab==3.6.9
@@ -66,14 +66,14 @@ simplejson==3.11.1
 urllib3==1.24.2
 
 # Migration tools
-marabunta==0.10.6
+marabunta==0.12.0
 anthem==0.13.0
 
 # test / lint
 # those libs and their dependencies are unpinned
 # to always test with the last version of it
 flake8
-pytest
+pytest==7.4.4
 pluggy
 coverage
 pytest-odoo

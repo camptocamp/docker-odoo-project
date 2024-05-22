@@ -44,7 +44,7 @@ python-ldap==3.1.0; sys_platform != 'win32'
 PyPDF2==1.26.0
 pyserial==3.4
 python-dateutil==2.7.3
-pytz==2019.1
+pytz==2024.1
 pyusb==1.0.2
 qrcode==6.1
 reportlab==3.6.9
@@ -69,14 +69,14 @@ simplejson==3.17.0
 urllib3==1.26.7
 
 # Migration tools
-marabunta==0.10.6
+marabunta==0.12.0
 anthem==0.13.0
 
 # test / lint
 # those libs and their dependencies are unpinned
 # to always test with the last version of it
 flake8
-pytest>=5.4.2
+pytest==7.4.4
 pluggy
 coverage
 pytest-odoo>=0.4.7

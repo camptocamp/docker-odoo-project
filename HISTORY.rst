@@ -20,6 +20,20 @@
 Release History
 ---------------
 
+
+Unreleased
+++++++++++
+
+** Build ** 
+
+Update Python dependencies
+
+  sync the requirements of the different versions of python packages
+  with Odoo's own requirements, and update some with our own.
+  Done for 11.0 -> 17.0
+
+
+
 4.5.8 (2024-03-05)
 ++++++++++++++++++
 

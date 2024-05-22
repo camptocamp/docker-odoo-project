@@ -3,7 +3,8 @@
 # sys_platform != 'win32'
 # this is a copy of Odoo dependencies with some bumped versions
 # unused official dependencies are commented to avoid dependabot alerts
-Babel==2.6.0
+Babel==2.6.0; python_version <= '3.9'
+Babel==2.9.1; python_version > '3.9'  # (Jammy) 2.6.0 has issues with python 3.10
 chardet==3.0.4
 decorator==4.3.0
 docutils==0.14
@@ -14,9 +15,11 @@ gevent==1.1.2 ; sys_platform != 'win32' and python_version < '3.7'
 gevent==1.5.0 ; python_version == '3.7'
 gevent==20.9.0 ; python_version >= '3.8'
 gevent==1.4.0 ; sys_platform == 'win32' and python_version < '3.7'
+gevent==21.8.0 ; python_version > '3.9'  # (Jammy)
 greenlet==0.4.10 ; python_version < '3.7'
 greenlet==0.4.15 ; python_version == '3.7'
 greenlet==0.4.17 ; python_version > '3.7'
+greenlet==1.1.2 ; python_version  > '3.9'  # (Jammy)
 html2text==2018.1.9
 idna==2.6
 Jinja2==2.11.3; python_version < '3.8' # official 2.10.1
@@ -26,14 +29,13 @@ libsass==0.17.0
 lxml==3.7.1 ; sys_platform != 'win32' and python_version < '3.7'
 lxml==4.6.3 ; sys_platform != 'win32' and python_version == '3.7' # official 4.3.2
 lxml==4.6.3 ; sys_platform != 'win32' and python_version > '3.7' # official 4.6.1
-lxml ; sys_platform == 'win32'
 Mako==1.0.7
 MarkupSafe==1.1.0
 num2words==0.5.6
-ofxparse==0.19
+ofxparse==0.19; python_version <= '3.9'
+ofxparse==0.21; python_version > '3.9'  # (Jammy) ABC removed from collections in 3.10 but still used in ofxparse < 0.21
 passlib==1.7.1
 Pillow==8.3.2 ; python_version <= '3.7' and sys_platform != 'win32' # official 5.4.1
-Pillow==6.1.0 ; python_version <= '3.7' and sys_platform == 'win32'
 Pillow==8.3.2 ; python_version > '3.7'  # official 8.1.1
 polib==1.1.0
 psutil==5.6.6
@@ -44,15 +46,16 @@ python-ldap==3.1.0; sys_platform != 'win32'
 PyPDF2==1.26.0
 pyserial==3.4
 python-dateutil==2.7.3
-pytz==2019.1
+pytz==2024.1
 pyusb==1.0.2
 qrcode==6.1
-reportlab==3.5.55; python_version >= '3.8'
+reportlab==3.6.9
 requests==2.25.1  # official 2.21.0
 zeep==3.2.0
 python-stdnum==1.13  # official 1.8
 vobject==0.9.6.1
-Werkzeug==0.16.1
+Werkzeug==0.16.1 ; python_version <= '3.9'
+Werkzeug==2.0.3 ; python_version > '3.9'  # (Jammy)
 XlsxWriter==1.1.2
 xlwt==1.3.*
 xlrd==1.1.0; python_version < '3.8'
@@ -73,14 +76,14 @@ simplejson==3.17.0
 urllib3==1.26.7
 
 # Migration tools
-marabunta==0.10.6
+marabunta==0.12.0
 anthem==0.13.0
 
 # test / lint
 # those libs and their dependencies are unpinned
 # to always test with the last version of it
 flake8
-pytest>=5.4.2
+pytest==7.4.4
 pluggy
 coverage
 pytest-odoo>=0.4.7

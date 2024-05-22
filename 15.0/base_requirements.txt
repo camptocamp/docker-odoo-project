@@ -1,54 +1,50 @@
 # Odoo dependencies
 Babel==2.6.0
 chardet==3.0.4
-decorator==4.3.0
-docutils==0.14
+decorator==4.4.2
+docutils==0.16
 ebaysdk==2.1.5
 freezegun==0.3.11; python_version < '3.8'
 freezegun==0.3.15; python_version >= '3.8'
-gevent==1.1.2 ; sys_platform != 'win32' and python_version < '3.7'
 gevent==1.5.0 ; python_version == '3.7'
-gevent==20.9.0 ; python_version >= '3.8'
-gevent==1.4.0 ; sys_platform == 'win32' and python_version < '3.7'
-greenlet==0.4.10 ; python_version < '3.7'
+gevent==20.9.0 ; python_version > '3.7' and python_version <= '3.9'
+gevent==21.8.0 ; python_version > '3.9'  # (Jammy)
+greenlet==0.4.15 ; python_version < '3.7'
 greenlet==0.4.15 ; python_version == '3.7'
 greenlet==0.4.17 ; python_version > '3.7'
+greenlet==1.1.2 ; python_version  > '3.9'  # (Jammy)
 html2text==2018.1.9
-idna==2.6
-Jinja2==2.10.1; python_version < '3.8'
-# bullseye version, focal patched 2.10
+idna==2.8
 Jinja2==2.11.3; python_version >= '3.8'  # official 2.11.2
-libsass==0.17.0
-lxml==3.7.1 ; sys_platform != 'win32' and python_version < '3.7'
-lxml==4.6.3 ; sys_platform != 'win32' and python_version == '3.7'  # official 4.3.2
-lxml==4.6.3 ; sys_platform != 'win32' and python_version > '3.7'   # official 4.6.1
-lxml ; sys_platform == 'win32'
-Mako==1.0.7
+libsass==0.18.0
+lxml==4.6.5 # min version = 4.5.0 (Focal - with security backports)
+Mako==1.0.7  # XXX no longer in std requirements.txt
 MarkupSafe==1.1.0
 num2words==0.5.6
-ofxparse==0.19
-passlib==1.7.1
-Pillow==5.4.1 ; python_version <= '3.7' and sys_platform != 'win32'
-Pillow==6.1.0 ; python_version <= '3.7' and sys_platform == 'win32'
-Pillow==8.3.2 ; python_version > '3.7'  # official 8.1.1
+ofxparse==0.19; python_version <= '3.9'
+ofxparse==0.21; python_version > '3.9'  # (Jammy)
+passlib==1.7.3
+Pillow==9.0.1  # min version = 7.0.0 (Focal with security backports)
 polib==1.1.0
-psutil==5.6.6
+psutil==5.6.7
 psycopg2==2.7.7; sys_platform != 'win32' and python_version < '3.8'
 psycopg2==2.8.6; sys_platform == 'win32' or python_version >= '3.8'  # official 2.8.5
 pydot==1.4.1
-python-ldap==3.1.0; sys_platform != 'win32'
+python-ldap==3.4.0; sys_platform != 'win32'
 PyPDF2==1.26.0
 pyserial==3.4
 python-dateutil==2.7.3
-pytz==2019.1
+pytz==2024.1
 pyusb==1.0.2
 qrcode==6.1
 reportlab==3.6.9
-requests==2.25.1  # official 2.21.0
-zeep==3.2.0
-python-stdnum==1.13  # official 1.8
+requests==2.25.1 
+zeep==3.4.0
+python-stdnum==1.18
+urllib3==1.26.7
 vobject==0.9.6.1
-Werkzeug==0.16.1
+Werkzeug==0.16.1 ; python_version <= '3.9'
+Werkzeug==2.0.2 ; python_version > '3.9'  # (Jammy)
 XlsxWriter==1.1.2
 xlwt==1.3.*
 xlrd==1.1.0; python_version < '3.8'
@@ -66,17 +62,17 @@ html5lib==1.0.1
 odfpy==1.4.1
 pyinotify==0.9.6
 simplejson==3.17.0
-urllib3==1.26.7
+
 
 # Migration tools
-marabunta==0.10.5
+marabunta==0.12.0
 -e git+https://github.com/camptocamp/anthem@master#egg=anthem
 
 # test / lint
 # those libs and their dependencies are unpinned
 # to always test with the last version of it
 flake8
-pytest>=5.4.2
+pytest==7.4.4
 pluggy
 coverage
 pytest-odoo>=0.4.7
