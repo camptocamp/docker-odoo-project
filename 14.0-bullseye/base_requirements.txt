@@ -77,3 +77,4 @@ pycodestyle==2.10.0
 pyflakes==3.0.1
 unicodecsv==0.14.1
 wrapt==1.14.1
+openpyxl==2.6.4
