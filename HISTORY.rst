@@ -20,6 +20,14 @@
 Release History
 ---------------
 
+5.2.1.0.0 (2024-01-19)
+++++++++++++++++++++++
+
+**Features and Improvements**
+
+* add openxlrd library 
+* remove 11.0 version 
+
 5.2.0.0.0 (2024-01-19)
 ++++++++++++++++++++++
 
