@@ -22,7 +22,7 @@ Follow the steps:
 4. Optionally add custom addons in `odoo/addons`
 
 6. Create the Dockerfile, the bare minimum being (see also [the example
-   file](odoo/Dockerfile) that installs additional dependencies):
+   file](Dockerfile) that installs additional dependencies):
 
         FROM camptocamp/odoo-project:11.0
         MAINTAINER <name>
