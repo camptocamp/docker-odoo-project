@@ -114,6 +114,17 @@ if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]; then
     run-parts --verbose "$START_ENTRYPOINT_DIR"
   fi
 
+  if [ ! -z "$DEBUGPY_ENABLE" ]; then
+    if [ -z "$DEBUGPY_PORT" ]; then
+      DEBUGPY_PORT=8888
+    fi
+    pip3 install debugpy
+    /usr/bin/python3 -m debugpy --listen 0.0.0.0:${DEBUGPY_PORT}  /usr/local/bin/odoo
+  else
+    exec "$@"
+  fi
+  
+
   exec "$@"
 fi
 
