@@ -68,7 +68,6 @@ beautifulsoup4==4.11.1
 future==0.18.2
 mccabe==0.7.0
 more-itertools==9.0.0
-pathtools==0.1.2
 pbr==5.11.0
 pexpect==4.8.0
 ptyprocess==0.7.0
