@@ -16,7 +16,6 @@ ENV LANG=C.UTF-8 \
 ENV BUILD_PACKAGE \
     build-essential \
     gcc \
-    python3.9-dev \
     libevent-dev \
     libfreetype6-dev \
     libxml2-dev \
