@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM python:3.7.17-bookworm
 MAINTAINER Camptocamp
 ARG UID=999
 # create the working directory and a place to set the logs (if wanted)
