@@ -20,6 +20,19 @@
 Release History
 ---------------
 
+5.3.0.0.0 (2024-08-26)
+++++++++++++++++++++++
+
+**Features and Improvements**
+
+* remove pathtools library, use pathlib instead
+* remove 14 buster, use bookworm instead
+* use bookwork for all supported versions, specific debian version applied 
+* bump all package for 15.0/16.0/17.0
+* swtich 15.0/16.0/17.0 to python 3.12 on bookworm
+
+
+
 5.2.1.0.0 (2024-01-19)
 ++++++++++++++++++++++
 
