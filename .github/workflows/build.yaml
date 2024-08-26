@@ -5,6 +5,7 @@ on:
     branches:
       - "main"
       - "master"
+      - "dev"
     tags:
       - "*.*.*.*.*"
       - "stable"
@@ -13,6 +14,9 @@ on:
     branches:
       - "main"
       - "master"
+  schedule:
+    - cron: "0 1 * * THU"
+
 
 env:
   TARGET: GHCR
@@ -25,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        odoo_serie: ["12.0", "13.0", "14.0", "14.0-bullseye", "15.0", "16.0", "17.0"]
+        odoo_serie: ["12.0", "13.0", "14.0", "15.0", "16.0", "17.0"]
 
     steps:
       - uses: actions/checkout@v4
@@ -42,9 +46,12 @@ jobs:
           flavor: |
               prefix=${{ matrix.odoo_serie }}-,onlatest=true
           tags: |
-              type=raw,value=latest
-              type=raw,value={{date 'YYYYMMDD'}}
+              type=raw,value={{branch}}-latest
+              type=raw,value={{branch}}-{{date 'YYYYMMDD'}}
               type=ref,event=tag
+              type=ref,event=pr
+              type=schedule,pattern=nightly
+              type=raw,value={{branch}}
 
       - name: Setup build dir
         run: |
@@ -65,7 +72,7 @@ jobs:
         run: export BASE_IMAGE=${{ matrix.odoo_serie }}:latest; make VERSION=${{ matrix.odoo_serie }} test
 
       - name: Login to GitHub Container Registry
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' || github.event_name == 'schedule'
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -73,7 +80,7 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
 
       - name: Tag & Push
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' || github.event_name == 'schedule'
         id: docker_push
         uses: docker/build-push-action@v3
         with:

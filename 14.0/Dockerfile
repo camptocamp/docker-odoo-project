@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM python:3.9.19-slim-bookworm
 MAINTAINER Camptocamp
 ARG UID=999
 # create the working directory and a place to set the logs (if wanted)
@@ -16,7 +16,6 @@ ENV LANG=C.UTF-8 \
 ENV BUILD_PACKAGE \
     build-essential \
     gcc \
-    python3.7-dev \
     libevent-dev \
     libfreetype6-dev \
     libxml2-dev \
@@ -31,7 +30,7 @@ ENV BUILD_PACKAGE \
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
-        sh -c /install/package_odoo_13.0_14.0.sh \
+        sh -c /install/package_odoo.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
         && /install/kwkhtml_client.sh \
