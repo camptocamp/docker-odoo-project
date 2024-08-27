@@ -1,4 +1,4 @@
-FROM python:3.10-bullseye 
+FROM python:3.12-slim-bookworm
 MAINTAINER Camptocamp
 
 # create the working directory and a place to set the logs (if wanted)
