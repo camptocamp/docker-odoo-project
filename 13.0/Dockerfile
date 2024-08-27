@@ -16,7 +16,6 @@ ENV LANG=C.UTF-8 \
 ENV BUILD_PACKAGE \
     build-essential \
     gcc \
-    python3.7-dev \
     libevent-dev \
     libfreetype6-dev \
     libxml2-dev \
@@ -31,13 +30,13 @@ ENV BUILD_PACKAGE \
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
-        sh -c /install/package_odoo_13.0_14.0.sh \
+        sh -c /install/package_odoo.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
         && /install/kwkhtml_client.sh \
         && /install/kwkhtml_client_force_python3.sh \
         && /install/dev_package.sh \
-        && python3 -m pip install --force-reinstall pip "setuptools<58" \
+        && python3 -m pip install --force-reinstall pip \
         && pip install -r /odoo/base_requirements.txt --ignore-installed \
         && /install/purge_dev_package_and_cache.sh
 
