@@ -17,6 +17,7 @@ COPY ./VERSION /odoo/
 COPY ./migration.yml /odoo/
 
 RUN pip install -e /odoo
+RUN chmod a+rw /odoo -R
 RUN pip install -e /odoo/src
 
 # Project's specifics packages
