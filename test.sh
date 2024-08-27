@@ -32,7 +32,7 @@ echo "Working in $TMP"
 on_exit() {
     echo "Cleaning up temporary directory..."
     cd $TMP
-    docker-compose -f test-compose.yml down
+    docker compose -f test-compose.yml down
     rm -rf $TMP
     rm -f /tmp/odoo.tar.gz
 }
@@ -42,18 +42,18 @@ trap on_exit EXIT
 # run 'runtests' in the container
 # extra arguments are passed to the 'run' command (example: -e FOO=bar is added to the list of args)
 docoruntests() {
-    docker-compose -f test-compose.yml run --rm -e LOCAL_USER_ID=$(id -u) $@ odoo runtests
+    docker compose -f test-compose.yml run --rm -e LOCAL_USER_ID=$(id -u) $@ odoo runtests
 }
 # run 'runmigration' in the container
 # extra arguments are passed to the 'run' command (example: -e FOO=bar is added to the list of args)
 docorunmigration() {
-    docker-compose -f test-compose.yml run --rm -e LOCAL_USER_ID=$(id -u) $@ odoo runmigration
+    docker compose -f test-compose.yml run --rm -e LOCAL_USER_ID=$(id -u) $@ odoo runmigration
 }
 docodown() {
-    docker-compose -f test-compose.yml down
+    docker compose -f test-compose.yml down
 }
 docoruncmd() {
-    docker-compose -f test-compose.yml run --rm -e LOCAL_USER_ID=$(id -u) $@
+    docker compose -f test-compose.yml run --rm -e LOCAL_USER_ID=$(id -u) $@
 }
 
 cp -ra ./example/. "$TMP/"
