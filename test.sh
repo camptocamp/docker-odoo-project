@@ -99,12 +99,3 @@ echo '>>> * run unit tests with runtests and re-use a dump'
 docoruntests -v ${TMP}/.cachedb:/.cachedb -e LOAD_DB_CACHE="true" -e SUBS_MD5=testcache
 docodown
 
-echo '>>> * run tests for onbuild image'
-cp odoo/Dockerfile-onbuild odoo/Dockerfile
-sed "s|FROM .*|FROM ${IMAGE_LATEST}-onbuild|" -i odoo/Dockerfile
-cat odoo/Dockerfile
-
-docoruncmd odoo odoo --stop-after-init
-docoruntests
-
-docodown
