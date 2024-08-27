@@ -16,7 +16,6 @@ COPY ./setup.py /odoo/
 COPY ./VERSION /odoo/
 COPY ./migration.yml /odoo/
 
-RUN replace_dependencies.sh
 RUN pip install -e /odoo
 RUN pip install -e /odoo/src
 
