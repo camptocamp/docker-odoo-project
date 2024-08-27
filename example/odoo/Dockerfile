@@ -15,9 +15,9 @@ COPY ./songs /odoo/songs
 COPY ./setup.py /odoo/
 COPY ./VERSION /odoo/
 COPY ./migration.yml /odoo/
-
+USER root
 RUN pip install -e /odoo
-RUN chmod a+rw /odoo -R
+
 RUN pip install -e /odoo/src
 
 # Project's specifics packages
