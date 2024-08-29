@@ -26,7 +26,8 @@ ENV BUILD_PACKAGE \
     libjpeg-dev \
     libpng-dev \
     zlib1g-dev \
-    git
+    git \
+    chromium
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 # wkhtml-buster is kept as in official image, no deb available for bullseye

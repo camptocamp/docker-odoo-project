@@ -79,6 +79,7 @@ coverage
 pytest-odoo
 pytest-cov
 watchdog
+websocket-client
 
 # Library dependency
 argh==0.26.2
