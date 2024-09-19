@@ -1,4 +1,4 @@
-FROM camptocamp/odoo-project:11.0-latest
+FROM ci-latest:0.1
 MAINTAINER Camptocamp
 
 # For installing odoo you have two possibility
@@ -16,8 +16,9 @@ COPY ./setup.py /odoo/
 COPY ./VERSION /odoo/
 COPY ./migration.yml /odoo/
 
-RUN replace_dependencies.sh
+USER root
 RUN pip install -e /odoo
+
 RUN pip install -e /odoo/src
 
 # Project's specifics packages

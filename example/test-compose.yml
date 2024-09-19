@@ -1,7 +1,7 @@
 # Composition used to run automated tests on the images
 # Used by the Makefile at the repository's root
 
-version: '2'
+version: '3.8'
 
 services:
   odoo:
@@ -20,6 +20,7 @@ services:
       - MARABUNTA_MODE=demo  # could be 'full' for the db with all the data
       - KWKHTMLTOPDF_SERVER_URL=http://kwkhtmltopdf:8080
       - ODOO_REPORT_URL=http://odoo:8069
+      - MIGRATION_CONFIG_FILE=/odoo/migration.yml
       # cached database dumps config for `runmigration` and `runtests`
       - CREATE_DB_CACHE=false  # set it to 'true' to create dumps
       - LOAD_DB_CACHE=true # by default will always search for existing dumps
@@ -34,7 +35,7 @@ services:
       - MIG_LOAD_VERSION_CEIL=
 
   db:
-    image: postgres:12.0
+    image: postgres:13.0
     ports:
       - 5432
     environment:

@@ -6,8 +6,6 @@ migration:
       operations:
         pre:
           - "sh -c 'psql -c \"CREATE EXTENSION pg_trgm;\"'"
-        post:
-          - anthem songs.install.base::main
       addons:
         upgrade:
           - sale
