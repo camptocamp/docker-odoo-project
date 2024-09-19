@@ -20,6 +20,18 @@
 Release History
 ---------------
 
+4.5.10 (2024-09-19)
+++++++++++++++++++
+
+** Build ** 
+
+* Update Python dependencies, for all version except V11
+* V15, V16, V17: Update Python to Version 3.12
+* Update Debian version to bookworm for all versions
+* Switch from Travis to github actions
+* Add test on Sysdig Secure
+
+
 4.5.9 (2024-05-22)
 ++++++++++++++++++
 

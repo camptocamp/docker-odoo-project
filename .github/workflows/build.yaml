@@ -6,7 +6,7 @@ on:
       - "release-4.5.X"
       - "dev-4.5.X"
     tags:
-      - "4.*.*.*.*"
+      - "4.*.*"
 
   pull_request:
     branches:
