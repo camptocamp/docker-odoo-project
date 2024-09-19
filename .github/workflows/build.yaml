@@ -43,14 +43,14 @@ jobs:
         with:
           images: ghcr.io/camptocamp/docker-odoo-project
           flavor: |
-              prefix=${{ matrix.odoo_serie }}-4.x,onlatest=true
+              prefix=${{ matrix.odoo_serie }}-,onlatest=true
           tags: |
               type=raw,value={{branch}}-latest
               type=raw,value={{branch}}-{{date 'YYYYMMDD'}}
               type=ref,event=tag
               type=ref,event=pr
               type=schedule,pattern=nightly
-              type=raw,value={{branch}}-4.x
+              type=raw,value={{branch}}
 
       - name: Setup build dir
         run: |
