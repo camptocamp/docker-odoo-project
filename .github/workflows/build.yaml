@@ -37,6 +37,8 @@ jobs:
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v2
+        with:
+          driver: docker
 
       - name: Docker meta
         id: docker_meta
@@ -50,7 +52,7 @@ jobs:
               type=raw,value={{branch}}-{{date 'YYYYMMDD'}}
               type=ref,event=tag
               type=ref,event=pr
-              type=schedule,pattern=nightly
+              type=schedule,pattern={{branch}}-nightly
               type=raw,value={{branch}}
 
       - name: Setup build dir
@@ -63,13 +65,11 @@ jobs:
           context: ./build
           push: false
           load: true
-          tags: ${{ steps.docker_meta.outputs.tags }}
+          tags: ci-5xx-latest:${{ matrix.odoo_serie }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       - name: Test
-        run: export BASE_IMAGE=${{ matrix.odoo_serie }}:latest; make VERSION=${{ matrix.odoo_serie }} test
+        run: make VERSION=${{ matrix.odoo_serie }} test
 
       - name: Login to GitHub Container Registry
         if: github.event_name == 'push' || github.event_name == 'schedule'
@@ -88,8 +88,6 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       - name: Image digest
         run: echo ${{ steps.docker_push.outputs.digest }}

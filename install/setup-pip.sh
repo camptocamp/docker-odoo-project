@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eo pipefail
-
+# Install pip with ensuire pip
+python -m ensurepip
 cat << EOF > /etc/pip.conf
 [global]
 # counter-intuitively, false means that we enable 'no-cache-dir'
