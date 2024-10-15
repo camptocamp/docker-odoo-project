@@ -67,6 +67,7 @@ jobs:
         run: make VERSION=${{ matrix.odoo_serie }} test
 
       - name: Scan image
+        if: github.event_name == 'push'
         id: scan
         uses: sysdiglabs/scan-action@v5
         with:
