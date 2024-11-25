@@ -4,10 +4,6 @@ set -e
 
 cat /odoo/base_requirements.txt > requirements.txt
 
-if [ "$BATTERIES" = "True" ]
-  then cat /odoo/extra_requirements.txt >> requirements.txt
-fi
-
 sed -i '/^\s*$/d' requirements.txt
 
 pip freeze -r requirements.txt | grep -v odoo > installed_package.txt

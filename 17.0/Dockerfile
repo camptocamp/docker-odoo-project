@@ -24,19 +24,20 @@ ENV BUILD_PACKAGE \
     libssl-dev \
     libjpeg-dev \
     libpng-dev \
-    zlib1g-dev \
-    git
+    zlib1g-dev
 
+# run in a virtualenv
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 # wkhtml-buster is kept as in official image, no deb available for bullseye
 RUN set -x; \
-        sh -c /install/package_odoo.sh \
+        sh -c /install/package_odoo_common.sh \
+        && /install/package_odoo_common_custom.sh \
+        && /install/package_odoo.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
         && /install/kwkhtml_client.sh \
         && /install/kwkhtml_client_force_python3.sh \
         && /install/dev_package.sh \
-        && pip install -r /odoo/base_requirements.txt --ignore-installed \
         && /install/purge_dev_package_and_cache.sh
 
 # grab dockerize to generate template and
@@ -57,6 +58,12 @@ RUN adduser --disabled-password -u $UID --gecos '' odoo \
 
 VOLUME ["/data/odoo", "/var/log/odoo"]
 USER odoo
+RUN python3 -m venv /odoo/.venv  --system-site-packages
+ENV PATH=/odoo/.venv/bin:$PATH
+ENV PYTHONPATH=$PYTHONPATH:/odoo/
+RUN echo "export PATH=$PATH" >> ~/.bashrc
+
+RUN /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt  
 # Expose Odoo services
 EXPOSE 8069 8072
 
