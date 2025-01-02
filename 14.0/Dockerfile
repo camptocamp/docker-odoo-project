@@ -75,7 +75,7 @@ ENV ODOO_VERSION=14.0 \
     ODOO_DATA_PATH=/odoo/data \
     DEMO=False \
     ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
-    OPENERP_SERVER=/odoo/odoo.cfg
+    ODOO_RC=/odoo/odoo.cfg
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["odoo"]
