@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bookworm
+FROM python:3.14.0a1-slim-bookworm
 ARG UID=999
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /odoo /var/log/odoo
