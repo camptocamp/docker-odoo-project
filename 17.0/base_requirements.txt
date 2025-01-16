@@ -5,6 +5,7 @@ decorator==5.1.1  ; python_version >= '3.11'
 docutils==0.20.1 ; python_version >= '3.11'
 ebaysdk==2.1.5
 freezegun==1.2.1 ; python_version >= '3.11'
+whool==1.2.0
 geoip2==2.9.0
 gevent==24.2.1 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
 greenlet==3.0.3 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
