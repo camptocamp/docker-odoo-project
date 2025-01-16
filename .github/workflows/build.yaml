@@ -11,7 +11,8 @@ on:
   pull_request:
     branches:
       - "release-4.5.X"
-
+  schedule:
+    - cron: "0 1 * * WED"
 
 env:
   TARGET: GHCR
@@ -47,7 +48,7 @@ jobs:
               type=raw,value={{branch}}-{{date 'YYYYMMDD'}}
               type=ref,event=tag
               type=ref,event=pr
-              type=schedule,pattern=nightly
+              type=schedule,pattern={{branch}}-nightly
               type=raw,value={{branch}}
 
       - name: Setup build dir
