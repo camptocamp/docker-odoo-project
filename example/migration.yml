@@ -9,8 +9,3 @@ migration:
       addons:
         upgrade:
           - sale
-      modes:
-        demo:
-          operations:
-            post:
-              - anthem songs.install.demo::main

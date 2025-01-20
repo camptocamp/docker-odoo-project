@@ -45,26 +45,10 @@ https://github.com/camptocamp/docker-odoo-project/pkgs/container/odoo-project
 There are 4 flavors of the image:
 
 - normal: `odoo-project:${odoo_version}-${tag_version}`
-- normal-onbuild: `odoo-project:${odoo_version}-${tag_version}-onbuild`
-- batteries-included: `odoo-project:${odoo_version}-${tag_version}-batteries`
-- batteries-included-onbuild: `odoo-project:${odoo_version}-${tag_version}-batteries-onbuild`
 
 Note: in production, we strongly recommend to never use the "latest" tag.
 Instead use a specific version in order to be able to rebuild identical images.
 
-### Normal or Batteries-included?
-
-The batteries-included image is exactly the same image, with a list of
-additional pre-installed python packages. The packages have been chosen because
-of their prevalent usage in OCA addons.
-
-The list of package (with their version) is defined in the extra_requirements.txt file.
-
-* [9.0/extra_requirements.txt](9.0/extra_requirements.txt)
-* [10.0/extra_requirements.txt](10.0/extra_requirements.txt)
-* [11.0/extra_requirements.txt](11.0/extra_requirements.txt)
-
-you can also see the Dockerfile that generate this image here: [common/Dockerfile-batteries](common/Dockerfile-batteries)
 
 ### With or without onbuild?
 
@@ -98,15 +82,6 @@ $ make VERSION=11.0
 # generate image camptocamp/odoo-project:10.0-latest and camptocamp/odoo-project:10.0-latest-onbuild
 $ make VERSION=10.0
 ```
-
-Batteries-included flavors:
-```
-# generate image camptocamp/odoo-project:11.0-batteries-latest and camptocamp/odoo-project:11.0-latest-batteries-onbuild
-$ make VERSION=11.0 BATTERIES=True
-# generate image camptocamp/odoo-project:10.0-batteries-latest and camptocamp/odoo-project:10.0-latest-batteries-onbuild
-$ make VERSION=10.0 BATTERIES=True
-```
-
 
 ## Configuration
 

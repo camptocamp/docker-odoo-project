@@ -16,6 +16,11 @@ COPY ./setup.py /odoo/
 COPY ./VERSION /odoo/
 COPY ./migration.yml /odoo/
 USER root
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends parallel  libsasl2-dev libldap2-dev libssl-dev libmagic1 libpq-dev build-essential python3-dev libffi-dev pkg-config libcairo2-dev libgirepository1.0-dev\
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN set -x; \
         apt-get update \
         && apt-get install -y --no-install-recommends \
@@ -26,8 +31,10 @@ RUN set -x; \
 COPY ./requirements.txt /odoo/
 USER odoo
 WORKDIR /odoo
-RUN pip install --user -e .
-RUN pip install --user -r requirements.txt 
+# run in a virtualenv
+RUN /odoo/.venv/bin/pip install --user -r requirements.txt 
+RUN /odoo/.venv/bin/pip install -r /odoo/src/odoo/requirements.txt
+RUN /odoo/.venv/bin/pip install -e /odoo/src/odoo
 
 # Project's specifics packages
 
