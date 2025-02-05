@@ -88,8 +88,6 @@ echo "        post:" >>odoo/migration.yml
 echo "          - anthem songs.install.demo::create_partners" >>odoo/migration.yml
 docoruncmd odoo dropdb odoodb
 
-
-
 echo '>>> * run unit tests with runtests'
 docoruntests -e LOAD_DB_CACHE="false" -e CREATE_DB_CACHE="false"
 
@@ -99,4 +97,3 @@ docoruntests -e CREATE_DB_CACHE="true" -e SUBS_MD5=testcache
 echo '>>> * run unit tests with runtests and re-use a dump'
 docoruntests -e LOAD_DB_CACHE="true" -e SUBS_MD5=testcache
 docodown
-
