@@ -61,6 +61,7 @@ ENV ODOO_VERSION=17.0 \
     PATH=/odoo-bin:$PATH \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
+    OPENBLAS_NUM_THREADS=1 \
     DB_HOST=db \
     DB_PORT=5432 \
     DB_NAME=odoodb \
