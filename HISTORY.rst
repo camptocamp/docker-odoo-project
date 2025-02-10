@@ -7,6 +7,8 @@
 
 .. **Features and Improvements**
 
+* Replace environment variable OPENERP_SERVER with ODOO_RC
+
 .. **Bugfixes**
 
 .. **Libraries**
