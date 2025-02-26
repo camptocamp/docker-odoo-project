@@ -1,5 +1,5 @@
 ifndef VERSION
-$(error VERSION is not set)
+VERSION=15.0
 endif
 
 IMAGE_LATEST=ci-5xx-latest:${VERSION}
@@ -7,7 +7,9 @@ BUILD_TAG=$(IMAGE_LATEST)
 
 export
 
-all: build
+.PHONY: all
+all: 
+	bash build.sh
 
 .PHONY: setup
 setup:

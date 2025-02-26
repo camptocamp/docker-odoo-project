@@ -15,6 +15,18 @@ apt-get install -y --no-install-recommends \
     node-clean-css \
     node-less \
     poppler-utils \
+    adduser \
+    fonts-dejavu-core \
+    fonts-freefont-ttf \
+    fonts-freefont-otf \
+    fonts-noto-core \
+    fonts-inconsolata \
+    fonts-font-awesome \
+    fonts-roboto-unhinted \
+    gsfonts \
+    libjs-underscore \
+    lsb-base \
+    postgresql-client \
     python3 \
     python3-pip \
     python3-setuptools \
@@ -24,4 +36,8 @@ apt-get install -y --no-install-recommends \
     xfonts-75dpi \
     xfonts-base \
     xz-utils \
-    tcl expect
+    tcl\
+    git \
+    curl \
+    gnupg2 \
+    expect

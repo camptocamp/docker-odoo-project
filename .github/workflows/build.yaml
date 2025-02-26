@@ -79,6 +79,19 @@ jobs:
           username: ${{ secrets.GHCR_USER }}
           password: ${{ secrets.GHCR_TOKEN }}
 
+      - name: Scan image
+        if: github.event_name == 'push'
+        id: scan
+        uses: sysdiglabs/scan-action@v5
+        with:
+            sysdig-secure-url: https://eu1.app.sysdig.com
+            stop-on-failed-policy-eval: false
+            stop-on-processing-error: false
+            image-tag: ci-5xx-latest:${{ matrix.odoo_serie }}
+            skip-upload: false
+            sysdig-secure-token: ${{ secrets.SYSDIG_SECURE_TOKEN }}
+
+
       - name: Tag & Push
         if: github.event_name == 'push' || github.event_name == 'schedule'
         id: docker_push

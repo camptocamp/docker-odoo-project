@@ -1,5 +1,11 @@
 #!/bin/bash
-set -euxo pipefail
+set -exo pipefail
+if [ -z "$VERSION" ]; then
+    export VERSION=15.0
+fi
+if [ -z "$BUILD_TAG" ]; then
+    export BUILD_TAG=odoo:15.0
+fi
 
 #
 # Build the image

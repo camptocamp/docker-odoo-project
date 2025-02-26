@@ -1,5 +1,5 @@
 #!/bin/bash
-set -Exeuo pipefail
+set -Exeo pipefail
 
 #
 # Run tests on the image
@@ -15,14 +15,18 @@ set -Exeuo pipefail
 # * VERSION (9.0, 10.0, 11.0, ...)
 # * IMAGE_LATEST (tag of the 'latest' image built)
 #
-
+# if VERSION is not set, we will use the default 15.0
+if [ -z "$VERSION" ]; then
+    export VERSION=15.0
+fi
+if [ -z "$IMAGE_LATEST" ]; then
+    export IMAGE_LATEST=odoo:15.0
+fi
 if [ -z "$VERSION" ]; then
     echo "VERSION environment variable is missing"
     exit 1
 fi
 
-# Allow version flavor like 12.0-buster
-VERSION=$(echo $VERSION | cut -d '-' -f '1')
 
 ODOO_URL="https://github.com/odoo/odoo/archive/${VERSION}.tar.gz"
 

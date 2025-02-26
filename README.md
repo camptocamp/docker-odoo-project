@@ -50,26 +50,6 @@ Note: in production, we strongly recommend to never use the "latest" tag.
 Instead use a specific version in order to be able to rebuild identical images.
 
 
-### With or without onbuild?
-
-The `onbuild` flavors add default *ONBUILD* instructions in the Dockerfile in
-order to simplify the generation of custom image.
-
-For more information on the *ONBUILD* command please read Docker documentation
-
-The dockerfile for this flavor is here:  [common/Dockerfile-onbuild](common/Dockerfile-onbuild)
-
-For comparison, two example of Dockerfile are shown in the project example here:
-
-- without onbuild: [example/odoo/Dockerfile](example/odoo/Dockerfile)
-- with onbuild: [example/odoo/Dockerfile-onbuild](example/odoo/Dockerfile-onbuild)
-
-Note: the Dockerfile of the onbuild flavor is shorter but
-
-- you can not create intermediary custom image based on it (as ONBUILD instruction need to be played).
-- the official docker images have deprecated their `-onbuild` images: https://github.com/docker-library/official-images/issues/2076
-
-
 ## Build
 
 The images should be build with `make`:
@@ -77,9 +57,9 @@ The images should be build with `make`:
 Normal flavors:
 
 ```
-# generate image camptocamp/odoo-project:11.0-latest and camptocamp/odoo-project:11.0-latest-onbuild
+# generate image camptocamp/odoo-project:11.0-latest and camptocamp/odoo-project:11.0-latest
 $ make VERSION=11.0
-# generate image camptocamp/odoo-project:10.0-latest and camptocamp/odoo-project:10.0-latest-onbuild
+# generate image camptocamp/odoo-project:10.0-latest and camptocamp/odoo-project:10.0-latest
 $ make VERSION=10.0
 ```
 
