@@ -5,11 +5,9 @@ decorator==5.1.1  ; python_version >= '3.11'
 docutils==0.20.1 ; python_version >= '3.11'
 ebaysdk==2.1.5
 freezegun==1.2.1 ; python_version >= '3.11'
-whool==1.2.0
 geoip2==2.9.0
 gevent==24.2.1 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
 greenlet==3.0.3 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
-idna==3.7.0
 Jinja2==3.1.4 ; python_version >= '3.12'  # (Noble) compatibility with markupsafe
 libsass==0.22.0 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 lxml==5.2.1; python_version >= '3.12' # (Noble - removed html clean)
@@ -43,7 +41,7 @@ xlrd==2.0.1 ; python_version >= '3.12'
 XlsxWriter==3.1.9 ; python_version >= '3.12'
 xlwt==1.3.0
 zeep==4.2.1 ; python_version >= '3.11'
-setuptools==73.0.1
+
 
 # Not part of official requirements, but used by some addons
 # colorama==0.3.9
@@ -53,35 +51,3 @@ odfpy==1.4.1
 pyinotify==0.9.6
 simplejson==3.19.3
 
-
-# Migration tools
-marabunta==0.12.0
--e git+https://github.com/camptocamp/anthem@master#egg=anthem
-
-# test / lint
-# those libs and their dependencies are unpinned
-# to always test with the last version of it
-flake8
-pytest==8.3.2
-pluggy
-coverage
-pytest-odoo>=0.4.7
-pytest-cov>=2.10.0
-watchdog
-
-# Library dependency
-argh==0.31.3
-atomicwrites==1.4.1
-attrs==24.2.0
-beautifulsoup4==4.12.3
-future==1.0.0
-mccabe==0.7.0
-more-itertools==10.4.0
-pbr==6.0.0
-pexpect==4.9.0
-ptyprocess==0.7.0
-py==1.11.0
-pycodestyle==2.12.1
-pyflakes==3.2.0
-unicodecsv==0.14.1
-wrapt==1.16.0
