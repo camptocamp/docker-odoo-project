@@ -1,10 +1,13 @@
 FROM python:3.12-slim-bookworm 
 ARG UID=999
+ARG GID=999
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /odoo /var/log/odoo
 
 COPY ./install /install
 COPY ./base_requirements.txt /odoo
+COPY ./extra_requirements.txt /odoo
+COPY ./test_requirements.txt /odoo
 
 # Moved because there was a bug while installing `odoo-autodiscover`. There is
 # an accent in the contributor name
@@ -30,15 +33,12 @@ ENV BUILD_PACKAGE \
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 # wkhtml-buster is kept as in official image, no deb available for bullseye
 RUN set -x; \
-        sh -c /install/package_odoo_common.sh \
-        && /install/package_odoo_common_custom.sh \
-        && /install/package_odoo.sh \
+        sh -c /install/package_odoo.sh \
         && /install/setup-pip.sh \
         && /install/postgres.sh \
         && /install/kwkhtml_client.sh \
         && /install/kwkhtml_client_force_python3.sh \
-        && /install/dev_package.sh \
-        && /install/purge_dev_package_and_cache.sh
+        && /install/dev_package.sh 
 
 # grab dockerize to generate template and
 # wait on postgres
@@ -50,7 +50,9 @@ COPY ./templates /templates
 COPY ./before-migrate-entrypoint.d /odoo/before-migrate-entrypoint.d
 COPY ./start-entrypoint.d /odoo/start-entrypoint.d
 COPY ./MANIFEST.in /odoo
-RUN adduser --disabled-password -u $UID --gecos '' odoo \
+
+RUN groupadd -g $GID odoo \
+  && adduser --disabled-password -u $UID --gid $GID --gecos '' odoo \
   && touch /odoo/odoo.cfg \
   && mkdir -p /odoo/data/odoo/{addons,filestore,sessions} \
   && chown -R odoo:odoo /odoo && usermod odoo --home /odoo \
@@ -64,7 +66,12 @@ ENV PYTHONPATH=$PYTHONPATH:/odoo/
 RUN echo "export PATH=$PATH" >> ~/.bashrc
 
 RUN /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt  
-# Expose Odoo services
+RUN /odoo/.venv/bin/pip install -r /odoo/extra_requirements.txt
+RUN /odoo/.venv/bin/pip install -r /odoo/test_requirements.txt
+USER root
+RUN set -x; \
+        sh -c /install/purge_dev_package_and_cache.sh
+USER odoo
 EXPOSE 8069 8072
 
 ENV ODOO_VERSION=15.0 \

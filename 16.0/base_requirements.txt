@@ -1,12 +1,54 @@
+# The officially supported versions of the following packages are their
+# python3-* equivalent distributed in Ubuntu 22.04 and Debian 11
+Babel==2.9.1  # min version = 2.6.0 (Focal with security backports)
+chardet==4.0.0
+cryptography==42.0.8 ; python_version >= '3.12'  # (Noble) min 41.0.7, pinning 42.0.8 for security fixes
+decorator==4.4.2
+docutils==0.16
+ebaysdk==2.1.5
+freezegun==0.3.15; python_version >= '3.8'
+gevent==24.2.1 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
+greenlet==3.0.3 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
+idna==3.7.0
+Jinja2==3.1.4 ; python_version >= '3.12'  # (Noble) compatibility with markupsafe
+libsass==0.22.0 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
+lxml==5.2.1; python_version >= '3.12' # (Noble - removed html clean)
+lxml-html-clean; python_version >= '3.12' # (Noble - removed from lxml, unpinned for futur security patches)
+MarkupSafe==2.1.5 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
+num2words==0.5.9
+ofxparse==0.21; python_version > '3.9'  # (Jammy)
+passlib==1.7.4 # min version = 1.7.2 (Focal with security backports)
+Pillow==10.3.0 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
+polib==1.1.0
+psutil==5.9.8 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
+psycopg2==2.9.9 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
+pydot==1.4.2
+pyopenssl==24.1.0 ; python_version >= '3.12' # (Noble) min 23.2.0, pinned for compatibility with cryptography==42.0.8 and security patches
+PyPDF2==2.12.1 ; python_version > '3.10'
+pyserial==3.5
+python-dateutil==2.8.1
+python-ldap==3.4.4 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble) Mostly to have a wheel package
+python-stdnum==1.16
+pytz  # no version pinning to avoid OS perturbations
+pyusb==1.2.1 ; python_version > '3.10'
+qrcode==6.1
+reportlab==4.1.0 ; python_version >= '3.12' # (Noble) Mostly to have a wheel package
+requests==2.32.0 ; python_version >= '3.12' # (Noble) Compatibility with i
+rl-renderPM==4.0.3 ; sys_platform == 'win32' and python_version >= '3.12'  # Needed by reportlab 4.1.0 but included in deb package
+urllib3==2.2.2  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography
+vobject==0.9.6.1
+Werkzeug==2.1.1 ; python_version > '3.9'  # (Jammy)
+xlrd==1.2.0; python_version >= '3.8'
+XlsxWriter==1.1.2
+xlwt==1.3.0
+zeep==4.0.0
+
+
 # Not part of official requirements, but used by some addons
 # colorama==0.3.9
 gdata==2.0.18
-lxml-html-clean==0.4.1
-whool==1.2
-setuptools==75.6.0
-
-
-# Migration tools
-marabunta==0.12.0
--e git+https://github.com/camptocamp/anthem@master#egg=anthem
+html5lib==1.1
+odfpy==1.4.1
+pyinotify==0.9.6
+simplejson==3.19.3
 
