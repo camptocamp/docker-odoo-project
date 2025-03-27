@@ -11,7 +11,7 @@ freezegun==0.3.15; python_version >= '3.8'
 gevent==24.2.1 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
 greenlet==3.0.3 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
 idna==3.7.0
-Jinja2==3.1.4 ; python_version >= '3.12'  # (Noble) compatibility with markupsafe
+Jinja2==3.1.6 ; python_version >= '3.12'  # (Noble) compatibility with markupsafe
 libsass==0.22.0 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 lxml==5.2.1; python_version >= '3.12' # (Noble - removed html clean)
 lxml-html-clean; python_version >= '3.12' # (Noble - removed from lxml, unpinned for futur security patches)
