@@ -20,6 +20,14 @@
 Release History
 ---------------
 
+4.5.11 (2025-04-01)
+++++++++++++++++++
+
+** Build ** 
+
+* Update Python dependencies, for all version except V11
+* fix security issues 
+
 4.5.10 (2024-09-19)
 ++++++++++++++++++
 
