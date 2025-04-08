@@ -8,11 +8,12 @@ cryptography==42.0.8 ; python_version >= '3.12'  # (Noble) min 41.0.7, pinning 4
 decorator==5.1.1  ; python_version >= '3.11'
 docutils==0.20.1 ; python_version >= '3.11'
 freezegun==1.2.1 ; python_version >= '3.11'
+whool==1.2.0
 geoip2==2.9.0
 gevent==24.2.1 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
 greenlet==3.0.3 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
 idna==3.7 ; python_version >= '3.12'
-Jinja2==3.1.3 ; python_version > '3.10'
+Jinja2==3.1.6 ; python_version > '3.10'
 libsass==0.22.0 ; python_version >= '3.11'  # (Noble) Mostly to have a wheel package
 lxml==5.2.1; python_version >= '3.12' # (Noble - removed html clean)
 lxml-html-clean; python_version >= '3.12' # (Noble - removed from lxml, unpinned for futur security patches)
@@ -36,16 +37,24 @@ pytz  # no version pinning to avoid OS perturbations
 pyusb==1.2.1
 qrcode==7.4.2 ; python_version >= '3.11'
 reportlab==4.1.0 ; python_version >= '3.12' # (Noble) Mostly to have a wheel package
+pycairo==1.27.0 ; python_version >= '3.12'  # Needed only for reportlab 4.0+ https://docs.reportlab.com/install/ReportLab_Plus_version_installation/
+rlPyCairo==0.3.0
 requests==2.32.0 ; python_version >= '3.11' # (Noble)
 rjsmin==1.2.0 ; python_version >= '3.11'
 urllib3==2.0.7  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography
 vobject==0.9.6.1
-Werkzeug==3.0.3 ; python_version >= '3.12'  # (Noble) Avoid deprecation warnings
+Werkzeug==3.0.6 ; python_version >= '3.12'  # (Noble) Avoid deprecation warnings
 xlrd==2.0.1 ; python_version >= '3.12'
 XlsxWriter==3.1.9 ; python_version >= '3.12'
 xlwt==1.3.0
 zeep==4.2.1 ; python_version >= '3.11'
 
+
+
+
+
+
+setuptools==73.0.1
 
 # Not part of official requirements, but used by some addons
 # colorama==0.3.9
@@ -56,3 +65,23 @@ pyinotify==0.9.6
 simplejson==3.19.3
 
 
+# Migration tools
+marabunta==0.12.0
+-e git+https://github.com/camptocamp/anthem@master#egg=anthem
+
+
+# Library dependency
+argh==0.31.3
+atomicwrites==1.4.1
+attrs==24.2.0
+beautifulsoup4==4.12.3
+future==1.0.0
+mccabe==0.7.0
+more-itertools==10.4.0
+pbr==6.0.0
+pexpect==4.9.0
+ptyprocess==0.7.0
+pycodestyle==2.12.1
+pyflakes==3.2.0
+unicodecsv==0.14.1
+wrapt==1.16.0
