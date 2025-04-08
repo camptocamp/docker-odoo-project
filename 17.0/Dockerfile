@@ -27,7 +27,8 @@ ENV BUILD_PACKAGE \
     libssl-dev \
     libjpeg-dev \
     libpng-dev \
-    zlib1g-dev
+    zlib1g-dev \
+    libcairo2-dev 
 
 # run in a virtualenv
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
