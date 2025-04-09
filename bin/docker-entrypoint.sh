@@ -79,7 +79,7 @@ fi
 if [ -e $TEMPLATES_DIR/odoo.cfg.tmpl ]; then
   dockerize -template $TEMPLATES_DIR/odoo.cfg.tmpl:$CONFIG_TARGET
 fi
-cat $CONFIG_TARGET | grep -v '^#' | grep -v '^$' > /odoo/odoo.conf
+cat $CONFIG_TARGET | grep -v '^#' | grep -v '^$' > /odoo/odoo.cfg
 if [ ! -f "${CONFIG_TARGET}" ]; then
   echo "Error: one of /templates/openerp.cfg.tmpl, /templates/odoo.cfg.tmpl, /etc/odoo.cfg is required"
   exit 1
