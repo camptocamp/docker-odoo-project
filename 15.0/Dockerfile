@@ -57,8 +57,8 @@ RUN groupadd -g $GID odoo \
   && adduser --disabled-password -u $UID --gid $GID --gecos '' odoo \
   && touch /odoo/odoo.cfg \
   && mkdir -p /odoo/data/odoo/{addons,filestore,sessions} \
-  && chown -R odoo:odoo /odoo && usermod odoo --home /odoo \
-  && chown -R odoo:odoo /var/log/odoo
+  && chown -R odoo:root /odoo && usermod odoo --home /odoo \
+  && chown -R odoo:root /var/log/odoo
 
 VOLUME ["/data/odoo", "/var/log/odoo"]
 USER odoo
