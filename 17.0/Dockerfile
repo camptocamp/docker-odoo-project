@@ -55,6 +55,7 @@ COPY ./MANIFEST.in /odoo
 RUN groupadd -g $GID odoo \
   && adduser --disabled-password -u $UID --gid $GID --gecos '' odoo \
   && touch /odoo/odoo.cfg \
+  && touch /odoo/.bashrc \
   && mkdir -p /odoo/data/odoo/{addons,filestore,sessions} \
   && chown -R odoo:root /odoo && usermod odoo --home /odoo \
   && chown -R odoo:root /var/log/odoo
