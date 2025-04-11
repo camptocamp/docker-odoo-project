@@ -70,6 +70,8 @@ RUN /odoo/.venv/bin/pip install -r /odoo/extra_requirements.txt
 USER root
 RUN set -x; \
         sh -c /install/purge_dev_package_and_cache.sh
+RUN chgrp -R 0 /odoo && \
+     chmod -R g=u /odoo
 USER odoo
 EXPOSE 8069 8072
 
