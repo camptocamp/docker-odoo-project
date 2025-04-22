@@ -38,6 +38,8 @@ apt-get install -y --no-install-recommends \
     xz-utils \
     tcl\
     git \
-    curl \
     gnupg2 \
-    expect
+    expect \
+    patch \
+    vim-nox \
+    procps
