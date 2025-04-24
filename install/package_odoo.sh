@@ -41,5 +41,5 @@ apt-get install -y --no-install-recommends \
     gnupg2 \
     expect \
     patch \
-    vim-nox \
+    vim-tiny \
     procps
