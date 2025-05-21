@@ -81,7 +81,6 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
 
       - name: Scan image
-        if: github.event_name == 'push'
         id: scan
         uses: sysdiglabs/scan-action@v5
         with:
