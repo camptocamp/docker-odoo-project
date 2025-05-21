@@ -46,7 +46,7 @@ xlwt==1.3.*
 xlrd==1.2.0; python_version >= '3.8'
 
 
-setuptools==78.0.1
+setuptools==73.0.1
 
 whool==1.2.0
 # Not part of official requirements, but used by some addons
