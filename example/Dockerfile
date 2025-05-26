@@ -33,7 +33,7 @@ USER odoo
 WORKDIR /odoo
 # run in a virtualenv
 RUN /odoo/.venv/bin/pip install -r requirements.txt 
-RUN /odoo/.venv/bin/pip install -r /odoo/src/odoo/requirements.txt
+#RUN /odoo/.venv/bin/pip install -r /odoo/src/odoo/requirements.txt
 RUN /odoo/.venv/bin/pip install -e /odoo/src/odoo
 
 # Project's specifics packages
