@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bookworm 
+FROM python:3.13.4-slim-bookworm 
 ARG UID=999
 ARG GID=999
 # create the working directory and a place to set the logs (if wanted)
