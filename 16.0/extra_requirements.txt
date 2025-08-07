@@ -42,3 +42,13 @@ s3transfer==0.10.2
 tzlocal==5.2
 Unidecode==1.3.8
 yarl==1.9.4
+
+# Odoo external services dependencies
+## PLATFORM
+redis==6.2.*
+python-json-logger==3.3.*
+prometheus-client==0.22.*
+
+# PLATFORM, for azure blob storage
+azure-storage-blob==12.16.*
+azure-identity==1.13.*

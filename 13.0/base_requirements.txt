@@ -50,7 +50,7 @@ xlrd==1.1.0
 
 # last version compatible with 2to3 (for vatnumber)
 setuptools<58
-
+zope.event==5.0
 
 # Not part of official requirements, but used by some addons
 # colorama==0.3.9
