@@ -5,7 +5,6 @@ decorator==4.3.0
 docutils==0.14
 ebaysdk==2.1.5
 freezegun==0.3.15; python_version >= '3.8'
-zope.event==5.1
 gevent==24.2.1 ; python_version >= '3.8'
 greenlet==3.1.1 ; python_version > '3.7'
 html2text==2018.1.9
