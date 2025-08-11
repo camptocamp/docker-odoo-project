@@ -4,7 +4,7 @@ MAINTAINER Camptocamp
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /odoo /var/log/odoo
 
-COPY ./base_requirements.txt /odoo
+COPY ./base_requirements.txt ./platform_requirements.txt /odoo
 COPY ./install /install
 
 # Moved because there was a bug while installing `odoo-autodiscover`. There is
@@ -37,6 +37,7 @@ RUN set -x; \
         && /install/kwkhtml_client_force_python3.sh \
         && /install/dev_package.sh \        
         && pip install -r /odoo/base_requirements.txt --ignore-installed \
+        && pip install -r /odoo/platform_requirements.txt --ignore-installed \
         && /install/purge_dev_package_and_cache.sh
 
 # grab gosu for easy step-down from root and dockerize to generate template and
