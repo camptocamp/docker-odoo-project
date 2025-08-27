@@ -19,6 +19,14 @@
 
 Release History
 ---------------
+4.5.12 (2025-08-27)
+++++++++++++++++++
+
+** Build ** 
+
+* Update Python dependencies for security issue
+* set the postgresql client version to 14.0 
+
 
 4.5.11 (2025-04-01)
 ++++++++++++++++++
