@@ -40,6 +40,7 @@ RUN set -x; \
         && /install/dev_package.sh \
         && python3 -m pip install --force-reinstall pip \
         && pip install -r /odoo/base_requirements.txt --ignore-installed \
+        && pip install -r /odoo/platform_requirements.txt --ignore-installed \
         && /install/purge_dev_package_and_cache.sh
 
 # grab gosu for easy step-down from root and dockerize to generate template and
