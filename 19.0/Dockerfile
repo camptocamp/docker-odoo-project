@@ -4,7 +4,7 @@ MAINTAINER Camptocamp
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /odoo /var/log/odoo
 
-COPY ./base_requirements.txt /odoo
+COPY ./base_requirements.txt ./platform_requirements.txt /odoo
 COPY ./install /install
 
 # Moved because there was a bug while installing `odoo-autodiscover`. There is
