@@ -60,7 +60,8 @@ simplejson==3.20.1
 
 
 # Migration tools
-marabunta==0.13.0
+# marabunta==0.13.0
+-e git+https://github.com/camptocamp/marabunta@master#egg=marabunta
 -e git+https://github.com/camptocamp/anthem@master#egg=anthem
 
 # test / lint
