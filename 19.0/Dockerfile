@@ -1,4 +1,4 @@
-FROM python:3.13-slim-trixie
+FROM python:3.12-slim-trixie
 MAINTAINER Camptocamp
 
 # create the working directory and a place to set the logs (if wanted)
@@ -75,7 +75,7 @@ ENV ODOO_VERSION=19.0 \
     ODOO_DATA_PATH=/odoo/data \
     DEMO=False \
     ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
-    OPENERP_SERVER=/etc/odoo.cfg
+    ODOO_RC=/etc/odoo.cfg
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["odoo"]
