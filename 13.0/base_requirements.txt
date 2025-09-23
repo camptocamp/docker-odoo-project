@@ -39,7 +39,7 @@ qrcode==6.1
 reportlab==3.6.9
 requests==2.25.1  # official 2.21.0
 zeep==3.2.0
-vatnumber==1.2
+# vatnumber==1.2
 vobject==0.9.6.1
 Werkzeug==0.16.1 ; sys_platform != 'win32' # official 0.14.1
 # Werkzeug==0.16.0 ; sys_platform == 'win32'
