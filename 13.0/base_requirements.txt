@@ -52,7 +52,7 @@ xlrd==1.1.0
 
 zope.event==5.0
 zope.interface==8.0
-setuptools==78.1.1
+
 # Not part of official requirements, but used by some addons
 # colorama==0.3.9
 gdata==2.0.18
