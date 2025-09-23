@@ -5,6 +5,7 @@ on:
     branches:
       - "release-4.5.X"
       - "dev-4.5.X"
+      - "add_version_19"
     tags:
       - "4.*.*"
 
