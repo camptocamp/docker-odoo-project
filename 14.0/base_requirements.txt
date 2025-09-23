@@ -22,7 +22,7 @@ libsass==0.17.0
 lxml_html_clean
 lxml==4.8.0
 # lxml ; sys_platform == 'win32'
-Mako==1.0.7e.interface==8.0
+Mako==1.2.2
 
 MarkupSafe==1.1.0
 num2words==0.5.6
