@@ -49,7 +49,7 @@ xlrd==1.1.0
 # pypiwin32 ; sys_platform == 'win32'
 
 # last version compatible with 2to3 (for vatnumber)
-setuptools<58
+setuptools==78.1.1
 zope.event==5.0
 zope.interface==8.0
 # Not part of official requirements, but used by some addons
