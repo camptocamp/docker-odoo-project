@@ -13,33 +13,44 @@
 
 .. **Build**
 
-* Change PostgreSQL deb repo to 'apt-archive' for debian stretch based images
+
 
 .. **Documentation**
 
 Release History
 ---------------
+
+4.5.13 (2025-09-25)
+++++++++++++++++++
+
+** Build **
+
+* Change PostgreSQL deb repo to 'apt-archive' for debian stretch based images
+* fix: install extra-requirement by default
+* feat: add version 19.0 + move from bookworm to debian trixie
+
+
 4.5.12 (2025-08-27)
 ++++++++++++++++++
 
-** Build ** 
+** Build **
 
 * Update Python dependencies for security issue
-* set the postgresql client version to 14.0 
+* set the postgresql client version to 14.0
 
 
 4.5.11 (2025-04-01)
 ++++++++++++++++++
 
-** Build ** 
+** Build **
 
 * Update Python dependencies, for all version except V11
-* fix security issues 
+* fix security issues
 
 4.5.10 (2024-09-19)
 ++++++++++++++++++
 
-** Build ** 
+** Build **
 
 * Update Python dependencies, for all version except V11
 * V15, V16, V17: Update Python to Version 3.12
@@ -51,7 +62,7 @@ Release History
 4.5.9 (2024-05-22)
 ++++++++++++++++++
 
-** Build ** 
+** Build **
 
 Update Python dependencies
 
@@ -116,7 +127,7 @@ Update Python dependencies
 
 **Bugfixes**
 
-* Remove old version (7 -> 10) from travis 
+* Remove old version (7 -> 10) from travis
 
 
 4.5.1 (2022-11-22)
@@ -175,7 +186,7 @@ Update Python dependencies
 
 **Bugfixes**
 
-* Fix reportlab version for label 
+* Fix reportlab version for label
 
 
 4.4.2 (2022-03-01)
@@ -183,7 +194,7 @@ Update Python dependencies
 
 **Bugfixes**
 
-* Fix python3 for version 15 
+* Fix python3 for version 15
 
 
 4.4.1 (2022-02-16)
@@ -191,7 +202,7 @@ Update Python dependencies
 
 **Bugfixes**
 
-* Fix execute flag wkhtmltopdf 
+* Fix execute flag wkhtmltopdf
 
 
 4.4.0 (2022-02-05)
