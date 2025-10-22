@@ -81,7 +81,7 @@ jobs:
 
       - name: Scan image
         id: scan
-        uses: sysdiglabs/scan-action@v5
+        uses: sysdiglabs/scan-action@v6.1.3
         with:
             sysdig-secure-url: https://eu1.app.sysdig.com
             stop-on-failed-policy-eval: false

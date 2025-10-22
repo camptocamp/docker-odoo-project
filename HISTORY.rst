@@ -8,6 +8,7 @@
 .. **Features and Improvements**
 
 * Replace environment variable OPENERP_SERVER with ODOO_RC
+* Entrypoint: exit on error when executing run-parts
 
 .. **Bugfixes**
 
