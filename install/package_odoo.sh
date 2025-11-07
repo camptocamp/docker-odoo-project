@@ -26,7 +26,6 @@ apt-get install -y --no-install-recommends \
     gsfonts \
     libjs-underscore \
     lsb-base \
-    postgresql-client \
     libxslt1.1 \
     xfonts-75dpi \
     xfonts-base \
