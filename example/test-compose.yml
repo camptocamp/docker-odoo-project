@@ -1,8 +1,6 @@
 # Composition used to run automated tests on the images
 # Used by the Makefile at the repository's root
 
-version: '3.8'
-
 services:
   odoo:
     build: .

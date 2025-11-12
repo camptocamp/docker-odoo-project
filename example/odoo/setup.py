@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from setuptools import setup, find_packages
 
 with open('VERSION') as fd:
@@ -21,8 +19,8 @@ setup(
         'License :: OSI Approved :: '
         'GNU Affero General Public License v3 or later (AGPLv3+)',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: Implementation :: CPython',
     ],
 )

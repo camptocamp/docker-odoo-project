@@ -34,6 +34,8 @@ latest (unreleased)
 
 **Documentation**
 
+* Switch project example to Python 3
+
 
 5.3.0.0.0 (2024-08-26)
 ++++++++++++++++++++++
