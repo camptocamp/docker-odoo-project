@@ -30,7 +30,7 @@ Release History
 
 * remove pathtools library, use pathlib instead
 * remove 14 buster, use bookworm instead
-* use bookwork for all supported versions, specific debian version applied 
+* use bookwork for all supported versions, specific debian version applied
 * bump all package for 15.0/16.0/17.0
 * swtich 15.0/16.0/17.0 to python 3.12 on bookworm
 
@@ -41,8 +41,8 @@ Release History
 
 **Features and Improvements**
 
-* add openxlrd library 
-* remove 11.0 version 
+* add openxlrd library
+* remove 11.0 version
 
 5.2.0.0.0 (2024-01-19)
 ++++++++++++++++++++++
@@ -69,10 +69,10 @@ Release History
 
 **Features and Improvements**
 
-* 17.0 version 
+* 17.0 version
 * Switch to github action
 * Image pushed to github repository
-  
+
 
 **Bugfixes**
 
@@ -88,7 +88,7 @@ Release History
 **Features and Improvements**
 
 * Image pushed to github repository
-  
+
 
 **Bugfixes**
 
@@ -132,7 +132,7 @@ Release History
 
 **Features and Improvements**
 
-* Switch to buster for version 11.0 
+* Switch to buster for version 11.0
 
 **Bugfixes**
 
@@ -147,7 +147,7 @@ Release History
 
 **Features and Improvements**
 
-* Fix package version for all versions 
+* Fix package version for all versions
 
 **Bugfixes**
 
@@ -177,7 +177,7 @@ Release History
 
 **Features and Improvements**
 
-* Fix coverage 
+* Fix coverage
 
 **Bugfixes**
 
@@ -192,7 +192,7 @@ Release History
 
 **Features and Improvements**
 
-* Fix path in instance dependencies 
+* Fix path in instance dependencies
 
 **Bugfixes**
 
@@ -207,7 +207,7 @@ Release History
 
 **Features and Improvements**
 
-* Fix makefile tag 
+* Fix makefile tag
 
 **Bugfixes**
 
