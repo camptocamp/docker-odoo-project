@@ -1,5 +1,6 @@
-FROM camptocamp/odoo-project:11.0-latest
-MAINTAINER Camptocamp
+FROM ghcr.io/camptocamp/docker-odoo-project:16.0-master-latest
+LABEL maintainer="Camptocamp"
+
 
 # For installing odoo you have two possibility
 # 1. either adding the whole root directory
