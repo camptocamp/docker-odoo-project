@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {'name': 'Dummy Test',
  'description': "Dummy module to check that Travis runs tests. ",
  'version': '1.0',

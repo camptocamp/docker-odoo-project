@@ -12,4 +12,3 @@ setup(
     include_package_data=True,
     odoo_addons=True,
 )
-
