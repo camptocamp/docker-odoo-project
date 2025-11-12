@@ -45,7 +45,7 @@ services:
       - POSTGRES_PASSWORD=odoo
     volumes:
       - "data-db:/var/lib/postgresql/data"
-  
+
   kwkhtmltopdf:
     image: acsone/kwkhtmltopdf
     ports:

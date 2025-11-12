@@ -1,4 +1,4 @@
-FROM python:3.9-slim-trixie 
+FROM python:3.9-slim-trixie
 ARG UID=999
 ARG GID=999
 # create the working directory and a place to set the logs (if wanted)
@@ -28,7 +28,7 @@ ENV BUILD_PACKAGE \
     libjpeg-dev \
     libpng-dev \
     zlib1g-dev \
-    libcairo2-dev 
+    libcairo2-dev
 
 
 
@@ -40,7 +40,7 @@ RUN set -x; \
         && /install/postgres.sh \
         && /install/kwkhtml_client.sh \
         && /install/kwkhtml_client_force_python3.sh \
-        && /install/dev_package.sh 
+        && /install/dev_package.sh
 
 # grab dockerize to generate template and
 # wait on postgres
@@ -68,7 +68,7 @@ ENV PATH=/odoo/.venv/bin:$PATH
 ENV PYTHONPATH=$PYTHONPATH:/odoo/
 RUN echo "export PATH=$PATH" >> ~/.bashrc
 
-RUN /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt  
+RUN /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt
 RUN /odoo/.venv/bin/pip install -r /odoo/extra_requirements.txt
 RUN /odoo/.venv/bin/pip install -r /odoo/test_requirements.txt
 USER root
