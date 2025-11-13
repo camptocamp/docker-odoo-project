@@ -15,7 +15,7 @@ ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8
 
 # build and dev packages
-ENV BUILD_PACKAGE \
+ENV BUILD_PACKAGE="\
     build-essential \
     gcc \
     libevent-dev \
@@ -28,7 +28,8 @@ ENV BUILD_PACKAGE \
     libjpeg-dev \
     libpng-dev \
     zlib1g-dev \
-    libcairo2-dev
+    libcairo2-dev"
+
 
 # run in a virtualenv
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
@@ -64,7 +65,7 @@ VOLUME ["/data/odoo", "/var/log/odoo"]
 USER odoo
 RUN python3 -m venv /odoo/.venv  --system-site-packages
 ENV PATH=/odoo/.venv/bin:$PATH
-ENV PYTHONPATH=$PYTHONPATH:/odoo/
+ENV PYTHONPATH=/odoo/
 RUN echo "export PATH=$PATH" >> ~/.bashrc
 
 RUN /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt
