@@ -7,21 +7,33 @@
 
 .. **Features and Improvements**
 
-* Replace environment variable OPENERP_SERVER with ODOO_RC
-* Entrypoint: exit on error when executing run-parts
-
 .. **Bugfixes**
 
 .. **Libraries**
 
 .. **Build**
 
-* Change PostgreSQL deb repo to 'apt-archive' for debian stretch based images
-
 .. **Documentation**
 
 Release History
 ---------------
+
+latest (unreleased)
++++++++++++++++++++
+
+**Features and Improvements**
+
+* Replace environment variable OPENERP_SERVER with ODOO_RC
+* Entrypoint: exit on error when executing run-parts
+
+**Bugfixes**
+
+**Build**
+
+* Change PostgreSQL deb repo to 'apt-archive' for debian stretch based images
+
+**Documentation**
+
 
 5.3.0.0.0 (2024-08-26)
 ++++++++++++++++++++++
@@ -30,10 +42,9 @@ Release History
 
 * remove pathtools library, use pathlib instead
 * remove 14 buster, use bookworm instead
-* use bookwork for all supported versions, specific debian version applied 
+* use bookwork for all supported versions, specific debian version applied
 * bump all package for 15.0/16.0/17.0
-* swtich 15.0/16.0/17.0 to python 3.12 on bookworm
-
+* switch 15.0/16.0/17.0 to python 3.12 on bookworm
 
 
 5.2.1.0.0 (2024-01-19)
@@ -41,8 +52,9 @@ Release History
 
 **Features and Improvements**
 
-* add openxlrd library 
-* remove 11.0 version 
+* add openxlrd library
+* remove 11.0 version
+
 
 5.2.0.0.0 (2024-01-19)
 ++++++++++++++++++++++
@@ -54,7 +66,6 @@ Release History
 * clean local-src reference
 * print DEPS_ADDONS for debugging
 
-**Bugfixes**
 
 5.1.0.0.1 (2023-12-11)
 ++++++++++++++++++++++
@@ -69,18 +80,10 @@ Release History
 
 **Features and Improvements**
 
-* 17.0 version 
+* 17.0 version
 * Switch to github action
 * Image pushed to github repository
-  
 
-**Bugfixes**
-
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 5.1.0 (2023-11-13) move to 5.1.0.0.0
 ++++++++++++++++++++++++++++++++++++
@@ -88,74 +91,39 @@ Release History
 **Features and Improvements**
 
 * Image pushed to github repository
-  
 
-**Bugfixes**
-
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 5.0.8 (2023-09-12)
 ++++++++++++++++++
-
-**Features and Improvements**
 
 **Bugfixes**
 
 * Remove pip install of src
 
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 5.0.7 (2023-06-07)
 ++++++++++++++++++
-
-**Features and Improvements**
 
 **Bugfixes**
 
 * Fix entrypoint path for odoo
 
-**Libraries**
 
-**Build**
-
-**Documentation**
 5.0.6 (2023-04-28)
 ++++++++++++++++++
 
 **Features and Improvements**
 
-* Switch to buster for version 11.0 
+* Switch to buster for version 11.0
 
-**Bugfixes**
-
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 5.0.5 (2022-12-05)
 ++++++++++++++++++
 
 **Features and Improvements**
 
-* Fix package version for all versions 
+* Fix package version for all versions
 
-**Bugfixes**
-
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 5.0.4 (2022-11-23)
 ++++++++++++++++++
@@ -164,58 +132,30 @@ Release History
 
 * Fix for V16 pypi
 
-**Bugfixes**
-
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 5.0.3 (2022-09-01)
 ++++++++++++++++++
 
 **Features and Improvements**
 
-* Fix coverage 
+* Fix coverage
 
-**Bugfixes**
-
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 5.0.2 (2022-08-31)
 ++++++++++++++++++
 
 **Features and Improvements**
 
-* Fix path in instance dependencies 
+* Fix path in instance dependencies
 
-**Bugfixes**
-
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 5.0.1 (2022-08-30)
 ++++++++++++++++++
 
 **Features and Improvements**
 
-* Fix makefile tag 
+* Fix makefile tag
 
-**Bugfixes**
-
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 5.0.0 (2022-08-30)
 ++++++++++++++++++
@@ -226,13 +166,6 @@ Release History
 * Remove Gosu.sh
 * Run container with odoo user
 
-**Bugfixes**
-
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 4.4.5 (2022-08-29)
 ++++++++++++++++++
@@ -244,12 +177,6 @@ Release History
 **Bugfixes**
 
 * Pin certifi library for Odoo<=10.0 to avoid python compatibility issue
-
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 
 4.4.4 (2022-05-23)
@@ -266,56 +193,30 @@ Release History
 * Pin contextlib2 requirement for Odoo <= V10
 * Add kwkhtmltopdf in test composition to avoid issues when testing reports
 
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 4.4.3 (2022-03-04)
 ++++++++++++++++++
 
-**Features and Improvements**
-
 **Bugfixes**
 
-* Fix reportlab version for label 
+* Fix reportlab version for label
 
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 4.4.2 (2022-03-01)
 ++++++++++++++++++
 
-**Features and Improvements**
-
 **Bugfixes**
 
-* Fix python3 for version 15 
+* Fix python3 for version 15
 
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 4.4.1 (2022-02-16)
 ++++++++++++++++++
 
-**Features and Improvements**
-
 **Bugfixes**
 
-* Fix execute flag wkhtmltopdf 
+* Fix execute flag wkhtmltopdf
 
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 4.4.0 (2022-02-05)
 ++++++++++++++++++
@@ -327,12 +228,6 @@ Release History
 **Bugfixes**
 
 * Fix lab entry point
-
-**Libraries**
-
-**Build**
-
-**Documentation**
 
 
 4.3.0 (2021-12-02)

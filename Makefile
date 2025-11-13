@@ -8,7 +8,7 @@ BUILD_TAG=$(IMAGE_LATEST)
 export
 
 .PHONY: all
-all: 
+all:
 	bash build.sh
 
 .PHONY: setup
