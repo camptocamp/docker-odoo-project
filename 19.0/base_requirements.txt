@@ -43,7 +43,7 @@ MarkupSafe==2.0.1 ; python_version <= '3.10'
 MarkupSafe==2.1.2 ; python_version > '3.10' and python_version < '3.12'
 MarkupSafe==2.1.5 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 num2words==0.5.10 ; python_version < '3.12'  # (Jammy / Bookworm)
-num2words==0.5.13 ; python_version >= '3.12' 
+num2words==0.5.13 ; python_version >= '3.12'
 ofxparse==0.21
 openpyxl==3.0.9 ; python_version < '3.12'
 openpyxl==3.1.2 ; python_version >= '3.12'
@@ -53,8 +53,8 @@ Pillow==9.4.0 ; python_version > '3.10' and python_version < '3.12'
 Pillow==10.2.0 ; python_version >= '3.12' and python_version < '3.13'  # (Noble) Mostly to have a wheel package
 Pillow==11.1.0 ; python_version >= '3.13'  # (Noble) Mostly to have a wheel package
 polib==1.1.1
-psutil==5.9.0 ; python_version <= '3.10' 
-psutil==5.9.4 ; python_version > '3.10' and python_version < '3.12' 
+psutil==5.9.0 ; python_version <= '3.10'
+psutil==5.9.4 ; python_version > '3.10' and python_version < '3.12'
 psutil==5.9.8 ; python_version >= '3.12' # (Noble) Mostly to have a wheel package
 psycopg2==2.9.2 ; python_version == '3.10' # (Jammy)
 psycopg2==2.9.5 ; python_version == '3.11'
@@ -89,7 +89,7 @@ rl-renderPM==4.0.3 ; sys_platform == 'win32' and python_version >= '3.12'  # Nee
 urllib3==1.26.5 ; python_version < '3.12' # indirect / min version = 1.25.8 (Focal with security backports)
 urllib3==2.0.7  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography
 vobject==0.9.6.1
-Werkzeug==2.0.2 ; python_version <= '3.10' 
+Werkzeug==2.0.2 ; python_version <= '3.10'
 Werkzeug==2.2.2 ; python_version > '3.10' and python_version < '3.12'
 Werkzeug==3.0.1 ; python_version >= '3.12'  # (Noble) Avoid deprecation warnings
 xlrd==1.2.0 ; python_version < '3.12'  # (jammy)
@@ -141,7 +141,10 @@ more-itertools==10.8.0
 pbr==7.0.1
 pexpect==4.9.0
 ptyprocess==0.7.0
+pycairo==1.28.0
 pycodestyle==2.14.0
 pyflakes==3.4.0
+rl-renderPM==4.0.3
+reportlab==4.1.0
 unicodecsv==0.14.1
 wrapt==1.17.3
