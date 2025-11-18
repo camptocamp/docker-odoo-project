@@ -25,7 +25,14 @@ Release History
 
 ** Build **
 
+
+4.5.14 (2025-11-18)
+++++++++++++++++++
+
+** Build **
+
 * Odoo 12 and 13: pin Pip 25.2, to support outdated 'vatnumber' package
+* Odoo 19: Add missing requirement for printing reports
 
 
 4.5.13 (2025-09-25)
