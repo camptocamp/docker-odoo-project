@@ -20,6 +20,14 @@
 Release History
 ---------------
 
+4.5.x (unreleased)
+++++++++++++++++++
+
+** Build **
+
+* Odoo 12 and 13: pin Pip 25.2, to support outdated 'vatnumber' package
+
+
 4.5.13 (2025-09-25)
 ++++++++++++++++++
 
