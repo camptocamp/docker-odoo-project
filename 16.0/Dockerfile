@@ -69,8 +69,8 @@ RUN groupadd -g $GID odoo \
 
 VOLUME ["/data/odoo", "/var/log/odoo"]
 USER odoo
-RUN chmod -R 770 /odoo/.venv --system-site-packages
-RUN python3 -m venv /odoo/.venv  
+RUN chmod -R 770 /odoo/.venv 
+RUN python3 -m venv /odoo/.venv  --system-site-packages
 ENV PATH=/odoo/.venv/bin:$PATH
 ENV PYTHONPATH=/odoo/
 RUN echo "export PATH=$PATH" >> ~/.bashrc
