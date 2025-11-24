@@ -74,8 +74,9 @@ fi
 gosu odoo migrate
 
 DUMP="$CACHE_DIR/odoo_sample_$VERSION.dmp"
-# Create a dump if none exist for the current VERSION
-if [ "$CREATE_DB_CACHE" == "true" -a ! -f $DUMP ]; then
+
+# Create a dump if required
+if [ "$CREATE_DB_CACHE" = "true" ]; then
   mkdir -p "$CACHE_DIR"
   db_save $DB_NAME $DUMP
 fi
