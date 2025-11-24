@@ -72,7 +72,6 @@ RUN echo "export PATH=$PATH" >> ~/.bashrc
 
 RUN /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt
 RUN /odoo/.venv/bin/pip install -r /odoo/extra_requirements.txt
-RUN /odoo/.venv/bin/pip install -r /odoo/test_requirements.txt
 USER root
 RUN set -x; \
         sh -c /install/purge_dev_package_and_cache.sh
