@@ -41,7 +41,6 @@ pytesseract==0.3.13
 regex==2025.9.1
 s3transfer==0.14.0
 tzlocal==5.3.1
-Unidecode==1.4.0
 yarl==1.20.1
 
 #Extra for enterprise
