@@ -8,6 +8,8 @@ RUN mkdir -p /odoo /var/log/odoo /odoo/.venv
 RUN adduser --disabled-password -u $UID --gid $GID --gecos '' odoo \
   && touch /odoo/odoo.cfg \
   && touch /odoo/.bashrc \
+  && chmod 660 /odoo/odoo.cfg \
+  && chmod 660 /odoo/.bashrc \
   && mkdir -p /odoo/data/odoo/{addons,filestore,sessions} \
   && chown -R odoo:root /odoo && usermod odoo --home /odoo \
   && chown -R odoo:root /var/log/odoo
