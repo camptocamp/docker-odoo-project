@@ -4,12 +4,16 @@ ARG GID=0
 
 
 # create the working directory and a place to set the logs (if wanted)
-RUN adduser --disabled-password -u $UID --gid $GID --gecos '' odoo \
-  && install -m 770 -o odoo -d /odoo /odoo/data /var/log/odoo /odoo/.venv \
-             /odoo/data/odoo /odoo/data/odoo/{addons,filestore,sessions} \
+RUN adduser --disabled-password --no-create-home \
+            --home /odoo --gecos '' -u $UID --gid $GID odoo \
+  && install -m 770 -o odoo -d /odoo /var/log/odoo /odoo/.venv \
+                               /odoo/data \
+                               /odoo/data/odoo \
+                               /odoo/data/odoo/addons \
+                               /odoo/data/odoo/filestore \
+                               /odoo/data/odoo/sessions \
   && install -m 660 -o odoo /dev/null /odoo/odoo.cfg \
-  && install -m 660 -o odoo /dev/null /odoo/.bashrc \
-  && usermod odoo --home /odoo
+  && install -m 660 -o odoo /dev/null /odoo/.bashrc
 
 COPY --chown=odoo:root --chmod=770 ./install /install
 COPY --chown=odoo:root --chmod=660 ./base_requirements.txt /odoo
