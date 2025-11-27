@@ -1,18 +1,15 @@
 FROM python:3.12-slim-trixie
 ARG UID=999
 ARG GID=0
+
+
 # create the working directory and a place to set the logs (if wanted)
-RUN mkdir -p /odoo /var/log/odoo /odoo/.venv
-
-
 RUN adduser --disabled-password -u $UID --gid $GID --gecos '' odoo \
-  && touch /odoo/odoo.cfg \
-  && touch /odoo/.bashrc \
-  && chmod 660 /odoo/odoo.cfg \
-  && chmod 660 /odoo/.bashrc \
-  && mkdir -p /odoo/data/odoo/{addons,filestore,sessions} \
-  && chown -R odoo:root /odoo && usermod odoo --home /odoo \
-  && chown -R odoo:root /var/log/odoo
+  && install -m 770 -o odoo -d /odoo /odoo/data /var/log/odoo /odoo/.venv \
+             /odoo/data/odoo /odoo/data/odoo/{addons,filestore,sessions} \
+  && install -m 660 -o odoo /dev/null /odoo/odoo.cfg \
+  && install -m 660 -o odoo /dev/null /odoo/.bashrc \
+  && usermod odoo --home /odoo
 
 COPY --chown=odoo:root --chmod=770 ./install /install
 COPY --chown=odoo:root --chmod=660 ./base_requirements.txt /odoo
@@ -56,7 +53,7 @@ RUN /install/dockerize.sh
 
 COPY --chown=odoo:root --chmod=660 ./src_requirements.txt /odoo
 COPY --chown=odoo:root --chmod=770 ./bin /odoo/odoo-bin
-COPY --chown=odoo:root --chmod=660  ./templates /templates
+COPY --chown=odoo:root --chmod=660 ./templates /templates
 COPY --chown=odoo:root --chmod=770 ./before-migrate-entrypoint.d /odoo/before-migrate-entrypoint.d
 COPY --chown=odoo:root --chmod=770 ./start-entrypoint.d /odoo/start-entrypoint.d
 COPY --chown=odoo:root --chmod=770 ./MANIFEST.in /odoo
@@ -65,7 +62,6 @@ COPY --chown=odoo:root --chmod=770 ./MANIFEST.in /odoo
 
 VOLUME ["/data/odoo", "/var/log/odoo"]
 USER odoo
-RUN chmod -R 770 /odoo/.venv 
 RUN python3 -m venv /odoo/.venv --system-site-packages
 ENV PATH=/odoo/.venv/bin:$PATH
 ENV PYTHONPATH=/odoo/
