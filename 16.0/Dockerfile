@@ -10,13 +10,15 @@ RUN adduser --disabled-password -u $UID --gid $GID --gecos '' odoo \
   && touch /odoo/.bashrc \
   && chmod 660 /odoo/odoo.cfg \
   && chmod 660 /odoo/.bashrc \
-  && mkdir -p /odoo/data/odoo/{addons,filestore,sessions} \
+  && mkdir -p /odoo/data/odoo/addons \
+              /odoo/data/odoo/filestore \
+              /odoo/data/odoo/sessions \
   && chown -R odoo:root /odoo && usermod odoo --home /odoo \
   && chown -R odoo:root /var/log/odoo
 
 COPY --chown=odoo:root --chmod=770 ./install /install
-COPY --chown=odoo:root --chmod=770 ./base_requirements.txt /odoo
-COPY --chown=odoo:root --chmod=770 ./extra_requirements.txt /odoo
+COPY --chown=odoo:root --chmod=660 ./base_requirements.txt /odoo
+COPY --chown=odoo:root --chmod=660 ./extra_requirements.txt /odoo
 
 # Moved because there was a bug while installing `odoo-autodiscover`. There is
 # an accent in the contributor name
@@ -54,9 +56,9 @@ RUN set -x; \
 # wait on postgres
 RUN /install/dockerize.sh
 
-COPY --chown=odoo:root --chmod=770 ./src_requirements.txt /odoo
+COPY --chown=odoo:root --chmod=660 ./src_requirements.txt /odoo
 COPY --chown=odoo:root --chmod=770 ./bin /odoo/odoo-bin
-COPY --chown=odoo:root --chmod=770  ./templates /templates
+COPY --chown=odoo:root --chmod=770 ./templates /templates
 COPY --chown=odoo:root --chmod=770 ./before-migrate-entrypoint.d /odoo/before-migrate-entrypoint.d
 COPY --chown=odoo:root --chmod=770 ./start-entrypoint.d /odoo/start-entrypoint.d
 COPY --chown=odoo:root --chmod=770 ./MANIFEST.in /odoo
