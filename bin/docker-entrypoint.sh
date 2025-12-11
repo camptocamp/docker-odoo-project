@@ -10,9 +10,9 @@ export PGUSER=${DB_USER}
 export PGDATABASE=${DB_NAME}
 export PGAPPNAME=${HOSTNAME}
 
-# As docker-compose exec do not launch the entrypoint
+# As 'docker compose exec' do not launch the entrypoint
 # init PG variable into .bashrc so it will be initialized
-# when doing docker-compose exec odoo odoo bash
+# when doing 'docker compose exec odoo odoo bash'
 echo "
 export PGHOST=${DB_HOST}
 export PGPORT=${DB_PORT}
@@ -32,7 +32,7 @@ fi
 # Accepted values for DEMO: True / False
 # Odoo use a reverse boolean for the demo, which is not handy,
 # that's why we propose DEMO which exports WITHOUT_DEMO used in
-# openerp.cfg.tmpl
+# odoo.cfg.tmpl
 if [ -z "$DEMO" ]; then
   DEMO=False
 fi

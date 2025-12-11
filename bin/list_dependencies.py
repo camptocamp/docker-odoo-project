@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 # Provide a list of module which are dependencies
 # of odoo/addons modules excluding odoo/addons modules
 #
@@ -13,7 +12,7 @@ import sys
 import os
 import ast
 
-LOCAL_CODE_PATH = os.getenv('LOCAL_CODE_PATH',"/odoo/odoo/addons")
+LOCAL_CODE_PATH = os.getenv('LOCAL_CODE_PATH', "/odoo/odoo/addons")
 
 dependencies = set()
 local_modules = os.listdir(LOCAL_CODE_PATH)
