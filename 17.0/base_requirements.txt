@@ -37,8 +37,7 @@ pycairo==1.27.0 ; python_version >= '3.12'  # Needed only for reportlab 4.0+ htt
 rlPyCairo==0.3.0
 requests==2.32.0 ; python_version >= '3.11' # (Noble)
 rjsmin==1.2.0 ; python_version >= '3.11'
-rl-renderPM==4.0.3 ; sys_platform == 'win32' and python_version >= '3.12'  # Needed by reportlab 4.1.0 but included in deb package
-urllib3==2.2.2  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography
+urllib3==2.6.1  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography; pin 2.6.1 for security fixes
 vobject==0.9.6.1
 Werkzeug==3.0.6 ; python_version >= '3.12'  # (Noble) Avoid deprecation warnings
 xlrd==2.0.1 ; python_version >= '3.12'
