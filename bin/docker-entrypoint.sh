@@ -39,30 +39,11 @@ fi
 case "$(echo "${DEMO}" | tr '[:upper:]' '[:lower:]')" in
 "false")
   echo "Running without demo data"
-  export WITHOUT_DEMO=all
+  export WITHOUT_DEMO=True
   ;;
 "true")
   echo "Running with demo data"
   export WITHOUT_DEMO=
-  ;;
-  # deprecated options:
-"odoo")
-  echo "Running with demo data"
-  echo "DEMO=odoo is deprecated, use DEMO=True"
-  export WITHOUT_DEMO=
-  ;;
-"none")
-  echo "Running without demo data"
-  echo "DEMO=none is deprecated, use DEMO=False"
-  export WITHOUT_DEMO=all
-  ;;
-"scenario")
-  echo "DEMO=scenario is deprecated, use DEMO=False and MARABUNTA_MODE=demo with a demo mode in migration.yml"
-  exit 1
-  ;;
-"all")
-  echo "DEMO=all is deprecated, use DEMO=True and MARABUNTA_MODE=demo with a demo mode in migration.yml"
-  exit 1
   ;;
 *)
   echo "Value '${DEMO}' for DEMO is not a valid value in 'False', 'True'"
