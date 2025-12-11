@@ -6,6 +6,7 @@ on:
       - "main"
       - "master"
       - "dev"
+      - "dev_imagesize"
     tags:
       - "*.*.*.*.*"
       - "stable"
