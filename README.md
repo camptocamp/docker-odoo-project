@@ -15,23 +15,27 @@ See also the [Changelog](HISTORY.rst).
   - We not longer use gosu
   - The `odoo` user is created during the build of the image, and no longer in the entrypoint
   - All odoo related files are moved in /odoo
-  - odoo runs with uid 999; if you need to change this, use for instance `docker-compose --build-arg UID=$(id -u)
-  - Odoo versions 7.0, 8.0, 9.0 and 10.0 are no longer supported
+  - odoo runs with uid 999; if you need to change this, use for instance `docker compose --build-arg UID=$(id -u)`
+  - Odoo versions 7.0, 8.0, 9.0, ..., 13.0 are no longer supported
 
 ## ⚠️ Reporting now use kwkhtmltopdf instead of wkhtmltopdf
 
 To limit the amount of memory required on each containers to print report
 
-We have switch to kwkhtmltopdf project : https://github.com/acsone/kwkhtmltopdf
+We have switched to kwkhtmltopdf project: https://github.com/acsone/kwkhtmltopdf
 
-the kwkhtmltopdf client is included in the base image, you must set the
-env variable :
+The kwkhtmltopdf client is included in the base image, you must set the
+env variable:
 
+```
 KWKHTMLTOPDF_SERVER_URL=<url of your KWKHTMLTOPDF server>:<port>
+```
 
 and you also need to specify report url to let kwkhtmltopdf server to retrive images/header etc... from odoo:
 
+```
 ODOO_REPORT_URL=<url of you odoo:8069>
+```
 
 ## ⚠️ Images moved to ghcr.io
 
@@ -101,8 +105,8 @@ marabunta will be launched. By default migration will be launched.
 Migration is *not* launched when using:
 
 ```
-    docker-compose run --rm odoo odoo shell [...]
-    docker-compose run --rm odoo odoo [...] --help [...]
+    docker compose run --rm odoo odoo shell [...]
+    docker compose run --rm odoo odoo [...] --help [...]
 ```
 
 ### MARABUNTA_MODE
@@ -241,7 +245,7 @@ The main configuration options of Odoo can be configured through environment var
 
 Look in [11.0/templates/odoo.cfg.tmpl](11.0/templates/odoo.cfg.tmpl) to see the full list.
 
-While most of the variables can be set in the docker-compose file so we can have different values for different environments, the `ADDONS_PATH` **must** be set in the `Dockerfile` of your project with a line such as:
+While most of the variables can be set in the `docker-compose.yml` file so we can have different values for different environments, the `ADDONS_PATH` **must** be set in the `Dockerfile` of your project with a line such as:
 
 ```
 ENV ADDONS_PATH=/odoo/local-src,/odoo/external-src/server-tools,/odoo/src/addons
@@ -274,7 +278,7 @@ if `CREATE_DB_CACHE` is activated creates a dump of that state.
 Then it will install local addons, run their tests and show the code coverage.
 
 ```
-docker-compose run --rm [-e CREATE_DB_CACHE=true] [-e LOAD_DB_CACHE=false] [-e SUBS_MD5=<hash>] odoo runtests
+docker compose run --rm [-e CREATE_DB_CACHE=true] [-e LOAD_DB_CACHE=false] [-e SUBS_MD5=<hash>] odoo runtests
 ```
 
 
@@ -285,20 +289,20 @@ This is not the day-to-day tool for running the tests as a developer.
 pytest is included and can be invoked when starting a container. It needs an existing database to run the tests:
 
 ```
-docker-compose run --rm -e DB_NAME=testdb odoo testdb-gen -i my_addon
-docker-compose run --rm -e DB_NAME=testdb odoo pytest -s odoo/local-src/my_addon/tests/test_feature.py::TestFeature::test_it_passes
+docker compose run --rm -e DB_NAME=testdb odoo testdb-gen -i my_addon
+docker compose run --rm -e DB_NAME=testdb odoo pytest -s odoo/local-src/my_addon/tests/test_feature.py::TestFeature::test_it_passes
 ```
 
 When you make changes in the addon, you need to update it in Odoo before running the tests again. You can use:
 
 ```
-docker-compose run --rm -e DB_NAME=testdb odoo testdb-update -u my_addon
+docker compose run --rm -e DB_NAME=testdb odoo testdb-update -u my_addon
 ```
 
 When you are done, you can drop the database with:
 
 ```
-docker-compose run --rm odoo dropdb testdb
+docker compose run --rm odoo dropdb testdb
 ```
 
 
@@ -324,7 +328,7 @@ The migration steps are then run.
 If migration succeed a dump is created if `CREATE_DB_CACHE` is set to `true`.
 
 ```
-docker-compose run --rm [-e CREATE_DB_CACHE=true] [-e LOAD_DB_CACHE=false] [-e MIG_LOAD_VERSION_CEIL=x.y.z] odoo runmigration
+docker compose run --rm [-e CREATE_DB_CACHE=true] [-e LOAD_DB_CACHE=false] [-e MIG_LOAD_VERSION_CEIL=x.y.z] odoo runmigration
 ```
 
 This tools really speed up the process of testing migration steps as you can be executing only a single step instead of redoing all.
@@ -354,9 +358,9 @@ You can add your own scripts in those directories. They must be named
 something like `010_abc` (`^[a-zA-Z0-9_-]+$`) and must have no extension (or
 it would not be picked up by `run-parts`).
 
-Important: The database is guaranteed to exist when the scripts are run, so you
-must take that in account when writing them. Usually you'll want to use such
-check:
+Important: The database is not guaranteed to exist when the scripts are run,
+so you must take that in account when writing them. Usually you'll want to use
+such check:
 
 ```
   if [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" )" != '1' ]
@@ -367,21 +371,3 @@ check:
 ```
 
 The scripts are run only if the command is `odoo`/`odoo.py`.
-
-## Legacy images
-
-Legacy images are used for projects using deprecated Odoo versions (7 & 8).
-They work the same as the newer ones, with a few differences.
-
-### Anthem
-
-`anthem` is not available in these images as the Odoo API is too old to use it.
-If you want to script migration parts, you can write a script using `erppeek`.
-
-Sidenote: You can still use SQL scripts the same as before
-
-### Demo Data
-
-In Odoo 8, the configuration parameter `without_demo` can be sometimes buggy (Odoo will still install demo data even if it is told not to do so).
-
-To circumvent this behavior, you can force this parameter in the command line used to start Odoo (check [migration.yml](example/odoo/migration.yml) as example).
