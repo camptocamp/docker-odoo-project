@@ -33,8 +33,7 @@ reportlab==4.1.0 ; python_version >= '3.12' # (Noble) Mostly to have a wheel pac
 pycairo==1.27.0 ; python_version >= '3.12'  # Needed only for reportlab 4.0+ https://docs.reportlab.com/install/ReportLab_Plus_version_installation/
 rlPyCairo==0.3.0
 requests==2.32.0 ; python_version >= '3.12' # (Noble) Compatibility with i
-rl-renderPM==4.0.3 ; sys_platform == 'win32' and python_version >= '3.12'  # Needed by reportlab 4.1.0 but included in deb package
-urllib3==2.2.2  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography
+urllib3==2.6.1  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography; pin 2.6.1 for security fixes
 vobject==0.9.6.1
 Werkzeug==2.1.1 ; python_version > '3.9'  # (Jammy)
 xlrd==1.2.0; python_version >= '3.8'
