@@ -1,7 +1,5 @@
 # Composition for development
 
-version: '2'
-
 services:
   odoo:
     tty: true
