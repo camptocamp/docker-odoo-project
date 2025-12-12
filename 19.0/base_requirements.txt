@@ -81,10 +81,9 @@ more-itertools==10.8.0
 pbr==7.0.1
 pexpect==4.9.0
 ptyprocess==0.7.0
-pycairo==1.28.0
+pycairo==1.29.0
 pycodestyle==2.14.0
 pyflakes==3.4.0
-rl-renderPM==4.0.3
-reportlab==4.1.0
+rlPyCairo==0.4.0
 unicodecsv==0.14.1
 wrapt==1.17.3
