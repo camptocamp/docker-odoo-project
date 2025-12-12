@@ -35,7 +35,7 @@ RUN set -x; \
         && /install/postgres.sh \
         && /install/kwkhtml_client.sh \
         && /install/kwkhtml_client_force_python3.sh \
-        && /install/dev_package.sh \        
+        && /install/dev_package.sh \
         && pip install -r /odoo/base_requirements.txt --ignore-installed \
         && pip install -r /odoo/platform_requirements.txt --ignore-installed \
         && /install/purge_dev_package_and_cache.sh

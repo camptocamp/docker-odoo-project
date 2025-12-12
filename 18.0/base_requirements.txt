@@ -18,7 +18,7 @@ libsass==0.22.0 ; python_version >= '3.11'  # (Noble) Mostly to have a wheel pac
 lxml==5.2.1; python_version >= '3.12' # (Noble - removed html clean)
 lxml-html-clean; python_version >= '3.12' # (Noble - removed from lxml, unpinned for futur security patches)
 MarkupSafe==2.1.5 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
-num2words==0.5.13 ; python_version >= '3.12' 
+num2words==0.5.13 ; python_version >= '3.12'
 ofxparse==0.21
 openpyxl==3.1.2 ; python_version >= '3.12'
 passlib==1.7.4 # min version = 1.7.2 (Focal with security backports)
