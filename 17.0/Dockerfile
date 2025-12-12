@@ -1,4 +1,4 @@
-FROM python:3.12-slim-trixie 
+FROM python:3.12-slim-trixie
 MAINTAINER Camptocamp
 
 # create the working directory and a place to set the logs (if wanted)
