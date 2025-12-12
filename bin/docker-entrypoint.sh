@@ -39,11 +39,11 @@ fi
 case "$(echo "${DEMO}" | tr '[:upper:]' '[:lower:]')" in
 "false")
   echo "Running without demo data"
-  export WITHOUT_DEMO=all
+  export WITHOUT_DEMO=True
   ;;
 "true")
   echo "Running with demo data"
-  export WITHOUT_DEMO=
+  export WITHOUT_DEMO=False
   ;;
   # deprecated options:
 "odoo")
