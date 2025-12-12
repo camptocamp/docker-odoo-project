@@ -56,6 +56,7 @@ odfpy==1.4.1
 pyinotify==0.9.6
 simplejson==3.19.3
 
+
 # Migration tools
 marabunta==0.12.0
 -e git+https://github.com/camptocamp/anthem@master#egg=anthem
@@ -72,7 +73,6 @@ more-itertools==10.5.0
 pbr==6.1.0
 pexpect==4.9.0
 ptyprocess==0.7.0
-
 pycodestyle==2.12.1
 pyflakes==3.2.0
 unicodecsv==0.14.1
