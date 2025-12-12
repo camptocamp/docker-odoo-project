@@ -42,4 +42,3 @@ regex==2024.7.24
 s3transfer==0.10.2
 tzlocal==5.2
 yarl==1.9.4
-
