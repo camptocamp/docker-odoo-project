@@ -25,6 +25,9 @@ Release History
 
 ** Build **
 
+* Odoo 19: Install rlPyCairo for printing instead of rl-renderPM
+  (Same as previous Odoo versions)
+
 
 4.5.14 (2025-11-18)
 ++++++++++++++++++
