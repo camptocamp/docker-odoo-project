@@ -23,10 +23,25 @@ Release History
 4.5.x (unreleased)
 ++++++++++++++++++
 
+** Build ** 
+
+
+** Bugfixes ** 
+
+
+
+4.5.15 (2025-12-19)
++++++++++++++++++++
+
 ** Build **
 
 * Odoo 19: Install rlPyCairo for printing instead of rl-renderPM
   (Same as previous Odoo versions)
+
+** Bugfixes ** 
+
+* Fix issues with the database migration scripts in the CI
+
 
 
 4.5.14 (2025-11-18)
