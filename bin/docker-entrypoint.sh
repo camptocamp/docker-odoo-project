@@ -29,21 +29,24 @@ if [ ! -f /odoo/.pgpass ]; then
     " >>/odoo/.bashrc
 fi
 
+BASE_CMD=$(basename $1)
+CMD_ARRAY=($*)
+ARGS=(${CMD_ARRAY[@]:1})
+
 # Accepted values for DEMO: True / False
-# Odoo use a reverse boolean for the demo, which is not handy,
-# that's why we propose DEMO which exports WITHOUT_DEMO used in
-# odoo.cfg.tmpl
-if [ -z "$DEMO" ]; then
-  DEMO=False
-fi
-case "$(echo "${DEMO}" | tr '[:upper:]' '[:lower:]')" in
+# Odoo <= 18 used a negated boolean without_demo, which is not handy
+# Odoo >= 19 uses an intuitive with_demo option
+case "$BASE_CMD" in ("runtests"|"testdb-gen"|"testdb-update")
+  DEMO=true;;
+esac
+case "$(echo "${DEMO:-false}" | tr '[:upper:]' '[:lower:]')" in
 "false")
   echo "Running without demo data"
-  export WITHOUT_DEMO=True
+  export DEMO=False WITHOUT_DEMO=True
   ;;
 "true")
   echo "Running with demo data"
-  export WITHOUT_DEMO=
+  export DEMO=True WITHOUT_DEMO=
   ;;
 *)
   echo "Value '${DEMO}' for DEMO is not a valid value in 'False', 'True'"
@@ -54,24 +57,17 @@ esac
 # Create configuration file from the template
 TEMPLATES_DIR=/templates
 CONFIG_TARGET=/tmp/odoo.cfg
-if [ -e $TEMPLATES_DIR/openerp.cfg.tmpl ]; then
-  dockerize -template $TEMPLATES_DIR/openerp.cfg.tmpl:$CONFIG_TARGET
-fi
 if [ -e $TEMPLATES_DIR/odoo.cfg.tmpl ]; then
   dockerize -template $TEMPLATES_DIR/odoo.cfg.tmpl:$CONFIG_TARGET
 fi
-cat $CONFIG_TARGET | grep -v '^#' | grep -v '^$' > /odoo/odoo.cfg
 if [ ! -f "${CONFIG_TARGET}" ]; then
-  echo "Error: one of /templates/openerp.cfg.tmpl, /templates/odoo.cfg.tmpl, /etc/odoo.cfg is required"
+  echo "Error: $TEMPLATES_DIR/odoo.cfg.tmpl is required"
   exit 1
 fi
+grep -E -v '^(#|$)' < "$CONFIG_TARGET" > /odoo/odoo.cfg
 
 # Wait until postgres is up
 wait_postgres.sh
-
-BASE_CMD=$(basename $1)
-CMD_ARRAY=($*)
-ARGS=(${CMD_ARRAY[@]:1})
 
 if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || [ "$BASE_CMD" = "migrate" ]; then
   BEFORE_MIGRATE_ENTRYPOINT_DIR=/odoo/before-migrate-entrypoint.d
@@ -95,7 +91,6 @@ if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]; then
     run-parts --exit-on-error --verbose "$START_ENTRYPOINT_DIR"
   fi
 
-  exec "$@"
 fi
 
 exec "$@"
