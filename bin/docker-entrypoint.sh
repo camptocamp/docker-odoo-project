@@ -29,21 +29,25 @@ if [ ! -f /odoo/.pgpass ]; then
     " >>/odoo/.bashrc
 fi
 
+BASE_CMD=$(basename $1)
+CMD_ARRAY=($*)
+ARGS=(${CMD_ARRAY[@]:1})
+
 # Accepted values for DEMO: True / False
 # Odoo use a reverse boolean for the demo, which is not handy,
 # that's why we propose DEMO which exports WITHOUT_DEMO used in
 # odoo.cfg.tmpl
-if [ -z "$DEMO" ]; then
-  DEMO=False
-fi
-case "$(echo "${DEMO}" | tr '[:upper:]' '[:lower:]')" in
+case "$BASE_CMD" in ("runtests"|"testdb-gen"|"testdb-update")
+  DEMO=true;;
+esac
+case "$(echo "${DEMO:-false}" | tr '[:upper:]' '[:lower:]')" in
 "false")
   echo "Running without demo data"
   export WITHOUT_DEMO=True
   ;;
 "true")
   echo "Running with demo data"
-  export WITHOUT_DEMO=
+  export WITHOUT_DEMO=False
   ;;
 *)
   echo "Value '${DEMO}' for DEMO is not a valid value in 'False', 'True'"
@@ -68,10 +72,6 @@ fi
 
 # Wait until postgres is up
 wait_postgres.sh
-
-BASE_CMD=$(basename $1)
-CMD_ARRAY=($*)
-ARGS=(${CMD_ARRAY[@]:1})
 
 if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || [ "$BASE_CMD" = "migrate" ]; then
   BEFORE_MIGRATE_ENTRYPOINT_DIR=/odoo/before-migrate-entrypoint.d
