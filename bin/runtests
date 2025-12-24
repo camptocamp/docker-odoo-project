@@ -66,7 +66,7 @@ else
     fi
     echo "🔨🔨 Install official/OCA modules 🔨🔨"
     echo "${DEPS_ADDONS}"
-    odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --without-demo="" --db-filter=$DB_NAME_TEST -i ${DEPS_ADDONS}
+    odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --db-filter=$DB_NAME_TEST -i ${DEPS_ADDONS}
     if [ "$CREATE_DB_CACHE" == "true" -a ! -z "$CACHED_DUMP" ]; then
         echo "Generate dump $CACHED_DUMP into cache 🐘⮕ 📦"
         mkdir -p "$CACHE_DIR"
@@ -74,6 +74,6 @@ else
     fi
 fi
 echo "🔧🔧 Install odoo/addons modules 🔧🔧"
-odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" --without-demo="" --db-filter=$DB_NAME_TEST -i ${LOCAL_ADDONS}
+odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" --db-filter=$DB_NAME_TEST -i ${LOCAL_ADDONS}
 
 dropdb ${DB_NAME_TEST}
