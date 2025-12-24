@@ -1,18 +1,31 @@
 FROM python:3.9-slim-trixie
 ARG UID=999
-ARG GID=999
-# create the working directory and a place to set the logs (if wanted)
-RUN mkdir -p /odoo /var/log/odoo
+ARG GID=0
 
-COPY ./install /install
-COPY ./base_requirements.txt /odoo
-COPY ./extra_requirements.txt /odoo
-COPY ./test_requirements.txt /odoo
+
+# create the working directory and a place to set the logs (if wanted)
+RUN adduser --disabled-password --no-create-home \
+            --home /odoo --gecos '' -u $UID --gid $GID odoo \
+    && install -m 770 -o odoo -d /var/log/odoo \
+                                 /odoo /odoo/.venv /odoo/src \
+                                 /odoo/data \
+                                 /odoo/data/odoo \
+                                 /odoo/data/odoo/addons \
+                                 /odoo/data/odoo/filestore \
+                                 /odoo/data/odoo/sessions \
+    && install -m 660 -o odoo /dev/null /odoo/odoo.cfg \
+    && install -m 660 -o odoo /dev/null /odoo/.bashrc
+
+COPY --chown=odoo:root --chmod=770 ./install /install
+COPY --chown=odoo:root --chmod=660 ./base_requirements.txt /odoo
+COPY --chown=odoo:root --chmod=660 ./extra_requirements.txt /odoo
 
 # Moved because there was a bug while installing `odoo-autodiscover`. There is
 # an accent in the contributor name
 ENV LANG=C.UTF-8 \
-    LC_ALL=C.UTF-8
+    LC_ALL=C.UTF-8 \
+    PATH=/odoo/.venv/bin:$PATH \
+    PYTHONPATH=/odoo/
 
 # build and dev packages
 ENV BUILD_PACKAGE="\
@@ -31,54 +44,36 @@ ENV BUILD_PACKAGE="\
     libcairo2-dev"
 
 
+# Default SHELL is ["/bin/sh", "-c"]
+SHELL ["/bin/sh", "-e", "-x", "-c"]
+
+
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
-# wkhtml-buster is kept as in official image, no deb available for bullseye
-RUN set -x; \
-        sh -c /install/package_odoo.sh \
-        && /install/setup-pip.sh \
-        && /install/postgres.sh \
-        && /install/kwkhtml_client.sh \
-        && /install/kwkhtml_client_force_python3.sh \
-        && /install/dev_package.sh
+RUN /install/package_odoo.sh \
+    && /install/setup-pip.sh \
+    && /install/postgres.sh \
+    && /install/kwkhtml_client.sh \
+    && /install/kwkhtml_client_force_python3.sh \
+    && /install/dev_package.sh \
+    && su odoo -c "umask 007 \
+    && python3 -m venv /odoo/.venv --system-site-packages \
+    && /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt \
+    && /odoo/.venv/bin/pip install -r /odoo/extra_requirements.txt" \
+    # Grab dockerize to generate template and wait on postgres \
+    && /install/dockerize.sh \
+    # Purge build packages, to reduce layer size \
+    && /install/purge_dev_package_and_cache.sh
 
-# grab dockerize to generate template and
-# wait on postgres
-RUN /install/dockerize.sh
+COPY --chown=odoo:root --chmod=660 ./src_requirements.txt /odoo
+COPY --chown=odoo:root --chmod=770 ./bin /odoo/odoo-bin
+COPY --chown=odoo:root --chmod=660 ./templates /templates
+COPY --chown=odoo:root --chmod=770 ./before-migrate-entrypoint.d /odoo/before-migrate-entrypoint.d
+COPY --chown=odoo:root --chmod=770 ./start-entrypoint.d /odoo/start-entrypoint.d
+COPY --chown=odoo:root --chmod=660 ./MANIFEST.in /odoo
 
-COPY ./src_requirements.txt /odoo
-COPY ./bin /odoo/odoo-bin
-COPY ./templates /templates
-COPY ./before-migrate-entrypoint.d /odoo/before-migrate-entrypoint.d
-COPY ./start-entrypoint.d /odoo/start-entrypoint.d
-COPY ./MANIFEST.in /odoo
 
-RUN groupadd -g $GID odoo \
-  && adduser --disabled-password -u $UID --gid $GID --gecos '' odoo \
-  && touch /odoo/odoo.cfg \
-  && touch /odoo/.bashrc \
-  && mkdir -p /odoo/data/odoo/addons \
-              /odoo/data/odoo/filestore \
-              /odoo/data/odoo/sessions \
-  && chown -R odoo:root /odoo && usermod odoo --home /odoo \
-  && chown -R odoo:root /var/log/odoo
-
-VOLUME ["/data/odoo", "/var/log/odoo"]
 USER odoo
-RUN python3 -m venv /odoo/.venv  --system-site-packages
-ENV PATH=/odoo/.venv/bin:$PATH
-ENV PYTHONPATH=/odoo/
 RUN echo "export PATH=$PATH" >> ~/.bashrc
-
-RUN /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt
-RUN /odoo/.venv/bin/pip install -r /odoo/extra_requirements.txt
-RUN /odoo/.venv/bin/pip install -r /odoo/test_requirements.txt
-USER root
-RUN set -x; \
-        sh -c /install/purge_dev_package_and_cache.sh
-RUN chgrp -R 0 /odoo && \
-     chmod -R g=u /odoo
-USER odoo
-EXPOSE 8069 8072
 
 ENV ODOO_VERSION=14.0 \
     PATH=/odoo/odoo-bin:/odoo/.local/bin:$PATH \
@@ -96,6 +91,9 @@ ENV ODOO_VERSION=14.0 \
     DEMO=False \
     ADDONS_PATH=/odoo/odoo/addons,/odoo/odoo/src/odoo/addons \
     ODOO_RC=/odoo/odoo.cfg
+
+VOLUME ["/data/odoo", "/var/log/odoo"]
+EXPOSE 8069 8072
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["odoo"]
