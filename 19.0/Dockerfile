@@ -6,14 +6,15 @@ ARG GID=0
 # create the working directory and a place to set the logs (if wanted)
 RUN adduser --disabled-password --no-create-home \
             --home /odoo --gecos '' -u $UID --gid $GID odoo \
-  && install -m 770 -o odoo -d /odoo /var/log/odoo /odoo/.venv \
-                               /odoo/data \
-                               /odoo/data/odoo \
-                               /odoo/data/odoo/addons \
-                               /odoo/data/odoo/filestore \
-                               /odoo/data/odoo/sessions \
-  && install -m 660 -o odoo /dev/null /odoo/odoo.cfg \
-  && install -m 660 -o odoo /dev/null /odoo/.bashrc
+    && install -m 770 -o odoo -d /var/log/odoo \
+                                 /odoo /odoo/.venv /odoo/src \
+                                 /odoo/data \
+                                 /odoo/data/odoo \
+                                 /odoo/data/odoo/addons \
+                                 /odoo/data/odoo/filestore \
+                                 /odoo/data/odoo/sessions \
+    && install -m 660 -o odoo /dev/null /odoo/odoo.cfg \
+    && install -m 660 -o odoo /dev/null /odoo/.bashrc
 
 COPY --chown=odoo:root --chmod=770 ./install /install
 COPY --chown=odoo:root --chmod=660 ./base_requirements.txt /odoo
@@ -58,21 +59,23 @@ RUN /install/dockerize.sh
 
 COPY --chown=odoo:root --chmod=660 ./src_requirements.txt /odoo
 COPY --chown=odoo:root --chmod=770 ./bin /odoo/odoo-bin
-COPY --chown=odoo:root --chmod=770 ./templates /templates
+COPY --chown=odoo:root --chmod=660 ./templates /templates
 COPY --chown=odoo:root --chmod=770 ./before-migrate-entrypoint.d /odoo/before-migrate-entrypoint.d
 COPY --chown=odoo:root --chmod=770 ./start-entrypoint.d /odoo/start-entrypoint.d
-COPY --chown=odoo:root --chmod=770 ./MANIFEST.in /odoo
+COPY --chown=odoo:root --chmod=660 ./MANIFEST.in /odoo
 
 
 VOLUME ["/data/odoo", "/var/log/odoo"]
 USER odoo
-RUN python3 -m venv /odoo/.venv --system-site-packages
+RUN umask 007 \
+    && python3 -m venv /odoo/.venv --system-site-packages
 ENV PATH=/odoo/.venv/bin:$PATH
 ENV PYTHONPATH=/odoo/
 RUN echo "export PATH=$PATH" >> ~/.bashrc
 
-RUN /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt
-RUN /odoo/.venv/bin/pip install -r /odoo/extra_requirements.txt
+RUN umask 007 \
+    && /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt \
+    && /odoo/.venv/bin/pip install -r /odoo/extra_requirements.txt
 USER root
 RUN /install/purge_dev_package_and_cache.sh
 
