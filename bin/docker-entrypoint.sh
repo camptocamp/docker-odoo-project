@@ -36,40 +36,35 @@ if [ ! -f /home/odoo/.pgpass ]; then
     " >> /home/odoo/.bashrc
 fi
 
+BASE_CMD=$(basename $1)
+CMD_ARRAY=($*)
+ARGS=(${CMD_ARRAY[@]:1})
+
 # Accepted values for DEMO: True / False
-# Odoo use a reverse boolean for the demo, which is not handy,
-# that's why we propose DEMO which exports WITHOUT_DEMO used in
-# openerp.cfg.tmpl
-if [ -z "$DEMO" ]; then
-  DEMO=False
-fi
-case "$(echo "${DEMO}" | tr '[:upper:]' '[:lower:]' )" in
+# Odoo <= 18 used a negated boolean without_demo, which is not handy
+# Odoo >= 19 uses an intuitive with_demo option
+case "$BASE_CMD" in ("runtests"|"testdb-gen"|"testdb-update")
+  DEMO=true;;
+esac
+case "$(echo "${DEMO:-false}" | tr '[:upper:]' '[:lower:]')" in
   "false")
     echo "Running without demo data"
-    export WITHOUT_DEMO=all
+    export DEMO=False WITHOUT_DEMO=all
     ;;
   "true")
     echo "Running with demo data"
-    export WITHOUT_DEMO=
+    export DEMO=True WITHOUT_DEMO=
     ;;
   # deprecated options:
   "odoo")
     echo "Running with demo data"
     echo "DEMO=odoo is deprecated, use DEMO=True"
-    export WITHOUT_DEMO=
+    export DEMO=True WITHOUT_DEMO=
     ;;
   "none")
     echo "Running without demo data"
     echo "DEMO=none is deprecated, use DEMO=False"
-    export WITHOUT_DEMO=all
-    ;;
-  "scenario")
-    echo "DEMO=scenario is deprecated, use DEMO=False and MARABUNTA_MODE=demo with a demo mode in migration.yml"
-    exit 1
-    ;;
-  "all")
-    echo "DEMO=all is deprecated, use DEMO=True and MARABUNTA_MODE=demo with a demo mode in migration.yml"
-    exit 1
+    export DEMO=False WITHOUT_DEMO=all
     ;;
   *)
     echo "Value '${DEMO}' for DEMO is not a valid value in 'False', 'True'"
@@ -129,12 +124,7 @@ if [ ! "$(stat -c '%U' /var/log/odoo)" = "odoo" ]; then
   chown -R odoo: /var/log/odoo
 fi
 
-BASE_CMD=$(basename $1)
-CMD_ARRAY=($*)
-ARGS=(${CMD_ARRAY[@]:1})
-
 if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || ([ "$BASE_CMD" = "gosu" ] && [[ "${ARGS[@]}" =~ "odoo migrate" ]] ); then
-
   BEFORE_MIGRATE_ENTRYPOINT_DIR=/before-migrate-entrypoint.d
   if [ -d "$BEFORE_MIGRATE_ENTRYPOINT_DIR" ]; then
     run-parts --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
