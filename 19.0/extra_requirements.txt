@@ -23,7 +23,7 @@ unidecode==1.4.0
 vcrpy==7.0.0
 
 # Library dependency
-aiohttp==3.13.2
+aiohttp==3.13.3
 bcrypt==4.3.0
 botocore==1.40.30
 cffi==2.0.0
@@ -41,7 +41,7 @@ pytesseract==0.3.13
 regex==2025.9.1
 s3transfer==0.14.0
 tzlocal==5.3.1
-yarl==1.20.1
+yarl==1.22.0
 
 #Extra for enterprise
 pdfminer==20191125
