@@ -1,4 +1,5 @@
-FROM python:3.12-slim-trixie
+FROM python
+ARG VERSION=19.0
 ARG UID=999
 ARG GID=999
 
@@ -77,7 +78,7 @@ COPY --chown=odoo:root --chmod=660 ./MANIFEST.in /odoo
 USER odoo
 RUN echo "export PATH=$PATH" >> ~/.bashrc
 
-ENV ODOO_VERSION=16.0 \
+ENV ODOO_VERSION=$VERSION \
     PATH=/odoo/odoo-bin:/odoo/.local/bin:$PATH \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \

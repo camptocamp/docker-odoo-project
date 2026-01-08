@@ -1,5 +1,5 @@
 ifndef VERSION
-VERSION=15.0
+VERSION=18.0
 endif
 
 IMAGE_LATEST=ci-5xx-latest:${VERSION}
@@ -7,14 +7,15 @@ BUILD_TAG=$(IMAGE_LATEST)
 
 export
 
-.PHONY: all
-all:
-	bash build.sh
+all: build
 
 .PHONY: setup
 setup:
 	bash setup.sh
 
+.PHONY: build
+build:
+	bash build.sh
 
 .PHONY: test
 test:

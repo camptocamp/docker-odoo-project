@@ -2,16 +2,15 @@
 set -euxo pipefail
 
 #
-# Build the image
+# Prepare to build the image
 #
 # Normally run by the Makefile:
 #
-#   $ make VERSION=$VERSION build
+#   $ make VERSION=$VERSION setup
 #
-# It expects the following variables to be set:
+# It expects the following variable to be set:
 #
-# * VERSION (9.0, 10.0, 11.0, ...)
-# * BUILD_TAG (tag of the 'latest' image built)
+# * VERSION (16.0, 17.0, ...)
 #
 if [ -z "$VERSION" ]; then
     echo "VERSION environment variable is missing"
@@ -21,6 +20,8 @@ fi
 SRC=${SRC:=(mktemp -d)}
 echo "Creating $SRC"
 
+mkdir -p ${SRC}
+cp Dockerfile MANIFEST.in ${SRC}/
 cp -r ${VERSION}/. $SRC/
 cp -r bin/ $SRC
 cp -r install/ $SRC
