@@ -30,12 +30,16 @@ jobs:
     strategy:
       matrix:
         odoo_serie:
-          - "14.0"
           - "15.0"
           - "16.0"
           - "17.0"
           - "18.0"
           - "19.0"
+        python_from:
+          - "python:3.12-slim-trixie"
+        include:
+          - odoo_serie: "14.0"
+            python_from: "python:3.9-slim-trixie"
 
     steps:
       - uses: actions/checkout@v4
@@ -66,9 +70,13 @@ jobs:
           VERSION=${{ matrix.odoo_serie }} SRC=build make setup
 
       - name: Build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v6
         with:
           context: ./build
+          build-args: |
+              VERSION=${{ matrix.odoo_serie }}
+          build-contexts: |
+              python=docker-image://${{ matrix.python_from }}
           push: false
           load: true
           tags: ci-5xx-latest:${{ matrix.odoo_serie }}
@@ -96,13 +104,16 @@ jobs:
             skip-upload: false
             sysdig-secure-token: ${{ secrets.SYSDIG_SECURE_TOKEN }}
 
-
       - name: Tag & Push
         if: github.event_name == 'push' || github.event_name == 'schedule'
         id: docker_push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v6
         with:
           context: ./build
+          build-args: |
+              VERSION=${{ matrix.odoo_serie }}
+          build-contexts: |
+              python=docker-image://${{ matrix.python_from }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}

@@ -1,10 +1,10 @@
 #!/bin/bash
 set -exo pipefail
 if [ -z "$VERSION" ]; then
-    export VERSION=15.0
+    export VERSION=18.0
 fi
 if [ -z "$BUILD_TAG" ]; then
-    export BUILD_TAG=odoo:15.0
+    export BUILD_TAG=odoo:${VERSION}
 fi
 
 #
@@ -16,13 +16,18 @@ fi
 #
 # It expects the following variables to be set:
 #
-# * VERSION (9.0, 10.0, 11.0, ...)
+# * VERSION (16.0, 17.0, ...)
 # * BUILD_TAG (tag of the 'latest' image built)
-# * DOCKERFILE (name of the file used for the Docker build)
 #
 if [ -z "$VERSION" ]; then
     echo "VERSION environment variable is missing"
     exit 1
+fi
+
+if [ "$VERSION" = "14.0" ]; then
+    PYTHON_FROM="python:3.9-slim-trixie"
+else
+    PYTHON_FROM="python:3.12-slim-trixie"
 fi
 
 TMP=$(mktemp -d)
@@ -36,10 +41,9 @@ on_exit() {
 
 trap on_exit EXIT
 
-cp -r ${VERSION}/. ${TMP}/
-cp -r bin/ ${TMP}
-cp -r install/ ${TMP}
-cp -r start-entrypoint.d/ ${TMP}
-cp -r before-migrate-entrypoint.d/ ${TMP}
+SRC=${TMP} . ./setup.sh
 
-docker build --progress plain --no-cache -f ${TMP}/Dockerfile -t ${BUILD_TAG} ${TMP}
+docker build --progress plain --no-cache \
+             --build-arg VERSION=${VERSION} \
+             --build-context python=docker-image://${PYTHON_FROM} \
+             -f ${TMP}/Dockerfile -t ${BUILD_TAG} ${TMP}
