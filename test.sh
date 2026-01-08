@@ -36,7 +36,7 @@ echo "Working in $TMP"
 on_exit() {
     echo "Cleaning up temporary directory..."
     cd $TMP
-    docker compose -f test-compose.yml down
+    docker compose -f test-compose.yaml down
     rm -rf $TMP
     rm -f /tmp/odoo.tar.gz
 }
@@ -46,18 +46,18 @@ trap on_exit EXIT
 # run 'runtests' in the container
 # extra arguments are passed to the 'run' command (example: -e FOO=bar is added to the list of args)
 docoruntests() {
-    docker compose -f test-compose.yml run --rm -e LOCAL_USER_ID=999 $@ odoo runtests
+    docker compose -f test-compose.yaml run --rm -e LOCAL_USER_ID=999 $@ odoo runtests
 }
 # run 'runmigration' in the container
 # extra arguments are passed to the 'run' command (example: -e FOO=bar is added to the list of args)
 docorunmigration() {
-    docker compose -f test-compose.yml run --rm -e LOCAL_USER_ID=999 $@ odoo runmigration
+    docker compose -f test-compose.yaml run --rm -e LOCAL_USER_ID=999 $@ odoo runmigration
 }
 docodown() {
-    docker compose -f test-compose.yml down
+    docker compose -f test-compose.yaml down
 }
 docoruncmd() {
-    docker compose -f test-compose.yml run --rm -e LOCAL_USER_ID=999 $@
+    docker compose -f test-compose.yaml run --rm -e LOCAL_USER_ID=999 $@
 }
 
 cp -ra ./example/. "$TMP/"
@@ -90,7 +90,7 @@ docoruncmd odoo dropdb odoodb
 echo '>>> * migration: use the dump and migrate to new version'
 docorunmigration -e LOAD_DB_CACHE="true"
 docodown
-cat <<EOT >>migration.yml
+cat <<EOT >>migration.yaml
     - version: ${VERSION}.0.1
       operations:
         post:

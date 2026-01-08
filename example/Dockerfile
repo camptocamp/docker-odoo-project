@@ -15,7 +15,7 @@ COPY ./data /odoo/data
 COPY ./songs /odoo/songs
 COPY ./setup.py /odoo/
 COPY ./VERSION /odoo/
-COPY ./migration.yml /odoo/
+COPY ./migration.yaml /odoo/
 USER root
 # RUN apt-get update \
 #     && apt-get install -y --no-install-recommends parallel  libsasl2-dev libldap2-dev libssl-dev libmagic1 libpq-dev build-essential python3-dev libffi-dev pkg-config libcairo2-dev libgirepository1.0-dev\

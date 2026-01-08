@@ -33,5 +33,5 @@ Follow the steps:
 
         docker build -t youruser/odoo-project-example .
 
-8. Optionally create a [docker-compose.yml](docker-compose.yml) file. This
+8. Optionally create a [compose.yaml](compose.yaml) file. This
    example is a development composition.

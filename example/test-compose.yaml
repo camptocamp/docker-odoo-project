@@ -20,7 +20,7 @@ services:
       - KWKHTMLTOPDF_SERVER_URL=http://kwkhtmltopdf:8080
       - ODOO_REPORT_URL=http://odoo:8069
       - LOCAL_CODE_PATH=/odoo/odoo/addons
-      - MIGRATION_CONFIG_FILE=/odoo/migration.yml
+      - MIGRATION_CONFIG_FILE=/odoo/migration.yaml
       # cached database dumps config for `runmigration` and `runtests`
       - CREATE_DB_CACHE=false  # set it to 'true' to create dumps
       - LOAD_DB_CACHE=true # by default will always search for existing dumps

@@ -178,7 +178,7 @@ Specifies path for local(custom) code to be used, by default is /odoo/odoo/addon
 
 ### MIGRATION_CONFIG_FILE
 
-Specifies path for migration config file, by default is /odoo/migration.yml
+Specifies path for migration config file, by default is /odoo/migration.yaml
 
 ### DEMO
 
@@ -245,7 +245,7 @@ The main configuration options of Odoo can be configured through environment var
 
 Look in [11.0/templates/odoo.cfg.tmpl](11.0/templates/odoo.cfg.tmpl) to see the full list.
 
-While most of the variables can be set in the `docker-compose.yml` file so we can have different values for different environments, the `ADDONS_PATH` **must** be set in the `Dockerfile` of your project with a line such as:
+While most of the variables can be set in the `compose.yaml` file so we can have different values for different environments, the `ADDONS_PATH` **must** be set in the `Dockerfile` of your project with a line such as:
 
 ```
 ENV ADDONS_PATH=/odoo/local-src,/odoo/external-src/server-tools,/odoo/src/addons

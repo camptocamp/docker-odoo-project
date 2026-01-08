@@ -1,7 +1,6 @@
 **/.git/**/*
 **/.git
 **/.gitignore
-**/.travis.yml
 **/LICENSE
 **/*.pyc
 **/README.md
