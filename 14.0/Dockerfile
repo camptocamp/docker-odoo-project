@@ -1,11 +1,12 @@
 FROM python:3.9-slim-trixie
 ARG UID=999
-ARG GID=0
+ARG GID=999
 
 
 # create the working directory and a place to set the logs (if wanted)
-RUN adduser --disabled-password --no-create-home \
-            --home /odoo --gecos '' -u $UID --gid $GID odoo \
+RUN groupadd -g $GID odoo \
+    && adduser --disabled-password --no-create-home --gecos '' \
+               --home /odoo --uid $UID --gid $GID odoo \
     && install -m 770 -o odoo -d /var/log/odoo \
                                  /odoo /odoo/.venv /odoo/src \
                                  /odoo/data \
@@ -59,6 +60,7 @@ RUN /install/package_odoo.sh \
     && python3 -m venv /odoo/.venv --system-site-packages \
     && /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt \
     && /odoo/.venv/bin/pip install -r /odoo/extra_requirements.txt" \
+    && chgrp -R root /odoo/.venv \
     # Grab dockerize to generate template and wait on postgres \
     && /install/dockerize.sh \
     # Purge build packages, to reduce layer size \
