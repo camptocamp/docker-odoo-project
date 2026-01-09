@@ -32,7 +32,7 @@ dateparser==1.2.2
 idna==3.10
 jmespath==1.0.1
 multidict==6.6.4
-pdfminer.six==20250506
+pdfminer.six==20260107
 pyasn1==0.6.1
 pycparser==2.23
 pycryptodome==3.23.0
