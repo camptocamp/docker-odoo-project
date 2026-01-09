@@ -37,7 +37,7 @@ pycairo==1.27.0 ; python_version >= '3.12'  # Needed only for reportlab 4.0+ htt
 rlPyCairo==0.3.0
 requests==2.32.5 ; python_version >= '3.11' # (Noble) Pin 2.32.5 for security fixes
 rjsmin==1.2.0 ; python_version >= '3.11'
-urllib3==2.6.1  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography; pin 2.6.1 for security fixes
+urllib3==2.6.3  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography; pin 2.6.3 for security fixes
 vobject==0.9.6.1
 Werkzeug==3.0.6 ; python_version >= '3.12'  # (Noble) Avoid deprecation warnings
 xlrd==2.0.1 ; python_version >= '3.12'

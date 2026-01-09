@@ -43,7 +43,7 @@ qrcode==7.4.2 ; python_version >= '3.11'
 reportlab==4.1.0 ; python_version >= '3.12' # (Noble) Mostly to have a wheel package
 requests==2.32.5 ; python_version >= '3.11' # (Noble) Pin 2.32.5 for security fixes
 rjsmin==1.2.0 ; python_version >= '3.11'
-urllib3==2.6.1  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography; pin 2.6.1 for security fixes
+urllib3==2.6.3  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography; pin 2.6.3 for security fixes
 vobject==0.9.6.1
 Werkzeug==3.0.6 ; python_version >= '3.12'  # (Noble) Avoid deprecation warnings
 xlrd==2.0.1 ; python_version >= '3.12'
