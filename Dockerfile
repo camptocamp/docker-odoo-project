@@ -15,6 +15,9 @@ RUN groupadd -g $GID odoo \
                                  /odoo/data/odoo/addons \
                                  /odoo/data/odoo/filestore \
                                  /odoo/data/odoo/sessions \
+                                 /odoo/odoo-bin \
+                                 /odoo/before-migrate-entrypoint.d \
+                                 /odoo/start-entrypoint.d \
     && install -m 660 -o odoo /dev/null /odoo/odoo.cfg \
     && install -m 660 -o odoo /dev/null /odoo/.bashrc
 
