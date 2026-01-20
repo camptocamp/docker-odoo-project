@@ -40,7 +40,10 @@ else
     LOCAL_ADDONS=$1
 fi
 
-DEPS_ADDONS=$(list_dependencies.py "$LOCAL_ADDONS")
+ALL_DEPS_ADDONS=$(list_dependencies.py "$LOCAL_ADDONS")
+# Ignore base_automation from dependencies to avoid its register hook
+#  messing with MRO of modules to be installed after server restart
+DEPS_ADDONS=${ALL_DEPS_ADDONS/",base_automation,"/","}
 
 DB_NAME_TEST=${DB_NAME}_test
 
