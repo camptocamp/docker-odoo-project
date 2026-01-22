@@ -61,7 +61,7 @@ simplejson==3.19.3
 
 
 # Migration tools
-marabunta==0.13.0
+marabunta==0.14.0
 -e git+https://github.com/camptocamp/anthem@master#egg=anthem
 
 
