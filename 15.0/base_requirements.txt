@@ -1,6 +1,6 @@
 Babel==2.9.1  # min version = 2.6.0 (Focal with security backports)
 chardet==3.0.4
-cryptography==42.0.8 ; python_version >= '3.12'  # (Noble) min 41.0.7, pinning 42.0.8 for security fixes
+cryptography==46.0.5 ; python_version >= '3.12'  # (Noble) min 41.0.7, pinning 46.0.5 for security fixes
 decorator==4.4.2
 docutils==0.16
 ebaysdk==2.1.5
@@ -20,7 +20,7 @@ polib==1.1.0
 psutil==5.9.8 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 psycopg2==2.9.9 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 pydot==1.4.1
-pyopenssl==24.1.0 ; python_version >= '3.12' # (Noble) min 23.2.0, pinned for compatibility with cryptography==42.0.8 and security patches
+pyopenssl==25.3.0 ; python_version >= '3.12' # (Noble) min 23.2.0, pinned for compatibility with cryptography==46.0.5 and security patches
 PyPDF2==2.12.1 ; python_version >= '3.12' # (Noble) Compatibility with cryptography
 pyserial==3.4
 python-dateutil==2.7.3
