@@ -1,13 +1,13 @@
 Babel==2.9.1  # min version = 2.6.0 (Focal with security backports)
 chardet==3.0.4
-cryptography==42.0.8 ; python_version >= '3.12'  # (Noble) min 41.0.7, pinning 42.0.8 for security fixes
+cryptography==46.0.5 ; python_version >= '3.12'  # (Noble) min 41.0.7, pinning 46.0.5 for security fixes
 decorator==4.4.2
 docutils==0.16
 ebaysdk==2.1.5
 freezegun==0.3.15; python_version >= '3.8'
 gevent==24.2.1 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
 greenlet==3.0.3 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
-idna==3.7.0
+idna==3.8
 Jinja2==3.1.6 ; python_version >= '3.12'  # (Noble) compatibility with markupsafe
 libsass==0.22.0 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 lxml==5.2.1; python_version >= '3.12' # (Noble - removed html clean)
@@ -20,10 +20,10 @@ polib==1.1.0
 psutil==5.9.8 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 psycopg2==2.9.9 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 pydot==1.4.1
-pyopenssl==24.1.0 ; python_version >= '3.12' # (Noble) min 23.2.0, pinned for compatibility with cryptography==42.0.8 and security patches
+pyopenssl==25.3.0 ; python_version >= '3.12' # (Noble) min 23.2.0, pinned for compatibility with cryptography==46.0.5 and security patches
 PyPDF2==2.12.1 ; python_version >= '3.12' # (Noble) Compatibility with cryptography
 pyserial==3.4
-python-dateutil==2.7.3
+python-dateutil==2.8.2  # bumped because of requirement of algoliasearch
 python-ldap==3.4.4 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 python-stdnum==1.13
 pytz  # no version pinning to avoid OS perturbations
@@ -32,18 +32,17 @@ qrcode==6.1
 reportlab==4.1.0 ; python_version >= '3.12' # (Noble) Mostly to have a wheel package
 pycairo==1.27.0 ; python_version >= '3.12'  # Needed only for reportlab 4.0+ https://docs.reportlab.com/install/ReportLab_Plus_version_installation/
 rlPyCairo==0.3.0
-requests==2.32.0 ; python_version >= '3.12' # (Noble) Compatibility with i
-rl-renderPM==4.0.3 ; sys_platform == 'win32' and python_version >= '3.12'  # Needed by reportlab 4.1.0 but included in deb package
-urllib3==2.2.2  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography
+requests==2.32.5 ; python_version >= '3.12' # (Noble) Pin 2.32.5 for security fixes
+urllib3==2.6.3  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography; pin 2.6.3 for security fixes
 vobject==0.9.6.1
 Werkzeug==2.1.1 ; python_version > '3.9'  # (Jammy)
 xlrd==1.2.0; python_version >= '3.8'
 XlsxWriter==1.1.2
 xlwt==1.3.0
 zeep==3.4.0
-zope.event==5.0
+zope.event==5.1.1
 zope.interface==8.0
-setuptools==78.1.1
+
 
 whool==1.2.0
 # Not part of official requirements, but used by some addons
@@ -54,8 +53,9 @@ odfpy==1.4.1
 pyinotify==0.9.6
 simplejson==3.19.3
 
+
 # Migration tools
-marabunta==0.12.0
+marabunta==0.13.0
 -e git+https://github.com/camptocamp/anthem@master#egg=anthem
 
 # test / lint
@@ -81,8 +81,8 @@ more-itertools==10.5.0
 pbr==6.1.0
 pexpect==4.9.0
 ptyprocess==0.7.0
-
 pycodestyle==2.12.1
 pyflakes==3.2.0
+setuptools==79.0.1
 unicodecsv==0.14.1
 wrapt==1.16.0
