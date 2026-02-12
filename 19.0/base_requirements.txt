@@ -14,7 +14,7 @@ gevent==24.2.1 ; sys_platform != 'win32' and python_version >= '3.12' and python
 gevent==24.11.1 ; sys_platform != 'win32' and python_version >= '3.13'  # (Trixie)
 greenlet==3.0.3 ; sys_platform != 'win32' and python_version >= '3.12' and python_version < '3.13' # (Noble)
 greenlet==3.1.1 ; sys_platform != 'win32' and python_version >= '3.13'  # (Trixie)
-idna==3.7 ; python_version >= '3.12'
+idna==3.10 ; python_version >= '3.12'
 Jinja2==3.1.6 ; python_version > '3.10'
 libsass==0.22.0 ; python_version >= '3.11'  # (Noble) Mostly to have a wheel package
 lxml==5.2.1; python_version >= '3.12' # (Noble - removed html clean)
@@ -53,7 +53,6 @@ zeep==4.2.1 ; python_version >= '3.11' and python_version < '3.13'
 zeep==4.3.1 ; python_version >= '3.13'
 zope.event==6.0
 zope.interface==8.0
-setuptools==78.1.1
 
 # Not part of official requirements, but used by some addons
 # colorama==0.3.9
@@ -74,6 +73,7 @@ argh==0.31.3
 atomicwrites==1.4.1
 attrs==25.3.0
 beautifulsoup4==4.13.5
+cffi==2.0.0             # dependency of cryptography
 future==1.0.0
 mccabe==0.7.0
 more-itertools==10.8.0
@@ -82,7 +82,9 @@ pexpect==4.9.0
 ptyprocess==0.7.0
 pycairo==1.29.0
 pycodestyle==2.14.0
+pycparser==3.0.0        # dependency of cryptography
 pyflakes==3.4.0
 rlPyCairo==0.4.0
+setuptools==79.0.1
 unicodecsv==0.14.1
 wrapt==1.17.3
