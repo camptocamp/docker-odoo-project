@@ -73,6 +73,7 @@ RUN /install/package_odoo.sh \
 COPY --chown=odoo:root --chmod=660 ./src_requirements.txt /odoo
 COPY --chown=odoo:root --chmod=770 ./bin /odoo/odoo-bin
 COPY --chown=odoo:root --chmod=660 ./templates /templates
+RUN chmod 770 /templates
 COPY --chown=odoo:root --chmod=770 ./before-migrate-entrypoint.d /odoo/before-migrate-entrypoint.d
 COPY --chown=odoo:root --chmod=770 ./start-entrypoint.d /odoo/start-entrypoint.d
 COPY --chown=odoo:root --chmod=660 ./MANIFEST.in /odoo
