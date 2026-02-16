@@ -25,6 +25,7 @@ latest (unreleased)
 
 * Replace environment variable OPENERP_SERVER with ODOO_RC
 * Entrypoint: exit on error when executing run-parts
+* Pillow: bump to 12.1.1 (to fix security issues)
 
 **Bugfixes**
 
