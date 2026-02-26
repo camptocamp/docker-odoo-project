@@ -68,9 +68,8 @@ jobs:
         run: make VERSION=${{ matrix.odoo_serie }} test
 
       - name: Scan image
-        if: github.event_name == 'push'
         id: scan
-        uses: sysdiglabs/scan-action@v5
+        uses: sysdiglabs/scan-action@v6.1.3
         with:
             sysdig-secure-url: https://eu1.app.sysdig.com
             stop-on-failed-policy-eval: false
