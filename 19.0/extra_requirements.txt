@@ -37,9 +37,6 @@ s3transfer==0.14.0
 tzlocal==5.3.1
 yarl==1.22.0
 
-#Extra for enterprise
-pdfminer==20191125
-
 # Odoo external services dependencies
 ## PLATFORM
 redis==6.2.*
