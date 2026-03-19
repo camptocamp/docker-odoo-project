@@ -26,20 +26,20 @@ jobs:
     strategy:
       matrix:
         odoo_serie: ["12.0", "13.0", "14.0", "15.0", "16.0", "17.0", "18.0", "19.0"]
-    continue-on-error: ${{matrix.odoo_serie == '12.0' }}
+    continue-on-error: ${{ matrix.odoo_serie == '12.0' }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v4
         with:
           driver: docker
 
       - name: Docker meta
         id: docker_meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v6
         with:
           images: ghcr.io/camptocamp/docker-odoo-project
           flavor: |
@@ -57,7 +57,7 @@ jobs:
           VERSION=${{ matrix.odoo_serie }} SRC=build make setup
 
       - name: Build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v7
         with:
           context: ./build
           push: false
@@ -70,19 +70,18 @@ jobs:
 
       - name: Scan image
         id: scan
-        uses: sysdiglabs/scan-action@v6.1.3
+        uses: sysdiglabs/scan-action@v6
         with:
-            sysdig-secure-url: https://eu1.app.sysdig.com
-            stop-on-failed-policy-eval: false
-            stop-on-processing-error: false
-            image-tag: ci-4xx-latest:${{ matrix.odoo_serie }}
-            skip-upload: false
-            sysdig-secure-token: ${{ secrets.SYSDIG_SECURE_TOKEN }}
-
+          sysdig-secure-url: https://eu1.app.sysdig.com
+          stop-on-failed-policy-eval: false
+          stop-on-processing-error: false
+          image-tag: ci-4xx-latest:${{ matrix.odoo_serie }}
+          skip-upload: false
+          sysdig-secure-token: ${{ secrets.SYSDIG_SECURE_TOKEN }}
 
       - name: Login to GitHub Container Registry
         if: github.event_name == 'push' || github.event_name == 'schedule'
-        uses: docker/login-action@v2
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ secrets.GHCR_USER }}
@@ -91,7 +90,7 @@ jobs:
       - name: Tag & Push
         if: github.event_name == 'push' || github.event_name == 'schedule'
         id: docker_push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v7
         with:
           context: ./build
           push: ${{ github.event_name != 'pull_request' }}
