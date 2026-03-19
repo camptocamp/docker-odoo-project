@@ -15,9 +15,9 @@ export PGUSER=${DB_USER}
 export PGDATABASE=${DB_NAME}
 export PGAPPNAME=${HOSTNAME}
 
-# As docker-compose exec do not launch the entrypoint
+# As 'docker compose exec' does not launch the entrypoint
 # init PG variable into .bashrc so it will be initialized
-# when doing docker-compose exec odoo gosu odoo bash
+# when doing 'docker compose exec odoo gosu odoo bash'
 touch /home/odoo/.bashrc
 chown odoo:odoo /home/odoo/.bashrc
 echo "
