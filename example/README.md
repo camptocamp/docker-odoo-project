@@ -16,7 +16,7 @@ Follow the steps:
         git submodule add git@github.com:odoo/odoo.git odoo/src
 
 3. Optionally add submodules for external addons in `odoo/external-src`
- 
+
         git submodule add git@github.com:OCA/server-tools.git odoo/external-src/server-tools
 
 4. Optionally add custom addons in `odoo/local-src`

@@ -54,7 +54,7 @@ docodown() {
     docker compose -f test-compose.yml down
 }
 docoruncmd() {
-    docker compose -f test-compose.yml build odoo 
+    docker compose -f test-compose.yml build odoo
     docker compose -f test-compose.yml run --rm -e LOCAL_USER_ID=$(id -u) $@
 }
 

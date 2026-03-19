@@ -17,7 +17,7 @@ To limit the amount of memory required on each containers to print report
 
 We have switch to kwkhtmltopdf project : https://github.com/acsone/kwkhtmltopdf
 
-the kwkhtmltopdf client is included in the base image, you must set the 
+the kwkhtmltopdf client is included in the base image, you must set the
 env variable :
 
 KWKHTMLTOPDF_SERVER_URL=<url of your KWKHTMLTOPDF server>:<port>
@@ -143,8 +143,8 @@ marabunta will be launched. By default migration will be launched.
 Migration is *not* launched when using:
 
 ```
-    docker-compose run --rm odoo odoo shell [...]
-    docker-compose run --rm odoo odoo [...] --help [...]
+    docker compose run --rm odoo odoo shell [...]
+    docker compose run --rm odoo odoo [...] --help [...]
 ```
 
 ### MARABUNTA_MODE
@@ -276,7 +276,7 @@ The main configuration options of Odoo can be configured through environment var
 
 Look in [11.0/templates/odoo.cfg.tmpl](11.0/templates/odoo.cfg.tmpl) to see the full list.
 
-While most of the variables can be set in the docker-compose file so we can have different values for different environments, the `ADDONS_PATH` **must** be set in the `Dockerfile` of your project with a line such as:
+While most of the variables can be set in the docker compose file so we can have different values for different environments, the `ADDONS_PATH` **must** be set in the `Dockerfile` of your project with a line such as:
 
 ```
 ENV ADDONS_PATH=/odoo/local-src,/odoo/external-src/server-tools,/odoo/src/addons
@@ -309,7 +309,7 @@ if `CREATE_DB_CACHE` is activated creates a dump of that state.
 Then it will install local addons, run their tests and show the code coverage.
 
 ```
-docker-compose run --rm [-e CREATE_DB_CACHE=true] [-e LOAD_DB_CACHE=false] [-e SUBS_MD5=<hash>] odoo runtests
+docker compose run --rm [-e CREATE_DB_CACHE=true] [-e LOAD_DB_CACHE=false] [-e SUBS_MD5=<hash>] odoo runtests
 ```
 
 
@@ -320,20 +320,20 @@ This is not the day-to-day tool for running the tests as a developer.
 pytest is included and can be invoked when starting a container. It needs an existing database to run the tests:
 
 ```
-docker-compose run --rm -e DB_NAME=testdb odoo testdb-gen -i my_addon
-docker-compose run --rm -e DB_NAME=testdb odoo pytest -s odoo/local-src/my_addon/tests/test_feature.py::TestFeature::test_it_passes
+docker compose run --rm -e DB_NAME=testdb odoo testdb-gen -i my_addon
+docker compose run --rm -e DB_NAME=testdb odoo pytest -s odoo/local-src/my_addon/tests/test_feature.py::TestFeature::test_it_passes
 ```
 
 When you make changes in the addon, you need to update it in Odoo before running the tests again. You can use:
 
 ```
-docker-compose run --rm -e DB_NAME=testdb odoo testdb-update -u my_addon
+docker compose run --rm -e DB_NAME=testdb odoo testdb-update -u my_addon
 ```
 
 When you are done, you can drop the database with:
 
 ```
-docker-compose run --rm odoo dropdb testdb
+docker compose run --rm odoo dropdb testdb
 ```
 
 
@@ -342,7 +342,7 @@ Odoo namespaces (`openerp.addons`/`odoo.addons`) when running the tests.
 
 ### pytest-cov
 
-pytest-cov is also included and can be used to generate a coverage report. 
+pytest-cov is also included and can be used to generate a coverage report.
 You can add --cov=MODULE_PATH to your pytest to get a text version in the shell, or export it as HTML so you can browse the results.
 To export it to HTML, add --cov-report=HTML:EXPORT_PATH
 
@@ -359,7 +359,7 @@ The migration steps are then run.
 If migration succeed a dump is created if `CREATE_DB_CACHE` is set to `true`.
 
 ```
-docker-compose run --rm [-e CREATE_DB_CACHE=true] [-e LOAD_DB_CACHE=false] [-e MIG_LOAD_VERSION_CEIL=x.y.z] odoo runmigration
+docker compose run --rm [-e CREATE_DB_CACHE=true] [-e LOAD_DB_CACHE=false] [-e MIG_LOAD_VERSION_CEIL=x.y.z] odoo runmigration
 ```
 
 This tools really speed up the process of testing migration steps as you can be executing only a single step instead of redoing all.
