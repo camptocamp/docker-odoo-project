@@ -37,5 +37,3 @@ s3transfer==0.10.2
 tzlocal==5.2
 yarl==1.22.0
 
-#Extra for enterprise
-pdfminer==20191125
