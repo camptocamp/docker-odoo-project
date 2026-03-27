@@ -23,10 +23,25 @@ Release History
 4.5.x (unreleased)
 ++++++++++++++++++
 
+
+4.5.16 (2026-03-26)
++++++++++++++++++++
+
+** Features and Improvements **
+
+* Port DB_FILTER to all Odoo versions
+
 ** Build **
 
+* Update platform dependencies
+* Trigger build every time it is needed
 
 ** Bugfixes **
+
+* Odoo 19: adapt odoo.cfg.tmpl to suppress deprecation warnings
+* Odoo 19: set configuration option with_demo
+* Odoo 17: add missing requirements openpyxl
+* Update requirements to fix vulnerabilities
 
 
 
