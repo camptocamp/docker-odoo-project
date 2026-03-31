@@ -2,7 +2,7 @@
 # python3-* equivalent distributed in Ubuntu 24.04 and Debian 12
 asn1crypto==1.5.1 ; python_version >= '3.11'
 Babel==2.10.3 ; python_version >= '3.11'
-cbor2==5.6.2 ; python_version >= '3.12'
+cbor2==5.9.0 ; python_version >= '3.12'  # Pin 5.9.0 for security fixes
 chardet==5.2.0 ; python_version >= '3.11'
 cryptography==46.0.5 ; python_version >= '3.12'  # (Noble) min 41.0.7, pinning 46.0.5 for security fixes
 decorator==5.1.1  ; python_version >= '3.11'
