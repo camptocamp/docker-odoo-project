@@ -1,0 +1,15 @@
+# Hadolint configuration
+# https://github.com/hadolint/hadolint#configure
+
+ignored:
+  # Pin versions in apt-get install: package installation is delegated to
+  # install/*.sh scripts, pinning isn't practical for base images.
+  - DL3008
+  # Pin versions in pip install: handled via requirements.txt files.
+  - DL3013
+  # Avoid cache directory with pip: cache is cleaned by
+  # install/purge_dev_package_and_cache.sh.
+  - DL3042
+  # Last USER should not be root: the entrypoint uses gosu to step down
+  # from root, so running as root at build time is intentional.
+  - DL3002
