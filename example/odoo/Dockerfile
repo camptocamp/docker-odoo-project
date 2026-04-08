@@ -1,5 +1,5 @@
 FROM ci-latest:0.1
-MAINTAINER Camptocamp
+LABEL maintainer="Camptocamp"
 
 # For installing odoo you have two possibility
 # 1. either adding the whole root directory
@@ -16,20 +16,18 @@ COPY ./setup.py /odoo/
 COPY ./VERSION /odoo/
 COPY ./migration.yml /odoo/
 
+COPY ./requirements.txt /odoo/
+
 USER root
-RUN pip install -e /odoo
-
-RUN pip install -e /odoo/src
-
-# Project's specifics packages
 RUN set -x; \
-        apt-get update \
+        pip install -e /odoo \
+        && pip install -e /odoo/src \
+        # Project's specifics packages
+        && apt-get update \
         && apt-get install -y --no-install-recommends \
         python3-shapely \
         && apt-get clean \
-        && rm -rf /var/lib/apt/lists/*
-
-COPY ./requirements.txt /odoo/
-RUN cd /odoo && pip install -r requirements.txt
+        && rm -rf /var/lib/apt/lists/* \
+        && pip install -r /odoo/requirements.txt
 
 ENV ADDONS_PATH=/odoo/local-src,/odoo/src/addons
