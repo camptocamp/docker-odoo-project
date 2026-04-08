@@ -385,12 +385,6 @@ If you want to script migration parts, you can write a script using `erppeek`.
 
 Sidenote: You can still use SQL scripts the same as before
 
-### Python Libraries
-
-If you use the official Odoo V7 or the OCA prior to https://github.com/OCA/OCB/commit/b2e48ad8b7cbd62d366e6ffee1861a6085999ce0,
-you will need to run the script `replace_dependencies.sh` in your Dockerfile (check [Dockerfile](example/odoo/Dockerfile) as example)
-in order to use renamed version of old Python libraries (e.g. *PIL* and *pychart*, now named *Pillow* and *Python-Chart*).
-
 ### Demo Data
 
 In Odoo 8, the configuration parameter `without_demo` can be sometimes buggy (Odoo will still install demo data even if it is told not to do so).
