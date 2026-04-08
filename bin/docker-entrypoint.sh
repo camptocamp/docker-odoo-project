@@ -55,17 +55,6 @@ case "$(echo "${DEMO:-false}" | tr '[:upper:]' '[:lower:]')" in
     echo "Running with demo data"
     export DEMO=True WITHOUT_DEMO=
     ;;
-  # deprecated options:
-  "odoo")
-    echo "Running with demo data"
-    echo "DEMO=odoo is deprecated, use DEMO=True"
-    export DEMO=True WITHOUT_DEMO=
-    ;;
-  "none")
-    echo "Running without demo data"
-    echo "DEMO=none is deprecated, use DEMO=False"
-    export DEMO=False WITHOUT_DEMO=all
-    ;;
   *)
     echo "Value '${DEMO}' for DEMO is not a valid value in 'False', 'True'"
     exit 1
