@@ -75,7 +75,8 @@ ENV ODOO_VERSION=18.0 \
     ODOO_DATA_PATH=/odoo/data \
     DEMO=False \
     ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
-    OPENERP_SERVER=/etc/odoo.cfg
+    OPENERP_SERVER=/etc/odoo.cfg \
+    NEUTRALIZE_DB=True
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["odoo"]
