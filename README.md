@@ -11,26 +11,26 @@ A project using this image has to respect a defined structure, look at the [exam
 
 See also the [Changelog](HISTORY.rst).
 
-## ⚠️ Reporting now use kwkhtmltopdf instead of wkhtmltopdf
+## ⚠️ Reporting now uses kwkhtmltopdf instead of wkhtmltopdf
 
-To limit the amount of memory required on each containers to print report
+To limit the amount of memory required on each container to print a report
 
-We have switch to kwkhtmltopdf project : https://github.com/acsone/kwkhtmltopdf
+We have switched to the kwkhtmltopdf project: https://github.com/acsone/kwkhtmltopdf
 
 the kwkhtmltopdf client is included in the base image, you must set the
 env variable :
 
 KWKHTMLTOPDF_SERVER_URL=<url of your KWKHTMLTOPDF server>:<port>
 
-and you also need to specify report url to let kwkhtmltopdf server to retrive images/header etc... from odoo:
+and you also need to specify the report URL to let the kwkhtmltopdf server to retrieve images/headers, etc. from Odoo:
 
-ODOO_REPORT_URL=<url of you odoo:8069>
+ODOO_REPORT_URL=<url of your odoo:8069>
 
 ## ⚠️ Images moved to ghcr.io
 
-Due to pull limitation on docker.io the images are now pushed exclusively on ghcr.io.
+Due to the pull limitation on docker.io the images are now pushed exclusively on ghcr.io.
 
-Images can be found under the github link "Packages".
+Images can be found under the Github link "Packages".
 https://github.com/camptocamp/docker-odoo-project/pkgs/container/odoo-project
 
 ## Image Flavors
@@ -40,8 +40,8 @@ There are 2 flavors of the image:
 - normal: `odoo-project:${odoo_version}-${tag_version}`
 - batteries-included: `odoo-project:${odoo_version}-${tag_version}-batteries`
 
-Note: in production, we strongly recommend to never use the "latest" tag.
-Instead use a specific version in order to be able to rebuild identical images.
+Note: in production, we strongly recommend against using the "latest" tag.
+Instead, use a specific version in order to be able to rebuild identical images.
 
 ### Normal or Batteries-included?
 
@@ -49,29 +49,25 @@ The batteries-included image is exactly the same image, with a list of
 additional pre-installed python packages. The packages have been chosen because
 of their prevalent usage in OCA addons.
 
-The list of package (with their version) is defined in the extra_requirements.txt file.
+The list of packages (with their version) is defined in the extra_requirements.txt file.
 
-* [9.0/extra_requirements.txt](9.0/extra_requirements.txt)
-* [10.0/extra_requirements.txt](10.0/extra_requirements.txt)
-* [11.0/extra_requirements.txt](11.0/extra_requirements.txt)
+* [19.0/extra_requirements.txt](19.0/extra_requirements.txt)
 
-you can also see the Dockerfile that generate this image here: [common/Dockerfile-batteries](common/Dockerfile-batteries)
+You can also see the Dockerfile that generated this image here: [common/Dockerfile-batteries](common/Dockerfile-batteries)
 
 ## Build
 
-The images should be build with `make`:
+The images should be built with `make`:
 
 Normal flavors:
 
 ```
-$ make VERSION=11.0
-$ make VERSION=10.0
+$ make VERSION=19.0
 ```
 
 Batteries-included flavors:
 ```
-$ make VERSION=11.0 BATTERIES=True
-$ make VERSION=10.0 BATTERIES=True
+$ make VERSION=19.0 BATTERIES=True
 ```
 
 
@@ -80,7 +76,7 @@ $ make VERSION=10.0 BATTERIES=True
 The host for the database is in `$DB_HOST` (`db` by default).
 
 A volume `/data/odoo` is declared, which is expected to contain Odoo's filestore
-(this path is set in `openerp.cfg`).
+(this path is set in `odoo.cfg`).
 
 Ports 8069 and 8072 are exposed by default.
 
@@ -96,19 +92,19 @@ value, the configuration parameters will be left unchanged.
 ### ODOO_REPORT_URL
 
 The `ir.config_parameter` `report.url` will be automatically set to this
-domain when the container starts..
+domain when the container starts.
 Default url is `http://localhost:8069`. As soon as we use kwkhtmltopdf
-we must set this URL to be accessible by you kwkhtmltopdf server
+we must set this URL to be accessible by your kwkhtmltopdf server.
 
 ### KWKHTMLTOPDF_SERVER_URL
 
-It point to the server that host the kwktmltopdf server to serve files
+It points to the server that hosts the kwktmltopdf server to serve files
 
 
 ### MIGRATE
 
 `MIGRATE` can be `True` or `False` and determines whether migration tool
-marabunta will be launched. By default migration will be launched.
+marabunta will be launched. By default, migration will be launched.
 
 Migration is *not* launched when using:
 
@@ -137,11 +133,11 @@ one `MARABUNTA_MODE=full`.
 
 By default, [Marabunta](https://github.com/camptocamp/marabunta) does not allow
 to execute more than one version upgrade at a time. This is because it is
-dangerous to execute a migration script (say 9.1.0) if the version of the code
-is not the same (say 9.2.0).
+dangerous to execute a migration script (say 19.1.0) if the version of the code
+is not the same (say 19.2.0).
 
 For a production server, it works, because usually you only want to upgrade to
-the last version N from N-1.  But for development or a test server, you might
+the last version N from N-1. But for development or a test server, you might
 want to take the risk of running all the migration scripts consecutively, this
 is what `MARABUNTA_ALLOW_SERIE=True` is for.
 
@@ -187,10 +183,10 @@ data. It has effect only at the creation of the database.
 
 ### LOCAL_USER_ID
 
-By default, the user ID inside of the container will be 9001. There is little
+By default, the user ID inside the container is 9001. There is little
 concern with this ID until we setup a host volume: the same user ID will be
 used to write the files on the host's filesystem. 9001 will probably be
-inexistent on the host system but at least it will not collide with an actual
+inexistent on the host system, but at least it will not collide with an actual
 user.
 
 Instead, you can set the ID of the host's system in `LOCAL_USER_ID`, which will
@@ -201,14 +197,14 @@ then share the same user.
 
 Used in `bin/runtests` and `bin/runmigration`.
 
-If set to "true", will create a dump in `.cachedb` of an intermediate state of the tests or migration.
+If set to "true", it creates a dump in `.cachedb` of an intermediate state of the tests or migration.
 By default not set, thus unactivated.
 
 ### LOAD_DB_CACHE
 
 Used in `bin/runtests` and `bin/runmigration`.
 
-If set to "false", will skip trying to reload a cached dump from `.cachedb`.
+If set to "false", it skips trying to reload a cached dump from `.cachedb`.
 
 ### SUBS_MD5
 
@@ -235,16 +231,16 @@ It will load a dump lower than "odoo_sample_$MIG_LOAD_VERSION_CEIL.dmp"
 This is useful if you bumped odoo/VERSION as it won't match existing
 dumps.
 
-For instance you have made a dump 10.1.0, you are now on the version
-10.2.0, if you pass your current version it will search for a dump
-lower than 10.2.0 and restore the 10.1.0. Then play the remaining
+For instance you have made a dump 19.1.0, you are now on the version
+19.2.0, if you pass your current version it will search for a dump
+lower than 19.2.0 and restore the 19.1.0. Then play the remaining
 steps on top of it.
 
 ### Odoo Configuration Options
 
 The main configuration options of Odoo can be configured through environment variables. The name of the environment variables are the same of the options but uppercased (eg. `workers` becomes `WORKERS`).
 
-Look in [11.0/templates/odoo.cfg.tmpl](11.0/templates/odoo.cfg.tmpl) to see the full list.
+Look in [19.0/templates/odoo.cfg.tmpl](19.0/templates/odoo.cfg.tmpl) to see the full list.
 
 While most of the variables can be set in the docker compose file so we can have different values for different environments, the `ADDONS_PATH` **must** be set in the `Dockerfile` of your project with a line such as:
 
@@ -273,10 +269,10 @@ other_param='some value'
 Inside the container, a script `runtests` is used for running the tests on Travis.
 
 Unless `LOAD_DB_CACHE is set to `false` it will search for a dump of dependencies and restore it.
-Otherwise, will create a new database, find the `odoo/external-src` and `odoo/src` dependencies of the local addons and
-if `CREATE_DB_CACHE` is activated creates a dump of that state.
+Otherwise, will create a new database, find the `odoo/external-src` and `odoo/src` dependencies of the local addons,
+and if `CREATE_DB_CACHE` is activated, it creates a dump of that state.
 
-Then it will install local addons, run their tests and show the code coverage.
+Then it will install local addons, run their tests, and show the code coverage.
 
 ```
 docker compose run --rm [-e CREATE_DB_CACHE=true] [-e LOAD_DB_CACHE=false] [-e SUBS_MD5=<hash>] odoo runtests
@@ -320,25 +316,25 @@ To export it to HTML, add --cov-report=HTML:EXPORT_PATH
 
 Inside the container, a script `runmigration` is used to run the migration steps on Travis.
 
-Then when launched, it will search for database dump of the content of `odoo/VERSION` file.
+Then, when launched, it will search for a database dump of the content of `odoo/VERSION` file.
 Or if you provided `MIG_LOAD_VERSION_CEIL` which will allow you to search for an other version.
 If no dump is available (or `LOAD_DB_CACHE` is set to `false`), migration will start from scratch.
 
 The migration steps are then run.
 
-If migration succeed a dump is created if `CREATE_DB_CACHE` is set to `true`.
+If migration succeeds, a dump is created if `CREATE_DB_CACHE` is set to `true`.
 
 ```
 docker compose run --rm [-e CREATE_DB_CACHE=true] [-e LOAD_DB_CACHE=false] [-e MIG_LOAD_VERSION_CEIL=x.y.z] odoo runmigration
 ```
 
-This tools really speed up the process of testing migration steps as you can be executing only a single step instead of redoing all.
+This tool really speeds up the process of testing migration steps, as you can be executing only a single step instead of redoing all.
 
 ### cached dumps (runtests / runmigration)
 
-To use database dumps you will need a volume on `/.cachedb` to have persistant dumps.
+To use database dumps, you will need a volume on `/.cachedb` to have persistant dumps.
 
-On travis you will also want to activate the cache, if your volume definition is `- "$HOME/.cachedb:/.cachedb"`
+On travis, you will also want to activate the cache, if your volume definition is `- "$HOME/.cachedb:/.cachedb"`
 add this in `.travis.yml`:
 
 ```
@@ -360,7 +356,7 @@ something like `010_abc` (`^[a-zA-Z0-9_-]+$`) and must have no extension (or
 it would not be picked up by `run-parts`).
 
 Important: The database is guaranteed to exist when the scripts are run, so you
-must take that in account when writing them. Usually you'll want to use such
+must take that into account when writing them. Usually you'll want to use such
 check:
 
 ```
@@ -389,4 +385,4 @@ Sidenote: You can still use SQL scripts the same as before
 
 In Odoo 8, the configuration parameter `without_demo` can be sometimes buggy (Odoo will still install demo data even if it is told not to do so).
 
-To circumvent this behavior, you can force this parameter in the command line used to start Odoo (check [migration.yml](example/odoo/migration.yml) as example).
+To circumvent this behavior, you can force this parameter in the command line used to start Odoo (check [migration.yml](example/odoo/migration.yml) as an example).
