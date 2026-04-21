@@ -75,8 +75,7 @@ ENV ODOO_VERSION=19.0 \
     ODOO_DATA_PATH=/odoo/data \
     DEMO=False \
     ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
-    ODOO_RC=/etc/odoo.cfg \
-    NEUTRALIZE_DB=True
+    ODOO_RC=/etc/odoo.cfg
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["odoo"]

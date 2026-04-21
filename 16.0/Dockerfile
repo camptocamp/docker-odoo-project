@@ -74,8 +74,7 @@ ENV ODOO_VERSION=16.0 \
     ODOO_DATA_PATH=/odoo/data \
     DEMO=False \
     ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
-    OPENERP_SERVER=/etc/odoo.cfg \
-    NEUTRALIZE_DB=True
+    OPENERP_SERVER=/etc/odoo.cfg
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["odoo"]
