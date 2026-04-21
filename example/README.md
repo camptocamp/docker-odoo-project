@@ -25,7 +25,7 @@ Follow the steps:
    file](odoo/Dockerfile) that installs additional dependencies):
 
         FROM camptocamp/odoo-project:11.0
-        MAINTAINER <name>
+        LABEL maintainer="<maintainer name>"
 
         ENV ADDONS_PATH=/odoo/local-src,/odoo/external-src/server-tools,/odoo/src/addons
 
