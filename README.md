@@ -244,9 +244,52 @@ For instance you have made a dump 10.1.0, you are now on the version
 lower than 10.2.0 and restore the 10.1.0. Then play the remaining
 steps on top of it.
 
+### ODOO_NEUTRALIZE
+
+`ODOO_NEUTRALIZE` can be `True` or `False`. When set to `True` (default), the image will execute the official Odoo neutralization script if `RUNNING_ENV` is not set to `prod`. This deactivates outgoing emails, scheduled actions, and external payments to prevent accidental data leaks from production dumps.
+
+    Note: This requires Odoo 16.0 or higher.
+
+### CONFIDOO_APPLY
+
+`CONFIDOO_APPLY` can be `True` or `False`. When set to `True` (default), the image will use the [confidoo tool](https://github.com/camptocamp/confidoo) to apply settings defined in environment variables. This runs after neutralization and migrations but before the Odoo server starts.
+
+### ODOO_ENVIRONMENT_CONFIG
+
+An INI-formatted string containing system parameters or Odoo configurations to be applied by Confidoo.
+Example from [the tool documentation](https://github.com/camptocamp/confidoo):
+  ```
+  ODOO_ENVIRONMENT_CONFIG: |
+    # Disable all scheduled actions
+    [model:ir.cron]
+    active = False
+
+    # Update specific partner
+    [record:base.partner_admin]
+    name = Confidoo Admin
+    email = admin@confidoo.com
+
+    # Set system parameters
+    [config:set_param]
+    ribbon.name = Test Environment
+    database.uuid = 0000-0000-0000-0000
+
+    # Remove expiration settings
+    database.expiration_reason =
+    database.expiration_date =
+  ```
+
+### ODOO_ENVIRONMENT_SECRET_CONFIG
+
+Similar to `ODOO_ENVIRONMENT_CONFIG`, but intended for sensitive data (API keys, passwords).
+
+
 ### Odoo Configuration Options
 
-The main configuration options of Odoo can be configured through environment variables. The name of the environment variables are the same of the options but uppercased (eg. `workers` becomes `WORKERS`).
+There are three ways to configure Odoo in this image, depending on the scope and persistence required:
+
+
+1. The main configuration options of Odoo can be configured through environment variables. The name of the environment variables are the same of the options but uppercased (eg. `workers` becomes `WORKERS`).
 
 Look in [11.0/templates/odoo.cfg.tmpl](11.0/templates/odoo.cfg.tmpl) to see the full list.
 
@@ -259,6 +302,20 @@ ENV ADDONS_PATH=/odoo/local-src,/odoo/external-src/server-tools,/odoo/src/addons
 By setting this value in the `Dockerfile`, it will be integrated into the build and thus will be consistent across each environment.
 
 By the way, you can add other `ENV` variables in your project's `Dockerfile` if you want to customize the default values of some variables for a project.
+
+2. Declarative Configuration via Confidoo (non-production environment)
+
+For Odoo 16.0+, it is recommended to use Confidoo for managing system parameters and complex configurations. This is handled via the ODOO_ENVIRONMENT_CONFIG and ODOO_ENVIRONMENT_SECRET_CONFIG variables.
+
+Unlike standard environment variables, Confidoo:
+
+    Can set `ir.config_parameter` values directly in the database.
+
+    Supports INI-style sections.
+
+    Is applied automatically during the entrypoint sequence in non-production environments.
+
+3. Raw Configuration Injection (`ADDITIONAL_ODOO_RC`)
 
 You can also use environment variable `ADDITIONAL_ODOO_RC` for any additional parameters that must go in the `odoo.cfg` file.
 e.g.:
