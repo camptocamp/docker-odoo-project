@@ -68,6 +68,9 @@ simplejson==3.20.1
 -e git+https://github.com/camptocamp/marabunta@master#egg=marabunta
 -e git+https://github.com/camptocamp/anthem@master#egg=anthem
 
+# Confidoo
+-e git+https://github.com/camptocamp/confidoo@master#egg=confidoo
+
 # test / lint
 # those libs and their dependencies are unpinned
 # to always test with the last version of it

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+if [ "${ODOO_VERSION%%.*}" -lt 16 ]; then
+    echo "Confidoo apply skipped: neutralization requires Odoo 16.0+"
+    exit 0
+fi
+# Default value
+CONFIDOO_APPLY=${CONFIDOO_APPLY:-True}
+if [[ "$RUNNING_ENV" != "prod" && "$CONFIDOO_APPLY" == "True" ]]; then
+    if [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" )" != '1' ]
+    then
+        echo "Database does not exist, ignoring script"
+        exit 0
+    fi
+    ALREADY_RUN=$(psql -tAc "SELECT value FROM ir_config_parameter WHERE key='confidoo.apply_date'")
+    if [ -n "$ALREADY_RUN" ]; then
+        echo "Confidoo already applied on $ALREADY_RUN, skipping."
+        exit 0
+    fi
+    if ! command -v confidoo &> /dev/null; then
+        echo "Error: 'confidoo' command not found. Please ensure it is installed in the image."
+        exit 1
+    fi
+    if [ "$( psql -tAc "SELECT value FROM ir_config_parameter WHERE key='database.is_neutralized'" )" != 'True' ]; then
+        echo "INFO: You are about to apply Confidoo settings on a non-neutralized database."
+    fi
+
+    export PGDATABASE=$DB_NAME PGUSER=$DB_USER PGPASSWORD=$DB_PASSWORD
+    echo "Entrypoint: Applying environment-defined settings via confidoo..."
+    if [ -n "$ODOO_ENVIRONMENT_CONFIG" ]; then
+        echo "Applying ODOO_ENVIRONMENT_CONFIG..."
+        echo "$ODOO_ENVIRONMENT_CONFIG" | confidoo apply
+    fi
+    if [ -n "$ODOO_ENVIRONMENT_SECRET_CONFIG" ]; then
+        echo "Applying ODOO_ENVIRONMENT_SECRET_CONFIG..."
+        echo "$ODOO_ENVIRONMENT_SECRET_CONFIG" | confidoo apply
+    fi
+
+    psql -c "INSERT INTO ir_config_parameter (key, value) VALUES ('confidoo.apply_date', NOW()) ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;"
+    echo "Success: Confidoo settings applied and flag set."
+fi
