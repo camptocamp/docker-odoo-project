@@ -10,7 +10,7 @@ export PGUSER=${DB_USER}
 export PGDATABASE=${DB_NAME}
 export PGAPPNAME=${HOSTNAME}
 
-# As 'docker compose exec' do not launch the entrypoint
+# As 'docker compose exec' does not launch the entrypoint
 # init PG variable into .bashrc so it will be initialized
 # when doing 'docker compose exec odoo odoo bash'
 echo "
@@ -19,14 +19,14 @@ export PGPORT=${DB_PORT}
 export PGUSER=${DB_USER}
 export PGDATABASE=${DB_NAME}
 export PGAPPNAME=${HOSTNAME}
-" >>/odoo/.bashrc
+" >> /odoo/.bashrc
 
 # Only set PGPASSWORD if there is no .pgpass file
 if [ ! -f /odoo/.pgpass ]; then
   export PGPASSWORD=${DB_PASSWORD}
   echo "
     export PGPASSWORD=${DB_PASSWORD}
-    " >>/odoo/.bashrc
+    " >> /odoo/.bashrc
 fi
 
 BASE_CMD=$(basename $1)
@@ -40,18 +40,18 @@ case "$BASE_CMD" in ("runtests"|"testdb-gen"|"testdb-update")
   DEMO=true;;
 esac
 case "$(echo "${DEMO:-false}" | tr '[:upper:]' '[:lower:]')" in
-"false")
-  echo "Running without demo data"
-  export DEMO=False WITHOUT_DEMO=True
-  ;;
-"true")
-  echo "Running with demo data"
-  export DEMO=True WITHOUT_DEMO=
-  ;;
-*)
-  echo "Value '${DEMO}' for DEMO is not a valid value in 'False', 'True'"
-  exit 1
-  ;;
+  "false")
+    echo "Running without demo data"
+    export DEMO=False WITHOUT_DEMO=True
+    ;;
+  "true")
+    echo "Running with demo data"
+    export DEMO=True WITHOUT_DEMO=
+    ;;
+  *)
+    echo "Value '${DEMO}' for DEMO is not a valid value in 'False', 'True'"
+    exit 1
+    ;;
 esac
 
 # Create configuration file from the template

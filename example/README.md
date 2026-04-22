@@ -8,7 +8,7 @@ Follow the steps:
 
 1. Create directories. This is mandatory, they will be copied in the image
 
-        mkdir -p  odoo/addons data songs
+        mkdir -p odoo/addons data songs
 
 2. Add a submodule for Odoo (official or OCA/OCB)
 
@@ -25,7 +25,7 @@ Follow the steps:
    file](Dockerfile) that installs additional dependencies):
 
         FROM camptocamp/odoo-project:11.0
-        MAINTAINER <name>
+        LABEL maintainer="<maintainer name>"
 
         ENV ADDONS_PATH=/odoo/odoo/addons,/odoo/external-src/server-tools,/odoo/src/odoo/addons
 

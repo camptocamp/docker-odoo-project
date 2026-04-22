@@ -562,6 +562,7 @@ if the image, without onbuild instructions, with onbuild and full.
 
 * Reduce size of the 11.0 image by cleaning and optimizing layers
 
+
 2.5.0 (2018-01-11)
 ++++++++++++++++++
 

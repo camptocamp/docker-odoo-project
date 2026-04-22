@@ -33,11 +33,11 @@ wait_postgres.sh
 CACHE_DIR=${CACHE_DIR:=/tmp/cachedb}
 
 if [ -z $1 ]; then
-    LOCAL_ADDONS=$(find ${LOCAL_CODE_PATH}/* -maxdepth 0 -type d -and -not -name server_environment_files -printf "%f\n" |
-        awk -vORS=, '{print $1}' |
-        sed 's/,$/\n/')
+  LOCAL_ADDONS=$(find ${LOCAL_CODE_PATH}/* -maxdepth 0 -type d -and -not -name server_environment_files -printf "%f\n" |
+      awk -vORS=, '{print $1}' |
+      sed 's/,$/\n/')
 else
-    LOCAL_ADDONS=$1
+  LOCAL_ADDONS=$1
 fi
 
 ALL_DEPS_ADDONS=$(list_dependencies.py "$LOCAL_ADDONS")
@@ -51,30 +51,30 @@ echo "Create database"
 createdb -O $DB_USER ${DB_NAME_TEST}
 
 if [[ ! -z "$SUBS_MD5" ]]; then
-    CACHED_DUMP="$CACHE_DIR/odoo_test_$SUBS_MD5.dmp"
+  CACHED_DUMP="$CACHE_DIR/odoo_test_$SUBS_MD5.dmp"
 fi
 
 echo "Submodule addons MD5 is: $SUBS_MD5"
 
 if [ "$LOAD_DB_CACHE" != "false" -a -f "$CACHED_DUMP" ]; then
-    echo "🐘 🐘 Database dump ${CACHED_DUMP} found 🐘 🐘"
-    echo "Restore Database dump from cache matching MD5 📦⮕ 🐘"
-    psql -q -o /dev/null -d $DB_NAME_TEST -f "$CACHED_DUMP"
-    psql -d $DB_NAME_TEST -P pager=off -c "SELECT name as installed_module FROM ir_module_module WHERE state = 'installed' ORDER BY name"
+  echo "🐘 🐘 Database dump ${CACHED_DUMP} found 🐘 🐘"
+  echo "Restore Database dump from cache matching MD5 📦⮕ 🐘"
+  psql -q -o /dev/null -d $DB_NAME_TEST -f "$CACHED_DUMP"
+  psql -d $DB_NAME_TEST -P pager=off -c "SELECT name as installed_module FROM ir_module_module WHERE state = 'installed' ORDER BY name"
 else
-    if [ "$LOAD_DB_CACHE" == "false" ]; then
-        echo "Dump cache load disabled."
-    else
-        echo "No cached dump found matching MD5 🐢 🐢 🐢"
-    fi
-    echo "🔨🔨 Install official/OCA modules 🔨🔨"
-    echo "${DEPS_ADDONS}"
-    odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --db-filter=$DB_NAME_TEST -i ${DEPS_ADDONS}
-    if [ "$CREATE_DB_CACHE" == "true" -a ! -z "$CACHED_DUMP" ]; then
-        echo "Generate dump $CACHED_DUMP into cache 🐘⮕ 📦"
-        mkdir -p "$CACHE_DIR"
-        pg_dump -Fp -d $DB_NAME_TEST -O -f "$CACHED_DUMP"
-    fi
+  if [ "$LOAD_DB_CACHE" == "false" ]; then
+    echo "Dump cache load disabled."
+  else
+    echo "No cached dump found matching MD5 🐢 🐢 🐢"
+  fi
+  echo "🔨🔨 Install official/OCA modules 🔨🔨"
+  echo "${DEPS_ADDONS}"
+  odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --log-level=warn --db-filter=$DB_NAME_TEST -i ${DEPS_ADDONS}
+  if [ "$CREATE_DB_CACHE" == "true" -a ! -z "$CACHED_DUMP" ]; then
+    echo "Generate dump $CACHED_DUMP into cache 🐘⮕ 📦"
+    mkdir -p "$CACHE_DIR"
+    pg_dump -Fp -d $DB_NAME_TEST -O -f "$CACHED_DUMP"
+  fi
 fi
 echo "🔧🔧 Install odoo/addons modules 🔧🔧"
 odoo --stop-after-init --workers=0 --database $DB_NAME_TEST --test-enable --log-level=test --log-handler=":INFO" --db-filter=$DB_NAME_TEST -i ${LOCAL_ADDONS}

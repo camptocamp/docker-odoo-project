@@ -46,6 +46,7 @@ services:
 
 volumes:
   data-odoo:
-  data-db: # store pytest cache, allowing to use --lf or --ff (replay last or first failures)
+  data-db:
+  # store pytest cache, allowing to use --lf or --ff (replay last or first failures)
 
   data-odoo-pytest-cache:

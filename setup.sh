@@ -20,8 +20,8 @@ fi
 SRC=${SRC:=(mktemp -d)}
 echo "Creating $SRC"
 
-mkdir -p ${SRC}
-cp Dockerfile MANIFEST.in ${SRC}/
+mkdir -p $SRC
+cp -r common/. $SRC/
 cp -r ${VERSION}/. $SRC/
 cp -r bin/ $SRC
 cp -r install/ $SRC

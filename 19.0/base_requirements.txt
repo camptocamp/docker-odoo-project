@@ -24,7 +24,7 @@ num2words==0.5.13 ; python_version >= '3.12'
 ofxparse==0.21
 openpyxl==3.1.2 ; python_version >= '3.12'
 passlib==1.7.4 # min version = 1.7.2 (Focal with security backports)
-Pillow==12.1.1 # upstream: 10.3.0
+Pillow==12.1.1 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 polib==1.1.1
 psutil==5.9.8 ; python_version >= '3.12' # (Noble) Mostly to have a wheel package
 psycopg2==2.9.9 ; python_version >= '3.12' and python_version < '3.13' # (Noble)
@@ -52,6 +52,7 @@ zeep==4.2.1 ; python_version >= '3.11' and python_version < '3.13'
 zeep==4.3.1 ; python_version >= '3.13'
 zope.event==6.0
 zope.interface==8.0
+
 
 # Not part of official requirements, but used by some addons
 # colorama==0.3.9

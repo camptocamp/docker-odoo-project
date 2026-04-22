@@ -1,8 +1,5 @@
 #!/bin/bash
 set -exo pipefail
-if [ -z "$VERSION" ]; then
-    export VERSION=18.0
-fi
 if [ -z "$BUILD_TAG" ]; then
     export BUILD_TAG=odoo:${VERSION}
 fi
@@ -24,11 +21,14 @@ if [ -z "$VERSION" ]; then
     exit 1
 fi
 
-if [ "$VERSION" = "14.0" ]; then
-    PYTHON_FROM="python:3.9-slim-trixie"
-else
-    PYTHON_FROM="python:3.12-slim-trixie"
-fi
+case "$VERSION" in
+    "14.0")
+        PYTHON_FROM="python:3.9-slim-trixie"
+        ;;
+    *)
+        PYTHON_FROM="python:3.12-slim-trixie"
+        ;;
+esac
 
 TMP=$(mktemp -d)
 echo "Working in $TMP"

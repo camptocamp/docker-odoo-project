@@ -8,11 +8,11 @@
 #
 # Usage:
 #   ./odoo/bin/list_dependencies.py local_module1,local_module2
-import sys
-import os
 import ast
+import os
+import sys
 
-LOCAL_CODE_PATH = os.getenv('LOCAL_CODE_PATH', "/odoo/odoo/addons")
+LOCAL_CODE_PATH = os.getenv("LOCAL_CODE_PATH", "/odoo/odoo/addons")
 
 dependencies = set()
 local_modules = os.listdir(LOCAL_CODE_PATH)

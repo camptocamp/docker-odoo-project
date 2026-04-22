@@ -15,16 +15,13 @@ set -Exeo pipefail
 # * VERSION (16.0, 17.0, ...)
 # * IMAGE_LATEST (tag of the 'latest' image built)
 #
-# if VERSION is not set, we will use the default 18.0
-if [ -z "$VERSION" ]; then
-    export VERSION=18.0
-fi
-if [ -z "$IMAGE_LATEST" ]; then
-    export IMAGE_LATEST=odoo:${VERSION}
-fi
+
 if [ -z "$VERSION" ]; then
     echo "VERSION environment variable is missing"
     exit 1
+fi
+if [ -z "$IMAGE_LATEST" ]; then
+    export IMAGE_LATEST=odoo:${VERSION}
 fi
 
 
@@ -61,6 +58,7 @@ docoruncmd() {
 }
 
 cp -ra ./example/. "$TMP/"
+
 cd "$TMP"
 
 echo '>>> Downloading Odoo src'
