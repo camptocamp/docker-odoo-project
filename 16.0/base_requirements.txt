@@ -61,6 +61,9 @@ simplejson==3.19.3
 marabunta==0.13.0
 -e git+https://github.com/camptocamp/anthem@master#egg=anthem
 
+# Confidoo
+-e git+https://github.com/camptocamp/confidoo@master#egg=confidoo
+
 # test / lint
 # those libs and their dependencies are unpinned
 # to always test with the last version of it
