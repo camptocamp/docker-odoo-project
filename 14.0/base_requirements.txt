@@ -46,6 +46,7 @@ xlrd==1.2.0; python_version >= '3.8'
 zope.event==5.0
 zope.interface==8.0
 
+
 whool==1.2.0
 # Not part of official requirements, but used by some addons
 # colorama==0.3.9

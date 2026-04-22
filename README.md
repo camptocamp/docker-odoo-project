@@ -34,7 +34,7 @@ KWKHTMLTOPDF_SERVER_URL=<url of your KWKHTMLTOPDF server>:<port>
 and you also need to specify report url to let kwkhtmltopdf server to retrive images/header etc... from odoo:
 
 ```
-ODOO_REPORT_URL=<url of you odoo:8069>
+ODOO_REPORT_URL=<url of your odoo:8069>
 ```
 
 ## ⚠️ Images moved to ghcr.io
@@ -46,7 +46,7 @@ https://github.com/camptocamp/docker-odoo-project/pkgs/container/odoo-project
 
 ## Image Flavors
 
-There are 4 flavors of the image:
+There are 1 flavor of the image:
 
 - normal: `odoo-project:${odoo_version}-${tag_version}`
 
@@ -61,10 +61,8 @@ The images should be build with `make`:
 Normal flavors:
 
 ```
-# generate image camptocamp/odoo-project:11.0-latest and camptocamp/odoo-project:11.0-latest
-$ make VERSION=11.0
-# generate image camptocamp/odoo-project:10.0-latest and camptocamp/odoo-project:10.0-latest
-$ make VERSION=10.0
+$ make VERSION=19.0
+$ make VERSION=18.0
 ```
 
 ## Configuration
@@ -72,7 +70,7 @@ $ make VERSION=10.0
 The host for the database is in `$DB_HOST` (`db` by default).
 
 A volume `/data/odoo` is declared, which is expected to contain Odoo's filestore
-(this path is set in `openerp.cfg`).
+(this path is set in `odoo.cfg`).
 
 Ports 8069 and 8072 are exposed by default.
 
@@ -88,13 +86,13 @@ value, the configuration parameters will be left unchanged.
 ### ODOO_REPORT_URL
 
 The `ir.config_parameter` `report.url` will be automatically set to this
-domain when the container starts..
+domain when the container starts.
 Default url is `http://localhost:8069`. As soon as we use kwkhtmltopdf
 we must set this URL to be accessible by you kwkhtmltopdf server
 
 ### KWKHTMLTOPDF_SERVER_URL
 
-It point to the server that host the kwktmltopdf server to serve files
+It points to the server that host the kwktmltopdf server to serve files
 
 
 ### MIGRATE
@@ -129,11 +127,11 @@ one `MARABUNTA_MODE=full`.
 
 By default, [Marabunta](https://github.com/camptocamp/marabunta) does not allow
 to execute more than one version upgrade at a time. This is because it is
-dangerous to execute a migration script (say 9.1.0) if the version of the code
-is not the same (say 9.2.0).
+dangerous to execute a migration script (say 19.1.0) if the version of the code
+is not the same (say 19.2.0).
 
 For a production server, it works, because usually you only want to upgrade to
-the last version N from N-1.  But for development or a test server, you might
+the last version N from N-1. But for development or a test server, you might
 want to take the risk of running all the migration scripts consecutively, this
 is what `MARABUNTA_ALLOW_SERIE=True` is for.
 
@@ -234,16 +232,16 @@ It will load a dump lower than "odoo_sample_$MIG_LOAD_VERSION_CEIL.dmp"
 This is useful if you bumped odoo/VERSION as it won't match existing
 dumps.
 
-For instance you have made a dump 10.1.0, you are now on the version
-10.2.0, if you pass your current version it will search for a dump
-lower than 10.2.0 and restore the 10.1.0. Then play the remaining
+For instance you have made a dump 19.1.0, you are now on the version
+19.2.0, if you pass your current version it will search for a dump
+lower than 19.2.0 and restore the 19.1.0. Then play the remaining
 steps on top of it.
 
 ### Odoo Configuration Options
 
 The main configuration options of Odoo can be configured through environment variables. The name of the environment variables are the same of the options but uppercased (eg. `workers` becomes `WORKERS`).
 
-Look in [11.0/templates/odoo.cfg.tmpl](11.0/templates/odoo.cfg.tmpl) to see the full list.
+Look in [19.0/templates/odoo.cfg.tmpl](19.0/templates/odoo.cfg.tmpl) to see the full list.
 
 While most of the variables can be set in the `docker-compose.yml` file so we can have different values for different environments, the `ADDONS_PATH` **must** be set in the `Dockerfile` of your project with a line such as:
 
@@ -307,7 +305,7 @@ docker compose run --rm odoo dropdb testdb
 
 
 Pytest uses a plugin (https://github.com/camptocamp/pytest-odoo) that corrects the
-Odoo namespaces (`openerp.addons`/`odoo.addons`) when running the tests.
+Odoo namespaces (`odoo.addons`) when running the tests.
 
 ### pytest-cov
 

@@ -1,5 +1,5 @@
 ifndef VERSION
-VERSION=18.0
+$(error VERSION is not set)
 endif
 
 IMAGE_LATEST=ci-5xx-latest:${VERSION}
