@@ -246,9 +246,9 @@ data. It has effect only at the creation of the database.
 
 ### LOCAL_USER_ID
 
-By default, the user ID inside the container is 9001. There is little
+By default, the user ID inside the container is 999. There is little
 concern with this ID until we setup a host volume: the same user ID will be
-used to write the files on the host's filesystem. 9001 will probably be
+used to write the files on the host's filesystem. 999 will probably be
 inexistent on the host system, but at least it will not collide with an actual
 user.
 
