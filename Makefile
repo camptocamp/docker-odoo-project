@@ -1,8 +1,9 @@
 ifndef VERSION
 $(error VERSION is not set)
 endif
-
+ifndef IMAGE_LATEST
 IMAGE_LATEST=ci-4xx-latest:${VERSION}
+endif
 BUILD_TAG=$(IMAGE_LATEST)
 
 export

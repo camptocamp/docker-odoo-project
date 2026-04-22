@@ -1,0 +1,14 @@
+**/.git/**/*
+**/.git
+**/.gitignore
+**/.travis.yml
+**/LICENSE
+**/*.pyc
+**/README.md
+
+# for speeding build of image in dev, you can build a light image
+# without all odoo code source by ignoring the following directory
+# just uncomment following lines
+# local-src/**/*
+# external-src/**/*
+# src/addons

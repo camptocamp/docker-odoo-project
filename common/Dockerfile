@@ -7,8 +7,8 @@ ARG VERSION=19.0
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /odoo /var/log/odoo
 
-COPY ./base_requirements.txt ./platform_requirements.txt ./test_requirements.txt /odoo/
 COPY ./install /install
+COPY ./*_requirements.txt /odoo/
 
 # Moved because there was a bug while installing `odoo-autodiscover`. There is
 # an accent in the contributor name
@@ -54,12 +54,16 @@ RUN /install/package_odoo.sh \
 # wait on postgres
 RUN /install/gosu.sh && /install/dockerize.sh
 
-COPY ./src_requirements.txt /odoo
 COPY ./bin /odoo-bin
 COPY ./templates /templates
 COPY ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
 COPY ./start-entrypoint.d /start-entrypoint.d
 COPY ./MANIFEST.in /odoo
+COPY --chmod=644 ./env_odoo.sh /odoo-bin/
+# Init PG variables during Shell initialization so it will be available
+# when doing 'docker compose exec odoo gosu odoo bash'
+RUN set -x; echo >> /etc/bash.bashrc \
+  "if [ -f /odoo-bin/env_postgres.sh ]; then . /odoo-bin/env_postgres.sh; fi"
 
 ENV ODOO_VERSION=$VERSION \
     PATH=/odoo-bin:$PATH \

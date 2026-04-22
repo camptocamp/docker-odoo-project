@@ -32,14 +32,12 @@
 #   steps on top of it.
 set -e
 
-source db.sh
+. db_cache_helpers.sh
+. env_odoo.sh
 wait_postgres.sh
 
-CREATE_DB_CACHE=${CREATE_DB_CACHE:=false}
-LOAD_DB_CACHE=${LOAD_DB_CACHE:=true}
-
-CACHE_DIR=${CACHE_DIR:=/tmp/cachedb}
-DB_NAME=${DB_NAME:=odoo_mig}
+# Set default values
+: ${CREATE_DB_CACHE:=false} ${LOAD_DB_CACHE:=true} ${CACHE_DIR:=/tmp/cachedb} ${DB_NAME:=odoo_mig}
 
 VERSION=$(cat /odoo/VERSION)
 
@@ -71,7 +69,7 @@ if [ "$LOAD_DB_CACHE" != "false" ]; then
   fi
 fi
 
-gosu odoo migrate
+run_as_odoo migrate
 
 DUMP="$CACHE_DIR/odoo_sample_$VERSION.dmp"
 

@@ -1,3 +1,4 @@
+# hadolint ignore=DL3006  # Use `docker build --build-context ...`
 FROM odoo
 LABEL maintainer="Camptocamp"
 

@@ -1,35 +1,40 @@
 #!/usr/bin/env python3
-# Provide a list of module which are dependencies
-# of local-src modules excluding local-src modules
+# Provide a list of modules which are dependencies
+# of local modules excluding local modules themselves
 #
 # Arguments:
-#  list of module (coma separated), restrict list of
+#  list of modules (coma separated), restrict list of
 #  dependencies to the dependencies of this list.
 #
 # Usage:
 #   ./odoo/bin/list_dependencies.py local_module1,local_module2
 import ast
 import os
+import pathlib
 import sys
 
-BASE_DIR = os.getcwd()
-LOCAL_SRC_DIR = os.path.join(BASE_DIR, "odoo", "local-src")
+CWD = pathlib.Path.cwd()
+
+if path_from_env := os.getenv("LOCAL_CODE_PATH"):
+    LOCAL_CODE_PATH = CWD / path_from_env
+else:
+    LOCAL_CODE_PATH = CWD / "odoo" / "local-src"
 
 dependencies = set()
-local_modules = os.listdir(LOCAL_SRC_DIR)
+local_modules = {mod.name for mod in LOCAL_CODE_PATH.iterdir()}
+
 if len(sys.argv) > 1:
     modules = sys.argv[1].split(",")
 else:
     modules = local_modules
-for mod in modules:
-    # read __manifest__
-    manifest_path = os.path.join(LOCAL_SRC_DIR, mod, "__manifest__.py")
-    if not os.path.isfile(manifest_path):
-        continue
-    with open(manifest_path) as manifest:
-        data = ast.literal_eval(manifest.read())
-    dependencies.update(data["depends"])
 
-# remove local-src from list of dependencies
+for mod_name in modules:
+    # read __manifest__
+    manifest = LOCAL_CODE_PATH / mod_name / "__manifest__.py"
+    if manifest.is_file():
+        data = ast.literal_eval(manifest.read_text())
+        dependencies.update(data["depends"])
+
+# remove local modules from list of dependencies
 dependencies = dependencies.difference(local_modules)
-print(",".join(dependencies) or "base")
+print(",".join(sorted(dependencies)) or "base")
