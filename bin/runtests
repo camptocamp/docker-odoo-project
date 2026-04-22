@@ -31,6 +31,7 @@ source db.sh
 wait_postgres.sh
 LOCAL_SRC_DIR=/odoo/local-src
 ODOO_BIN_PATH=/odoo/src/odoo-bin
+COVERAGE=$(command -v coverage || true)
 
 if [ -z $1 ]; then
   LOCAL_ADDONS=$(find ${LOCAL_SRC_DIR}/* -maxdepth 0 -type d -and -not -name server_environment_files -printf "%f\n" |
@@ -77,7 +78,15 @@ if [ "$DUMP_LOADED" = 0 ]; then
   fi
 fi
 echo "🔧🔧 Install local-src modules 🔧🔧"
-coverage run --source="${LOCAL_SRC_DIR}" "${ODOO_BIN_PATH}" --stop-after-init --workers=0 --database $DB_NAME --test-enable --log-level=test --log-handler=":INFO" --db-filter=$DB_NAME -i ${LOCAL_ADDONS}
+ODOO_PARAMS="--stop-after-init --workers=0 --database $DB_NAME --test-enable --log-level=test --log-handler=:INFO --db-filter=$DB_NAME -i ${LOCAL_ADDONS}"
+if [ -n "$COVERAGE" ]; then
+  "$COVERAGE" run --source="${LOCAL_SRC_DIR}" "${ODOO_BIN_PATH}" $ODOO_PARAMS
+else
+  echo "Skip Code Coverage - not available"
+  odoo $ODOO_PARAMS
+fi
 
 dropdb ${DB_NAME}
-coverage report -m
+if [ -n "$COVERAGE" ]; then
+ "$COVERAGE" report -m
+fi

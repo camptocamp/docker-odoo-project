@@ -71,16 +71,6 @@ simplejson==3.20.1
 # Confidoo
 -e git+https://github.com/camptocamp/confidoo@master#egg=confidoo
 
-# test / lint
-# those libs and their dependencies are unpinned
-# to always test with the last version of it
-flake8
-pytest==8.4.2
-pluggy
-coverage
-pytest-odoo>=2.1.3
-pytest-cov>=7.0.0
-watchdog
 
 # Library dependency
 argh==0.31.3
