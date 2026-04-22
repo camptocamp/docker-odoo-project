@@ -1,0 +1,11 @@
+migration:
+  options:
+    install_command: odoo
+  versions:
+    - version: setup
+      operations:
+        pre:
+          - "sh -c 'psql -c \"CREATE EXTENSION pg_trgm;\"'"
+      addons:
+        upgrade:
+          - sale

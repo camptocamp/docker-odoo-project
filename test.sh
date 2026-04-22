@@ -16,14 +16,33 @@ set -Exeuo pipefail
 # * IMAGE_LATEST (tag of the 'latest' image built)
 #
 
-if [ -z "$VERSION" ]; then
+if [ -z "${VERSION-}" ]; then
     echo "VERSION environment variable is missing"
     exit 1
 fi
-if [ -z "$IMAGE_LATEST" ]; then
-    export IMAGE_LATEST=odoo:${VERSION}
+if [ -z "${IMAGE_LATEST-}" ]; then
+    if [ -n "${BUILD_TAG-}" ]; then
+        IMAGE_LATEST="${BUILD_TAG}"
+    else
+        IMAGE_LATEST="odoo:${VERSION}"
+    fi
 fi
+export IMAGE_LATEST
 
+case $IMAGE_LATEST in
+  *-5xx-*)
+    TEST_SRC=./example-core
+    BASE_PATH=.
+    LOCAL_CODE_PATH=./odoo/addons
+    ODOO_PATH=./odoo/src/odoo
+    ;;
+  *)
+    TEST_SRC=./example
+    BASE_PATH=./odoo
+    LOCAL_CODE_PATH=./odoo/local-src
+    ODOO_PATH=./odoo/src
+    ;;
+esac
 
 # Allow version flavor like 12.0-buster
 VERSION=$(echo $VERSION | cut -d '-' -f '1')
@@ -61,18 +80,22 @@ docoruncmd() {
     docker compose -f test-compose.yml run --rm -e LOCAL_USER_ID=$(id -u) $@
 }
 
-cp -ra ./example/. "$TMP/"
+cp -ra "$TEST_SRC/." "$TMP/"
 
 cd "$TMP"
 
 echo '>>> Downloading Odoo src'
-rm -rf "$TMP/odoo/src"
+rm -rf "$ODOO_PATH"
 wget -nv -O /tmp/odoo.tar.gz "$ODOO_URL"
-tar xfz /tmp/odoo.tar.gz -C odoo/
-mv "odoo/odoo-$VERSION" odoo/src
+tar xfz /tmp/odoo.tar.gz -C "./odoo"
+mkdir -p $(dirname -- "$ODOO_PATH")
+mv "./odoo/odoo-$VERSION" "$ODOO_PATH"
 echo "+++++++++++++ $IMAGE_LATEST"
 echo '>>> Run test for base image'
-sed "s|FROM .*|FROM ${IMAGE_LATEST}|" -i odoo/Dockerfile
+sed "s|FROM .*|FROM ${IMAGE_LATEST}|" -i "$BASE_PATH/Dockerfile"
+sed "s|\(.version.: .\)[0-9.]*\(.*\)|\\1${VERSION}.0.0.0\\2|" -i "$LOCAL_CODE_PATH/dummy_test/__manifest__.py"
+echo $VERSION.0.0.0 > "$BASE_PATH/VERSION"
+
 mkdir .cachedb
 
 echo '>>> * migration: standard'
@@ -85,7 +108,7 @@ docoruncmd odoo dropdb odoodb
 echo '>>> * migration: use the dump and migrate to new version'
 docorunmigration -e LOAD_DB_CACHE="true"
 docodown
-cat <<EOT >>migration.yml
+cat <<EOT >>"$BASE_PATH/migration.yml"
     - version: ${VERSION}.0.1
       operations:
         post:

@@ -1,0 +1,54 @@
+# Composition used to run automated tests on the images
+# Used by the Makefile at the repository's root
+
+services:
+  odoo:
+    build: .
+    depends_on:
+      - db
+      - kwkhtmltopdf
+    volumes:
+      - "data-odoo:/data/odoo"
+      - "./odoo/addons:/odoo/odoo/addons"
+    environment:
+      - DB_USER=odoo
+      - DB_PASS=odoo
+      - DB_NAME=odoodb
+      - RUNNING_ENV=dev
+      - LOG_HANDLER=:WARN
+      - MARABUNTA_MODE=demo  # could be 'full' for the db with all the data
+      - KWKHTMLTOPDF_SERVER_URL=http://kwkhtmltopdf:8080
+      - ODOO_REPORT_URL=http://odoo:8069
+      - LOCAL_CODE_PATH=/odoo/odoo/addons
+      - MIGRATION_CONFIG_FILE=/odoo/migration.yml
+      # cached database dumps config for `runmigration` and `runtests`
+      - CREATE_DB_CACHE=false  # set it to 'true' to create dumps
+      - LOAD_DB_CACHE=true # by default will always search for existing dumps
+      # SUBS_MD5 is `runtests` only, you need to define it to identify dumps,
+      # a good practice is to generate it based on the content you have in
+      # your dependencies (`odoo/src`, `odoo/external-src`)
+      # See README.md for more.
+      - SUBS_MD5=
+      # MIG_LOAD_VERSION is `runmigration` only, define it if you want to load
+      # a prior release dump that doesn't match `odoo/VERSION` number.
+      # See README.md for more.
+      - MIG_LOAD_VERSION_CEIL=
+
+  db:
+    image: postgres:13.0
+    ports:
+      - 5432
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+    volumes:
+      - "data-db:/var/lib/postgresql/data"
+
+  kwkhtmltopdf:
+    image: acsone/kwkhtmltopdf
+    ports:
+      - 8080
+
+volumes:
+  data-odoo:
+  data-db:

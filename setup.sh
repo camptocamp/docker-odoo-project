@@ -17,7 +17,7 @@ if [ -z "$VERSION" ]; then
     exit 1
 fi
 
-SRC=${SRC:=(mktemp -d)}
+SRC=${SRC:=$(mktemp -d)}
 echo "Creating $SRC"
 
 mkdir -p $SRC

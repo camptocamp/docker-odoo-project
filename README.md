@@ -9,7 +9,17 @@ code should be added in a Dockerfile inheriting from this image.
 
 A project using this image has to respect a defined structure, look at the [example](example).
 
-See also the [Changelog](HISTORY.rst).
+See also the [Changelog](HISTORY.rst) and [Changelog of core image 5.x](HISTORY-core.rst).
+
+## ⚠️ Version 5.0.0 : Some Breaking changes
+
+  - We no longer use gosu
+  - The `odoo` user is created during the build of the image, and no longer in the entrypoint
+  - All odoo related files are moved in /odoo
+  - odoo runs with uid 999; if you need to change this, use for instance `docker compose --build-arg UID=$(id -u)`
+  - Odoo versions prior to 14.0 are no longer supported
+
+  - Note: image versions 4.5.x are fully supported and maintained.
 
 ## ⚠️ Reporting now uses kwkhtmltopdf instead of wkhtmltopdf
 
@@ -59,7 +69,7 @@ The list of packages (with their version) is defined in the extra_requirements.t
 * [18.0/extra_requirements.txt](18.0/extra_requirements.txt)
 * [19.0/extra_requirements.txt](19.0/extra_requirements.txt)
 
-You can also see the Dockerfile that generated this image here: [common/Dockerfile-batteries](common/Dockerfile-batteries)
+You can also see the Dockerfile that generated this image here: [common/Dockerfile-batteries](common/batteries.Dockerfile)
 
 ## Build
 
@@ -181,6 +191,14 @@ and use `anthem` loader straight::
 ```
 
 NOTE: `anthem > 0.11.0` is required.
+
+### LOCAL_CODE_PATH
+
+Specifies path for local(custom) code to be used, by default is /odoo/local-src
+
+### MIGRATION_CONFIG_FILE
+
+Specifies path for migration config file, by default is /odoo/migration.yml
 
 ### DEMO
 
@@ -367,7 +385,7 @@ docker compose run --rm odoo dropdb testdb
 
 
 Pytest uses a plugin (https://github.com/camptocamp/pytest-odoo) that corrects the
-Odoo namespaces (`openerp.addons`/`odoo.addons`) when running the tests.
+Odoo namespaces (`odoo.addons`) when running the tests.
 
 ### pytest-cov
 

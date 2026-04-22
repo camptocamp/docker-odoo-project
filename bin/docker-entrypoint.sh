@@ -1,40 +1,10 @@
 #!/bin/bash
 set -e
 
-# allow to customize the UID of the odoo user,
-# so we can share the same than the host's.
-# If no user id is set, we use 999
-USER_ID=${LOCAL_USER_ID:-999}
+. env_postgres.sh
+. env_odoo.sh
 
-echo "Starting with UID : $USER_ID"
-id -u odoo &> /dev/null || useradd --shell /bin/bash -u $USER_ID -o -c "" -m odoo
-
-export PGHOST=${DB_HOST}
-export PGPORT=${DB_PORT}
-export PGUSER=${DB_USER}
-export PGDATABASE=${DB_NAME}
-export PGAPPNAME=${HOSTNAME}
-
-# As 'docker compose exec' does not launch the entrypoint
-# init PG variable into .bashrc so it will be initialized
-# when doing 'docker compose exec odoo gosu odoo bash'
-touch /home/odoo/.bashrc
-chown odoo:odoo /home/odoo/.bashrc
-echo "
-export PGHOST=${DB_HOST}
-export PGPORT=${DB_PORT}
-export PGUSER=${DB_USER}
-export PGDATABASE=${DB_NAME}
-export PGAPPNAME=${HOSTNAME}
-" >> /home/odoo/.bashrc
-
-# Only set PGPASSWORD if there is no .pgpass file
-if [ ! -f /home/odoo/.pgpass ]; then
-  export PGPASSWORD=${DB_PASSWORD}
-  echo "
-    export PGPASSWORD=${DB_PASSWORD}
-    " >> /home/odoo/.bashrc
-fi
+echo "Starting with UID: $USER_ID"
 
 BASE_CMD=$(basename $1)
 CMD_ARRAY=($*)
@@ -62,13 +32,13 @@ case "$(echo "${DEMO:-false}" | tr '[:upper:]' '[:lower:]')" in
 esac
 
 # Create configuration file from the template
-TEMPLATES_DIR=/templates
-CONFIG_TARGET=/etc/odoo.cfg
-if [ -e $TEMPLATES_DIR/odoo.cfg.tmpl ]; then
-  dockerize -template $TEMPLATES_DIR/odoo.cfg.tmpl:$CONFIG_TARGET
+DATA_DIR="$ODOO_BASE_PATH/data/odoo"
+ODOO_RC_TMPL="/templates/odoo.cfg.tmpl"
+if [ -e "$ODOO_RC_TMPL" ]; then
+  DATA_DIR=$DATA_DIR dockerize -template $ODOO_RC_TMPL:${ODOO_RC-$OPENERP_SERVER}
 fi
-if [ ! -f "${CONFIG_TARGET}" ]; then
-  echo "Error: $TEMPLATES_DIR/odoo.cfg.tmpl is required"
+if [ ! -f "${ODOO_RC-$OPENERP_SERVER}" ]; then
+  echo "Error: $ODOO_RC_TMPL is required"
   exit 1
 fi
 
@@ -101,16 +71,20 @@ fi
 # Wait until postgres is up
 wait_postgres.sh
 
-mkdir -p /data/odoo/{addons,filestore,sessions}
-if [ ! "$(stat -c '%U' /data/odoo)" = "odoo" ]; then
-  chown -R odoo: /data/odoo
-fi
-if [ ! "$(stat -c '%U' /var/log/odoo)" = "odoo" ]; then
-  chown -R odoo: /var/log/odoo
+if [ $EUID -eq 0 ]; then
+  # Not for core image
+  mkdir -p $DATA_DIR/{addons,filestore,sessions}
+  if [ ! "$(stat -c '%U' $DATA_DIR)" = "odoo" ]; then
+    chown -R odoo: $DATA_DIR
+  fi
+  if [ ! "$(stat -c '%U' /var/log/odoo)" = "odoo" ]; then
+    chown -R odoo: /var/log/odoo
+  fi
 fi
 
-if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || ([ "$BASE_CMD" = "gosu" ] && [[ "${ARGS[@]}" =~ "odoo migrate" ]] ); then
-  BEFORE_MIGRATE_ENTRYPOINT_DIR=/before-migrate-entrypoint.d
+if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || [ "$BASE_CMD" = "migrate" ] ||
+    ([ "$BASE_CMD" = "gosu" ] && [[ "${ARGS[@]}" =~ "odoo migrate" ]] ); then
+  BEFORE_MIGRATE_ENTRYPOINT_DIR=$ODOO_BASE_PATH/before-migrate-entrypoint.d
   if [ -d "$BEFORE_MIGRATE_ENTRYPOINT_DIR" ]; then
     run-parts --exit-on-error --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
   fi
@@ -121,17 +95,17 @@ if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]; then
   if [[ ! " ${ARGS[@]} " =~ " --help " ]] && [[ ! " ${ARGS[@]:0:1} " =~ " shell " ]]; then
 
     if [ -z "$MIGRATE" -o "$MIGRATE" = True ]; then
-      gosu odoo migrate
+      run_as_odoo migrate
     fi
 
   fi
 
-  START_ENTRYPOINT_DIR=/start-entrypoint.d
+  START_ENTRYPOINT_DIR=$ODOO_BASE_PATH/start-entrypoint.d
   if [ -d "$START_ENTRYPOINT_DIR" ]; then
     run-parts --exit-on-error --verbose "$START_ENTRYPOINT_DIR"
   fi
 
-  exec gosu odoo "$@"
+  exec_as_odoo "$@"
 fi
 
 exec "$@"

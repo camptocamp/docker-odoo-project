@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Run unit tests of local-src modules
+# Run unit tests of local modules
 #
 # mainly used from Travis,
 # it creates a database,
@@ -27,29 +27,32 @@
 set -e
 
 # TODO: if we are not in TRAVIS, make a template then run tests on a copy
-source db.sh
+. db_cache_helpers.sh
 wait_postgres.sh
-LOCAL_SRC_DIR=/odoo/local-src
-ODOO_BIN_PATH=/odoo/src/odoo-bin
+
+LOCAL_CODE_PATH=${LOCAL_CODE_PATH:-/odoo/local-src}
+ODOO_BIN_PATH=/odoo/src/odoo/odoo-bin  # Core image layout
+if [ ! -e "$ODOO_BIN_PATH" ]; then
+  ODOO_BIN_PATH=/odoo/src/odoo-bin
+fi
 COVERAGE=$(command -v coverage || true)
 
 if [ -z $1 ]; then
-  LOCAL_ADDONS=$(find ${LOCAL_SRC_DIR}/* -maxdepth 0 -type d -and -not -name server_environment_files -printf "%f\n" |
+  LOCAL_ADDONS=$(find ${LOCAL_CODE_PATH}/* -maxdepth 0 -type d -and -not -name server_environment_files -printf "%f\n" |
     awk -vORS=, '{print $1}' |
     sed 's/,$/\n/')
 else
   LOCAL_ADDONS=$1
 fi
 
-CREATE_DB_CACHE=${CREATE_DB_CACHE:=false}
-LOAD_DB_CACHE=${LOAD_DB_CACHE:=true}
+ALL_DEPS_ADDONS=$(list_dependencies.py "$LOCAL_ADDONS")
+# Ignore base_automation from dependencies to avoid its register hook
+#  messing with MRO of modules to be installed after server restart
+DEPS_ADDONS=${ALL_DEPS_ADDONS/",base_automation,"/","}
 
-LOCAL_SRC_DIR=${LOCAL_SRC_DIR:=/odoo/local-src}
-CACHE_DIR=${CACHE_DIR:=/tmp/cachedb}
+# Set default values
+: ${CREATE_DB_CACHE:=false} ${LOAD_DB_CACHE:=true} ${CACHE_DIR:=/tmp/cachedb} ${DB_NAME:=odoo_test}
 
-DEPS_ADDONS=$(list_dependencies.py "$LOCAL_ADDONS")
-
-DB_NAME=${DB_NAME:=odoo_test}
 
 if [[ ! -z "$SUBS_MD5" ]]; then
   DUMP="$CACHE_DIR/odoo_test_$SUBS_MD5.dmp"
@@ -77,10 +80,10 @@ if [ "$DUMP_LOADED" = 0 ]; then
     db_save $DB_NAME $DUMP
   fi
 fi
-echo "🔧🔧 Install local-src modules 🔧🔧"
+echo "🔧🔧 Install local modules -- ${LOCAL_CODE_PATH} 🔧🔧"
 ODOO_PARAMS="--stop-after-init --workers=0 --database $DB_NAME --test-enable --log-level=test --log-handler=:INFO --db-filter=$DB_NAME -i ${LOCAL_ADDONS}"
 if [ -n "$COVERAGE" ]; then
-  "$COVERAGE" run --source="${LOCAL_SRC_DIR}" "${ODOO_BIN_PATH}" $ODOO_PARAMS
+  "$COVERAGE" run --source="${LOCAL_CODE_PATH}" "${ODOO_BIN_PATH}" $ODOO_PARAMS
 else
   echo "Skip Code Coverage - not available"
   odoo $ODOO_PARAMS

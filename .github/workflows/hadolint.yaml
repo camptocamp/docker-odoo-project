@@ -6,12 +6,10 @@ on:
       - "main"
       - "master"
       - "dev"
-      - "release-4.5.X"
   pull_request:
     branches:
       - "main"
       - "master"
-      - "release-4.5.X"
 
 jobs:
 

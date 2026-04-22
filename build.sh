@@ -49,4 +49,4 @@ docker build --progress plain --no-cache \
              -f ${TMP}/Dockerfile -t ${BUILD_TAG} ${TMP}
 docker build --progress plain --no-cache \
              --build-context odoo=docker-image://${BUILD_TAG} \
-             -f ${TMP}/Dockerfile-batteries -t ${BUILD_TAG}-batteries ${TMP}
+             -f ${TMP}/batteries.Dockerfile -t ${BUILD_TAG}-batteries ${TMP}
