@@ -3,10 +3,14 @@ name: hadolint
 on:
   push:
     branches:
+      - "main"
+      - "master"
+      - "dev"
       - "release-4.5.X"
-      - "dev-4.5.X"
   pull_request:
     branches:
+      - "main"
+      - "master"
       - "release-4.5.X"
 
 jobs:
@@ -15,7 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+
       - name: Lint Dockerfiles
         uses: hadolint/hadolint-action@v3.3.0
         with:
+          dockerfile: "*Dockerfile"
           recursive: true
