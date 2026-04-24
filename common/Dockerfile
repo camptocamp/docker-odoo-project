@@ -16,24 +16,6 @@ COPY ./*_requirements.txt /odoo/
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8
 
-# build and dev packages
-ENV BUILD_PACKAGE="\
-    build-essential \
-    gcc \
-    libevent-dev \
-    libfreetype6-dev \
-    libxml2-dev \
-    libxslt1-dev \
-    libsasl2-dev \
-    libldap2-dev \
-    libssl-dev \
-    libjpeg-dev \
-    libpng-dev \
-    zlib1g-dev \
-    libcairo2-dev \
-    git"
-
-
 # Default SHELL is ["/bin/sh", "-c"]
 SHELL ["/bin/sh", "-e", "-x", "-c"]
 
@@ -44,6 +26,7 @@ RUN /install/package_odoo.sh \
     && /install/postgres.sh \
     && /install/kwkhtml_client.sh \
     && /install/kwkhtml_client_force_python3.sh \
+    # build and dev packages
     && /install/dev_package.sh \
     && python3 -m pip install --force-reinstall pip \
     && pip install -r /odoo/base_requirements.txt \

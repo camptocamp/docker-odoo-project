@@ -15,22 +15,6 @@ COPY ./install /install
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8
 
-# build and dev packages
-ENV BUILD_PACKAGE="\
-    build-essential \
-    gcc \
-    libevent-dev \
-    libfreetype6-dev \
-    libxml2-dev \
-    libxslt1-dev \
-    libsasl2-dev \
-    libldap2-dev \
-    libssl-dev \
-    libjpeg-dev \
-    libpng-dev \
-    zlib1g-dev \
-    git"
-
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
     /install/package_odoo.sh \
