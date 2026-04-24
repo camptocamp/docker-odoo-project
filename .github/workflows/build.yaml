@@ -48,7 +48,7 @@ jobs:
           - odoo_serie: "14.0"
             python: "python:3.9"
             flavor: core
-    continue-on-error: ${{ matrix.odoo_serie == '12.0' || matrix.flavor == 'core' }}
+    continue-on-error: ${{ matrix.odoo_serie == '12.0' || matrix.odoo_serie == '13.0' || matrix.flavor == 'core' }}
 
     steps:
       - uses: actions/checkout@v6

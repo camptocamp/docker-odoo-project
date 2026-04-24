@@ -34,22 +34,6 @@ ENV LANG=C.UTF-8 \
     PATH=/odoo/.venv/bin:$PATH \
     PYTHONPATH=/odoo/
 
-# build and dev packages
-ENV BUILD_PACKAGE="\
-    build-essential \
-    gcc \
-    libevent-dev \
-    libfreetype6-dev \
-    libxml2-dev \
-    libxslt1-dev \
-    libsasl2-dev \
-    libldap2-dev \
-    libssl-dev \
-    libjpeg-dev \
-    libpng-dev \
-    zlib1g-dev \
-    libcairo2-dev"
-
 
 # Default SHELL is ["/bin/sh", "-c"]
 SHELL ["/bin/sh", "-e", "-x", "-c"]
@@ -61,7 +45,8 @@ RUN /install/package_odoo.sh core \
     && /install/postgres.sh \
     && /install/kwkhtml_client.sh \
     && /install/kwkhtml_client_force_python3.sh \
-    && /install/dev_package.sh \
+    # build and dev packages
+    && /install/dev_package.sh core \
     && su odoo -c "umask 007 \
     && python3 -m venv /odoo/.venv --system-site-packages \
     && /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt \
