@@ -76,12 +76,17 @@ You can also see the Dockerfile that generated this image here: [common/Dockerfi
 The images should be built with `make`:
 
 Normal flavors:
-
 ```
 $ make VERSION=19.0
 ```
 
-Batteries-included flavors:
+Note: version of PostgreSQL client can be changed.  By default, it is version 15, which is fully
+compatible with PostgreSQL 12 to 15. Example:
+```
+$ make VERSION=19.0 PG_VERSION=17
+```
+
+Batteries-included flavor:
 ```
 $ make VERSION=19.0 BATTERIES=True
 ```

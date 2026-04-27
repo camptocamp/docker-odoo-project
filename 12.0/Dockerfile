@@ -35,7 +35,7 @@ ENV BUILD_PACKAGE="\
 RUN set -x; \
     /install/package_odoo.sh \
     && /install/setup-pip.sh \
-    && /install/postgres.sh \
+    && /install/postgres.sh 15 \
     && /install/kwkhtml_client.sh \
     && /install/kwkhtml_client_force_python3.sh \
     && /install/dev_package.sh \

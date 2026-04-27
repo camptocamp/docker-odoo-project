@@ -3,6 +3,7 @@ FROM python
 LABEL maintainer="Camptocamp"
 
 ARG VERSION=19.0
+ARG PG_VERSION=15
 ARG UID=999
 ARG GID=999
 
