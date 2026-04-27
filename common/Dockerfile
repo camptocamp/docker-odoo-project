@@ -3,6 +3,7 @@ FROM python
 LABEL maintainer="Camptocamp"
 
 ARG VERSION=19.0
+ARG PG_VERSION=15
 
 # create the working directory and a place to set the logs (if wanted)
 RUN mkdir -p /odoo /var/log/odoo
