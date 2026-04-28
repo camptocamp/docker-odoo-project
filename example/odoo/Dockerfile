@@ -19,14 +19,13 @@ COPY ./migration.yml /odoo/
 COPY ./requirements.txt /odoo/
 
 USER root
-RUN set -x; \
+RUN \
         pip install -e /odoo \
         && pip install -e /odoo/src \
-        # Project's specifics packages
+        # Project's specific packages
         && apt-get update \
         && apt-get install -y --no-install-recommends \
         python3-shapely \
-        && apt-get clean \
         && rm -rf /var/lib/apt/lists/* \
         && pip install -r /odoo/requirements.txt
 

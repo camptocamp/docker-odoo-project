@@ -37,6 +37,10 @@ RUN /install/package_odoo.sh \
 # grab gosu for easy step-down from root and dockerize to generate template and
 # wait on postgres
 RUN /install/gosu.sh && /install/dockerize.sh
+# Init PG variables during Shell initialization so it will be available
+# when doing 'docker compose exec odoo gosu odoo bash'
+RUN echo >> /etc/bash.bashrc \
+  "if [ -f /odoo-bin/env_postgres.sh ]; then . /odoo-bin/env_postgres.sh; fi"
 
 COPY ./bin /odoo-bin
 COPY ./templates /templates
@@ -44,10 +48,6 @@ COPY ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
 COPY ./start-entrypoint.d /start-entrypoint.d
 COPY ./MANIFEST.in /odoo
 COPY --chmod=644 ./env_odoo.sh /odoo-bin/
-# Init PG variables during Shell initialization so it will be available
-# when doing 'docker compose exec odoo gosu odoo bash'
-RUN set -x; echo >> /etc/bash.bashrc \
-  "if [ -f /odoo-bin/env_postgres.sh ]; then . /odoo-bin/env_postgres.sh; fi"
 
 ENV ODOO_VERSION=$VERSION \
     PATH=/odoo-bin:$PATH \

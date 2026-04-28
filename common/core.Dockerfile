@@ -57,6 +57,10 @@ RUN /install/package_odoo.sh core \
     && /install/dockerize.sh \
     # Purge build packages, to reduce layer size
     && /install/purge_dev_package_and_cache.sh
+# Init PG variables during Shell initialization so it will be available
+# when doing 'docker compose exec odoo bash'
+RUN echo >> /etc/bash.bashrc \
+  "if [ -f /odoo-bin/env_postgres.sh ]; then . /odoo-bin/env_postgres.sh; fi"
 
 COPY --chown=odoo:root --chmod=770 ./bin /odoo/odoo-bin
 COPY --chown=odoo:root --chmod=660 ./templates /templates
@@ -64,10 +68,6 @@ COPY --chown=odoo:root --chmod=770 ./before-migrate-entrypoint.d /odoo/before-mi
 COPY --chown=odoo:root --chmod=770 ./start-entrypoint.d /odoo/start-entrypoint.d
 COPY --chown=odoo:root --chmod=660 ./MANIFEST.in /odoo
 COPY --chmod=644 ./env_odoo-core.sh /odoo/odoo-bin/env_odoo.sh
-# Init PG variables during Shell initialization so it will be available
-# when doing 'docker compose exec odoo bash'
-RUN set -x; echo >> /etc/bash.bashrc \
-  "if [ -f /odoo-bin/env_postgres.sh ]; then . /odoo-bin/env_postgres.sh; fi"
 
 
 USER odoo
