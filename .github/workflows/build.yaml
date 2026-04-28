@@ -3,16 +3,12 @@ name: build
 on:
   push:
     branches:
-      - "release-4.5.X"
-      - "dev-4.5.X"
+      - "main"
     tags:
-      - "4.*.*"
-
+      - "*.*.*"
   pull_request:
     branches:
-      - "release-4.5.X"
-  schedule:
-    - cron: "0 1 * * WED"
+      - "main"
 
 env:
   TARGET: GHCR

@@ -3,11 +3,10 @@ name: hadolint
 on:
   push:
     branches:
-      - "release-4.5.X"
-      - "dev-4.5.X"
+      - "main"
   pull_request:
     branches:
-      - "release-4.5.X"
+      - "main"
 
 jobs:
 
