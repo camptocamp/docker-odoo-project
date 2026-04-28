@@ -4,18 +4,11 @@ on:
   push:
     branches:
       - "main"
-      - "master"
-      - "dev"
     tags:
       - "*.*.*"
-      - "stable"
-
   pull_request:
     branches:
       - "main"
-      - "master"
-  schedule:
-    - cron: "0 1 * * THU"
 
 env:
   TARGET: GHCR
