@@ -21,7 +21,7 @@ if [[ "$RUNNING_ENV" != "prod" && "$CONFIDOO_APPLY" == "True" ]]; then
         echo "Error: 'confidoo' command not found. Please ensure it is installed in the image."
         exit 1
     fi
-    if [ "$( psql -tAc "SELECT value FROM ir_config_parameter WHERE key='database.is_neutralized'" )" != 'True' ]; then
+    if [ "$( psql -tAc "SELECT 1 FROM ir_config_parameter WHERE key='database.is_neutralized'" )" = '1' ]; then
         echo "INFO: You are about to apply Confidoo settings on a non-neutralized database."
     fi
 
