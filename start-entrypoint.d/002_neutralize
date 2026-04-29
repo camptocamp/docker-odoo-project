@@ -11,7 +11,7 @@ if [[ "$RUNNING_ENV" != "prod" && "$ODOO_NEUTRALIZE" == "True" ]]; then
         echo "Database does not exist, ignoring script"
         exit 0
     fi
-    if [ "$( psql -tAc "SELECT value FROM ir_config_parameter WHERE key='database.is_neutralized'" )" = 'True' ]; then
+    if [ "$( psql -tAc "SELECT 1 FROM ir_config_parameter WHERE key='database.is_neutralized' AND value != '';" )" = '1' ]; then
         echo "Database is already neutralized, skipping"
         exit 0
     fi
