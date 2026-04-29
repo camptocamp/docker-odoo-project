@@ -1,4 +1,4 @@
-[![Build Status](https://app.travis-ci.com/camptocamp/docker-odoo-project.svg?branch=master)](https://app.travis-ci.com/camptocamp/docker-odoo-project)
+[![Build Status](https://github.com/camptocamp/docker-odoo-project/actions/workflows/build.yaml/badge.svg?branch=master)](https://github.com/camptocamp/docker-odoo-project/actions/workflows/build.yaml?query=branch%3Amaster)
 
 # docker-odoo-project
 
@@ -236,7 +236,7 @@ This value is used in `bin/runtests` to determine the name of the intermediate s
 load or create.
 
 Value to tag a database dump of `bin/runtests`, for instance it can be based on
-submodules in .travis.yml of your git repositories in odoo/src and in odoo/external-src:
+submodules of your git repositories in odoo/src and in odoo/external-src:
 
 ```
 export SUBS_MD5=$(git submodule status | md5sum | cut -d ' ' -f1)
@@ -347,7 +347,7 @@ other_param='some value'
 
 ### runtests
 
-Inside the container, a script `runtests` is used for running the tests on Travis.
+Inside the container, a script `runtests` is used for running the CI tests.
 
 Unless `LOAD_DB_CACHE is set to `false` it will search for a dump of dependencies and restore it.
 Otherwise, will create a new database, find the `odoo/external-src` and `odoo/src` dependencies of the local addons,
@@ -395,7 +395,7 @@ To export it to HTML, add --cov-report=HTML:EXPORT_PATH
 
 ### runmigration
 
-Inside the container, a script `runmigration` is used to run the migration steps on Travis.
+Inside the container, a script `runmigration` is used to run the migration steps for CI.
 
 Then, when launched, it will search for a database dump of the content of `odoo/VERSION` file.
 Or if you provided `MIG_LOAD_VERSION_CEIL` which will allow you to search for an other version.
@@ -415,14 +415,7 @@ This tool really speeds up the process of testing migration steps, as you can be
 
 To use database dumps, you will need a volume on `/.cachedb` to have persistant dumps.
 
-On travis, you will also want to activate the cache, if your volume definition is `- "$HOME/.cachedb:/.cachedb"`
-add this in `.travis.yml`:
-
-```
-cache:
-  directories:
-    - $HOME/.cachedb
-```
+On CI, you will also want to activate the cache.
 
 ## Start entrypoint
 
