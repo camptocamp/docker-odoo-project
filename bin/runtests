@@ -2,7 +2,7 @@
 #
 # Run unit tests of local modules
 #
-# mainly used from Travis,
+# mainly used from CI,
 # it creates a database,
 # if a cached dump of official and oca modules exists restore it
 # otherwise install dependencies and create a dump to cache
@@ -26,7 +26,7 @@
 #
 set -e
 
-# TODO: if we are not in TRAVIS, make a template then run tests on a copy
+# TODO: if we are not on CI, make a template then run tests on a copy
 . db_cache_helpers.sh
 wait_postgres.sh
 

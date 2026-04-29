@@ -1,11 +1,11 @@
 #!/bin/bash
 #
-# Run marabunta steps
+# Run Marabunta steps
 #
-# Mainly used from Travis,
+# Mainly used from CI,
 #
 # If a cached dump of previous version is found, restore it.
-# Then play remaining marabunta steps from this state.
+# Then play remaining Marabunta steps from this state.
 #
 # Otherwise install from scratch.
 #

@@ -1,5 +1,5 @@
 {'name': 'Dummy Test',
- 'description': "Dummy module to check that Travis runs tests. ",
+ 'description': "Dummy module to check that CI runs tests.",
  'version': '1.0',
  'author': 'Camptocamp',
  'license': 'AGPL-3',
