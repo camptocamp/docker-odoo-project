@@ -4,7 +4,7 @@ asn1crypto==1.5.1 ; python_version >= '3.11'
 Babel==2.10.3 ; python_version >= '3.11'
 cbor2==5.9.0 ; python_version >= '3.12'  # Pin 5.9.0 for security fixes
 chardet==5.2.0 ; python_version >= '3.11'
-cryptography==46.0.5 ; python_version >= '3.12'  # (Noble) min 41.0.7, pinning 46.0.5 for security fixes
+cryptography==46.0.7 ; python_version >= '3.12'  # (Noble) min 41.0.7, pinning 46.0.7 for security fixes
 decorator==5.1.1  ; python_version >= '3.11'
 docutils==0.20.1 ; python_version >= '3.11'
 freezegun==1.2.1 ; python_version >= '3.11'
@@ -15,14 +15,14 @@ greenlet==3.0.3 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble
 idna==3.8 ; python_version >= '3.12'
 Jinja2==3.1.6 ; python_version > '3.10'
 libsass==0.22.0 ; python_version >= '3.11'  # (Noble) Mostly to have a wheel package
-lxml==5.2.1; python_version >= '3.12' # (Noble - removed html clean)
+lxml==6.1.0; python_version >= '3.12' # (Noble - removed html clean); pin 6.1.0 for security fixes
 lxml-html-clean; python_version >= '3.12' # (Noble - removed from lxml, unpinned for futur security patches)
 MarkupSafe==2.1.5 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 num2words==0.5.13 ; python_version >= '3.12'
 ofxparse==0.21
 openpyxl==3.1.2 ; python_version >= '3.12'
 passlib==1.7.4 # min version = 1.7.2 (Focal with security backports)
-Pillow==12.1.1 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
+Pillow==12.2.0 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package; pin 12.2.0 for security fixes
 polib==1.1.1
 psutil==5.9.8 ; python_version >= '3.12' # (Noble) Mostly to have a wheel package
 psycopg2==2.9.9 ; python_version >= '3.12' # (Noble) Mostly to have a wheel package
