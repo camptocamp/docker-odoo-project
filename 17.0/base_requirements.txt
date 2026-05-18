@@ -55,7 +55,6 @@ gdata==2.0.18
 html5lib==1.1
 odfpy==1.4.1
 pyinotify==0.9.6
-simplejson==3.19.3
 orjson==3.11.9  # used to speed up addons/bus if installed
 
 
