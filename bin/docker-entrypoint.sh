@@ -32,14 +32,23 @@ case "$(echo "${DEMO:-false}" | tr '[:upper:]' '[:lower:]')" in
 esac
 
 # Create configuration file from the template
+TEMP_ODOO_RC="${ODOO_RC=$OPENERP_SERVER}"
+if [ $USER_ID -ne 0 ]; then
+  TEMP_ODOO_RC="/tmp/odoo.cfg"
+fi
+
 DATA_DIR="$ODOO_BASE_PATH/data/odoo"
 ODOO_RC_TMPL="/templates/odoo.cfg.tmpl"
 if [ -e "$ODOO_RC_TMPL" ]; then
-  DATA_DIR=$DATA_DIR dockerize -template $ODOO_RC_TMPL:${ODOO_RC-$OPENERP_SERVER}
+  DATA_DIR=$DATA_DIR dockerize -template $ODOO_RC_TMPL:$TEMP_ODOO_RC
 fi
-if [ ! -f "${ODOO_RC-$OPENERP_SERVER}" ]; then
+if [ ! -f "$TEMP_ODOO_RC" ]; then
   echo "Error: $ODOO_RC_TMPL is required"
   exit 1
+fi
+
+if [ "$ODOO_RC" != "$TEMP_ODOO_RC" ]; then
+  grep -E -v '^(#|$)' < "$TEMP_ODOO_RC" > "$ODOO_RC"
 fi
 
 if [ -z "$(pip list --format=columns | grep "/odoo/src")" ]; then
