@@ -21,7 +21,7 @@ unidecode==1.4.0
 vcrpy==7.0.0
 
 # Library dependency
-aiohttp==3.13.3
+aiohttp==3.13.5
 bcrypt==4.3.0
 botocore==1.40.30
 dateparser==1.2.2
