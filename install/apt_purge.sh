@@ -1,8 +1,8 @@
 #!/bin/bash
 set -eo pipefail
 
-if [ -n "${_PACKAGES_TO_REMOVE=$@}" ]; then
-  apt-get remove -y "$_PACKAGES_TO_REMOVE"
+if [ $# -gt 0 ]; then
+  apt-get remove -y "$@"
 fi
 
 apt-get purge -y --auto-remove \
