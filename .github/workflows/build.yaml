@@ -67,14 +67,14 @@ jobs:
           flavor: |
             prefix=${{ matrix.odoo_serie }}${{ matrix.flavor == 'core' && '-core-' || '-' }},onlatest=true
           tags: |
-            type=ref,event=tag,priority=900,enable=true
+            type=ref,priority=900,event=tag,enable=true
             type=ref,event=pr
             type=schedule,priority=800
             type=raw,priority=500,value=latest,enable={{is_default_branch}}
             type=raw,priority=400,value={{date 'YYYYMMDD'}},enable={{is_default_branch}}
-            type=raw,priority=300,value={{branch}}-latest,enable={{is_not_default_branch}}
-            type=raw,priority=300,value={{branch}}-{{date 'YYYYMMDD'}},enable={{is_not_default_branch}}
-            type=raw,priority=200,value={{branch}},enable={{is_not_default_branch}}
+            type=raw,priority=300,value={{branch}}-latest,event=branch,enable={{is_not_default_branch}}
+            type=raw,priority=300,value={{branch}}-{{date 'YYYYMMDD'}},event=branch,enable={{is_not_default_branch}}
+            type=raw,priority=200,value={{branch}},event=branch,enable={{is_not_default_branch}}
 
       - name: Setup build dir
         id: setup
