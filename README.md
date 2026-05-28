@@ -1,27 +1,84 @@
-[![Build Status](https://github.com/camptocamp/docker-odoo-project/actions/workflows/build.yaml/badge.svg?branch=master)](https://github.com/camptocamp/docker-odoo-project/actions/workflows/build.yaml?query=branch%3Amaster)
+[![Build Status](https://github.com/camptocamp/docker-odoo-project/actions/workflows/build.yaml/badge.svg?branch=main)](https://github.com/camptocamp/docker-odoo-project/actions/workflows/build.yaml?query=branch%3Amain)
 
 # docker-odoo-project
 
 A base image for our Odoo projects.
 
-This image alone does nothing because it doesn't contain any Odoo's code. The
+This image alone does nothing because it doesn't contain any Odoo code. The
 code should be added in a Dockerfile inheriting from this image.
 
 A project using this image has to respect a defined structure, look at the [example](example).
 
-See also the [Changelog](HISTORY.rst) and [Changelog of core image 5.x](HISTORY-core.rst).
 
-## ⚠️ Version 5.0.0 : Some Breaking changes
+## ⚠️  May 2026 v5.4.0 - One repository, multiple images
 
-  - We no longer use gosu
-  - The `odoo` user is created during the build of the image, and no longer in the entrypoint
-  - All odoo related files are moved in /odoo
-  - odoo runs with uid 999; if you need to change this, use for instance `docker compose --build-arg UID=$(id -u)`
-  - Odoo versions prior to 14.0 are no longer supported
+Historically, images exist in different flavors
 
-  - Note: image versions 4.5.x are fully supported and maintained.
+### Main image
 
-## ⚠️ Reporting now uses kwkhtmltopdf instead of wkhtmltopdf
+`ghcr.io/camptocamp/docker-odoo-project:${odoo_version}-${tag_version}`
+
+Docker images are built from this repository since Odoo 9.
+Main images use `gosu` to drop privileges before running Odoo server.
+
+Version went up to 4.5.16 for the main image.
+Then version number jumped to 5.4.0 when the core image branch was re-merged with the main branch.
+
+Images (core and main) co-exist, but they share the same repository and the same version number from
+now on.
+
+Note: in production, we recommend against using the "latest" tag.
+Instead, use a specific version in order to be able to rebuild identical images.
+
+See also the [Changelog](HISTORY.rst).
+
+### Core image
+
+`ghcr.io/camptocamp/docker-odoo-project:${odoo_version}-core-${tag_version}`
+
+Since 2022, there is a branch 5.x which is an evolution of the image with significant changes.
+
+It has some breaking changes:
+
+ - No longer use `gosu`
+ - The `odoo` user is created during the build of the image, and no longer in the entrypoint
+ - All Odoo related files are moved in `/odoo`
+ - Server runs with UID 999 by default. It can be changed, for instance `docker compose --build-arg UID=$(id -u)`
+
+Version of core image went from 5.0.0 up to 5.3.0.1.0.
+Then version was bumped to 5.4.0 when it was merged back with the main branch, to simplify maintenance and evolution.
+
+Note: Features are progressively harmonized between both branches, and core images might be discontinued at some point.
+
+See also the [Changelog of core image](HISTORY-core.rst).
+
+### Batteries-included
+
+`docker-odoo-project:${odoo_version}-${tag_version}-batteries`
+
+It is derived from the Main image.
+Currently it is no longer built by CI.
+
+The batteries-included image is the same as main image, with a list of
+additional pre-installed Python packages. The packages have been chosen because
+of their prevalent usage in OCA addons.
+
+The list of packages (with their version) is defined in the extra_requirements.txt file.
+
+* [17.0/extra_requirements.txt](17.0/extra_requirements.txt)
+* [18.0/extra_requirements.txt](18.0/extra_requirements.txt)
+* [19.0/extra_requirements.txt](19.0/extra_requirements.txt)
+
+You can also see the Dockerfile related to this image here: [common/Dockerfile-batteries](common/batteries.Dockerfile)
+
+### Onbuild
+
+Support for Onbuild images was removed. They were images with `ONBUILD` instructions.
+
+Rationale: https://github.com/docker-library/official-images/issues/2076
+
+
+## ⚠️  Feb 2022 v4.4.0 - Use kwkhtmltopdf instead of wkhtmltopdf
 
 To limit the amount of memory required on each container to print a report
 
@@ -40,42 +97,19 @@ and you also need to specify the report URL to let the kwkhtmltopdf server to re
 ODOO_REPORT_URL=<url of your odoo:8069>
 ```
 
-## ⚠️ Images moved to ghcr.io
+## ⚠️  Dec 2021 v4.3.0 - Move images to ghcr.io
 
 Due to the pull limitation on docker.io the images are now pushed exclusively on ghcr.io.
 
 Images can be found under the Github link "Packages".
-https://github.com/camptocamp/docker-odoo-project/pkgs/container/odoo-project
+https://github.com/camptocamp/docker-odoo-project/pkgs/container/docker-odoo-project
 
-## Image Flavors
-
-There are 2 flavors of the image:
-
-- normal: `odoo-project:${odoo_version}-${tag_version}`
-- batteries-included: `odoo-project:${odoo_version}-${tag_version}-batteries`
-
-Note: in production, we strongly recommend against using the "latest" tag.
-Instead, use a specific version in order to be able to rebuild identical images.
-
-### Normal or Batteries-included?
-
-The batteries-included image is exactly the same image, with a list of
-additional pre-installed python packages. The packages have been chosen because
-of their prevalent usage in OCA addons.
-
-The list of packages (with their version) is defined in the extra_requirements.txt file.
-
-* [17.0/extra_requirements.txt](17.0/extra_requirements.txt)
-* [18.0/extra_requirements.txt](18.0/extra_requirements.txt)
-* [19.0/extra_requirements.txt](19.0/extra_requirements.txt)
-
-You can also see the Dockerfile that generated this image here: [common/Dockerfile-batteries](common/batteries.Dockerfile)
 
 ## Build
 
 The images should be built with `make`:
 
-Normal flavors:
+Main flavor:
 ```
 $ make VERSION=19.0
 ```

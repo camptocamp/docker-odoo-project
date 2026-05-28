@@ -20,20 +20,36 @@
 Release History
 ---------------
 
-4.5.x (unreleased)
+5.4.0 (2026-05-28)
 ++++++++++++++++++
 
 **Features and Improvements**
 
-
-**Bugfixes**
-
+* Add `Confidoo` support for Odoo >= 16, to apply environment configuration
+  https://github.com/camptocamp/confidoo
+* Add Odoo Neutralize support for Odoo >= 16
+* Force `dbfilter` to False, to avoid a connection to `postgres` database
+  to list the databases
+* Rename OPENERP_SERVER variable to ODOO_RC
+* Update README and documentation
 
 **Libraries**
 
+* Json: Install `orjson` for improved performance
+* Json: Remove obsolete `simplejson`
+* Upgrade dependencies, to fix important vulnerabilities
+* Split test requirements into `test_requirements.txt`
 
 **Build**
 
+* Support Odoo 12+
+* Simplify build, use the same Dockerfile for all Odoo versions
+* Converge to build `core` and `main` images from the same branch
+* Install PostgreSQL client 15 by default
+* PostgreSQL client version can be changed with build variable `PG_VERSION`
+* Remove obsolete scripts
+* Remove support for `-onbuild` images
+* Add Dockerfile linter to CI
 * Switch project example to Python 3
 
 
