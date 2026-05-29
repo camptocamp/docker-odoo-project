@@ -85,18 +85,18 @@ jobs:
           echo "image-tag=ci-${{ matrix.flavor == 'core' && '5' || '4' }}xx-latest:${{ matrix.odoo_serie }}" >> $GITHUB_OUTPUT
 
       - name: Build
-        uses: docker/build-push-action@v7
+        uses: docker/bake-action@v7
         with:
-          context: ./build
-          file: ${{ steps.setup.outputs.Dockerfile }}
-          build-args: |
-            VERSION=${{ matrix.odoo_serie }}
-          build-contexts: |
-            python=docker-image://${{ steps.setup.outputs.python-from }}
+          source: ./build
+          targets: odoo-project-${{ matrix.flavor }}
+          files: |
+            compose.yaml
+            cwd://${{ steps.docker_meta.outputs.bake-file }}
           push: false
           load: true
-          tags: ${{ steps.setup.outputs.image-tag  }}
-          labels: ${{ steps.docker_meta.outputs.labels }}
+        env:
+          VERSION: ${{ matrix.odoo_serie }}
+          PYTHON_IMAGE: ${{ steps.setup.outputs.python-from }}
 
       - name: Test
         run: |
