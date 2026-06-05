@@ -75,7 +75,7 @@ fi
 
 if [ "$DUMP_LOADED" = 0 ]; then
   echo "🔨🔨 Install official/OCA modules 🔨🔨"
-  odoo --stop-after-init --workers=0 --database $DB_NAME --log-level=warn --db-filter=$DB_NAME -i ${DEPS_ADDONS}
+  unbuffer odoo --stop-after-init --workers=0 --database $DB_NAME --log-level=warn --db-filter=$DB_NAME -i ${DEPS_ADDONS}
   if [ "$CREATE_DB_CACHE" != "false" ]; then
     db_save $DB_NAME $DUMP
   fi
@@ -83,10 +83,10 @@ fi
 echo "🔧🔧 Install local modules -- ${LOCAL_CODE_PATH} 🔧🔧"
 ODOO_PARAMS="--stop-after-init --workers=0 --database $DB_NAME --test-enable --log-level=test --log-handler=:INFO --db-filter=$DB_NAME -i ${LOCAL_ADDONS}"
 if [ -n "$COVERAGE" ]; then
-  "$COVERAGE" run --source="${LOCAL_CODE_PATH}" "${ODOO_BIN_PATH}" $ODOO_PARAMS
+  unbuffer "$COVERAGE" run --source="${LOCAL_CODE_PATH}" "${ODOO_BIN_PATH}" $ODOO_PARAMS
 else
   echo "Skip Code Coverage - not available"
-  odoo $ODOO_PARAMS
+  unbuffer odoo $ODOO_PARAMS
 fi
 
 dropdb ${DB_NAME}
