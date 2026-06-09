@@ -82,7 +82,7 @@ jobs:
           VERSION=${{ matrix.odoo_serie }} SRC=build make setup
           echo "Dockerfile=./build/${{ matrix.flavor == 'core' && 'core.' || '' }}Dockerfile" >> $GITHUB_OUTPUT
           echo "python-from=${{ matrix.python }}-slim-trixie" >> $GITHUB_OUTPUT
-          echo "image-tag=ci-${{ matrix.flavor == 'core' && '5' || '4' }}xx-latest:${{ matrix.odoo_serie }}" >> $GITHUB_OUTPUT
+          echo "image-tag=ci-${{ matrix.flavor == 'core' && 'core-' || '' }}latest:${{ matrix.odoo_serie }}" >> $GITHUB_OUTPUT
 
       - name: Build
         uses: docker/build-push-action@v7

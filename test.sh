@@ -30,7 +30,7 @@ fi
 export IMAGE_LATEST
 
 case $IMAGE_LATEST in
-  *-5xx-*)
+  *-core-*)
     TEST_SRC=./example-core
     BASE_PATH=.
     LOCAL_CODE_PATH=./odoo/addons
