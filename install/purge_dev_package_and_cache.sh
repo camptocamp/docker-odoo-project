@@ -12,4 +12,4 @@ fi
 # which triggered a vulnerability report, without easy way to fix it.
 rm -vrf $LIB_PATH/python3*/site-packages/setuptools/_vendor/*.dist-info
 
-unset $BUILD_PACKAGE
+unset BUILD_PACKAGE
