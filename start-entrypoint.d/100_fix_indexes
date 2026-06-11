@@ -1,0 +1,36 @@
+#! /bin/bash
+# This script can be removed when we have finished updating databases with
+# the configuration of the unaccentextension (odoo >= 16.0)
+
+if [ "${ODOO_VERSION%%.*}" -lt 16 ]; then
+    echo "Index fixing for unaccent: requires Odoo 16.0+"
+    exit 0
+fi
+
+if [ 0 = $(psql -Atc "SELECT COUNT(*) FROM pg_indexes WHERE indexdef LIKE '%gin_trgm%' AND indexdef NOT LIKE '%unaccent%'") ]
+then
+    echo "No indexes to fix"
+    exit 0
+fi
+
+odoo shell --no-http --log-handler=:ERROR --log-handler=odoo.schema:INFO << EOF
+cr = self.env.cr
+query = """SELECT indexname, tablename 
+FROM pg_indexes 
+WHERE indexdef LIKE '%gin_trgm%' 
+AND indexdef NOT LIKE '%unaccent%'"""
+cr.execute(query)
+tables = set()
+for indexname, tablename in cr.fetchall():
+    tables.add(tablename)
+    print(f"Fixing index {indexname} on table {tablename}")
+    cr.execute(f"DROP INDEX {indexname}")
+if tables:
+    # recreate the indexes with unaccent
+    models = set()
+    for model in self.env.registry.models.values():
+        if model._table in tables:
+            models.add(model._name)
+    self.env.registry.check_indexes(self.env.cr, models)
+self.env.cr.commit()
+EOF
