@@ -13,9 +13,9 @@ ARGS=(${CMD_ARRAY[@]:1})
 # Accepted values for DEMO: True / False
 # Odoo <= 18 used a negated boolean without_demo, which is not handy
 # Odoo >= 19 uses an intuitive with_demo option
-case "$BASE_CMD" in ("runtests"|"testdb-gen"|"testdb-update")
-  DEMO=true;;
-esac
+if [[ "$BASE_CMD" =~ ^(runtests|testdb-gen|testdb-update)$ && "${ODOO_VERSION%%.*}" -lt 19 ]]; then
+  DEMO=true
+fi
 case "$(echo "${DEMO:-false}" | tr '[:upper:]' '[:lower:]')" in
   "false")
     echo "Running without demo data"
