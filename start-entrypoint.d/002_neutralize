@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 if [ "${ODOO_VERSION%%.*}" -lt 16 ]; then
     echo "Neutralization skipped: requires Odoo 16.0+"
     exit 0
@@ -11,9 +12,24 @@ if [[ "$RUNNING_ENV" != "prod" && "$ODOO_NEUTRALIZE" == "True" ]]; then
         echo "Database does not exist, ignoring script"
         exit 0
     fi
-    if [ "$( psql -tAc "SELECT 1 FROM ir_config_parameter WHERE key='database.is_neutralized' AND value != '';" )" = '1' ]; then
-        echo "Database is already neutralized, skipping"
+    # On dev, the database usually comes from another environment where it was
+    # already neutralized. We still want to neutralize it locally, at least
+    # once, to reset the values that are environment specific (mail servers,
+    # crons, ...). A dedicated flag keeps track of it, so that we don't
+    # neutralize again on every start.
+    NEUTRALIZED_FLAG="database.is_neutralized"
+    if [[ "$RUNNING_ENV" == "dev" ]]; then
+        NEUTRALIZED_FLAG="database.is_neutralized_for_dev"
+    fi
+    if [ "$( psql -tAc "SELECT 1 FROM ir_config_parameter WHERE key='$NEUTRALIZED_FLAG' AND value != '';" )" = '1' ]; then
+        echo "Database is already neutralized ($NEUTRALIZED_FLAG), skipping"
         exit 0
     fi
     odoo neutralize
+    # Only on dev: on the other environments the flag set by `odoo neutralize`
+    # is enough. Writing it there would end up in the dumps, and would defeat
+    # the purpose of re-neutralizing them once when restored locally.
+    if [[ "$RUNNING_ENV" == "dev" ]]; then
+        psql -c "INSERT INTO ir_config_parameter (key, value) VALUES ('$NEUTRALIZED_FLAG', 'True') ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;"
+    fi
 fi
