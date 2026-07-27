@@ -303,6 +303,8 @@ steps on top of it.
 
 `ODOO_NEUTRALIZE` can be `True` or `False`. When set to `True` (default), the image will execute the official Odoo neutralization script if `RUNNING_ENV` is not set to `prod`. This deactivates outgoing emails, scheduled actions, and external payments to prevent accidental data leaks from production dumps.
 
+Databases that are already neutralized (flagged with the `database.is_neutralized` system parameter) are skipped, with one exception: when `RUNNING_ENV` is `dev`, the database is neutralized once more, so that a dump restored from another environment (integration, lab, ...) gets its environment-specific values reset locally. This is tracked with a separate `database.is_neutralized_for_dev` system parameter, so subsequent starts don't neutralize again.
+
     Note: This requires Odoo 16.0 or higher.
 
 ### CONFIDOO_APPLY
