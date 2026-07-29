@@ -25,7 +25,17 @@ if [[ "$RUNNING_ENV" != "prod" && "$ODOO_NEUTRALIZE" == "True" ]]; then
         echo "Database is already neutralized ($NEUTRALIZED_FLAG), skipping"
         exit 0
     fi
+
+    # If OCA 'mail_environment' is installed, it replaces some columns
+    # of "ir.mail_server" with dynamic values.  Neutralize script assume that
+    # these standard columns exist, so we create them before applying neutralization
+    if [ "$( psql -tAc "SELECT 1 FROM ir_module_module WHERE name = 'mail_environment' AND state != 'uninstalled';" )" = '1' ]; then
+        psql -c "ALTER TABLE ir_mail_server ADD IF NOT EXISTS smtp_encryption VARCHAR, ADD IF NOT EXISTS smtp_host VARCHAR, ADD IF NOT EXISTS smtp_port INT;"
+    fi
+
+    # Apply SQL scripts
     odoo neutralize
+
     # Only on dev: on the other environments the flag set by `odoo neutralize`
     # is enough. Writing it there would end up in the dumps, and would defeat
     # the purpose of re-neutralizing them once when restored locally.
