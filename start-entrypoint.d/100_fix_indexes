@@ -2,35 +2,45 @@
 # This script can be removed when we have finished updating databases with
 # the configuration of the unaccentextension (odoo >= 16.0)
 
-if [ "${ODOO_VERSION%%.*}" -lt 16 ]; then
-    echo "Index fixing for unaccent: requires Odoo 16.0+"
+if [ "${ODOO_VERSION%%.*}" -lt 16 -o "${ODOO_VERSION%%.*}" -gt 19 ]; then
+    echo "Index fixing for unaccent: requires Odoo [16.0 to 19.0]"
     exit 0
 fi
 
-if [ 0 = $(psql -Atc "SELECT COUNT(*) FROM pg_indexes WHERE indexdef LIKE '%gin_trgm%' AND indexdef NOT LIKE '%unaccent%'") ]
-then
+WHERE_CLAUSE="WHERE indexdef LIKE '%gin_trgm_ops%' AND indexdef NOT LIKE '%unaccent%' AND schemaname = current_schema"
+
+if [ 0 = $(psql -tAc "SELECT COUNT(*) FROM pg_indexes $WHERE_CLAUSE;") ]; then
     echo "No indexes to fix"
     exit 0
 fi
 
 odoo shell --no-http --log-handler=:ERROR --log-handler=odoo.schema:INFO << EOF
-cr = self.env.cr
-query = """SELECT indexname, tablename 
-FROM pg_indexes 
-WHERE indexdef LIKE '%gin_trgm%' 
-AND indexdef NOT LIKE '%unaccent%'"""
-cr.execute(query)
+import re
+
+query = """SELECT indexname, tablename, indexdef FROM pg_indexes $WHERE_CLAUSE;"""
+env.cr.execute(query)
+
 tables = set()
-for indexname, tablename in cr.fetchall():
+for indexname, tablename, indexdef in env.cr.fetchall():
+    # Odoo 17+ uses '__' as separator between table and column
+    # Note that index names longer than 63 chars are mangled, hence they are not detected
+    parsed = re.match(f"{tablename}__?(.+)_index", indexname)
+
+    # Sanity check, to avoid dropping non-standard indexes
+    colname = parsed and parsed.group(1)
+    if not colname:
+        print(f"Left unchanged: {indexdef}")
+        continue
     tables.add(tablename)
-    print(f"Fixing index {indexname} on table {tablename}")
-    cr.execute(f"DROP INDEX {indexname}")
+    print(f"Fixing index {indexname} on table {tablename} ({colname})")
+    env.cr.execute(f"DROP INDEX {indexname};")
+
 if tables:
     # recreate the indexes with unaccent
     models = set()
-    for model in self.env.registry.models.values():
+    for model in env.registry.models.values():
         if model._table in tables:
             models.add(model._name)
-    self.env.registry.check_indexes(self.env.cr, models)
-self.env.cr.commit()
+    env.registry.check_indexes(env.cr, models)
+env.cr.commit()
 EOF
