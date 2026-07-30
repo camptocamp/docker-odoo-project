@@ -91,8 +91,7 @@ if [ $EUID -eq 0 ]; then
   fi
 fi
 
-if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || [ "$BASE_CMD" = "migrate" ] ||
-    ([ "$BASE_CMD" = "gosu" ] && [[ "${ARGS[@]}" =~ "odoo migrate" ]] ); then
+if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || [ "$BASE_CMD" = "migrate" ]; then
   BEFORE_MIGRATE_ENTRYPOINT_DIR=$ODOO_BASE_PATH/before-migrate-entrypoint.d
   if [ -d "$BEFORE_MIGRATE_ENTRYPOINT_DIR" ]; then
     run-parts --exit-on-error --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
