@@ -98,7 +98,8 @@ if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || [ "$BASE_CMD" = "m
     run-parts --exit-on-error --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
   fi
 fi
-if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]; then
+if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] ||
+    ([ "$BASE_CMD" = "gosu" ] && [[ "${ARGS[@]}" =~ "odoo migrate" ]] ); then
 
   # Bypass migrate when `odoo shell` or `odoo --help` are used
   if [[ ! " ${ARGS[@]} " =~ " --help " ]] && [[ ! " ${ARGS[@]:0:1} " =~ " shell " ]]; then
