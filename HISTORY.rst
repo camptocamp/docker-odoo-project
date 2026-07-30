@@ -20,35 +20,67 @@
 Release History
 ---------------
 
+5.4.1 (2026-07-30)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Make sure that PostgreSQL ``unaccent`` function is immutable on cloud platform
+* Odoo 16+: Recreate trigram indexes, in case they were created without ``unaccent``
+* Odoo 16+: Neutralize again, when database is restored to local ``dev``
+* Odoo 18+: Remove ``running_env`` from Odoo configuration
+* Get colored log output for runtests and CI
+
+**Libraries**
+
+* Upgrade dependencies, to fix important vulnerabilities
+* **IMPORTANT** Odoo 15 and 16: Bump Werkzeug from 2.1.1 to 3.0.6 to fix CVEs.
+
+  Update Odoo source code for smooth transition.  For example
+  these changes are required: odoo/odoo#151989 and odoo/odoo#166814
+
+**Build**
+
+* Pin kwkhtmltopdf to the tagged version
+
+**Bugfixes**
+
+* Compatibility with Platform executing ``gosu odoo ...``
+* Odoo 14+: Force ``dbfilter=`` to empty value instead of False
+* Odoo 16+: Fix compatibility of ``neutralize`` with ``mail_environment``
+* Odoo 16+: Fix logging when Confidoo is applied on non-neutralized DB
+* Odoo 19+: Do no set ``DEMO=True`` to run tests
+
+
 5.4.0 (2026-05-28)
 ++++++++++++++++++
 
 **Features and Improvements**
 
-* Add `Confidoo` support for Odoo >= 16, to apply environment configuration
+* Add ``Confidoo`` support for Odoo >= 16, to apply environment configuration
   https://github.com/camptocamp/confidoo
 * Add Odoo Neutralize support for Odoo >= 16
-* Force `dbfilter` to False, to avoid a connection to `postgres` database
+* Force ``dbfilter=False``, to avoid a connection to ``postgres`` database
   to list the databases
 * Rename OPENERP_SERVER variable to ODOO_RC
 * Update README and documentation
 
 **Libraries**
 
-* Json: Install `orjson` for improved performance
-* Json: Remove obsolete `simplejson`
+* Json: Install ``orjson`` for improved performance
+* Json: Remove obsolete ``simplejson``
 * Upgrade dependencies, to fix important vulnerabilities
-* Split test requirements into `test_requirements.txt`
+* Split test requirements into ``test_requirements.txt``
 
 **Build**
 
 * Support Odoo 12+
 * Simplify build, use the same Dockerfile for all Odoo versions
-* Converge to build `core` and `main` images from the same branch
+* Converge to build **core** and **main** images from the same branch
 * Install PostgreSQL client 15 by default
-* PostgreSQL client version can be changed with build variable `PG_VERSION`
+* PostgreSQL client version can be changed with build variable ``PG_VERSION``
 * Remove obsolete scripts
-* Remove support for `-onbuild` images
+* Remove support for ``*-onbuild`` images
 * Add Dockerfile linter to CI
 * Switch project example to Python 3
 
