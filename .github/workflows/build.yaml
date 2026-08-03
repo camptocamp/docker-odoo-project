@@ -73,9 +73,9 @@ jobs:
             type=schedule,priority=800
             type=raw,priority=500,value=latest,enable={{is_default_branch}}
             type=raw,priority=400,value={{date 'YYYYMMDD'}},enable={{is_default_branch}}
-            type=raw,priority=300,value={{branch}}-latest,event=branch,enable={{is_not_default_branch}}
-            type=raw,priority=300,value={{branch}}-{{date 'YYYYMMDD'}},event=branch,enable={{is_not_default_branch}}
-            type=raw,priority=200,value={{branch}},event=branch,enable={{is_not_default_branch}}
+            type=raw,priority=300,value={{branch}}-latest,event=push,enable={{is_not_default_branch}}
+            type=raw,priority=300,value={{branch}}-{{date 'YYYYMMDD'}},event=push,enable={{is_not_default_branch}}
+            type=raw,priority=200,value={{branch}},event=push,enable={{is_not_default_branch}}
 
       - name: Setup build dir
         id: setup
