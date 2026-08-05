@@ -5,7 +5,7 @@ Babel==2.10.3 ; python_version >= '3.11' and python_version < '3.13'
 Babel==2.17.0 ; python_version >= '3.13'
 cbor2==5.9.0 ; python_version >= '3.12'  # Pin 5.9.0 for security fixes
 chardet==5.2.0 ; python_version >= '3.11'
-cryptography==48.0.1 ; python_version >= '3.12'  # (Noble) min 41.0.7, pinning 48.0.1 for security fixes
+cryptography==50.0.0 ; python_version >= '3.12'  # (Noble) min 41.0.7, pinning 50.0.0 for security fixes
 docutils==0.20.1 ; python_version >= '3.11'
 freezegun==1.2.1 ; python_version >= '3.11' and python_version < '3.13'
 freezegun==1.5.1 ; python_version >= '3.13'
@@ -29,7 +29,7 @@ polib==1.1.1
 psutil==5.9.8 ; python_version >= '3.12' # (Noble) Mostly to have a wheel package
 psycopg2==2.9.9 ; python_version >= '3.12' and python_version < '3.13' # (Noble)
 psycopg2==2.9.10 ; python_version >= '3.13' # (Trixie)
-pyopenssl==26.2.0 ; python_version >= '3.12' # (Noble) min 23.2.0, pinned for compatibility with cryptography==48.0.1 and security patches
+pyopenssl==26.4.0 ; python_version >= '3.12' # (Noble) min 23.2.0, pinned for compatibility with cryptography==50.0.0 and security patches
 PyPDF2==2.12.1 ; python_version > '3.10'
 pyserial==3.5
 python-dateutil==2.8.2 ; python_version >= '3.11'
