@@ -14,10 +14,8 @@ db_restore() {
     echo "Restore Database dump from $DUMP 📦⮕ 🐘"
     psql -q -o /dev/null -d $DB_NAME -f "$DUMP"
     psql -d $DB_NAME -P pager=off -c "SELECT name as installed_module FROM ir_module_module WHERE state = 'installed' ORDER BY name"
-    return 1
   else
     echo "No dump found matching"
-    return 0
   fi
 }
 
@@ -29,5 +27,18 @@ db_save() {
     mkdir -p $(dirname $DUMP)
     pg_dump -Fp -d $DB_NAME -O -f "$DUMP"
     ls $DUMP
+  fi
+}
+
+cap_version () {
+  CEILING=${1-}
+  if [ -z "$CEILING" ]; then cat
+  else
+    while read filename;
+    do
+      if dpkg --compare-versions "${filename##*_}" le "$CEILING"; then
+        echo "$filename"
+      fi
+    done
   fi
 }

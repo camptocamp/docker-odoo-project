@@ -20,16 +20,14 @@
 #   if set to "false", will skip trying to reload cached dump named "odoo_sample_$VERSION.dmp"
 #
 # MIG_LOAD_VERSION_CEIL:
-#   Version number passed to search for an older dump.
+#   Version number passed to search for a dump.
 #
-#   It will load a dump lower than "odoo_sample_$MIG_LOAD_VERSION_CEIL.dmp"
-#   This is useful if you bumped odoo/VERSION as it won't match existing
-#   dumps.
+#   It will load a dump lower than or equal to "odoo_sample_$MIG_LOAD_VERSION_CEIL.dmp"
 #
-#   For instance you have made a dump 10.1.0, you are now on the version
-#   10.2.0, if you pass your current version it will search for a dump
-#   lower than 10.2.0 and restore the 10.1.0. Then play the remaining
-#   steps on top of it.
+#   For instance you have made a dump 10.1.0, you are now preparing version 10.2.0
+#   but odoo/VERSION will be bumped when the release is tagged. So passing 10.1.0
+#   it will return the dump you've made before and restore 10.1.0.
+#   Then play the remaining steps on top of it.
 set -e
 
 . db_cache_helpers.sh
@@ -42,19 +40,13 @@ wait_postgres.sh
 VERSION=$(cat /odoo/VERSION)
 
 if [ "$LOAD_DB_CACHE" != "false" ]; then
-
-  # If we want to run the migration steps on top of a previous dump
-  # useful when odoo/VERSION was edited
-  if [ -n "$MIG_LOAD_VERSION_CEIL" ]; then
-    echo "New version - Searching for previous version dump 🔭"
-    if [ -d "$CACHE_DIR" ]; then
-      # Filter dumps of higher releases
-      export MAX_DUMP="$CACHE_DIR/odoo_sample_${MIG_LOAD_VERSION_CEIL}.dmp"
-      CACHED_DUMP=$(ls -v $CACHE_DIR/odoo_sample_*.dmp || true | awk '$0 < ENVIRON["MAX_DUMP"]' | tail -n1)
-    fi
-    if [ -n "$CACHED_DUMP" ]; then
-      echo "No cached migration sample dump found"
-    fi
+  if [ -d "$CACHE_DIR" ] && [ -z "$CACHED_DUMP" ]; then
+    echo "Searching for previous version dump 🔭"
+    # Run the migration steps on top of a previous dump, filter out dumps of higher releases
+    CACHED_DUMP=$(ls -v $CACHE_DIR/odoo_sample_*.dmp || true | cap_version ${MIG_LOAD_VERSION_CEIL-} | tail -n1)
+  fi
+  if [ -z "$CACHED_DUMP" ]; then
+    echo "No cached migration sample dump found"
   fi
 else
   echo "DB cache load disabled."
@@ -62,7 +54,7 @@ fi
 
 if [ "$LOAD_DB_CACHE" != "false" ]; then
   db_restore "$CACHED_DUMP" "$DB_NAME"
-  if [ $? = 1 ]; then
+  if [ -f "$CACHED_DUMP" ]; then
     echo "Do migration on top of restored dump"
   else
     echo "Do migration from scratch 🐢 🐢 🐢"
