@@ -5,6 +5,8 @@ ignored:
   # Pin versions in apt-get install: package installation is delegated to
   # install/*.sh scripts, pinning isn't practical for base images.
   - DL3008
+  # Delete the apt lists after installing something: delegated to apt_purge.sh
+  - DL3009
   # Pin versions in pip install: handled via requirements.txt files.
   - DL3013
   # Avoid cache directory with pip: cache is cleaned by

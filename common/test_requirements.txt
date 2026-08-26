@@ -2,10 +2,9 @@
 # those libs and their dependencies are unpinned
 # to always test with the last version of it
 flake8
-pytest==8.3.2
+pytest==8.4.2
 pluggy
 coverage
-# Pin, because 2.1.4 with camptocamp/pytest-odoo#85 is not released
-pytest-odoo==2.1.2
-pytest-cov>=2.10.0
+pytest-odoo>=2.2.0
+pytest-cov>=7.0.0
 watchdog
