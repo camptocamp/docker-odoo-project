@@ -20,13 +20,11 @@ COPY ./requirements.txt /odoo/
 
 USER root
 RUN \
-        pip install -e /odoo \
-        && pip install -e /odoo/src \
-        # Project's specific packages
-        && apt-get update \
-        && apt-get install -y --no-install-recommends \
-        python3-shapely \
-        && rm -rf /var/lib/apt/lists/* \
-        && pip install -r /odoo/requirements.txt
+  # Project's specific packages
+  apt-get update \
+  && apt-get install -y --no-install-recommends python3-shapely \
+  && pip install -r /odoo/requirements.txt -e /odoo -e /odoo/src \
+  # cleaning of dev packages
+  && /install/apt_purge.sh
 
 ENV ADDONS_PATH=/odoo/local-src,/odoo/src/addons

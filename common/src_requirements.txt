@@ -1,5 +1,5 @@
 # Requirements for the project itself and for Odoo.
 # When we install Odoo with -e, odoo.py is available in the PATH and
-# 'openerp' in the PYTHONPATH
+# 'odoo' module in the PYTHONPATH
 -e .
 -e src

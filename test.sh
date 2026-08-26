@@ -96,6 +96,13 @@ sed "s|FROM .*|FROM ${IMAGE_LATEST}|" -i "$BASE_PATH/Dockerfile"
 sed "s|\(.version.: .\)[0-9.]*\(.*\)|\\1${VERSION}.0.0.0\\2|" -i "$LOCAL_CODE_PATH/dummy_test/__manifest__.py"
 echo $VERSION.0.0.0 > "$BASE_PATH/VERSION"
 
+case "$VERSION" in
+  "12.0" | "13.0")
+    # No extra_requirements.txt, no test_requirements.txt
+    sed '/^-r \(extra\|test\)_/d' -i "$BASE_PATH/requirements.txt"
+    ;;
+esac
+
 mkdir .cachedb
 
 echo '>>> * migration: standard'

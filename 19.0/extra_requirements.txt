@@ -14,8 +14,8 @@ paypalrestsdk==1.13.3
 phonenumbers==9.0.13
 pyquerystring==1.1
 pysimplesoap==1.16.2
+python-slugify==8.0.4
 requests-mock==1.12.1
-slugify==0.0.1
 stripe==12.5.1
 unidecode==1.4.0
 vcrpy==8.2.1

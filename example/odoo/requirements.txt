@@ -1,2 +1,8 @@
+# Check requirenents incompatibilities
+-r base_requirements.txt
+-r platform_requirements.txt
+-r test_requirements.txt
+-r extra_requirements.txt
+
 # project's packages, customize for your needs:
-unidecode==0.4.14
+portion==2.4.2
