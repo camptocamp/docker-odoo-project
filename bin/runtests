@@ -63,8 +63,7 @@ echo "Submodule addons MD5 is: $SUBS_MD5"
 DUMP_LOADED=0
 if [ "$LOAD_DB_CACHE" != "false" ]; then
   db_restore "$DUMP" "$DB_NAME"
-  DUMP_LOADED=$?
-  if [ $DUMP_LOADED = 1 ]; then
+  if [ -f "$DUMP" ]; then
     echo "Use restored dump with official/OCA modules"
   else
     echo "Reinstall all addons from scratch 🐢 🐢 🐢"
