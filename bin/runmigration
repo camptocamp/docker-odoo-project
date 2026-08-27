@@ -32,7 +32,6 @@ set -e
 
 . db_cache_helpers.sh
 . env_odoo.sh
-wait_postgres.sh
 
 # Set default values
 : ${CREATE_DB_CACHE:=false} ${LOAD_DB_CACHE:=true} ${CACHE_DIR:=/tmp/cachedb} ${DB_NAME:=odoo_mig}

@@ -77,8 +77,8 @@ if [ -z "$(pip list --format=columns | grep "/odoo" | grep -v "/odoo/src")" ]; t
 fi
 
 
-# Wait until postgres is up
-wait_postgres.sh
+# Wait until PostgreSQL is up
+wait_postgres 30s
 
 if [ $EUID -eq 0 ]; then
   # Not for core image
