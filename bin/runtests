@@ -28,7 +28,6 @@ set -e
 
 # TODO: if we are not on CI, make a template then run tests on a copy
 . db_cache_helpers.sh
-wait_postgres.sh
 
 LOCAL_CODE_PATH=${LOCAL_CODE_PATH:-/odoo/local-src}
 ODOO_BIN_PATH=/odoo/src/odoo/odoo-bin  # Core image layout
