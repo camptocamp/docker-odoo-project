@@ -44,7 +44,6 @@ RUN /install/package_odoo.sh core \
     && /install/setup-pip.sh \
     && /install/postgres.sh \
     && /install/kwkhtml_client.sh \
-    && /install/kwkhtml_client_force_python3.sh \
     # build and dev packages
     && /install/dev_package.sh core \
     && su odoo -c "umask 007 \
