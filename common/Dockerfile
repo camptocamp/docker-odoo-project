@@ -25,7 +25,6 @@ RUN /install/package_odoo.sh \
     && /install/setup-pip.sh \
     && /install/postgres.sh \
     && /install/kwkhtml_client.sh \
-    && /install/kwkhtml_client_force_python3.sh \
     # build and dev packages
     && /install/dev_package.sh \
     && python3 -m pip install --force-reinstall pip \
