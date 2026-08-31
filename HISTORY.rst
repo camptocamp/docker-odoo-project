@@ -20,6 +20,28 @@
 Release History
 ---------------
 
+5.4.2 (2026-08-31)
+++++++++++++++++++
+
+**Libraries**
+
+* Same ``src_requirements.txt`` and ``test_requirements.txt`` for all versions
+* Upgrade ``openupgradelib`` to recent version
+* Remove outdated ``slugify``, replace with ``python-slugify``
+* Upgrade dependencies, to fix important vulnerabilities
+* Check requirements compatibility with CI tests
+
+**Build**
+
+* Remove obsolete install script ``kwkhtml_client_force_python3.sh``
+
+**Bugfixes**
+
+* Fix mechanism to store/load cached dump for CI tests and migration
+* Get rid of spurious error message when CI execute ``runmigration``
+* Remove repeated call to ``wait_postgres`` and use shell function instead of a script
+
+
 5.4.1 (2026-08-03)
 ++++++++++++++++++
 
