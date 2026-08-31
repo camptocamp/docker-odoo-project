@@ -114,10 +114,10 @@ Main flavor:
 $ make VERSION=19.0
 ```
 
-Note: version of PostgreSQL client can be changed.  By default, it is version 15, which is fully
-compatible with PostgreSQL 12 to 15. Example:
+Note: version of PostgreSQL client can be changed.  By default, it is version 17.
+Example:
 ```
-$ make VERSION=19.0 PG_VERSION=17
+$ make VERSION=19.0 PG_VERSION=18
 ```
 
 Batteries-included flavor:
