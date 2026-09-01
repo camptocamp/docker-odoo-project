@@ -66,16 +66,16 @@ jobs:
         with:
           images: ghcr.io/camptocamp/docker-odoo-project
           flavor: |
-            prefix=${{ matrix.odoo_serie }}${{ matrix.flavor == 'core' && '-core-' || '-' }},onlatest=true
+            prefix=${{ matrix.odoo_serie }}-${{ matrix.flavor == 'core' && 'core-' || '' }},onlatest=true
           tags: |
             type=ref,priority=900,event=tag,enable=true
             type=ref,event=pr
             type=schedule,priority=800
             type=raw,priority=500,value=latest,enable={{is_default_branch}}
             type=raw,priority=400,value={{date 'YYYYMMDD'}},enable={{is_default_branch}}
-            type=raw,priority=300,value={{branch}}-latest,event=push,enable={{is_not_default_branch}}
-            type=raw,priority=300,value={{branch}}-{{date 'YYYYMMDD'}},event=push,enable={{is_not_default_branch}}
-            type=raw,priority=200,value={{branch}},event=push,enable={{is_not_default_branch}}
+            type=ref,priority=300,suffix=-latest,event=branch,enable={{is_not_default_branch}}
+            type=ref,priority=300,suffix=-{{date 'YYYYMMDD'}},event=branch,enable={{is_not_default_branch}}
+            type=ref,priority=200,event=branch,enable={{is_not_default_branch}}
 
       - name: Setup build dir
         id: setup

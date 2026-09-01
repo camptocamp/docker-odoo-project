@@ -20,6 +20,14 @@
 Release History
 ---------------
 
+5.5.0 (2026-09-01)
+++++++++++++++++++
+
+**Build**
+
+* Switch to PostgreSQL client 17 by default, instead of 15
+
+
 5.4.2 (2026-08-31)
 ++++++++++++++++++
 
