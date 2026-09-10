@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
-ODOO_PACKAGE=" \
+ODOO_PACKAGE="\
     antiword \
     ca-certificates \
     curl \
@@ -21,6 +21,11 @@ ODOO_PACKAGE=" \
     xfonts-base \
     xz-utils \
 "
+
+if [ "${VERSION%%.*}" -gt 18 ]; then
+  # Odoo 19+ has dependency on python-magic
+  ODOO_PACKAGE="$ODOO_PACKAGE libmagic1"
+fi
 
 if [ "${1-}" = "core" ]; then
   ODOO_PACKAGE="$ODOO_PACKAGE \
