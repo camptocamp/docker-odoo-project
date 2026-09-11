@@ -7,3 +7,19 @@ prometheus-client==0.22.*
 # PLATFORM, for azure blob storage
 azure-storage-blob==12.26.*
 azure-identity==1.24.*
+
+# Dependencies
+async-timeout==5.0.1 ; python_version < '3.11'
+azure-core==1.39.0 ; python_version < '3.12'
+azure-core==1.41.* ; python_version >= '3.12'
+cffi==1.17.* ; python_version < '3.12'
+cffi==2.0.* ; python_version >= '3.12'
+cryptography==43.0.* ; python_version < '3.12'
+cryptography==50.0.* ; python_version >= '3.12'
+isodate==0.7.*
+msal==1.38.*
+msal-extensions==1.3.*
+pycparser>=2.22 ; python_version < '3.12'
+pycparser==3.* ; python_version >= '3.12'
+PyJWT==2.13.*
+typing_extensions==4.16.*
