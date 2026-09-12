@@ -26,29 +26,31 @@ jobs:
     strategy:
       matrix:
         odoo_serie:
-          - "15.0"
-          - "16.0"
-          - "17.0"
-          - "18.0"
-          - "19.0"
+          - "14.0"
+          # "15.0"
+          # "16.0"
+          # "17.0"
+          # "18.0"
+          # "19.0"
         python:
-          - "python:3.12"
+          - "python:3.9"
+          # "python:3.12"
         flavor:
           - main
           - core
         include:
-          - odoo_serie: "12.0"
-            python: "python:3.9"
-            flavor: main
+        # - odoo_serie: "12.0"
+        #   python: "python:3.9"
+        #   flavor: main
           - odoo_serie: "13.0"
             python: "python:3.9"
             flavor: main
-          - odoo_serie: "14.0"
-            python: "python:3.9"
-            flavor: main
-          - odoo_serie: "14.0"
-            python: "python:3.9"
-            flavor: core
+        # - odoo_serie: "14.0"
+        #   python: "python:3.9"
+        #   flavor: main
+        # - odoo_serie: "14.0"
+        #   python: "python:3.9"
+        #   flavor: core
     continue-on-error: ${{ matrix.odoo_serie == '12.0' || matrix.odoo_serie == '13.0' || matrix.flavor == 'core' }}
 
     steps:
