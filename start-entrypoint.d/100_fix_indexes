@@ -1,6 +1,8 @@
 #! /bin/bash
+
 # This script can be removed when we have finished updating databases with
 # the configuration of the unaccent extension (Odoo >= 16)
+# And when changes for res.partner are included in Odoo
 
 if [ "${ODOO_VERSION%%.*}" -lt 16 -o "${ODOO_VERSION%%.*}" -gt 19 ]; then
     echo "Index fixing for unaccent: requires Odoo 16 to 19"
@@ -14,12 +16,26 @@ WITHOUT_UNACCENT="$WITHOUT_UNACCENT AND indexname != 'ir_attachment_url_trgm_ind
 
 # Any trigram index without unaccent?
 if [ 0 = $(psql -tAc "SELECT COUNT(*) FROM pg_indexes $WHERE_CLAUSE $WITHOUT_UNACCENT;") ]; then
-    echo "No index to fix"
-    exit 0
+    # Missing trigram on "res.partner"? (at least 6 trigram indexes are expected)
+    if [ "$(psql -tAc "SELECT COUNT(*) FROM pg_indexes $WHERE_CLAUSE AND tablename = 'res_partner';")" -gt 5 ]; then
+       echo "No indexes to fix"
+       exit 0
+    fi
 fi
 
 odoo shell --no-http --log-handler=:ERROR --log-handler=odoo.schema:INFO << EOF
 import re
+
+# Fix for "res.partner": fields which were not declared index="trigram"
+# ["name", "complete_name", "email", "ref", "vat", "company_registry"]
+# For Odoo >= 19, search uses "complete_name" instead of "display_name"
+res_partner = env["res.partner"]
+res_partner_trigram = ["name"] + res_partner._rec_names_search
+for field_name in res_partner_trigram:
+    field = res_partner._fields[field_name]
+    if field.index != "trigram":
+        field.index = "trigram"
+
 
 # Inspired by 'env.registry.check_indexes()' implementation
 expected = {
@@ -32,6 +48,12 @@ expected = {
 }
 existing = set()
 
+# "res.partner" boolean field "active" should be indexed
+field_active = res_partner._fields["active"]
+if not field_active.index:
+    field_active.index = "btree"
+    expected.add(("res.partner", field_active))
+
 
 def find_model(tablename):
     model_name = tablename.replace("_", ".")
@@ -42,7 +64,11 @@ def find_model(tablename):
             return env[model_name]
 
 
-query = f"SELECT indexname, tablename, indexdef FROM pg_indexes $WHERE_CLAUSE;"
+query = """\
+SELECT indexname, tablename, indexdef FROM pg_indexes
+ WHERE indexname LIKE '%_index' AND schemaname = current_schema
+   AND (tablename = 'res_partner' OR indexdef LIKE '%gin_trgm_ops%');
+"""
 env.cr.execute(query)
 
 for indexname, tablename, indexdef in env.cr.fetchall():
@@ -61,7 +87,7 @@ for indexname, tablename, indexdef in env.cr.fetchall():
     field_key = (model._name, field)
     if field_key not in expected:
         continue
-    if "unaccent" in indexdef:
+    if "unaccent" in indexdef or field_key == ("res.partner", field_active):
         existing.add(field_key)
     else:
         print(f"Fixing index {indexname} on table {tablename} ({colname})")
