@@ -20,6 +20,28 @@
 Release History
 ---------------
 
+5.5.1 (2026-09-15)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Change process title WorkerCron/WorkerHTTP
+
+**Bugfixes**
+
+* CI: Do not reinstall add-ons when dump is loaded
+* Remove error message when running testdb-gen/testdb-update
+* Odoo 18: unsupported ``log_db = None`` replaced with ``log_db = False``
+
+**Libraries**
+
+* Re-order requirements, declare all dependencies
+* Update Marabunta 0.15
+* Remove some unused requirements
+* Odoo 19: install libmagic1 for python-magic
+* Odoo 14: bump cryptography and pyOpenSSL, same version as Odoo 15-19
+
+
 5.5.0 (2026-09-01)
 ++++++++++++++++++
 
