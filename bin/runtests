@@ -5,6 +5,7 @@
 # mainly used from CI,
 # it creates a database,
 # if a cached dump of official and oca modules exists restore it
+# and install the dependencies missing from it (without tests)
 # otherwise install dependencies and create a dump to cache
 # then install local addons
 # runs tests on it and drops it.
@@ -52,6 +53,8 @@ DEPS_ADDONS=${ALL_DEPS_ADDONS/",base_automation,"/","}
 # Set default values
 : ${CREATE_DB_CACHE:=false} ${LOAD_DB_CACHE:=true} ${CACHE_DIR:=/tmp/cachedb} ${DB_NAME:=odoo_test}
 
+# Odoo parameters common to all the passes
+ODOO_PARAMS=(--stop-after-init --workers=0 --database $DB_NAME --db-filter=$DB_NAME)
 
 if [[ ! -z "$SUBS_MD5" ]]; then
   DUMP="$CACHE_DIR/odoo_test_$SUBS_MD5.dmp"
@@ -74,18 +77,28 @@ fi
 
 if [ "$DUMP_LOADED" = 0 ]; then
   echo "🔨🔨 Install official/OCA modules 🔨🔨"
-  unbuffer odoo --stop-after-init --workers=0 --database $DB_NAME --log-level=warn --db-filter=$DB_NAME -i ${DEPS_ADDONS}
+  unbuffer odoo "${ODOO_PARAMS[@]}" --log-level=warn -i ${DEPS_ADDONS}
   if [ "$CREATE_DB_CACHE" != "false" ]; then
     db_save $DB_NAME $DUMP
   fi
+else
+  # The dump is keyed on the submodules only: dependencies added to the local
+  # modules since it was created are not installed yet. Install them here,
+  # otherwise they (and their tests) would be installed in the tests-enabled pass.
+  INSTALLED_ADDONS=$(psql -At -d $DB_NAME -c "SELECT name FROM ir_module_module WHERE state = 'installed'")
+  MISSING_ADDONS=$(comm -23 <(tr ',' '\n' <<<"$DEPS_ADDONS" | sort -u) <(sort -u <<<"$INSTALLED_ADDONS") | paste -sd, -)
+  if [ -n "$MISSING_ADDONS" ]; then
+    echo "🔨🔨 Install official/OCA modules missing from the dump: ${MISSING_ADDONS} 🔨🔨"
+    unbuffer odoo "${ODOO_PARAMS[@]}" --log-level=warn -i ${MISSING_ADDONS}
+  fi
 fi
 echo "🔧🔧 Install local modules -- ${LOCAL_CODE_PATH} 🔧🔧"
-ODOO_PARAMS="--stop-after-init --workers=0 --database $DB_NAME --test-enable --log-level=test --log-handler=:INFO --db-filter=$DB_NAME -i ${LOCAL_ADDONS}"
+TEST_PARAMS=("${ODOO_PARAMS[@]}" --test-enable --log-level=test --log-handler=:INFO -i ${LOCAL_ADDONS})
 if [ -n "$COVERAGE" ]; then
-  unbuffer "$COVERAGE" run --source="${LOCAL_CODE_PATH}" "${ODOO_BIN_PATH}" $ODOO_PARAMS
+  unbuffer "$COVERAGE" run --source="${LOCAL_CODE_PATH}" "${ODOO_BIN_PATH}" "${TEST_PARAMS[@]}"
 else
   echo "Skip Code Coverage - not available"
-  unbuffer odoo $ODOO_PARAMS
+  unbuffer odoo "${TEST_PARAMS[@]}"
 fi
 
 dropdb ${DB_NAME}
