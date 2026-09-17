@@ -20,6 +20,15 @@
 Release History
 ---------------
 
+5.5.2 (2026-09-17)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Improve ``unaccent`` startup script, to create trigram indexes which were not
+  created during Odoo setup. It happens if PG extension pg_trgm was installed later
+
+
 5.5.1 (2026-09-15)
 ++++++++++++++++++
 
