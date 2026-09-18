@@ -25,7 +25,7 @@ then
     echo "Function 'unaccent' is already immutable. Skip"
 else
     psql << EOF
-DROP EXTENSION IF EXISTS unaccent;
+DROP EXTENSION IF EXISTS unaccent CASCADE;
 CREATE SCHEMA IF NOT EXISTS unaccent_schema;
 CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA unaccent_schema;
 
