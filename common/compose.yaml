@@ -1,0 +1,36 @@
+# To use with `docker buildx bake`
+services:
+
+  odoo-project-main:
+    image: odoo:${VERSION}
+    build: &build-main
+      dockerfile: ./Dockerfile
+      additional_contexts:
+        - python=docker-image://${PYTHON_IMAGE}
+      args:
+        VERSION: ${VERSION}
+      x-bake:
+        tags:
+          - ci-4xx-latest:${VERSION}
+
+  odoo-project-core:
+    image: odoo:${VERSION}-core
+    build:
+      <<: *build-main
+      dockerfile: ./core.Dockerfile
+      x-bake:
+        tags:
+          - ci-5xx-latest:${VERSION}
+
+  odoo-project-batteries:
+    image: odoo:${VERSION}-batteries
+    build:
+      <<: *build-main
+      dockerfile: ./batteries.Dockerfile
+      additional_contexts:
+        - odoo=docker-image://odoo:${VERSION}
+      x-bake:
+        tags:
+          - ci-4xx-batteries-latest:${VERSION}
+    depends_on:
+      - odoo-project-main
