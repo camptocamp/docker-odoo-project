@@ -26,6 +26,7 @@ bcrypt==4.3.0
 botocore==1.42.97
 dateparser==1.2.2
 jmespath==1.0.1
+markdown2==2.5.5
 multidict==6.6.4
 pdfminer.six==20260107
 pycryptodome==3.23.0
