@@ -47,6 +47,20 @@ esac
 # Allow version flavor like 12.0-buster
 VERSION=$(echo $VERSION | cut -d '-' -f '1')
 
+# PostgreSQL server used for the test database
+# Odoo 20.0 requires PostgreSQL >= 16
+if [ -z "${PG_SERVER_VERSION-}" ]; then
+    case "$VERSION" in
+      "20.0")
+        PG_SERVER_VERSION=16
+        ;;
+      *)
+        PG_SERVER_VERSION=13.0
+        ;;
+    esac
+fi
+export PG_SERVER_VERSION
+
 ODOO_URL="https://github.com/odoo/odoo/archive/${VERSION}.tar.gz"
 
 TMP=$(mktemp -d)
