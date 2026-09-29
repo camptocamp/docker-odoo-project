@@ -7,7 +7,7 @@ boto3==1.42.97
 factur-x==3.8
 invoice2data==0.4.5
 mailjet-rest==1.5.1
-openupgradelib==3.11.1
+openupgradelib==3.13.7
 paramiko==4.0.0
 parse-accept-language==0.1.2
 paypalrestsdk==1.13.3
