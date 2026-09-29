@@ -55,7 +55,7 @@ if [ -z "${PG_SERVER_VERSION-}" ]; then
         PG_SERVER_VERSION=16
         ;;
       *)
-        PG_SERVER_VERSION=13.0
+        PG_SERVER_VERSION=13
         ;;
     esac
 fi

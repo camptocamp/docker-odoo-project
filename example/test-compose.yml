@@ -34,7 +34,7 @@ services:
       - MIG_LOAD_VERSION_CEIL=
 
   db:
-    image: postgres:${PG_SERVER_VERSION:-13.0}
+    image: postgres:${PG_SERVER_VERSION:-13}
     ports:
       - 5432
     environment:
