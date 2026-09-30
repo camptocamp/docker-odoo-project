@@ -7,15 +7,24 @@ if [ "${ODOO_VERSION%%.*}" -lt 16 -o "${ODOO_VERSION%%.*}" -gt 19 ]; then
     exit 0
 fi
 
+# Same check as Odoo's has_trigram():  https://github.com/odoo/odoo/blob/20.0/odoo/modules/db.py#L233
+if [ "$(psql -tAc "SELECT 1 FROM pg_proc WHERE proname = 'word_similarity';")" != 1 ]; then
+    echo "Extension pg_trgm is not installed: no support for trigram index"
+    exit 0
+fi
+
 WHERE_CLAUSE="WHERE indexdef LIKE '%gin_trgm_ops%' AND indexname LIKE '%_index' AND schemaname = current_schema"
 WITHOUT_UNACCENT="AND indexdef NOT LIKE '%unaccent%'"
 # Skip special 'ir_attachment_url_trgm_index' from camptocamp/odoo-tools, Odoo 16 and 17
 WITHOUT_UNACCENT="$WITHOUT_UNACCENT AND indexname != 'ir_attachment_url_trgm_index'"
 
-# Any trigram index without unaccent?
-if [ 0 = $(psql -tAc "SELECT COUNT(*) FROM pg_indexes $WHERE_CLAUSE $WITHOUT_UNACCENT;") ]; then
-    echo "No index to fix"
-    exit 0
+# Is there some trigram index already?
+if [ "$(psql -tAc "SELECT 1 FROM pg_indexes $WHERE_CLAUSE LIMIT 1;")" = 1 ]; then
+    # Any trigram index without unaccent?
+    if [ "$(psql -tAc "SELECT 1 FROM pg_indexes $WHERE_CLAUSE $WITHOUT_UNACCENT LIMIT 1;")" != 1 ]; then
+        echo "No index to fix"
+        exit 0
+    fi
 fi
 
 odoo shell --no-http --log-handler=:ERROR --log-handler=odoo.schema:INFO << EOF
