@@ -5,4 +5,5 @@ LABEL maintainer="Camptocamp"
 # Install extra requirements
 RUN /install/dev_package.sh \
     && pip install -r /odoo/extra_requirements.txt \
-    && /install/purge_dev_package_and_cache.sh
+    && /install/purge_dev_package_and_cache.sh \
+    && touch /install/_BATTERIES_
