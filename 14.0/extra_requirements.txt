@@ -1,42 +1,71 @@
-# Extra python dependencies
-algoliasearch==4.1.1
-Adyen==12.3.0
+# Extra python dependencies: OCA addons, ...
+#
+# It is recommended to adapt this list of requirements for each project,
+# keep the ones used, and add new ones when needed
+
+# OCA/connector: component
 cachetools==5.5.0
-cerberus==1.3.5
-cryptography==50.0.0
-boto3==1.35.6
+
+# OCA/storage
+boto3==1.35.6           # storage_backend_s3
+cryptography==50.0.0    # dep. of paramiko
+paramiko==3.4.1         # storage_backend_sftp
+python-slugify==8.0.4   # fs_storage, storage_file
+
+# OCA/edi: account_invoice_*
 factur-x==3.1
 invoice2data==0.4.5
-mailjet-rest==1.3.4
-openupgradelib==3.13.7
-paramiko==3.4.1
+
+# OCA/rest-framework: fastapi
 parse-accept-language==0.1.2
+
+# OCA: many add-ons
+unidecode==1.3.8
+
+# OCA: for some tests
+requests-mock==1.12.1
+vcrpy==7.0.0
+
+
+# Dependencies: Extra
+bcrypt==4.2.0           # dep. of paramiko
+botocore==1.35.6        # dep. of boto3
+cffi==2.0.0             # dep. of cryptography
+dateparser==1.2.0       # dep. of invoice2data
+jmespath==1.0.1         # dep. of boto3
+propcache==0.4.1        # dep. of vcrpy
+pycparser==2.23         # dep. of cryptography
+PyNaCl==1.5.0           # dep. of paramiko
+pypdf==6.19.0           # dep. of factur-x
+PyYAML==6.0.3           # dep. of invoice2data, vcrpy
+regex==2024.7.24        # dep. of invoice2data
+s3transfer==0.10.2      # dep. of boto3
+text-unidecode==1.3     # dep. of python-slugify
+tzlocal==5.2            # dep. of invoice2data
+wrapt==2.5.0            # dep. of vcrpy
+yarl==1.22.0            # dep. of vcrpy
+
+# Kept for backward compatibility
+algoliasearch==4.1.1
+Adyen==12.3.0
+asn1crypto==1.5.1
+cerberus==1.3.5
+mailjet-rest==1.3.4
 paypalrestsdk==1.13.3
-phonenumbers==8.13.44
+pdfminer.six==20251107
+pycryptodome==3.20.0
 pyOpenSSL==26.4.0
 pyquerystring==1.1
 pysimplesoap==1.16.2
-python-slugify==8.0.4
-requests-mock==1.12.1
-stripe==10.8.0
-unidecode==1.3.8
-vcrpy==7.0.0
-
-# Library dependency
-aiohttp==3.13.5
-asn1crypto==1.5.1
-bcrypt==4.2.0
-botocore==1.35.6
-cffi==2.0.0
-dateparser==1.2.0
-jmespath==1.0.1
-multidict==6.0.5
-pdfminer.six==20251107
-pycparser==2.23
-pycryptodome==3.20.0
-PyNaCl==1.5.0
 pytesseract==0.3.13
-regex==2024.7.24
-s3transfer==0.10.2
-tzlocal==5.2
-yarl==1.22.0
+stripe==10.8.0
+#
+aiohappyeyeballs==2.6.1
+aiohttp==3.13.5
+aiosignal==1.4.0
+annotated-types==0.7.0
+frozenlist==1.8.0
+multidict==6.0.5
+pydantic==2.13.5
+pydantic_core==2.46.5
+typing-inspection==0.4.2
