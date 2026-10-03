@@ -1,0 +1,45 @@
+#!/bin/bash
+
+#
+# Projects that install the 'camptocamp_cron' module (odoo-tools) can flag
+# individual scheduled actions as "Keep Active".
+# This script re-activates any such cron found inactive, independently of why
+# it was deactivated -- e.g. database neutralization (002_neutralize), or a
+# manual change.
+#
+# If the module is not installed, this script is a no-op.
+#
+# Skipped on production.
+#
+# To skip this step entirely,
+# set RESTORE_KEEP_ACTIVE_CRONS=False.
+#
+
+if [ "$RUNNING_ENV" = "prod" ]; then
+    echo "Ignoring prod"
+    exit 0
+fi
+
+restore_keep_active_crons=$(echo "${RESTORE_KEEP_ACTIVE_CRONS:-True}" | tr '[:upper:]' '[:lower:]' )
+
+if [ "$restore_keep_active_crons" = "false" ] || [ "$restore_keep_active_crons" = "0" ]; then
+    exit 0
+fi
+
+if [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" )" != '1' ]
+then
+    echo "Database does not exist, ignoring script"
+    exit 0
+fi
+
+if [ "$( psql -tAc "SELECT 1 FROM information_schema.columns WHERE table_name='ir_cron' AND column_name='keep_active'" )" != '1' ]; then
+    echo "camptocamp_cron is not installed, ignoring script"
+    exit 0
+fi
+
+reactivated_crons=$(psql -tAc "SELECT string_agg(cron_name, ', ') FROM ir_cron WHERE NOT active AND keep_active;")
+
+if [ -n "$reactivated_crons" ]; then
+    echo "Re-activating scheduled actions: $reactivated_crons"
+    psql -c "UPDATE ir_cron SET active = true WHERE NOT active AND keep_active;"
+fi
