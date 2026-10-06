@@ -38,7 +38,7 @@ jobs:
         python:
           - "python:3.12"
         flavor:
-          - main
+          # main
           - core
         include:
           - odoo_serie: "12.0"
