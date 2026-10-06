@@ -73,7 +73,7 @@ pyasn1==0.6.4               # dep. of python-ldap
 pyasn1_modules==0.4.2       # dep. of python-ldap
 pyparsing==3.3.2            # dep. of pydot
 requests-toolbelt==1.0.0    # dep. of zeep
-setuptools==79.0.1          # requirement of Odoo <= 16
+setuptools==79.0.1          # requirement of Odoo
 six==1.17.0                 # dep. of ofxparse, freezegun, qrcode, vobject, ...
 soupsieve==2.8.4            # dep. of ofxparse
 urllib3==1.26.20            # dep. of requests
