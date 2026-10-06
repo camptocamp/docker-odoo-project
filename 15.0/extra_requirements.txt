@@ -64,4 +64,5 @@ propcache==0.5.4
 pydantic==2.13.5
 pydantic_core==2.46.5
 typing-inspection==0.4.4
+unicodecsv==0.14.1
 yarl==1.22.0
