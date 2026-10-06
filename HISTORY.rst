@@ -20,6 +20,39 @@
 Release History
 ---------------
 
+5.5.x (unreleased)
+++++++++++++++++++
+
+**Features and Improvements**
+
+* Support Odoo 20
+* Improve ``unaccent`` startup script, to skip it if not ``has_trigram()``
+* Recommend to cherry-pick from ``extra_requirements.txt`` instead of installing all
+
+**Libraries**
+
+* ``base_requirements.txt``:
+
+  * Add ``openupgradelib``, removed from Extra
+  * Add ``phonumbers`` for ``phone_validation`` addon, removed from Extra
+  * Pin ``anthem==0.15.0``
+  * Remove unused requirements ``gdata``, ``html5lib`` and ``pyinotify``
+  * Odoo 18+ - Add requirement ``inotify`` for auto-reload feature
+  * Odoo 18+ - Remove ``unicodecsv`` from requirements.
+    For Odoo 14 to 17, it is moved to Extra
+
+* ``extra_requirements.txt``:
+
+  * Document each requirement with a comment line above
+  * Odoo 18+: Single file, common to all recent Odoo versions
+  * Odoo 18+: Removed many unused libraries
+
+**Build**
+
+* Bump default PostgreSQL client ``PG_VERSION`` from 15 to 17
+* Tests: run Odoo 20.0 against PostgreSQL 16
+
+
 5.5.2 (2026-09-17)
 ++++++++++++++++++
 

@@ -18,8 +18,8 @@
 Release History
 ---------------
 
-latest (unreleased)
-+++++++++++++++++++
+NOT RELEASED (2026-04-22)
++++++++++++++++++++++++++
 
 **Features and Improvements**
 
@@ -27,13 +27,9 @@ latest (unreleased)
 * Entrypoint: exit on error when executing run-parts
 * Pillow: bump to 12.1.1 (to fix security issues)
 
-**Bugfixes**
-
 **Build**
 
 * Change PostgreSQL deb repo to 'apt-archive' for debian stretch based images
-* Bump default PostgreSQL client (``PG_VERSION``) from 15 to 17
-* Tests: run 20.0 against PostgreSQL 16 (Odoo 20.0 requires PostgreSQL >= 16)
 
 **Documentation**
 
