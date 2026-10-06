@@ -28,6 +28,7 @@ Release History
 * Support Odoo 20
 * Improve ``unaccent`` startup script, to skip it if not ``has_trigram()``
 * Recommend to cherry-pick from ``extra_requirements.txt`` instead of installing all
+* Do not install ``extra_requirements.txt`` in **core** image
 
 **Libraries**
 
