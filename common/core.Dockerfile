@@ -49,7 +49,6 @@ RUN /install/package_odoo.sh core \
     && su odoo -c "umask 007 \
     && python3 -m venv /odoo/.venv --system-site-packages \
     && /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt \
-                                   -r /odoo/extra_requirements.txt \
                                    -r /odoo/test_requirements.txt" \
     && chgrp -R root /odoo/.venv \
     # Grab dockerize to generate template and wait on postgres
