@@ -48,9 +48,9 @@ phonenumbers==9.0.13
 setproctitle==1.3.7
 
 # Tools: Migration
+anthem==0.15.0
 marabunta==0.15.0
 openupgradelib==3.13.7
--e git+https://github.com/camptocamp/anthem@master#egg=anthem
 
 # Tools: Package Odoo addons
 whool==1.3
@@ -85,4 +85,3 @@ cssselect==1.3.0        # dep. of openupgradelib
 pexpect==4.9.0          # dep. of marabunta
 ptyprocess==0.7.0       # dep. of marabunta
 ruamel.yaml==0.19.1     # dep. of marabunta
-unicodecsv==0.14.1      # dep. of anthem

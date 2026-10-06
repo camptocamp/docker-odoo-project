@@ -69,3 +69,4 @@ multidict==6.0.5
 pydantic==2.13.5
 pydantic_core==2.46.5
 typing-inspection==0.4.2
+unicodecsv==0.14.1
