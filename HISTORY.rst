@@ -47,6 +47,10 @@ Release History
   * Odoo 18+: Single file, common to all recent Odoo versions
   * Odoo 18+: Removed many unused libraries
 
+* ``platform_requirements.txt``:
+
+  * Update PyJWT to fix CVE-2026-102268
+
 **Build**
 
 * Bump default PostgreSQL client ``PG_VERSION`` from 15 to 17
