@@ -20,7 +20,7 @@
 Release History
 ---------------
 
-5.5.x (unreleased)
+5.5.3 (2026-10-07)
 ++++++++++++++++++
 
 **Features and Improvements**
