@@ -1,0 +1,315 @@
+#!/usr/bin/env python3
+import functools
+import json
+import shlex
+import subprocess
+from collections import defaultdict
+from pathlib import Path
+
+from packaging.requirements import Requirement
+from packaging.utils import canonicalize_name
+
+MSG_CONFLICT = """\
+Most probably one of the package version declared in 'requirements.txt'
+conflicts with version installed in base image.
+If project needs a different version, add a comment to make it explicit.
+This way, it can be reviewed and removed when the base image is updated."""
+BASE_REQUIREMENTS = [
+    Path("/odoo/base_requirements.txt"),
+    Path("/odoo/platform_requirements.txt"),
+    Path("/odoo/test_requirements.txt"),
+]
+PROJECT_REQUIREMENTS = Path("/odoo/requirements.txt")
+PIPDEPTREE = Path("/usr/local/bin/pipdeptree")
+CSI = "\33["
+
+
+def run(command, verbose=True, check=True, **kwargs):
+    """Run shell command in a subprocess"""
+    if verbose:
+        print(command)
+    command = shlex.split(command)
+    return subprocess.run(command, check=check, **kwargs)
+
+
+def ask(choice, default=False):
+    """Simple yes-no question with default answer"""
+    y_n = "[Y/n]" if default else "[y/N]"
+    ans = input(f"{choice} {y_n} ").lstrip()
+    if default:
+        rv = not ans.startswith(("n", "N"))
+    else:
+        rv = ans.startswith(("y", "Y"))
+    return rv
+
+
+def install_pipdeptree(force=False):
+    """Install 'pipdeptree' if needed"""
+    if PIPDEPTREE.exists():
+        return True
+    if force or ask("Install 'pipdeptree' to analyze dependencies?", default=True):
+        run("pip install pipdeptree", capture_output=True)
+        if PIPDEPTREE.exists():
+            return True
+        print("Failed")
+    return False
+
+
+def reqs_installed_list(*args):
+    """Return installed packages as a list of Requirement"""
+    command = " ".join(["pip list --format freeze --exclude pip", *args])
+    proc = run(command, capture_output=True, text=True, check=False, verbose=False)
+    if proc.returncode:
+        print(f"{CSI}91m{proc.stderr}{CSI}m", end="")
+    lines = proc.stdout.splitlines()
+    return [req for req, __ in parse_requirements(lines)]
+
+
+def reqs_filter_installed(deptree, installed, excluded):
+    """Exclude pipdeptree dependencies"""
+    filtered = []
+    for pkg_data in deptree:
+        if pkg_data["key"] not in installed:
+            excluded.add(pkg_data["key"])
+            continue
+        filtered.append(pkg_data)
+        if pkg_data["dependencies"]:
+            reqs_filter_installed(pkg_data["dependencies"], installed, excluded)
+    deptree[:] = filtered
+
+
+def reqs_get_reverse_deps(packages, verbose=False):
+    """Return reverse deps of packages as a tree of dicts"""
+    command = f"pipdeptree --reverse --packages {','.join(packages)} --json-tree"
+    proc = run(command, capture_output=True, text=True, verbose=False)
+    return json.loads(proc.stdout)
+
+
+def reqs_print_reverse_deps(packages):
+    """Print reverse deps of packages"""
+    run(f"pipdeptree --reverse --packages {','.join(packages)}")
+
+
+def reqs_print_subtree(dep_list, level, toplevel):
+    """Recursive method to print a simplified subtree
+
+    It iterates on reverse dependencies, and isolate toplevel packages
+    """
+    indent = "└── ".rjust(level * 4) if level else f"{CSI}1m"
+    eol = "" if level else f"{CSI}m"
+    for pck_data in dep_list:
+        package_name = pck_data["package_name"]
+        if dep_sublist := pck_data["dependencies"]:
+            print(f"{indent}{package_name}{eol}")
+            reqs_print_subtree(dep_sublist, level + 1, toplevel)
+        else:
+            toplevel.add(package_name)
+            if level:
+                print(f"{indent}{package_name}{eol}")
+
+
+def reqs_print_details(packages):
+    """Print reverse deps of (all) packages.
+
+    - filter out any package which is not in the list
+    - print toplevel packages separately
+    """
+    toplevel = {*()}
+    excluded = {*()}
+    # Get editable packages
+    editable = {
+        canonicalize_name(req.name) for req in reqs_installed_list("--editable")
+    }
+    data = reqs_get_reverse_deps(packages)
+    # Exclude 'pipdeptree'
+    reqs_filter_installed(data, {*editable, *packages}, excluded)
+    print()
+    reqs_print_subtree(data, 0, toplevel)
+    if excluded:
+        print()
+        print(f"{CSI}93m== Excluded{CSI}m")
+        print()
+        for package_name in sorted(excluded):
+            print(f"  {package_name}")
+    print()
+    print(f"{CSI}93m== Top level packages{CSI}m")
+    print()
+    for package_name in sorted(toplevel):
+        print(f"  {package_name}")
+
+
+def select_requirements():
+    """Select requirement files"""
+    requirements = [*BASE_REQUIREMENTS]
+    extra_paths = [
+        path
+        for path in PROJECT_REQUIREMENTS.parent.glob("*_requirements.txt")
+        if path not in requirements and path.stem != "src_requirements"
+    ]
+    print()
+    print("These requirements are installed in base image:")
+    for path in BASE_REQUIREMENTS:
+        print(f" - {path}")
+    if PROJECT_REQUIREMENTS.exists():
+        if ask(f"Parse {PROJECT_REQUIREMENTS}?", default=True):
+            requirements.append(PROJECT_REQUIREMENTS)
+    if extra_paths:
+        for path in sorted(extra_paths):
+            if ask(f"Parse {path}?", default=False):
+                requirements.append(path)
+    return requirements
+
+
+def parse_requirements(requirements):
+    """Parse requirement lines.
+
+    Return an iterable of tuples: (Requirement, comment)
+    """
+    for line in requirements:
+        req_text, __, comment = line.partition("#")
+        if not req_text.strip():
+            continue
+        if req_text.lstrip().startswith("-"):
+            # Skip lines starting with -e or -r
+            continue
+        try:
+            req = Requirement(req_text)
+        except ValueError:
+            print(f"{CSI}91mCannot parse: {req_text!r}{CSI}m")
+            continue
+        yield req, comment.strip()
+
+
+def analyze_requirements(requirements):  # noqa: C901
+    """Analyze requirement files, and compare with installed packages.
+
+    Print result on stdout.
+    Return a tuple (dict_of_installed_pkgs, list_of_pkgs_to_analyze)
+    """
+    defined = defaultdict(list)
+    installed = {}
+    for req_file in requirements:
+        lines = req_file.read_text().splitlines()
+        print()
+        print(f"{CSI}93m## File: {req_file.name}{CSI}m")
+        for req, comment in parse_requirements(lines):
+            if not req.marker or req.marker.evaluate():
+                defined[canonicalize_name(req.name)].append((req, req_file))
+                req_str = f"{req}"
+            else:
+                req_str = f"{CSI}95m{req} -- SKIPPED{CSI}m"
+            if comment:
+                req_str = f"{req_str:40} {CSI}31m# {comment}{CSI}m"
+            print(f"  {req_str}")
+    print()
+    print(f"{CSI}92m## Installed{CSI}m")
+    for req in reqs_installed_list("--exclude-editable"):
+        [spec] = req.specifier
+        installed[canonicalize_name(req.name)] = req.name, spec.version
+        print(f"  {req}")
+
+    # Analyze
+    not_listed = [installed[name] for name in sorted({*installed} - {*defined})]
+    loose = []
+    unsatisfiable = []
+    not_satisfied = []
+    not_installed = []
+    redundant = []
+    to_analyze = []
+    for c_name, reqs in sorted(defined.items()):
+        name, version = installed.get(c_name, (reqs[0][0].name, None))
+        specs = [req.specifier for req, req_file in reqs if req.specifier]
+        if not specs:
+            loose.append((name, version, None))
+        else:
+            specset = functools.reduce(lambda a, b: a & b, specs)
+            if not version:
+                not_installed.append((name, None, specset))
+            elif specset.is_unsatisfiable():
+                unsatisfiable.append((name, version, specset))
+            elif version not in specset:
+                not_satisfied.append((name, version, specset))
+            elif not any(spec.operator == "==" for spec in specset):
+                loose.append((name, version, specset))
+            elif len(reqs) > 1:
+                if any(req_file not in BASE_REQUIREMENTS for __, req_file in reqs):
+                    redundant.append((name, version, reqs))
+
+    # Report
+    if not_installed:
+        print()
+        print(f"{CSI}93m== Requirements which are {CSI}91mnot installed{CSI}m")
+        print()
+        for name, __, specset in not_installed:
+            print(f"  {name}{specset or ''}")
+    if redundant:
+        print()
+        print(f"{CSI}93m== Requirements declared more than once (should be OK){CSI}m")
+        print()
+        for name, version, reqs in redundant:
+            for req, req_file in reqs:
+                name_spec = f"{name}{req.specifier or ''}"
+                print(f"  {name_spec:40} # in '{req_file.name}'")
+    if loose:
+        print()
+        print(
+            f"{CSI}93m== Requirements which are not strictly pinned (should be OK){CSI}m"
+        )
+        print()
+        for name, version, specset in loose:
+            name_spec = f"{name}{specset or ''}"
+            print(f"  {name_spec:40} # Installed {version}")
+    if not_listed:
+        print()
+        print(f"{CSI}93m== Requirements which are not declared{CSI}m")
+        print()
+        for name, version in not_listed:
+            print(f"  {CSI}1m{name}=={version}{CSI}m")
+        to_analyze.extend(name for (name, __) in not_listed)
+    if not_satisfied:
+        print()
+        print(f"{CSI}93m== Requirements which are {CSI}91mnot satisfied{CSI}m")
+        print()
+        for name, version, specset in not_satisfied:
+            name_spec = f"{name}{specset}"
+            print(f"  {CSI}1;31m{name_spec:40}{CSI}m # Installed {version}")
+        to_analyze.extend(name for (name, __, __) in not_satisfied)
+    if unsatisfiable:
+        print()
+        print(f"{CSI}93m== Requirements which are {CSI}91mnot compatible{CSI}m")
+        print()
+        for name, version, specset in unsatisfiable:
+            name_spec = f"{name}{specset}"
+            print(f"  {CSI}1;31m{name_spec:40}{CSI}m # Installed {version}")
+        print()
+        print(f"{CSI}95m{MSG_CONFLICT}{CSI}m")
+        print()
+        to_analyze.extend(name for (name, __, __) in unsatisfiable)
+    return installed, to_analyze
+
+
+def main():
+    print()
+    print(f"{CSI}93m== Checking requirements =={CSI}m")
+    print()
+    if ask("Compare requirements with installed packages?", default=True):
+        requirements = select_requirements()
+        installed, to_check = analyze_requirements(requirements)
+        print()
+        if to_check and install_pipdeptree():
+            reqs_print_reverse_deps(to_check)
+            print()
+        if ask("Print reverse dependencies of all packages?", default=False):
+            install_pipdeptree(force=True)
+            reqs_print_details(installed)
+            print()
+        print("That's all Folks!")
+    print()
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (EOFError, KeyboardInterrupt):
+        print()
+        raise SystemExit(1)
