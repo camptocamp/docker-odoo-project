@@ -1,0 +1,71 @@
+#!/bin/bash
+#
+# Run Marabunta steps
+#
+# Mainly used from CI,
+#
+# If a cached dump of previous version is found, restore it.
+# Then play remaining Marabunta steps from this state.
+#
+# Otherwise install from scratch.
+#
+# And finally make a database dump if none exists for current VERSION.
+#
+# Environment variables:
+#
+# CREATE_DB_CACHE:
+#   if set to "true", will create a dump named "odoo_sample_$VERSION.dmp"
+#
+# LOAD_DB_CACHE:
+#   if set to "false", will skip trying to reload cached dump named "odoo_sample_$VERSION.dmp"
+#
+# MIG_LOAD_VERSION_CEIL:
+#   Version number passed to search for a dump.
+#
+#   It will load a dump lower than or equal to "odoo_sample_$MIG_LOAD_VERSION_CEIL.dmp"
+#
+#   For instance you have made a dump 10.1.0, you are now preparing version 10.2.0
+#   but odoo/VERSION will be bumped when the release is tagged. So passing 10.1.0
+#   it will return the dump you've made before and restore 10.1.0.
+#   Then play the remaining steps on top of it.
+set -e
+
+. db_cache_helpers.sh
+. env_odoo.sh
+
+# Set default values
+: ${CREATE_DB_CACHE:=false} ${LOAD_DB_CACHE:=true} ${CACHE_DIR:=/tmp/cachedb} ${DB_NAME:=odoo_mig}
+
+VERSION=$(cat /odoo/VERSION)
+
+if [ "$LOAD_DB_CACHE" != "false" ]; then
+  if [ -d "$CACHE_DIR" ] && [ -z "$CACHED_DUMP" ]; then
+    echo "Searching for previous version dump 🔭"
+    # Run the migration steps on top of a previous dump, filter out dumps of higher releases
+    CACHED_DUMP=$(ls -v $CACHE_DIR/odoo_sample_*.dmp || true | cap_version ${MIG_LOAD_VERSION_CEIL-} | tail -n1)
+  fi
+  if [ -z "$CACHED_DUMP" ]; then
+    echo "No cached migration sample dump found"
+  fi
+else
+  echo "DB cache load disabled."
+fi
+
+if [ "$LOAD_DB_CACHE" != "false" ]; then
+  db_restore "$CACHED_DUMP" "$DB_NAME"
+  if [ -f "$CACHED_DUMP" ]; then
+    echo "Do migration on top of restored dump"
+  else
+    echo "Do migration from scratch 🐢 🐢 🐢"
+  fi
+fi
+
+run_as_odoo migrate
+
+DUMP="$CACHE_DIR/odoo_sample_$VERSION.dmp"
+
+# Create a dump if required
+if [ "$CREATE_DB_CACHE" = "true" ]; then
+  mkdir -p "$CACHE_DIR"
+  db_save $DB_NAME $DUMP
+fi

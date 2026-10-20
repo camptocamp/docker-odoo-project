@@ -1,0 +1,21 @@
+[build-system]
+requires=['setuptools-odoo', 'wheel', "setuptools>=67.0"]
+
+[tool.black]
+line-length = 88
+skip-string-normalization = 'True'
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | src/odoo
+    | src/enterprise
+    | odoo/paid-modules
+    | data
+)/
+| /__openerp__.py
+| /__manifest__.py
+'''

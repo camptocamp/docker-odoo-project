@@ -1,0 +1,91 @@
+#! /bin/bash
+# This script can be removed when we have finished updating databases with
+# the configuration of the unaccent extension (Odoo >= 16)
+
+if [ "${ODOO_VERSION%%.*}" -lt 16 -o "${ODOO_VERSION%%.*}" -gt 19 ]; then
+    echo "Index fixing for unaccent: requires Odoo 16 to 19"
+    exit 0
+fi
+
+# Same check as Odoo's has_trigram():  https://github.com/odoo/odoo/blob/20.0/odoo/modules/db.py#L233
+if [ "$(psql -tAc "SELECT 1 FROM pg_proc WHERE proname = 'word_similarity';")" != 1 ]; then
+    echo "Extension pg_trgm is not installed: no support for trigram index"
+    exit 0
+fi
+
+WHERE_CLAUSE="WHERE indexdef LIKE '%gin_trgm_ops%' AND indexname LIKE '%_index' AND schemaname = current_schema"
+WITHOUT_UNACCENT="AND indexdef NOT LIKE '%unaccent%'"
+# Skip special 'ir_attachment_url_trgm_index' from camptocamp/odoo-tools, Odoo 16 and 17
+WITHOUT_UNACCENT="$WITHOUT_UNACCENT AND indexname != 'ir_attachment_url_trgm_index'"
+
+# Is there some trigram index already?
+if [ "$(psql -tAc "SELECT 1 FROM pg_indexes $WHERE_CLAUSE LIMIT 1;")" = 1 ]; then
+    # Any trigram index without unaccent?
+    if [ "$(psql -tAc "SELECT 1 FROM pg_indexes $WHERE_CLAUSE $WITHOUT_UNACCENT LIMIT 1;")" != 1 ]; then
+        echo "No index to fix"
+        exit 0
+    fi
+fi
+
+odoo shell --no-http --log-handler=:ERROR --log-handler=odoo.schema:INFO << EOF
+import re
+
+# Inspired by 'env.registry.check_indexes()' implementation
+expected = {
+    (model_name, field)
+    for model_name in env
+    for model in (env[model_name],)
+    if model._auto and not model._abstract
+    for field in model._fields.values()
+    if field.column_type and field.store and field.index == "trigram"
+}
+existing = set()
+
+
+def find_model(tablename):
+    # Find model related to a table, usually res_lang --> res.lang
+    model_name = tablename.replace("_", ".")
+    if model_name in env and env[model_name]._table == tablename:
+        return env[model_name]
+    # Very few models do not follow the same convention
+    for model_name in env:
+        if env[model_name]._table == tablename:
+            return env[model_name]
+
+
+query = f"SELECT indexname, tablename, indexdef FROM pg_indexes $WHERE_CLAUSE;"
+env.cr.execute(query)
+
+for indexname, tablename, indexdef in env.cr.fetchall():
+    # Odoo >= 17 uses '__' as separator between table and column
+    # Note that index names longer than 63 chars are mangled, in practice there's none
+    parsed = re.match(f"{tablename}__?(.+)_index", indexname)
+    colname = parsed and parsed.group(1)
+
+    # Skip non-standard indexes
+    model = find_model(tablename)
+    field = model is not None and model._fields.get(colname)
+    if not field:
+        continue
+
+    field_key = (model._name, field)
+    if field_key not in expected:
+        continue
+    if "unaccent" in indexdef:
+        existing.add(field_key)
+    else:
+        print(f"Fixing index {indexname} on table {tablename} ({colname})")
+        env.cr.execute(f"DROP INDEX {indexname};")
+
+model_names = {name for (name, __) in expected - existing}
+
+if model_names:
+    # recreate the indexes with unaccent
+    for model in model_names:
+        print(f"Restore indexes for {model}")
+    env.registry.check_indexes(env.cr, model_names)
+else:
+    print("No index to create")
+
+env.cr.commit()
+EOF

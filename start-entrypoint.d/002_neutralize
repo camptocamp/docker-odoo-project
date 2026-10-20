@@ -1,0 +1,45 @@
+#!/bin/bash
+set -e
+if [ "${ODOO_VERSION%%.*}" -lt 16 ]; then
+    echo "Neutralization skipped: requires Odoo 16.0+"
+    exit 0
+fi
+# Default value
+ODOO_NEUTRALIZE=${ODOO_NEUTRALIZE:-True}
+if [[ "$RUNNING_ENV" != "prod" && "$ODOO_NEUTRALIZE" == "True" ]]; then
+    if [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" )" != '1' ]
+    then
+        echo "Database does not exist, ignoring script"
+        exit 0
+    fi
+    # On dev, the database usually comes from another environment where it was
+    # already neutralized. We still want to neutralize it locally, at least
+    # once, to reset the values that are environment specific (mail servers,
+    # crons, ...). A dedicated flag keeps track of it, so that we don't
+    # neutralize again on every start.
+    NEUTRALIZED_FLAG="database.is_neutralized"
+    if [[ "$RUNNING_ENV" == "dev" ]]; then
+        NEUTRALIZED_FLAG="database.is_neutralized_for_dev"
+    fi
+    if [ "$( psql -tAc "SELECT 1 FROM ir_config_parameter WHERE key='$NEUTRALIZED_FLAG' AND value != '';" )" = '1' ]; then
+        echo "Database is already neutralized ($NEUTRALIZED_FLAG), skipping"
+        exit 0
+    fi
+
+    # If OCA 'mail_environment' is installed, it replaces some columns
+    # of "ir.mail_server" with dynamic values.  Neutralize script assume that
+    # these standard columns exist, so we create them before applying neutralization
+    if [ "$( psql -tAc "SELECT 1 FROM ir_module_module WHERE name = 'mail_environment' AND state != 'uninstalled';" )" = '1' ]; then
+        psql -c "ALTER TABLE ir_mail_server ADD IF NOT EXISTS smtp_encryption VARCHAR, ADD IF NOT EXISTS smtp_host VARCHAR, ADD IF NOT EXISTS smtp_port INT;"
+    fi
+
+    # Apply SQL scripts
+    odoo neutralize
+
+    # Only on dev: on the other environments the flag set by `odoo neutralize`
+    # is enough. Writing it there would end up in the dumps, and would defeat
+    # the purpose of re-neutralizing them once when restored locally.
+    if [[ "$RUNNING_ENV" == "dev" ]]; then
+        psql -c "INSERT INTO ir_config_parameter (key, value) VALUES ('$NEUTRALIZED_FLAG', 'True') ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;"
+    fi
+fi

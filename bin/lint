@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+
+flake8 ${LOCAL_CODE_PATH:=/odoo/local-src} --exclude=__init__.py

@@ -1,0 +1,107 @@
+# The officially supported versions of the following packages are their
+# python3-* equivalent distributed in Ubuntu 22.04 and Debian 11
+Babel==2.9.1  # min version = 2.6.0 (Focal with security backports)
+chardet==4.0.0
+cryptography==50.0.0 ; python_version >= '3.12'  # (Noble) min 41.0.7, pinning 50.0.0 for security fixes
+decorator==4.4.2
+docutils==0.16
+ebaysdk==2.1.5
+freezegun==0.3.15; python_version >= '3.8'
+gevent==24.2.1 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
+greenlet==3.0.3 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble)
+idna==3.8
+Jinja2==3.1.6 ; python_version >= '3.12'  # (Noble) compatibility with markupsafe
+libsass==0.22.0 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
+lxml==6.1.1; python_version >= '3.12' # (Noble - removed html clean); pin 6.1.1 for security fixes
+lxml_html_clean; python_version >= '3.12' # (Noble - removed from lxml, unpinned for futur security patches)
+MarkupSafe==2.1.5 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
+num2words==0.5.9
+ofxparse==0.21; python_version > '3.9'  # (Jammy)
+passlib==1.7.4 # min version = 1.7.2 (Focal with security backports)
+pillow==12.3.0 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package; pin 12.3.0 for security fixes
+polib==1.1.0
+psutil==5.9.8 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
+psycopg2==2.9.9 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
+pydot==1.4.2
+pyOpenSSL==26.4.0 ; python_version >= '3.12'  # (Noble) min 23.2.0, pinned for compatibility with cryptography==50.0.0 and security patches
+PyPDF2==2.12.1 ; python_version > '3.10'
+pyserial==3.5
+python-dateutil==2.8.2  # bumped because of requirement of algoliasearch
+python-ldap==3.4.4 ; sys_platform != 'win32' and python_version >= '3.12'  # (Noble) Mostly to have a wheel package
+python-stdnum==1.16
+pytz  # no version pinning to avoid OS perturbations
+pyusb==1.2.1 ; python_version > '3.10'
+qrcode==6.1
+reportlab==4.1.0 ; python_version >= '3.12' # (Noble) Mostly to have a wheel package
+requests==2.32.5 ; python_version >= '3.12' # (Noble) Pin 2.32.5 for security fixes
+urllib3==2.7.0  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography; pin 2.7.0 for security fixes
+vobject==0.9.6.1
+Werkzeug==3.0.6 ; python_version > '3.9'  # (Jammy) Pin 3.0.6 for security fixes
+xlrd==1.2.0; python_version >= '3.8'
+XlsxWriter==1.1.2
+xlwt==1.3.0
+zeep==4.0.0
+
+
+# Optional: Not official, used by Odoo or some addons
+# - addons.base_import since Odoo 9, read ODF files (.ods) - odoo/odoo#7285
+odfpy==1.4.1
+# - addons.phone_validation since Odoo 11 - commit odoo/odoo@96a0047
+phonenumbers==9.0.13
+# - odoo.service.server since OpenERP 7, improve process display - commit odoo/odoo@0801f22
+setproctitle==1.3.7
+
+# Tools: Migration
+anthem==0.15.0
+marabunta==0.15.0
+openupgradelib==3.13.7
+
+# Tools: Confidoo
+-e git+https://github.com/camptocamp/confidoo@master#egg=confidoo
+
+# Tools: Package Odoo addons
+whool==1.3
+manifestoo_core==1.15.5
+packaging==26.3
+wheel==0.48.0
+
+
+# Dependencies: Base
+appdirs==1.4.4              # dep. of zeep
+attrs==24.2.0               # dep. of zeep
+beautifulsoup4==4.12.3      # dep. of ofxparse
+cached-property==2.0.1      # dep. of zeep
+certifi==2026.7.22          # dep. of requests
+cffi==2.0.0                 # dep. of cryptography
+charset-normalizer==3.5.1   # dep. of requests
+defusedxml==0.7.1           # dep. of zeep and odfpy
+docopt==0.6.2               # dep. of num2words
+freetype-py==2.5.1          # dep. of reportlab
+isodate==0.7.2              # dep. of zeep
+pyasn1==0.6.4               # dep. of python-ldap
+pyasn1_modules==0.4.2       # dep. of python-ldap
+pycairo==1.27.0             # dep. of reportlab
+pycparser==3.0              # dep. of cryptography
+pyparsing==3.3.2            # dep. of pydot
+requests-file==3.0.1        # dep. of zeep
+requests-toolbelt==1.0.0    # dep. of zeep
+rlPyCairo==0.3.0            # dep. of reportlab
+setuptools==79.0.1          # requirement of Odoo
+six==1.17.0                 # dep. of ofxparse, freezegun, qrcode, vobject
+soupsieve==2.9.2            # dep. of ofxparse
+typing_extensions==4.16.0   # dep. of pyopenssl
+zope.event==6.2             # dep. of gevent
+zope.interface==8.6         # dep. of gevent
+
+# Dependencies: Tools
+annotated-doc==0.0.5    # dep. of confidoo
+cssselect==1.5.0        # dep. of openupgradelib
+markdown-it-py==4.2.0   # dep. of confidoo
+mdurl==0.1.2            # dep. of confidoo
+pexpect==4.9.0          # dep. of marabunta
+ptyprocess==0.7.0       # dep. of marabunta
+Pygments==2.21.0        # dep. of confidoo
+rich==15.0.0            # dep. of confidoo
+ruamel.yaml==0.19.1     # dep. of marabunta
+shellingham==1.5.4      # dep. of confidoo
+typer==0.27.2           # dep. of confidoo

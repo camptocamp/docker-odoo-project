@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# Generate a test database
+#
+# Usage:
+#
+# testdb-gen -i my_addon_to_install
+#
+
+set -e
+
+. env_odoo.sh
+
+if psql -lqtA -h ${DB_HOST} | grep -q "^$DB_NAME|"; then
+  echo "database ${DB_NAME} already exists"
+  exit 1
+fi
+
+echo "creating database ${DB_NAME}"
+createdb -h ${DB_HOST} -O ${DB_USER} ${DB_NAME}
+run_as_odoo odoo --stop-after-init --workers=0 --log-level=warn "$@"
+echo "done"

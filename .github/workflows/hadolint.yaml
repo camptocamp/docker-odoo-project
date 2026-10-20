@@ -1,0 +1,25 @@
+name: hadolint
+
+on:
+  push:
+    branches:
+      - "main"
+      - "master"
+      - "dev"
+  pull_request:
+    branches:
+      - "main"
+      - "master"
+
+jobs:
+
+  hadolint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Lint Dockerfiles
+        uses: hadolint/hadolint-action@v3.3.0
+        with:
+          dockerfile: "*Dockerfile"
+          recursive: true

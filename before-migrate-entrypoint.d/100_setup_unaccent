@@ -1,0 +1,37 @@
+#!/bin/bash
+set -e
+
+# Odoo uses "unaccent" function for searches.  It is provided by PG extension.
+# However, this function needs to be "immutable" to be able to create indexes.
+#
+# When new database is created, Odoo tries to set the function immutable.
+# However it might not work in case the PostgreSQL server is hosted on a cloud platform.
+#
+# This is the reason for this workaround.
+#
+# Reference:
+# - https://github.com/odoo/odoo/blob/19.0/odoo/service/db.py#L155-L163
+# - https://github.com/odoo/odoo/pull/95943
+
+if [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" )" != '1' ]
+then
+    echo "Database does not exist, ignoring script"
+    exit 0
+fi
+
+# If 'unaccent' is already IMMUTABLE, do nothing
+if [ "$( psql -tAc "SELECT 1 FROM pg_proc WHERE proname = 'unaccent' AND provolatile = 'i' AND pronamespace = current_schema::regnamespace;" )" = "1" ]
+then
+    echo "Function 'unaccent' is already immutable. Skip"
+else
+    psql << EOF
+DROP EXTENSION IF EXISTS unaccent CASCADE;
+CREATE SCHEMA IF NOT EXISTS unaccent_schema;
+CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA unaccent_schema;
+
+CREATE OR REPLACE FUNCTION unaccent(value text) RETURNS text
+LANGUAGE sql IMMUTABLE PARALLEL SAFE STRICT
+RETURN (SELECT unaccent_schema.unaccent('unaccent_schema.unaccent', value));
+EOF
+
+fi
