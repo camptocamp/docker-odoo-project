@@ -72,7 +72,7 @@ wheel==0.48.0
 # Dependencies: Base
 attrs==24.2.0               # dep. of zeep
 beautifulsoup4==4.12.3      # dep. of ofxparse
-certifi==2026.7.22          # dep. of requests
+certifi>=2026.10.19         # dep of requests, see https://emudhra.we-have-a-problem.com/ recommended by Python.org
 cffi==2.0.0                 # dep. of cryptography
 charset-normalizer==3.5.1   # dep. of requests
 docopt==0.6.2               # dep. of num2words
