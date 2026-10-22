@@ -31,7 +31,7 @@ RUN /install/package_odoo.sh \
     && pip install -r /odoo/base_requirements.txt \
                    -r /odoo/platform_requirements.txt \
                    -r /odoo/test_requirements.txt --ignore-installed \
-    && /install/purge_dev_package_and_cache.sh
+    && /install/purge_dev_package_and_cache.sh && pip --version
 
 # grab gosu for easy step-down from root and dockerize to generate template and
 # wait on postgres

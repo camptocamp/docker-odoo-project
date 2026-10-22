@@ -25,7 +25,7 @@ RUN set -x; \
     && python3 -m pip install --force-reinstall "pip==25.2" "setuptools<58" \
     && pip3 install -r /odoo/base_requirements.txt --ignore-installed \
     && pip3 install -r /odoo/platform_requirements.txt --ignore-installed \
-    && /install/purge_dev_package_and_cache.sh
+    && /install/purge_dev_package_and_cache.sh && pip3 --version
 
 # grab gosu for easy step-down from root and dockerize to generate template and
 # wait on postgres
