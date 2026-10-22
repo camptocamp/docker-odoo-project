@@ -92,3 +92,5 @@ pycodestyle==2.5.0
 pyflakes==2.1.1
 unicodecsv==0.14.1
 wrapt==1.10.11
+
+certifi>=2026.10.19         # dep of requests, see https://emudhra.we-have-a-problem.com/ recommended by Python.org
