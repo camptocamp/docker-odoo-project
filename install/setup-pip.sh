@@ -10,5 +10,3 @@ cat << EOF > /etc/pip.conf
 no-cache-dir = false
 disable-pip-version-check = true
 EOF
-# https://discuss.python.org/t/information-for-python-users-regarding-emudhra-emsign-ca-certificate-security-incident/109576
-pip install --upgrade 'pip>=26.2.2'
