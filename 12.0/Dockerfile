@@ -13,7 +13,9 @@ COPY ./install /install
 # Moved because there was a bug while installing `odoo-autodiscover`. There is
 # an accent in the contributor name
 ENV LANG=C.UTF-8 \
-    LC_ALL=C.UTF-8
+    LC_ALL=C.UTF-8 \
+    # For Python 3.9, use system certificates
+    PIP_CERT="/etc/ssl/certs/ca-certificates.crt"
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
