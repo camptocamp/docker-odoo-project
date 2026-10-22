@@ -94,7 +94,11 @@ fi
 if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ] || [ "$BASE_CMD" = "migrate" ]; then
   BEFORE_MIGRATE_ENTRYPOINT_DIR=$ODOO_BASE_PATH/before-migrate-entrypoint.d
   if [ -d "$BEFORE_MIGRATE_ENTRYPOINT_DIR" ]; then
-    run-parts --exit-on-error --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
+    if [ "$SKIP_ENTRYPOINT_SCRIPTS" = True ]; then
+      echo "SKIP_ENTRYPOINT_SCRIPTS is True, skipping $BEFORE_MIGRATE_ENTRYPOINT_DIR"
+    else
+      run-parts --exit-on-error --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
+    fi
   fi
 fi
 if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]; then
@@ -110,7 +114,11 @@ if [ "$BASE_CMD" = "odoo" ] || [ "$BASE_CMD" = "odoo.py" ]; then
 
   START_ENTRYPOINT_DIR=$ODOO_BASE_PATH/start-entrypoint.d
   if [ -d "$START_ENTRYPOINT_DIR" ]; then
-    run-parts --exit-on-error --verbose "$START_ENTRYPOINT_DIR"
+    if [ "$SKIP_ENTRYPOINT_SCRIPTS" = True ]; then
+      echo "SKIP_ENTRYPOINT_SCRIPTS is True, skipping $START_ENTRYPOINT_DIR"
+    else
+      run-parts --exit-on-error --verbose "$START_ENTRYPOINT_DIR"
+    fi
   fi
 
   exec_as_odoo "$@"

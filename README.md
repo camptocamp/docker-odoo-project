@@ -168,6 +168,18 @@ Migration is *not* launched when using:
     docker compose run --rm odoo odoo [...] --help [...]
 ```
 
+### SKIP_ENTRYPOINT_SCRIPTS
+
+`SKIP_ENTRYPOINT_SCRIPTS` can be `True` or `False` (default). When `True`, the
+scripts of `before-migrate-entrypoint.d` and `start-entrypoint.d` (see [Start
+entrypoint](#start-entrypoint)) are not executed. Handy to run a one-off
+command without touching the database, together with `MIGRATE=False` to skip
+the migration as well:
+
+```
+    docker compose run --rm -e SKIP_ENTRYPOINT_SCRIPTS=True -e MIGRATE=False odoo odoo [...]
+```
+
 ### MARABUNTA_MODE
 
 In [Marabunta](https://github.com/camptocamp/marabunta) versions, you can
@@ -464,6 +476,8 @@ Any script in any language placed in `/start-entrypoint.d` will be
 executed just between the migration and the start of Odoo.
 Similarly, scripts placed in `/before-migrate-entrypoint.d` will be
 executed just before the migration.
+Set `SKIP_ENTRYPOINT_SCRIPTS=True` to skip both
+(see [SKIP_ENTRYPOINT_SCRIPTS](#skip_entrypoint_scripts)).
 
 The order of execution of the files is determined by the `run-parts` 's rules.
 You can add your own scripts in those directories. They must be named
