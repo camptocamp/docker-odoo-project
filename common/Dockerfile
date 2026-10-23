@@ -27,8 +27,8 @@ RUN /install/package_odoo.sh \
     && /install/kwkhtml_client.sh \
     # build and dev packages
     && /install/dev_package.sh \
-    && python3 -m pip install --force-reinstall pip \
-    && pip install -r /odoo/base_requirements.txt \
+    && python3 -m pip --use-feature=truststore install --force-reinstall pip \
+    && pip --use-feature=truststore install -r /odoo/base_requirements.txt \
                    -r /odoo/platform_requirements.txt \
                    -r /odoo/test_requirements.txt --ignore-installed \
     && /install/purge_dev_package_and_cache.sh

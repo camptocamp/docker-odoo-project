@@ -22,9 +22,9 @@ RUN set -x; \
     && /install/postgres.sh 15 \
     && /install/kwkhtml_client.sh \
     && /install/dev_package.sh \
-    && python3 -m pip install --force-reinstall "pip==25.2" "setuptools<58" \
-    && pip3 install -r /odoo/base_requirements.txt --ignore-installed \
-    && pip3 install -r /odoo/platform_requirements.txt --ignore-installed \
+    && python3 -m pip --use-feature=truststore install --force-reinstall "pip==25.2" "setuptools<58" \
+    && pip3 --use-feature=truststore install -r /odoo/base_requirements.txt --ignore-installed \
+    && pip3 --use-feature=truststore install -r /odoo/platform_requirements.txt --ignore-installed \
     && /install/purge_dev_package_and_cache.sh
 
 # grab gosu for easy step-down from root and dockerize to generate template and
