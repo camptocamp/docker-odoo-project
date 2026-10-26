@@ -18,7 +18,7 @@ MarkupSafe==2.1.5 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel p
 num2words==0.5.9
 ofxparse==0.21; python_version > '3.9'  # (Jammy)
 passlib==1.7.4 # min version = 1.7.2 (Focal with security backports)
-pillow==12.3.0 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package; pin 12.3.0 for security fixes
+pillow==13.0.0 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package; pin 13.0.0 for security fixes
 polib==1.1.0
 psutil==5.9.8 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 psycopg2==2.9.9 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package

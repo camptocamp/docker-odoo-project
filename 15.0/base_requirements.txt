@@ -15,7 +15,7 @@ lxml_html_clean; python_version >= '3.12' # (Noble - removed from lxml, unpinned
 MarkupSafe==2.1.5 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 num2words==0.5.6
 ofxparse==0.21; python_version > '3.9'  # (Jammy)
-pillow==12.3.0 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package; pin 12.3.0 for security fixes
+pillow==13.0.0 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package; pin 13.0.0 for security fixes
 polib==1.1.0
 psutil==5.9.8 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
 psycopg2==2.9.9 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel package
