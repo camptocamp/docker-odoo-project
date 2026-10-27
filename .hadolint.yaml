@@ -15,3 +15,6 @@ ignored:
   # Last USER should not be root: the entrypoint uses gosu to step down
   # from root, so running as root at build time is intentional.
   - DL3002
+  # Potentially sensitive data in ENV: DB_PASSWORD is only a development
+  # default, overridden at runtime.
+  - DL3064
