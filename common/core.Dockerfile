@@ -65,6 +65,7 @@ COPY --chown=odoo:root --chmod=660 ./templates /templates
 COPY --chown=odoo:root --chmod=770 ./before-migrate-entrypoint.d /odoo/before-migrate-entrypoint.d
 COPY --chown=odoo:root --chmod=770 ./start-entrypoint.d /odoo/start-entrypoint.d
 COPY --chown=odoo:root --chmod=660 ./MANIFEST.in /odoo
+COPY --chown=odoo:root --chmod=660 ./.coveragerc /odoo/
 COPY --chmod=644 ./env_odoo-core.sh /odoo/odoo-bin/env_odoo.sh
 
 
@@ -87,7 +88,8 @@ ENV ODOO_VERSION=$VERSION \
     LOCAL_CODE_PATH=/odoo/odoo/addons \
     ADDONS_PATH=/odoo/odoo/addons,/odoo/odoo/src/odoo/addons \
     MIGRATION_CONFIG_FILE=/odoo/migration.yml \
-    ODOO_RC=/odoo/odoo.cfg
+    ODOO_RC=/odoo/odoo.cfg \
+    COVERAGE_RCFILE=/odoo/.coveragerc
 
 VOLUME ["/data/odoo", "/var/log/odoo"]
 EXPOSE 8069 8072

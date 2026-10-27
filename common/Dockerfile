@@ -46,6 +46,7 @@ COPY ./templates /templates
 COPY ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
 COPY ./start-entrypoint.d /start-entrypoint.d
 COPY ./MANIFEST.in /odoo
+COPY ./.coveragerc /odoo/
 COPY --chmod=644 ./env_odoo.sh /odoo-bin/
 
 ENV ODOO_VERSION=$VERSION \
@@ -64,7 +65,8 @@ ENV ODOO_VERSION=$VERSION \
     ODOO_DATA_PATH=/odoo/data \
     DEMO=False \
     ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
-    ODOO_RC=/etc/odoo.cfg
+    ODOO_RC=/etc/odoo.cfg \
+    COVERAGE_RCFILE=/odoo/.coveragerc
 
 VOLUME ["/data/odoo", "/var/log/odoo"]
 EXPOSE 8069 8072
