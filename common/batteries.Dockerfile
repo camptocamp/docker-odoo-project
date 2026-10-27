@@ -2,8 +2,6 @@
 FROM odoo
 LABEL maintainer="Camptocamp"
 
-COPY ./.coveragerc /odoo/
-
 # Install extra requirements
 RUN /install/dev_package.sh \
     && pip install -r /odoo/extra_requirements.txt \
