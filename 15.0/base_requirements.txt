@@ -31,7 +31,7 @@ pyusb==1.2.1 ; python_version >= '3.12'  # (Noble) Mostly to have a wheel packag
 qrcode==6.1
 reportlab==4.1.0 ; python_version >= '3.12' # (Noble) Mostly to have a wheel package
 requests==2.32.5 ; python_version >= '3.12' # (Noble) Pin 2.32.5 for security fixes
-urllib3==2.7.0  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography; pin 2.7.0 for security fixes
+urllib3==2.8.0  ; python_version >= '3.12'  # (Noble) Compatibility with cryptography; pin 2.8.0 for security fixes
 vobject==0.9.6.1
 Werkzeug==3.0.6 ; python_version > '3.9'  # (Jammy) Pin 3.0.6 for security fixes
 xlrd==1.2.0; python_version >= '3.8'
