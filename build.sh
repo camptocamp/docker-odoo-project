@@ -47,6 +47,9 @@ docker build --progress plain --no-cache \
              --build-arg VERSION=${VERSION} \
              --build-context python=docker-image://${PYTHON_FROM} \
              -f ${TMP}/Dockerfile -t ${BUILD_TAG} ${TMP}
-docker build --progress plain --no-cache \
-             --build-context odoo=docker-image://${BUILD_TAG} \
-             -f ${TMP}/batteries.Dockerfile -t ${BUILD_TAG}-batteries ${TMP}
+
+if [ "${BATTERIES-}" = True ]; then
+    docker build --progress plain --no-cache \
+                 --build-context odoo=docker-image://${BUILD_TAG} \
+                 -f ${TMP}/batteries.Dockerfile -t ${BUILD_TAG}-batteries ${TMP}
+fi

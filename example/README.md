@@ -1,6 +1,6 @@
 # Odoo Project Example
 
-The base images does nothing alone, it only contains the dependencies and a few
+The base image does nothing alone, it contains only the dependencies and a few
 tools, but you need to create an inheriting image with the odoo and addons
 code.
 
@@ -24,7 +24,7 @@ Follow the steps:
 6. Create the Dockerfile, the bare minimum being (see also [the example
    file](odoo/Dockerfile) that installs additional dependencies):
 
-        FROM camptocamp/odoo-project:11.0
+        FROM camptocamp/docker-odoo-project:19.0-5.5.4
         LABEL maintainer="<maintainer name>"
 
         ENV ADDONS_PATH=/odoo/local-src,/odoo/external-src/server-tools,/odoo/src/addons
