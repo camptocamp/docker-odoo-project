@@ -90,25 +90,35 @@ def reqs_print_reverse_deps(packages):
     run(f"pipdeptree --reverse --packages {','.join(packages)}")
 
 
-def reqs_print_subtree(dep_list, level, toplevel):
+def reqs_print_subtree(dep_list, level, toplevel, _seen=None):
     """Recursive method to print a simplified subtree
 
     It iterates on reverse dependencies, and isolate toplevel packages
     """
     indent = "└── ".rjust(level * 4) if level else f"{CSI}1m"
     eol = "" if level else f"{CSI}m"
+    if not level:
+        _seen = {*()}
     for pck_data in dep_list:
         package_name = pck_data["package_name"]
         if dep_sublist := pck_data["dependencies"]:
             print(f"{indent}{package_name}{eol}")
-            reqs_print_subtree(dep_sublist, level + 1, toplevel)
+            if package_name in _seen:
+                print(f"    {indent}{CSI}3m(...){CSI}m")
+            else:
+                reqs_print_subtree(dep_sublist, level + 1, toplevel, _seen)
+                if (
+                    len(dep_sublist) > 1
+                    or dep_sublist[0]["package_name"] not in toplevel
+                ):
+                    _seen.add(package_name)
         else:
             toplevel.add(package_name)
             if level:
                 print(f"{indent}{package_name}{eol}")
 
 
-def reqs_print_details(packages):
+def reqs_print_details(packages, verbose):
     """Print reverse deps of (all) packages.
 
     - filter out any package which is not in the list
@@ -125,9 +135,11 @@ def reqs_print_details(packages):
     reqs_filter_installed(data, {*editable, *packages}, excluded)
     print()
     reqs_print_subtree(data, 0, toplevel)
-    if excluded:
+    # Do not print excluded packages. They are not present in the image.
+    # (Print only if verbose == True)
+    if verbose:
         print()
-        print(f"{CSI}93m== Excluded{CSI}m")
+        print(f"{CSI}93m== Excluded: pipdeptree, ...{CSI}m")
         print()
         for package_name in sorted(excluded):
             print(f"  {package_name}")
@@ -231,7 +243,7 @@ def analyze_requirements(requirements):  # noqa: C901
                 not_satisfied.append((name, version, specset))
             elif not any(spec.operator == "==" for spec in specset):
                 loose.append((name, version, specset))
-            elif len(reqs) > 1:
+            if len(reqs) > 1:
                 if any(req_file not in BASE_REQUIREMENTS for __, req_file in reqs):
                     redundant.append((name, version, reqs))
 
@@ -244,7 +256,9 @@ def analyze_requirements(requirements):  # noqa: C901
             print(f"  {name}{specset or ''}")
     if redundant:
         print()
-        print(f"{CSI}93m== Requirements declared more than once (should be OK){CSI}m")
+        print(
+            f"{CSI}93m== Requirements declared more than once {CSI}2m(should be OK){CSI}m"
+        )
         print()
         for name, version, reqs in redundant:
             for req, req_file in reqs:
@@ -253,7 +267,7 @@ def analyze_requirements(requirements):  # noqa: C901
     if loose:
         print()
         print(
-            f"{CSI}93m== Requirements which are not strictly pinned (should be OK){CSI}m"
+            f"{CSI}93m== Requirements which are not strictly pinned {CSI}2m(should be OK){CSI}m"
         )
         print()
         for name, version, specset in loose:
@@ -288,7 +302,7 @@ def analyze_requirements(requirements):  # noqa: C901
     return installed, to_analyze
 
 
-def main():
+def main(verbose=False):
     print()
     print(f"{CSI}93m== Checking requirements =={CSI}m")
     print()
@@ -300,9 +314,9 @@ def main():
             reqs_print_reverse_deps(to_check)
             print()
         if ask("Print reverse dependencies of all packages?", default=False):
-            install_pipdeptree(force=True)
-            reqs_print_details(installed)
-            print()
+            if install_pipdeptree(force=True):
+                reqs_print_details(installed, verbose=verbose)
+                print()
         print("That's all Folks!")
     print()
 
