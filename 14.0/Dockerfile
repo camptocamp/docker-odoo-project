@@ -1,0 +1,73 @@
+# hadolint ignore=DL3006  # Use `docker build --build-context ...`
+FROM python
+LABEL maintainer="Camptocamp"
+
+ARG VERSION=14.0
+ARG PG_VERSION=17
+
+# create the working directory and a place to set the logs (if wanted)
+RUN mkdir -p /odoo /var/log/odoo
+
+COPY ./install /install
+COPY ./*_requirements.txt /odoo/
+
+
+# Default SHELL is ["/bin/sh", "-c"]
+SHELL ["/bin/sh", "-e", "-x", "-c"]
+# For Python 3.9, use system certificates
+ENV PIP_CERT="/etc/ssl/certs/ca-certificates.crt"
+
+
+# Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
+RUN /install/package_odoo.sh \
+    && /install/setup-pip.sh \
+    && /install/postgres.sh \
+    && /install/kwkhtml_client.sh \
+    # build and dev packages
+    && /install/dev_package.sh \
+    && python3 -m pip install --force-reinstall pip \
+    && pip install -r /odoo/base_requirements.txt \
+                   -r /odoo/platform_requirements.txt \
+                   -r /odoo/test_requirements.txt --ignore-installed \
+    && /install/purge_dev_package_and_cache.sh
+
+# grab gosu for easy step-down from root and dockerize to generate template and
+# wait on postgres
+RUN /install/gosu.sh && /install/dockerize.sh
+# Init PG variables during Shell initialization so it will be available
+# when doing 'docker compose exec odoo gosu odoo bash'
+RUN echo >> /etc/bash.bashrc \
+  "if [ -f /odoo-bin/env_postgres.sh ]; then . /odoo-bin/env_postgres.sh; fi"
+
+COPY ./bin /odoo-bin
+COPY ./templates /templates
+COPY ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
+COPY ./start-entrypoint.d /start-entrypoint.d
+COPY ./MANIFEST.in /odoo
+COPY ./.coveragerc /odoo/
+COPY --chmod=644 ./env_odoo.sh /odoo-bin/
+
+ENV ODOO_VERSION=$VERSION \
+    PATH=/odoo-bin:$PATH \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    OPENBLAS_NUM_THREADS=1 \
+    DB_HOST=db \
+    DB_PORT=5432 \
+    DB_NAME=odoodb \
+    DB_USER=odoo \
+    DB_PASSWORD=odoo \
+    ODOO_BASE_URL=http://localhost:8069 \
+    ODOO_REPORT_URL=http://localhost:8069 \
+    # the place where you put the data of your project (csv, ...)
+    ODOO_DATA_PATH=/odoo/data \
+    DEMO=False \
+    ADDONS_PATH=/odoo/local-src,/odoo/src/addons \
+    ODOO_RC=/etc/odoo.cfg \
+    COVERAGE_RCFILE=/odoo/.coveragerc
+
+VOLUME ["/data/odoo", "/var/log/odoo"]
+EXPOSE 8069 8072
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["odoo"]

@@ -11,10 +11,6 @@ RUN mkdir -p /odoo /var/log/odoo
 COPY ./install /install
 COPY ./*_requirements.txt /odoo/
 
-# Moved because there was a bug while installing `odoo-autodiscover`. There is
-# an accent in the contributor name
-ENV LANG=C.UTF-8 \
-    LC_ALL=C.UTF-8
 
 # Default SHELL is ["/bin/sh", "-c"]
 SHELL ["/bin/sh", "-e", "-x", "-c"]
