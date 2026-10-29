@@ -21,3 +21,10 @@ pycparser>=2.22 ; python_version < '3.12'
 pycparser==3.* ; python_version >= '3.12'
 PyJWT==2.14.*
 typing_extensions==4.16.*
+
+# fs_attachment / fs_storage
+fsspec==2025.3.*
+# fs_attachment
+adlfs==2024.12.*
+# storage_file
+python-slugify==8.0.*
