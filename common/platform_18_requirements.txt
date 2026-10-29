@@ -1,0 +1,9 @@
+# Odoo >= 18.0 only (installed conditionally in Dockerfile)
+
+## PLATFORM: fs_attachment
+# fs_attachment / fs_storage
+fsspec==2025.3.*
+# fs_attachment
+adlfs==2024.12.*
+# storage_file
+python-slugify==8.0.*

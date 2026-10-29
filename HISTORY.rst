@@ -20,6 +20,15 @@
 Release History
 ---------------
 
+Unreleased
+++++++++++
+
+**Libraries**
+
+* Install ``fs_attachment`` platform requirements (``fsspec``, ``adlfs``,
+  ``python-slugify``) from ``platform_18_requirements.txt`` for Odoo >= 18.0
+  only (moved from odoo-template)
+
 5.5.3 (2026-10-07)
 ++++++++++++++++++
 

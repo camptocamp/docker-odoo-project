@@ -21,6 +21,7 @@ SHELL ["/bin/sh", "-e", "-x", "-c"]
 
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
+# hadolint ignore=SC2086  # $PLATFORM_EXTRA must be word-split
 RUN /install/package_odoo.sh \
     && /install/setup-pip.sh \
     && /install/postgres.sh \
@@ -28,8 +29,11 @@ RUN /install/package_odoo.sh \
     # build and dev packages
     && /install/dev_package.sh \
     && python3 -m pip install --force-reinstall pip \
+    && PLATFORM_EXTRA="" \
+    && if [ "${VERSION%%.*}" -ge 18 ]; then PLATFORM_EXTRA="-r /odoo/platform_18_requirements.txt"; fi \
     && pip install -r /odoo/base_requirements.txt \
                    -r /odoo/platform_requirements.txt \
+                   $PLATFORM_EXTRA \
                    -r /odoo/test_requirements.txt --ignore-installed \
     && /install/purge_dev_package_and_cache.sh
 
