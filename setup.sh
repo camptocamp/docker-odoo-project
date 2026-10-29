@@ -22,7 +22,7 @@ echo "Creating $SRC"
 
 mkdir -p $SRC
 cp -r common/. $SRC/
-cp -r ${VERSION}/. $SRC/
+cp -rL ${VERSION}/. $SRC/
 cp -r bin/ $SRC
 cp -r install/ $SRC
 cp -r start-entrypoint.d/ $SRC
