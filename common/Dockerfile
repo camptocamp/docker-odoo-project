@@ -22,7 +22,6 @@ RUN /install/package_odoo.sh \
     && /install/kwkhtml_client.sh \
     # build and dev packages
     && /install/dev_package.sh \
-    && python3 -m pip install --force-reinstall pip \
     && pip install -r /odoo/base_requirements.txt \
                    -r /odoo/platform_requirements.txt \
                    -r /odoo/test_requirements.txt --ignore-installed \

@@ -35,6 +35,10 @@ case $IMAGE_LATEST in
     BASE_PATH=.
     LOCAL_CODE_PATH=./odoo/addons
     ODOO_PATH=./odoo/src/odoo
+    if [ "${VERSION%%.*}" -le 18 ]; then
+        # Prior to odoo/odoo#195664
+        PIP_EDITABLE_OPTS="--config-settings editable_mode=compat"
+    fi
     ;;
   *)
     TEST_SRC=./example
@@ -107,13 +111,16 @@ mv "./odoo/odoo-$VERSION" "$ODOO_PATH"
 echo "+++++++++++++ $IMAGE_LATEST"
 echo '>>> Run test for base image'
 sed "s|FROM .*|FROM ${IMAGE_LATEST}|" -i "$BASE_PATH/Dockerfile"
-sed "s|\(.version.: .\)[0-9.]*\(.*\)|\\1${VERSION}.0.0.0\\2|" -i "$LOCAL_CODE_PATH/dummy_test/__manifest__.py"
+if [ -n "${PIP_EDITABLE_OPTS-}" ]; then
+    sed "/pip install -e .*\/odoo$/s|$| $PIP_EDITABLE_OPTS|" -i "$BASE_PATH/Dockerfile"
+fi
+sed "/^\s*.version.: /s|[0-9.]+|${VERSION}.0.0.0|" -E -i "$LOCAL_CODE_PATH/dummy_test/__manifest__.py"
 echo $VERSION.0.0.0 > "$BASE_PATH/VERSION"
 
 case "$VERSION" in
   "12.0" | "13.0")
     # No extra_requirements.txt, no test_requirements.txt
-    sed '/^-r \(extra\|test\)_/d' -i "$BASE_PATH/requirements.txt"
+    sed '/^-r (extra|test)_/d' -E -i "$BASE_PATH/requirements.txt"
     ;;
 esac
 
