@@ -91,7 +91,7 @@ freetype-py==2.5.1          # dep. of reportlab
 isodate==0.7.2              # dep. of zeep
 maxminddb==3.1.1            # dep. of geoip2
 platformdirs==4.11.8        # dep. of zeep
-pyasn1==0.6.4               # dep. of python-ldap
+pyasn1==0.6.5               # dep. of python-ldap
 pyasn1_modules==0.4.2       # dep. of python-ldap
 pycairo==1.29.0             # dep. of reportlab
 pycparser==3.0              # dep. of cryptography
