@@ -47,7 +47,7 @@ RUN /install/package_odoo.sh core \
     # build and dev packages
     && /install/dev_package.sh core \
     && su odoo -c "umask 007 \
-    && python3 -m venv /odoo/.venv --system-site-packages \
+    && python3 -m venv /odoo/.venv --system-site-packages --upgrade-deps \
     && /odoo/.venv/bin/pip install -r /odoo/base_requirements.txt \
                                    -r /odoo/test_requirements.txt" \
     && chgrp -R root /odoo/.venv \

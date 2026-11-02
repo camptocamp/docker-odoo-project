@@ -13,18 +13,19 @@ COPY ./install /install
 # Moved because there was a bug while installing `odoo-autodiscover`. There is
 # an accent in the contributor name
 ENV LANG=C.UTF-8 \
-    LC_ALL=C.UTF-8
+    LC_ALL=C.UTF-8 \
+    # For Python 3.9, use system certificates
+    PIP_CERT="/etc/ssl/certs/ca-certificates.crt"
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN set -x; \
     /install/package_odoo.sh \
-    && /install/setup-pip.sh \
+    && /install/setup-pip.sh "pip==25.2" "setuptools<58" \
     && /install/postgres.sh 15 \
     && /install/kwkhtml_client.sh \
     && /install/dev_package.sh \
-    && python3 -m pip install --force-reinstall "pip==25.2" "setuptools<58" \
-    && pip3 install -r /odoo/base_requirements.txt --ignore-installed \
-    && pip3 install -r /odoo/platform_requirements.txt --ignore-installed \
+    && pip install -r /odoo/base_requirements.txt --ignore-installed \
+    && pip install -r /odoo/platform_requirements.txt --ignore-installed \
     && /install/purge_dev_package_and_cache.sh
 
 # grab gosu for easy step-down from root and dockerize to generate template and
