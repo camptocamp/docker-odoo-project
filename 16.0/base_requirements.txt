@@ -78,7 +78,7 @@ defusedxml==0.7.1           # dep. of zeep and odfpy
 docopt==0.6.2               # dep. of num2words
 freetype-py==2.5.1          # dep. of reportlab
 isodate==0.7.2              # dep. of zeep
-pyasn1==0.6.4               # dep. of python-ldap
+pyasn1==0.6.5               # dep. of python-ldap
 pyasn1_modules==0.4.2       # dep. of python-ldap
 pycairo==1.27.0             # dep. of reportlab
 pycparser==3.0              # dep. of cryptography
