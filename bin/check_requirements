@@ -98,7 +98,7 @@ def reqs_print_subtree(dep_list, level, toplevel, _seen=None):
     indent = "└── ".rjust(level * 4) if level else f"{CSI}1m"
     eol = "" if level else f"{CSI}m"
     if not level:
-        _seen = {*()}
+        _seen = set()
     for pck_data in dep_list:
         package_name = pck_data["package_name"]
         if dep_sublist := pck_data["dependencies"]:
@@ -124,8 +124,8 @@ def reqs_print_details(packages, verbose):
     - filter out any package which is not in the list
     - print toplevel packages separately
     """
-    toplevel = {*()}
-    excluded = {*()}
+    toplevel = set()
+    excluded = set()
     # Get editable packages
     editable = {
         canonicalize_name(req.name) for req in reqs_installed_list("--editable")
