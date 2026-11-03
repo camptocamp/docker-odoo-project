@@ -20,6 +20,16 @@
 Release History
 ---------------
 
+Unreleased
+++++++++++
+
+**Libraries**
+
+* Add ``fs_attachment`` platform requirements (``fsspec``, ``adlfs``,
+  ``python-slugify``) to ``platform_requirements.txt`` for Odoo >= 18.0
+  (moved from odoo-template). Odoo 12.0 to 17.0 keep a legacy
+  ``17.0/platform_requirements.txt``, symlinked from the other legacy versions
+
 5.5.3 (2026-10-07)
 ++++++++++++++++++
 
