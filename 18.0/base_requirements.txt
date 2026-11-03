@@ -55,6 +55,8 @@ odfpy==1.4.1
 orjson==3.11.9
 # - addons.phone_validation since Odoo 11 - commit odoo/odoo@96a0047
 phonenumbers==9.0.13
+# - odoo.tools.mimetypes since Odoo 9, improve mimetype guessing - commit odoo/odoo@e06adc7
+python-magic==0.4.27
 # - odoo.service.server since OpenERP 7, improve process display - commit odoo/odoo@0801f22
 setproctitle==1.3.7
 
