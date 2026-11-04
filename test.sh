@@ -35,10 +35,6 @@ case $IMAGE_LATEST in
     BASE_PATH=.
     LOCAL_CODE_PATH=./odoo/addons
     ODOO_PATH=./odoo/src/odoo
-    if [ "${VERSION%%.*}" -le 18 ]; then
-        # Prior to odoo/odoo#195664
-        PIP_EDITABLE_OPTS="--config-settings editable_mode=compat"
-    fi
     ;;
   *)
     TEST_SRC=./example
@@ -65,7 +61,10 @@ if [ -z "${PG_SERVER_VERSION-}" ]; then
 fi
 export PG_SERVER_VERSION
 
-ODOO_URL="https://github.com/odoo/odoo/archive/${VERSION}.tar.gz"
+# Use OCA/OCB for compatibility with recent Pip - OCA/OCB#1279
+ODOO_REPO="OCA/OCB"
+ODOO_URL="https://github.com/${ODOO_REPO}/archive/${VERSION}.tar.gz"
+ODOO_EXTRACTED_DIR="${ODOO_REPO##*/}-$VERSION"
 
 TMP=$(mktemp -d)
 echo "Working in $TMP"
@@ -107,15 +106,13 @@ rm -rf "$ODOO_PATH"
 wget -nv -O /tmp/odoo.tar.gz "$ODOO_URL"
 tar xfz /tmp/odoo.tar.gz -C "./odoo"
 mkdir -p $(dirname -- "$ODOO_PATH")
-mv "./odoo/odoo-$VERSION" "$ODOO_PATH"
+mv "./odoo/$ODOO_EXTRACTED_DIR" "$ODOO_PATH"
 echo "+++++++++++++ $IMAGE_LATEST"
 echo '>>> Run test for base image'
-sed "s|FROM .*|FROM ${IMAGE_LATEST}|" -i "$BASE_PATH/Dockerfile"
-if [ -n "${PIP_EDITABLE_OPTS-}" ]; then
-    sed "/pip install -e .*\/odoo$/s|$| $PIP_EDITABLE_OPTS|" -i "$BASE_PATH/Dockerfile"
-fi
+sed "s/find_packages/find_namespace_packages/" -i "$ODOO_PATH/setup.py"
 sed "/^\s*.version.: /s|[0-9.]+|${VERSION}.0.0.0|" -E -i "$LOCAL_CODE_PATH/dummy_test/__manifest__.py"
-echo $VERSION.0.0.0 > "$BASE_PATH/VERSION"
+sed "s|FROM .*|FROM ${IMAGE_LATEST}|" -i "$BASE_PATH/Dockerfile"
+echo "$VERSION.0.0.0" > "$BASE_PATH/VERSION"
 
 case "$VERSION" in
   "12.0" | "13.0")

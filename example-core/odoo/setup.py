@@ -7,7 +7,7 @@ setup(
     name="my-project-name",
     version=version,
     description="project description",
-    license='GNU Affero General Public License v3 or later (AGPLv3+)',
+    license='AGPL-3.0-or-later',
     author="Author...",
     author_email="email...",
     url="url...",
@@ -15,9 +15,6 @@ setup(
     include_package_data=True,
     classifiers=[
         'Development Status :: 4 - Beta',
-        'License :: OSI Approved',
-        'License :: OSI Approved :: '
-        'GNU Affero General Public License v3 or later (AGPLv3+)',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.12',

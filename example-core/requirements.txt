@@ -1,4 +1,2 @@
 # project's packages, customize for your needs:
 unidecode==0.4.14
-setuptools-odoo
-wheel
