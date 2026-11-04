@@ -2,6 +2,7 @@
 import functools
 import json
 import shlex
+import shutil
 import subprocess
 from collections import defaultdict
 from pathlib import Path
@@ -16,11 +17,10 @@ If project needs a different version, add a comment to make it explicit.
 This way, it can be reviewed and removed when the base image is updated."""
 BASE_REQUIREMENTS = [
     Path("/odoo/base_requirements.txt"),
-    Path("/odoo/platform_requirements.txt"),
     Path("/odoo/test_requirements.txt"),
 ]
+PLATFORM_REQUIREMENTS = Path("/odoo/platform_requirements.txt")
 PROJECT_REQUIREMENTS = Path("/odoo/requirements.txt")
-PIPDEPTREE = Path("/usr/local/bin/pipdeptree")
 CSI = "\33["
 
 
@@ -45,14 +45,13 @@ def ask(choice, default=False):
 
 def install_pipdeptree(force=False):
     """Install 'pipdeptree' if needed"""
-    if PIPDEPTREE.exists():
-        return True
-    if force or ask("Install 'pipdeptree' to analyze dependencies?", default=True):
+    executable = shutil.which("pipdeptree")
+    if not executable and (force or ask("Install 'pipdeptree' to analyze dependencies?", default=True)):
         run("pip install pipdeptree", capture_output=True)
-        if PIPDEPTREE.exists():
-            return True
-        print("Failed")
-    return False
+        executable = shutil.which("pipdeptree")
+        if not executable:
+            print("Failed")
+    return bool(executable)
 
 
 def reqs_installed_list(*args):
@@ -322,6 +321,9 @@ def main(verbose=False):
 
 
 if __name__ == "__main__":
+    if os.geteuid() == 0:
+        # Main image installs platform_requirements.txt. Core image does not.
+        BASE_REQUIREMENTS.append(PLATFORM_REQUIREMENTS)
     try:
         main()
     except (EOFError, KeyboardInterrupt):
