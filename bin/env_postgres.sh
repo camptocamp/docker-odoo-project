@@ -13,6 +13,8 @@ fi
 
 wait_postgres () {
   TIMEOUT="${1:-30s}"
+  [ -n "${DB_HOST-}" ] || return 0
+
   # Wait until PostgreSQL is running.
   if [ -d "$DB_HOST" ]; then
       dockerize -timeout $TIMEOUT -wait "unix://${DB_HOST}/.s.PGSQL.${DB_PORT}"
