@@ -1,31 +1,39 @@
 # Odoo external services dependencies
-## PLATFORM
+
+# PLATFORM
 redis==6.4.*
 python-json-logger==3.3.*
 prometheus-client==0.22.*
 
-# PLATFORM, for azure blob storage
+# PLATFORM: Azure blob storage
 azure-storage-blob==12.26.*
 azure-identity==1.24.*
 
-# Dependencies
-async-timeout==5.0.1 ; python_version < '3.11'
-azure-core==1.39.0 ; python_version < '3.12'
-azure-core==1.41.* ; python_version >= '3.12'
-cffi==2.0.*
-cryptography==50.0.*
-isodate==0.7.*
-msal==1.38.*
-msal-extensions==1.3.*
-pycparser>=2.22 ; python_version < '3.12'
-pycparser==3.* ; python_version >= '3.12'
-PyJWT==2.14.*
-typing_extensions==4.16.*
-
-## PLATFORM: fs_attachment
+# PLATFORM: fs_attachment
 # fs_attachment / fs_storage
 fsspec==2026.6.*
 # fs_attachment
 adlfs==2024.12.*
 # storage_file
 python-slugify==8.0.*
+
+
+# Dependencies
+aiohappyeyeballs==2.7.*
+aiohttp==3.14.*
+aiosignal==1.4.*
+azure-core==1.41.*
+azure-datalake-store==0.0.53
+cffi==2.0.*
+cryptography==50.0.*
+frozenlist==1.8.*
+isodate==0.7.*
+msal==1.38.*
+msal-extensions==1.3.*
+multidict==7.2.*
+propcache==0.5.*
+pycparser==3.*
+PyJWT==2.14.*
+text-unidecode==1.3
+typing_extensions==4.16.*
+yarl==1.25.*

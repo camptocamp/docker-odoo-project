@@ -1,13 +1,15 @@
 # Legacy platform requirements for Odoo 12.0 -> 17.0 (symlinked from other version folders)
 # Odoo external services dependencies
-## PLATFORM
+
+# PLATFORM
 redis==6.4.*
 python-json-logger==3.3.*
 prometheus-client==0.22.*
 
-# PLATFORM, for azure blob storage
+# PLATFORM: Azure blob storage
 azure-storage-blob==12.26.*
 azure-identity==1.24.*
+
 
 # Dependencies
 async-timeout==5.0.1 ; python_version < '3.11'
