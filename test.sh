@@ -123,6 +123,11 @@ esac
 
 mkdir .cachedb
 
+if [ "${VERSION%%.*}" -ge 20 ]; then
+    echo '>>> * paper-muncher is installed'
+    docker run --rm --entrypoint paper-muncher "$IMAGE_LATEST" --version
+fi
+
 echo '>>> * migration: standard'
 docoruncmd -e LOAD_DB_CACHE="false" odoo odoo --stop-after-init
 
