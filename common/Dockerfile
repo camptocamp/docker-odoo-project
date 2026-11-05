@@ -15,11 +15,12 @@ COPY ./*_requirements.txt /odoo/
 SHELL ["/bin/sh", "-e", "-x", "-c"]
 
 
-# Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
+# Install some deps, lessc and less-plugin-clean-css, wkhtmltopdf and paper-muncher
 RUN /install/package_odoo.sh \
     && /install/setup-pip.sh \
     && /install/postgres.sh \
     && /install/kwkhtml_client.sh \
+    && /install/paper_muncher.sh \
     # build and dev packages
     && /install/dev_package.sh \
     && pip install -r /odoo/base_requirements.txt \

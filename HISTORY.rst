@@ -20,6 +20,14 @@
 Release History
 ---------------
 
+Unreleased
+++++++++++
+
+**Build**
+
+* Install ``paper-muncher`` for Odoo >= 20.0
+
+
 5.5.6 (2026-11-05)
 ++++++++++++++++++
 
