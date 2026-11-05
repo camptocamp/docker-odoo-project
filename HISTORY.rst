@@ -20,6 +20,14 @@
 Release History
 ---------------
 
+5.5.6 (unreleased)
+++++++++++++++++++
+
+**Bugfixes**
+
+* Fix script ``check_requirements``
+
+
 5.5.5 (2026-11-05)
 ++++++++++++++++++
 
