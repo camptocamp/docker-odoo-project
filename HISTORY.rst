@@ -20,15 +20,33 @@
 Release History
 ---------------
 
-Unreleased
-++++++++++
+5.5.5 (2026-11-05)
+++++++++++++++++++
 
 **Libraries**
 
 * Add ``fs_attachment`` platform requirements (``fsspec``, ``adlfs``,
-  ``python-slugify``) to ``platform_requirements.txt`` for Odoo >= 18.0
-  (moved from odoo-template). Odoo 12.0 to 17.0 keep a legacy
+  ``python-slugify``) to ``platform_requirements.txt`` for Odoo >= 18
+  (moved from odoo-template). Odoo 12 to 17 keep a legacy
   ``17.0/platform_requirements.txt``, symlinked from the other legacy versions
+* Add ``python-magic`` to ``base_requirements.txt`` for all versions from Odoo 14
+* Upgrade dependencies to fix vulnerabilities: ``fsspec``, ``pillow``, ``pyasn1``,
+  ``urllib3``, ...
+* Remove ``setuptools`` dependency for Odoo 17 and 18
+
+**Bugfixes**
+
+* Fix core image to use latest Pip.
+
+
+5.5.4 (2026-10-22)
+++++++++++++++++++
+
+**Bugfixes**
+
+* Fix CA certificates, to distrust compromised keys.
+  https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
+
 
 5.5.3 (2026-10-07)
 ++++++++++++++++++
