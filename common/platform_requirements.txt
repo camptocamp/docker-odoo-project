@@ -24,7 +24,7 @@ typing_extensions==4.16.*
 
 ## PLATFORM: fs_attachment
 # fs_attachment / fs_storage
-fsspec==2025.3.*
+fsspec==2026.6.*
 # fs_attachment
 adlfs==2024.12.*
 # storage_file
