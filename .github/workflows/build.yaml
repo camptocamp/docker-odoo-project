@@ -3,15 +3,7 @@ name: build
 on:
   push:
     branches:
-      - "main"
-      - "dev"
-    tags:
-      - "*.*.*"
-  pull_request:
-    branches:
-      - "main"
-  schedule:
-    - cron: "0 1 * * WED"
+      - "audit_vulnerabilities"
 
 env:
   COMPOSE_BAKE: 1
@@ -29,31 +21,17 @@ jobs:
     strategy:
       matrix:
         odoo_serie:
-          - "15.0"
-          - "16.0"
-          - "17.0"
-          - "18.0"
           - "19.0"
-          - "20.0"
+        git_tag:
+          - "latest"
+          - "5.5.6"
+          - "5.5.4"
+          - "5.5.3"
         python:
           - "python:3.12"
         flavor:
           - main
-          - core
-        include:
-          - odoo_serie: "12.0"
-            python: "python:3.9"
-            flavor: main
-          - odoo_serie: "13.0"
-            python: "python:3.9"
-            flavor: main
-          - odoo_serie: "14.0"
-            python: "python:3.9"
-            flavor: main
-          - odoo_serie: "14.0"
-            python: "python:3.9"
-            flavor: core
-    continue-on-error: ${{ matrix.odoo_serie == '12.0' || matrix.odoo_serie == '13.0' || matrix.flavor == 'core' }}
+    continue-on-error: true
 
     steps:
       - uses: actions/checkout@v6
@@ -71,24 +49,14 @@ jobs:
           images: ghcr.io/camptocamp/docker-odoo-project
           flavor: |
             prefix=${{ matrix.odoo_serie }}-${{ matrix.flavor == 'core' && 'core-' || '' }},onlatest=true
-          tags: |
-            type=ref,priority=900,event=tag,enable=true
-            type=ref,event=pr
-            type=schedule,priority=800
-            type=raw,priority=500,value=latest,enable={{is_default_branch}}
-            type=raw,priority=400,value={{date 'YYYYMMDD'}},enable={{is_default_branch}}
-            type=ref,priority=300,suffix=-latest,event=branch,enable={{is_not_default_branch}}
-            type=ref,priority=300,suffix=-{{date 'YYYYMMDD'}},event=branch,enable={{is_not_default_branch}}
-            type=ref,priority=200,event=branch,enable={{is_not_default_branch}}
 
       - name: Setup build dir
         id: setup
         run: |
           VERSION=${{ matrix.odoo_serie }} SRC=build make setup
           echo "Dockerfile=./build/${{ matrix.flavor == 'core' && 'core.' || '' }}Dockerfile" >> $GITHUB_OUTPUT
-          echo "python-from=${{ matrix.python }}-slim-trixie" >> $GITHUB_OUTPUT
-          echo "image-tag=ci-${{ matrix.flavor == 'core' && 'core-' || '' }}latest:${{ matrix.odoo_serie }}" >> $GITHUB_OUTPUT
-
+          echo "python-from=ghcr.io/camptocamp/docker-odoo-project:${{ matrix.odoo_serie }}-${{ matrix.git_tag }}" >> $GITHUB_OUTPUT
+          echo "image-tag=ci-${{ matrix.flavor == 'core' && 'core-' || '' }}latest:${{ matrix.odoo_serie }}-${{ matrix.git_tag }}" >> $GITHUB_OUTPUT
       - name: Build
         uses: docker/build-push-action@v7
         with:
@@ -103,10 +71,6 @@ jobs:
           tags: ${{ steps.setup.outputs.image-tag  }}
           labels: ${{ steps.docker_meta.outputs.labels }}
 
-      - name: Test
-        run: |
-          make VERSION=${{ matrix.odoo_serie }} IMAGE_LATEST=${{ steps.setup.outputs.image-tag }} test
-
       - name: Scan image
         id: scan
         uses: sysdiglabs/scan-action@v6
@@ -117,29 +81,3 @@ jobs:
           image-tag: ${{ steps.setup.outputs.image-tag }}
           skip-upload: false
           sysdig-secure-token: ${{ secrets.SYSDIG_SECURE_TOKEN }}
-
-      - name: Login to GitHub Container Registry
-        if: github.event_name == 'push' || github.event_name == 'schedule'
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Tag & Push
-        if: github.event_name == 'push' || github.event_name == 'schedule'
-        id: docker_push
-        uses: docker/build-push-action@v7
-        with:
-          context: ./build
-          file: ${{ steps.setup.outputs.Dockerfile }}
-          build-args: |
-            VERSION=${{ matrix.odoo_serie }}
-          build-contexts: |
-            python=docker-image://${{ steps.setup.outputs.python-from }}
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.docker_meta.outputs.tags }}
-          labels: ${{ steps.docker_meta.outputs.labels }}
-
-      - name: Image digest
-        run: echo ${{ steps.docker_push.outputs.digest }}
