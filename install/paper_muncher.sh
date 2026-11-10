@@ -6,9 +6,9 @@ if [ "${VERSION%%.*}" -lt 20 ]; then
   exit 0
 fi
 
-PAPER_MUNCHER_VERSION=0.9.0
+PAPER_MUNCHER_VERSION=0.10.0
 # Checksum of the Debian trixie amd64 package (only amd64 packages are published)
-PAPER_MUNCHER_SHA256=94520dcddb977271d334d392958b73585b42f2b3d17817ec316fd3a36d7a7932
+PAPER_MUNCHER_SHA256=c01bc309996b0606a22fbfbfa95f32ca362b796de2221505153acc27b548aef1
 
 DEB="paper-muncher_v${PAPER_MUNCHER_VERSION}_trixie_amd64.deb"
 
