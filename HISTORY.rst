@@ -20,8 +20,8 @@
 Release History
 ---------------
 
-Unreleased
-++++++++++
+5.5.7 (2026-11-11)
+++++++++++++++++++
 
 **Bugfixes**
 
@@ -29,10 +29,16 @@ Unreleased
   setting the ``confidoo.apply_date`` flag as if the configuration was applied
 * Confidoo: don't set the ``confidoo.apply_date`` flag when there is no
   configuration to apply, so that a configuration added later is applied
+* Fix ``wait_postgres`` with recent PostgreSQL
+
+**Libraries**
+
+* Odoo 20: install ``paper-muncher``
+* Odoo 20: fix vulnerability in ``pillow``
 
 **Build**
 
-* Install ``paper-muncher`` for Odoo >= 20.0
+* Replace GPG keyserver to verify ``gosu``
 
 
 5.5.6 (2026-11-05)
