@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
-GOSU_VER="1.20"
+GOSU_VER="1.10"
 GOSU_DL_URL="https://github.com/tianon/gosu/releases/download/${GOSU_VER}/gosu-$(dpkg --print-architecture)"
 KEY_SERVERS="keys.openpgp.org pgpkeys.eu"
 GPG_KEY="B42F6819007F00F88E364FD4036A9C25BF357DD4"
