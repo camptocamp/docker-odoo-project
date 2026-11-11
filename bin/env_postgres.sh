@@ -24,9 +24,9 @@ wait_postgres () {
 
   # now the port is up but sometimes server is not ready yet:
   # 'createdb: could not connect to database template1: FATAL:  the database system is starting up'
-  # we retry if we get this error
+  # pg_isready exits non-zero until the server accepts connections
 
-  while [ "$(psql -c '' postgres 2>&1)" = "psql: FATAL:  the database system is starting up" ]
+  until pg_isready -q -d postgres
   do
     echo "Waiting for the database system to start up"
     sleep 0.1
