@@ -8,6 +8,12 @@ fi
 # Default value
 CONFIDOO_APPLY=${CONFIDOO_APPLY:-True}
 if [[ "$RUNNING_ENV" != "prod" && "$CONFIDOO_APPLY" == "True" ]]; then
+    # Don't set the flag when there's nothing to apply, otherwise a
+    # configuration added later would never be applied
+    if [ -z "$ODOO_ENVIRONMENT_CONFIG" ] && [ -z "$ODOO_ENVIRONMENT_SECRET_CONFIG" ]; then
+        echo "Confidoo: nothing to apply, skipping."
+        exit 0
+    fi
     if [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" )" != '1' ]
     then
         echo "Database does not exist, ignoring script"

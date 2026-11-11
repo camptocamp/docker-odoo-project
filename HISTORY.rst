@@ -27,6 +27,8 @@ Unreleased
 
 * Confidoo: stop the entrypoint when ``confidoo apply`` fails, instead of
   setting the ``confidoo.apply_date`` flag as if the configuration was applied
+* Confidoo: don't set the ``confidoo.apply_date`` flag when there is no
+  configuration to apply, so that a configuration added later is applied
 
 **Build**
 
