@@ -1,26 +1,28 @@
 #!/bin/bash
 set -eo pipefail
 
-# fix intermittent gpg server error from https://github.com/tianon/gosu/issues/35
+GOSU_VER="1.20"
+GOSU_DL_URL="https://github.com/tianon/gosu/releases/download/${GOSU_VER}/gosu-$(dpkg --print-architecture)"
+KEY_SERVERS="keys.openpgp.org pgpkeys.eu"
+GPG_KEY="B42F6819007F00F88E364FD4036A9C25BF357DD4"
+BIN_DIR="/usr/local/bin"
+
 export GNUPGHOME="$(mktemp -d)"
-for server in $(shuf -e ha.pool.sks-keyservers.net \
-                        hkp://p80.pool.sks-keyservers.net:80 \
-                        keyserver.ubuntu.com \
-                        hkp://keyserver.ubuntu.com:80 \
-                        pgp.mit.edu)
+for server in $(shuf -e $KEY_SERVERS)
 do
   ks_options=""
-  # $http_proxy is an environment variable which is usually lowcase, a gpg quirk
+  # $http_proxy is an environment variable which is usually lowercase, a gpg quirk
   if [ -n "$http_proxy" ]
   then
     ks_options="--keyserver-options http-proxy=$http_proxy"
   fi
-  gpg --keyserver "$server" $ks_options --batch --no-tty --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 && break || :
+  echo gpg --keyserver "$server" $ks_options --batch --no-tty --recv-keys "$GPG_KEY"
+  gpg --keyserver "$server" $ks_options --batch --no-tty --recv-keys "$GPG_KEY" && break || :
 done
-curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.10/gosu-$(dpkg --print-architecture)"
-curl -o /usr/local/bin/gosu.asc -SL "https://github.com/tianon/gosu/releases/download/1.10/gosu-$(dpkg --print-architecture).asc"
-gpg --verify /usr/local/bin/gosu.asc
-rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc
-chmod +x /usr/local/bin/gosu
+curl -o "${BIN_DIR}/gosu" -SL "${GOSU_DL_URL}"
+curl -o "${BIN_DIR}/gosu.asc" -SL "${GOSU_DL_URL}.asc"
+gpg --verify "${BIN_DIR}/gosu.asc"
+rm -rf "$GNUPGHOME" "${BIN_DIR}/gosu.asc"
+chmod +x "${BIN_DIR}/gosu"
 # verify that the binary works
-gosu nobody true
+"${BIN_DIR}/gosu" nobody true
