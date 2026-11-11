@@ -23,6 +23,11 @@ Release History
 Unreleased
 ++++++++++
 
+**Bugfixes**
+
+* Confidoo: stop the entrypoint when ``confidoo apply`` fails, instead of
+  setting the ``confidoo.apply_date`` flag as if the configuration was applied
+
 **Build**
 
 * Install ``paper-muncher`` for Odoo >= 20.0
