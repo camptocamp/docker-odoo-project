@@ -35,8 +35,8 @@ RUN /install/gosu.sh && /install/dockerize.sh
 COPY ./src_requirements.txt /odoo
 COPY ./bin /odoo-bin
 COPY ./templates /templates
-COPY ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
-COPY ./start-entrypoint.d /start-entrypoint.d
+COPY --chmod=755 ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
+COPY --chmod=755 ./start-entrypoint.d /start-entrypoint.d
 COPY ./MANIFEST.in /odoo
 COPY --chmod=644 ./env_odoo.sh /odoo-bin/
 # Init PG variables during Shell initialization so it will be available
