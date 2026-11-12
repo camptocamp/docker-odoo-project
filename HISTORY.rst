@@ -20,6 +20,15 @@
 Release History
 ---------------
 
+5.5.x (unreleased)
+++++++++++++++++++
+
+**Build**
+
+* Download PostgreSQL public key from ``apt.postgresql.org``
+  in order to fix builds.
+
+
 5.5.7 (2026-11-11)
 ++++++++++++++++++
 
