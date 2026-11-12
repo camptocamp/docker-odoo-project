@@ -20,6 +20,17 @@
 Release History
 ---------------
 
+5.5.8 (unreleased)
+++++++++++++++++++
+
+**Bugfixes**
+
+* Make ``002_neutralize`` and ``003_confidoo_apply`` executable, they were
+  silently skipped by ``run-parts`` on start
+* Force executable permissions when copying ``start-entrypoint.d`` and
+  ``before-migrate-entrypoint.d`` into the image
+
+
 5.5.7 (2026-11-11)
 ++++++++++++++++++
 

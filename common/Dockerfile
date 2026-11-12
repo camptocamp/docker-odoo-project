@@ -38,8 +38,8 @@ RUN echo >> /etc/bash.bashrc \
 
 COPY ./bin /odoo-bin
 COPY ./templates /templates
-COPY ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
-COPY ./start-entrypoint.d /start-entrypoint.d
+COPY --chmod=755 ./before-migrate-entrypoint.d /before-migrate-entrypoint.d
+COPY --chmod=755 ./start-entrypoint.d /start-entrypoint.d
 COPY ./MANIFEST.in /odoo
 COPY ./.coveragerc /odoo/
 COPY --chmod=644 ./env_odoo.sh /odoo-bin/
