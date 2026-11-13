@@ -90,7 +90,7 @@ requests-toolbelt==1.0.0    # dep. of zeep
 rlPyCairo==0.3.0            # dep. of reportlab
 setuptools==79.0.1          # requirement of Odoo
 six==1.17.0                 # dep. of ofxparse, freezegun, qrcode, vobject
-soupsieve==2.9.2            # dep. of ofxparse
+soupsieve==4.1              # dep. of ofxparse
 typing_extensions==4.16.0   # dep. of pyopenssl
 zope.event==6.2             # dep. of gevent
 zope.interface==8.6         # dep. of gevent
