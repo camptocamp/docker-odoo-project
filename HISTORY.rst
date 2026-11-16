@@ -34,7 +34,7 @@ Release History
 
 * Download PostgreSQL public key from ``apt.postgresql.org``
   in order to fix builds.
-
+* install postgresql-client 17 on odoo 12 and 13 base images
 
 5.5.7 (2026-11-11)
 ++++++++++++++++++
