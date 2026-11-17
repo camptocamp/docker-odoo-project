@@ -21,7 +21,7 @@ ENV LANG=C.UTF-8 \
 RUN set -x; \
     /install/package_odoo.sh \
     && /install/setup-pip.sh "pip==25.2" "setuptools<58" \
-    && /install/postgres.sh 15 \
+    && /install/postgres.sh 17 \
     && /install/kwkhtml_client.sh \
     && /install/dev_package.sh \
     && pip install -r /odoo/base_requirements.txt --ignore-installed \
