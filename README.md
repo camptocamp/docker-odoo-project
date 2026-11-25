@@ -481,4 +481,5 @@ such check:
   fi
 ```
 
-The scripts are run only if the command is `odoo`/`odoo.py`.
+The scripts are run only if the command is `odoo`/`odoo.py` (the
+`before-migrate-entrypoint.d` scripts also run for `migrate`).
