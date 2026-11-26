@@ -99,7 +99,7 @@ case "$BASE_CMD" in
   "odoo"|"odoo.py"|"migrate")
     BEFORE_MIGRATE_ENTRYPOINT_DIR=$ODOO_BASE_PATH/before-migrate-entrypoint.d
     if [ -d "$BEFORE_MIGRATE_ENTRYPOINT_DIR" ]; then
-      run-parts --exit-on-error --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
+      with_marabunta_lock run-parts --exit-on-error --verbose "$BEFORE_MIGRATE_ENTRYPOINT_DIR"
     fi
     if [ "$BASE_CMD" != "migrate" ]; then
       # Bypass migrate when `odoo shell` or `odoo --help` are used
@@ -109,7 +109,7 @@ case "$BASE_CMD" in
 
       START_ENTRYPOINT_DIR=$ODOO_BASE_PATH/start-entrypoint.d
       if [ -d "$START_ENTRYPOINT_DIR" ]; then
-        run-parts --exit-on-error --verbose "$START_ENTRYPOINT_DIR"
+        with_marabunta_lock run-parts --exit-on-error --verbose "$START_ENTRYPOINT_DIR"
       fi
     fi
 

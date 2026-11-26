@@ -481,4 +481,21 @@ such check:
   fi
 ```
 
-The scripts are run only if the command is `odoo`/`odoo.py`.
+The scripts are run only if the command is `odoo`/`odoo.py` (the
+`before-migrate-entrypoint.d` scripts also run for `migrate`).
+
+When several containers start at the same time on the same database (e.g. the
+cron, thread and queue job pods), the scripts are run one container at a time:
+each directory is run while holding the marabunta lock (see
+`with_marabunta_lock`), so they also never run during a migration. The
+containers that had to wait run the scripts too, once the lock is released, so
+the scripts must be idempotent: check whether their work was already done
+before doing it again.
+
+Because the lock is held for the whole directory, the scripts must not:
+
+* take the marabunta lock themselves, e.g. by running `migrate`, `marabunta`
+  or `with_marabunta_lock`: they would wait forever for the lock held by the
+  entrypoint;
+* drop or recreate the `$DB_NAME` database (e.g. to restore a dump): the
+  session holding the lock is connected to it.

@@ -20,6 +20,16 @@
 Release History
 ---------------
 
+Unreleased
+++++++++++
+
+**Bugfixes**
+
+* Run ``before-migrate-entrypoint.d`` and ``start-entrypoint.d`` while holding
+  the marabunta lock, so that containers starting at the same time don't run
+  them concurrently. Fixes Confidoo settings being overwritten by a second
+  neutralization after restoring a database.
+
 5.5.8 (2026-11-17)
 ++++++++++++++++++
 
