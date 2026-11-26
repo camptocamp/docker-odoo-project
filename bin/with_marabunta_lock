@@ -8,6 +8,7 @@ If the database does not exist yet, the command runs without the lock.
 
 import subprocess
 import sys
+from contextlib import closing
 from os import getenv
 from time import sleep
 
@@ -25,14 +26,24 @@ class DBConfig:
         self.database = getenv("DB_NAME")
 
 
+def database_exists(database):
+    dsn = dict(database.dsn(), dbname="postgres")
+    with closing(psycopg2.connect(**dsn)) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT 1 FROM pg_database WHERE datname = %s", (database.name,)
+            )
+            return bool(cursor.fetchone())
+
+
 def main(cmd):
     database = Database(DBConfig())
     try:
         lock_connection = psycopg2.connect(**database.dsn())
-    except psycopg2.OperationalError as exc:
-        if f'database "{database.name}" does not exist' not in str(exc):
+    except psycopg2.OperationalError:
+        if database_exists(database):
             raise
-        print("Database does not exist, running without lock")
+        print("Database does not exist, running without lock", flush=True)
         return subprocess.call(cmd)
 
     # Ending the transaction, when leaving the block, releases the lock
